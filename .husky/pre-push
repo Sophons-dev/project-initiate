@@ -1,0 +1,9 @@
+#!/bin/sh
+echo '🚀 Running pre-push checks...'
+
+echo '🧹 Linting and building all packages...'
+pnpm run lint
+pnpm run format
+pnpm run build
+
+echo '✅ Pre-push checks passed!'

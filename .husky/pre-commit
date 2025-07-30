@@ -1,0 +1,28 @@
+#!/bin/sh
+
+echo '👷‍♂️ Starting pre-commit checks...'
+
+STAGED_FILES=$(git diff --cached --name-only)
+echo '🔍 Staged files:'
+echo "$STAGED_FILES"
+
+HAS_API_CHANGES=$(echo "$STAGED_FILES" | grep -E '^apps/api/' || true)
+HAS_CLIENT_CHANGES=$(echo "$STAGED_FILES" | grep -E '^apps/client/' || true)
+
+if [ -n "$HAS_API_CHANGES" ]; then
+  echo '📦 Changes detected in /api...'
+  echo '🧹 Linting API service...'
+  pnpm --filter api run lint || exit 1
+  echo '🎨 Formatting API service...'
+  pnpm --filter api run format || exit 1
+fi
+
+if [ -n "$HAS_CLIENT_CHANGES" ]; then
+  echo '📦 Changes detected in /client...'
+  echo '🧹 Linting client app...'
+  pnpm --filter client run lint || exit 1
+  echo '🎨 Formatting client app...'
+  pnpm --filter client run format || exit 1
+fi
+
+echo '✅ All relevant checks passed. Proceeding with commit. 🚀'
