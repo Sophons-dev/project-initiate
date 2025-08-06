@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { cn } from '@/lib/utils';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -15,18 +16,18 @@ const navLinks = [
 
 export const Navbar = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
+      setIsScrolled(scrollY > 10);
 
       for (const link of navLinks) {
         const section = document.querySelector(link.href);
-
         if (section) {
           const top = (section as HTMLElement).offsetTop - 100;
           const bottom = top + (section as HTMLElement).offsetHeight;
-
           if (scrollY >= top && scrollY < bottom) {
             setActiveSection(link.href.replace('#', ''));
           }
@@ -44,8 +45,11 @@ export const Navbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className='h-25 flex items-center max-w-7xl mx-auto sticky top-0 backdrop-blur-md z-50'>
-      <div className='relative container mx-auto flex items-center justify-between'>
+      className={cn(
+        'sticky top-0 z-50 transition-all duration-300',
+        isScrolled ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
+      )}>
+      <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
         <motion.div
           className='flex items-center space-x-2'
@@ -55,14 +59,15 @@ export const Navbar = () => {
             <Image
               src='/project-initiate-logo.png'
               alt='Logo'
-              width={80}
-              height={80}
+              width={60}
+              height={60}
+              className='transition-all duration-300'
             />
           </Link>
         </motion.div>
 
         {/* Nav Links */}
-        <nav className='absolute left-1/2 transform -translate-x-1/2 md:flex items-center space-x-1'>
+        <nav className='absolute hidden md:flex left-1/2 transform -translate-x-1/2 items-center space-x-1'>
           {navLinks.map((item, index) => (
             <motion.div
               key={item.href}
@@ -71,11 +76,12 @@ export const Navbar = () => {
               transition={{ delay: index * 0.1 + 0.3 }}>
               <Link
                 href={item.href}
-                className={`relative group text-sm px-4 py-1.5 rounded-full font-medium transition-colors duration-200 ${
+                className={cn(
+                  'relative group text-sm px-4 py-1.5 rounded-full font-medium transition-all duration-200',
                   activeSection === item.href.replace('#', '')
                     ? 'text-yellow-600 bg-[#FFF4DE]'
-                    : 'text-gray-600 hover:text-gray-900'
-                }`}>
+                    : 'text-gray-600 hover:text-gray-900',
+                )}>
                 {item.label}
               </Link>
             </motion.div>
@@ -93,7 +99,7 @@ export const Navbar = () => {
             whileTap={{ scale: 0.95 }}>
             <Button
               variant='ghost'
-              className='hidden hover:bg-transparent md:inline-flex'>
+              className='hidden md:inline-flex hover:bg-transparent'>
               Sign In
             </Button>
           </motion.div>

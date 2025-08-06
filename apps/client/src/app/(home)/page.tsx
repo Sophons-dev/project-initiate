@@ -1,3 +1,11 @@
+import { HeroSection } from './_components/hero-section';
+import { SponsorSection } from './_components/sponsor-section';
+
 export default function Home() {
-  return <div>Home</div>;
+  return (
+    <div>
+      <HeroSection />
+      <SponsorSection />
+    </div>
+  );
 }

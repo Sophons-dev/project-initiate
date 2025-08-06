@@ -15,7 +15,6 @@ export const metadata: Metadata = {
   description: 'Your project description here',
 };
 
-
 export default function RootLayout({
   children,
 }: Readonly<{
