@@ -45,13 +45,13 @@ export const HeroSection = () => {
                         transition={{ duration: 0.8, delay: 0.2 }}>
                         Find Your Perfect{' '}
                         <motion.span
-                            className='text-cyan-500 relative'
+                            className='text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-cyan-500 relative'
                             initial={{ opacity: 0, scale: 0.5 }}
                             animate={heroInView ? { opacity: 1, scale: 1 } : {}}
                             transition={{ duration: 0.6, delay: 0.5 }}>
                             Opportunity
                             <motion.div
-                                className='absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full'
+                                className='absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-cyan-300 to-cyan-500 rounded-full'
                                 initial={{ scaleX: 0 }}
                                 animate={heroInView ? { scaleX: 1 } : {}}
                                 transition={{ duration: 0.8, delay: 0.8 }}
