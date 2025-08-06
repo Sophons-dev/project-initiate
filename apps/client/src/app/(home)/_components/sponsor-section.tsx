@@ -7,7 +7,7 @@ import Image from 'next/image';
 export const SponsorSection = () => {
     return (
         <motion.section
-            className='px-4 py-12 lg:px-6'
+            className='px-4 py-12 lg:px-4'
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.8 }}
@@ -30,7 +30,7 @@ export const SponsorSection = () => {
                     We&apos;re grateful for the support of our sponsors who help make our mission possible.
                 </motion.p>
                 <motion.div
-                    className='flex flex-wrap items-center justify-between gap-8'
+                    className='flex items-center gap-8 pb-4 overflow-x-auto md:flex-wrap md:justify-between md:overflow-visible'
                     variants={staggerContainer}
                     initial='initial'
                     whileInView='animate'
@@ -39,7 +39,7 @@ export const SponsorSection = () => {
                         <motion.span
                             key={index}
                             variants={fadeInUp}
-                            className='text-2xl font-bold transition-opacity cursor-pointer opacity-60 hover:opacity-100'
+                            className='flex-shrink-0 text-2xl font-bold transition-opacity cursor-pointer opacity-60 hover:opacity-100'
                             whileHover={{ scale: 1.1, y: -5 }}
                             whileTap={{ scale: 0.95 }}>
                             <Image

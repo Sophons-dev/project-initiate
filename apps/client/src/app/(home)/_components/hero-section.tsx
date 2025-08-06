@@ -21,7 +21,7 @@ export const HeroSection = () => {
   return (
     <section
       ref={heroRef}
-      className='relative pt-20 hero-bg border border-neutral-100 rounded-4xl px-4 md:px-0 overflow-hidden max-w-[calc(100vw-10rem)] mx-auto'>
+      className='relative pt-10 md:pt-20 hero-bg border border-neutral-100 rounded-4xl px-4 md:px-0 overflow-hidden md:max-w-[calc(100vw-10rem)] mx-auto'>
       <motion.div className='mx-auto text-center'>
         {/* Hero Content */}
         <motion.div
@@ -151,7 +151,7 @@ export const HeroSection = () => {
                     <span className='text-sm font-medium text-black md:text-normal'>AI Career Insights</span>
                   </div>
                   <motion.p
-                    className='text-sm md:text-normal text-start'
+                    className='text-sm md:text-normal text-start line-clamp-6'
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.4 }}>
