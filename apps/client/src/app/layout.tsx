@@ -5,7 +5,6 @@ import { Navbar } from '@/components/shared/navbar';
 
 const poppins = Poppins({
   variable: '--font-poppins',
-  subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
 });
 
@@ -21,7 +20,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={`${poppins.variable} antialiased`}>
+      <body className={`${poppins.variable} font-sans antialiased`}>
         <Navbar />
         {children}
       </body>
