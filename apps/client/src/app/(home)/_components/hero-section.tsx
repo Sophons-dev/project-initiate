@@ -3,7 +3,7 @@
 import { TextPill } from '@/components/shared/text-pill';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
-import { motion, useInView, useScroll, useTransform } from 'framer-motion';
+import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Blend, ChevronDown, CircleCheck, CircleUserRound, Sparkles, TrendingUp } from 'lucide-react';
 import { useRef } from 'react';
 
@@ -22,9 +22,7 @@ export const HeroSection = () => {
     <section
       ref={heroRef}
       className='relative pt-20 hero-bg border border-neutral-100 rounded-4xl px-4 md:px-0 overflow-hidden max-w-[calc(100vw-10rem)] mx-auto'>
-      <motion.div
-        className='mx-auto text-center'>
-
+      <motion.div className='mx-auto text-center'>
         {/* Hero Content */}
         <motion.div
           initial={{ opacity: 0, y: 100 }}
@@ -90,13 +88,13 @@ export const HeroSection = () => {
 
         {/* Hero section feature display */}
         <div className='relative pb-0 mx-auto rounded-t-2xl md:p-15 md:pb-0'>
-          <motion.div initial={{ opacity: 0, y: 60, scale: 0.9 }}
+          <motion.div
+            initial={{ opacity: 0, y: 60, scale: 0.9 }}
             animate={heroInView ? { opacity: 1, y: 0, scale: 1 } : {}}
             transition={{ duration: 0.8, delay: 0.8 }}
             whileHover={{ scale: 1.02 }}
             className='container max-w-7xl p-5 pb-0 rounded-bl-none rounded-br-none bg-[#E9E9E9]/40 border border-white mx-auto rounded-2xl'>
-            <motion.div
-              className='p-2 bg-white border-b-0 rounded-bl-none rounded-br-none max-w-7xl md:p-10 md:pb-2 rounded-2xl'>
+            <motion.div className='p-2 bg-white border-b-0 rounded-bl-none rounded-br-none max-w-7xl md:p-10 md:pb-2 rounded-2xl'>
               <motion.div
                 className='grid grid-cols-1 md:grid-cols-4 md:bg-[#E9E9E9]/30 p-2 md:p-3 rounded-md md:border-2 md:border-white gap-4 mb-2 md:mb-6'
                 variants={staggerContainer}
