@@ -4,7 +4,7 @@ import { TextPill } from '@/components/shared/text-pill';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { ArrowRight, Calendar, ChevronDown, DollarSign, MapPin, Search, Sparkles } from 'lucide-react';
+import { ArrowRight, Blend, ChevronDown, CircleCheck, CircleUserRound, Sparkles, TrendingUp } from 'lucide-react';
 import { useRef } from 'react';
 
 export const HeroSection = () => {
@@ -17,10 +17,10 @@ export const HeroSection = () => {
     const yHero = useTransform(scrollYProgress, [0, 0.3], [0, -50]);
 
     const filterOptions = [
-        { icon: Search, value: '85%', label: 'Profile Completion', color: 'red' },
-        { icon: MapPin, value: '34', label: 'Matched Opportunities', color: 'cyan' },
-        { icon: Calendar, value: '10', label: 'High Priority Matches', color: 'yellow' },
-        { icon: DollarSign, value: '95%', label: 'Match Score', color: 'purple' },
+        { icon: CircleUserRound, value: '85%', label: 'Profile Completion', color: 'red' },
+        { icon: CircleCheck, value: '34', label: 'Matched Opportunities', color: 'cyan' },
+        { icon: TrendingUp, value: '10', label: 'High Priority Matches', color: 'yellow' },
+        { icon: Blend, value: '95%', label: 'Match Score', color: 'purple' },
     ];
     return (
         <section
@@ -29,6 +29,7 @@ export const HeroSection = () => {
             <motion.div
                 style={{ y: yHero }}
                 className='mx-auto text-center'>
+
                 {/* Hero Content */}
                 <motion.div
                     initial={{ opacity: 0, y: 100 }}
