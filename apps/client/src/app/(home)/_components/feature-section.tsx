@@ -4,7 +4,7 @@ import { TextPill } from '@/components/shared/text-pill';
 import { Card, CardContent } from '@/components/ui/card';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';
-import { Bookmark, Building, CircleUser, MapPin, Pin, Sparkles } from 'lucide-react';
+import { Bookmark, Building, CircleUser, MapPin, Sparkles } from 'lucide-react';
 import { useRef } from 'react';
 
 export const FeatureSection = () => {

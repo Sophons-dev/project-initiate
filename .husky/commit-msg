@@ -1,18 +1,18 @@
 # Commit message must follow ticket ID and name in Linear PM
 
-# echo "🔍 Checking commit message..."
+echo "🔍 Checking commit message..."
 
-# commit_msg_file=$1
-# commit_msg=$(cat "$commit_msg_file")
+commit_msg_file=$1
+commit_msg=$(cat "$commit_msg_file")
 
-# # Example: Enforce Conventional Commits (e.g., feat:, fix:, chore:, etc.)
-# conventional_regex="^(feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert)(\(.+\))?: .{1,}"
+# Example: Enforce Conventional Commits (e.g., feat:, fix:, chore:, etc.)
+conventional_regex="^(feat|fix|docs|style|refactor|test|chore|ci|perf|build|revert)(\(.+\))?: .{1,}"
 
-# if ! echo "$commit_msg" | grep -Eq "$conventional_regex"; then
-#   echo "❌ Invalid commit message."
-#   echo "🔧 Format must follow Conventional Commits (e.g., feat: add login button)"
-#   exit 1
-# fi
+if ! echo "$commit_msg" | grep -Eq "$conventional_regex"; then
+  echo "❌ Invalid commit message."
+  echo "🔧 Format must follow Conventional Commits (e.g., feat: add login button)"
+  exit 1
+fi
 
-# echo "✅ Commit message is valid!"
-# exit 0
+echo "✅ Commit message is valid!"
+exit 0
