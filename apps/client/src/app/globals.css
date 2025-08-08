@@ -124,4 +124,8 @@
   .hero-bg {
     background: linear-gradient(109deg, #ffedc9 20.4%, #fff 49.01%, #fdede9 63.31%, #daf0f3 77.62%);
   }
+
+  .how-it-works-bg {
+    background: linear-gradient(109deg, #fffcf7 20.4%, #fff 49.01%, #eff6ff 77.62%);
+  }
 }

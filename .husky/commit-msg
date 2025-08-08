@@ -1,3 +1,5 @@
+# Commit message must follow ticket ID and name in Linear PM
+
 echo "🔍 Checking commit message..."
 
 commit_msg_file=$1
