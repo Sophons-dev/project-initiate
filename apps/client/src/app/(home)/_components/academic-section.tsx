@@ -9,7 +9,7 @@ import { TextPill } from '@/components/shared/text-pill';
 
 export const AcademicSection = () => {
   return (
-    <section className='py-16 px-4 lg:px-6'>
+    <section id='students' className='py-16 px-4 lg:px-6'>
       <div className='container max-w-7xl mx-auto'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 items-center'>
           <motion.div

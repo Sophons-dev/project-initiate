@@ -24,7 +24,8 @@ export default function RootLayout({
     <html lang='en'>
       <body className={`${poppins.variable} font-sans antialiased`}>
         <Navbar />
-        {children}
+
+        <main className='mt-24'>{children}</main>
       </body>
     </html>
   );
