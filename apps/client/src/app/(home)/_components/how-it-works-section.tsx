@@ -14,6 +14,7 @@ export const HowItWorksSection = () => {
 
   return (
     <section
+      id='how-it-works'
       ref={howItWorksRef}
       className='py-16 mb-16 how-it-works-bg'>
       <div className='container max-w-7xl mx-auto px-4'>
