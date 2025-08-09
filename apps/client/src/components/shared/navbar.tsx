@@ -18,10 +18,11 @@ export const Navbar = () => {
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState(false);
 
+
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 10);
+      setIsScrolled(scrollY > 50);
 
       for (const link of navLinks) {
         const section = document.querySelector(link.href);
@@ -46,7 +47,7 @@ export const Navbar = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={cn(
-        'sticky top-0 z-50 transition-all duration-300',
+        'fixed w-full top-0 z-50 transition-all duration-300',
         isScrolled ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
       )}>
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
