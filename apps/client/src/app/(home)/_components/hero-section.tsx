@@ -20,6 +20,7 @@ export const HeroSection = () => {
   ];
   return (
     <section
+      id='home'
       ref={heroRef}
       className='relative pt-10 md:pt-20 hero-bg border border-neutral-100 rounded-4xl px-4 md:px-0 overflow-hidden md:max-w-[calc(100vw-10rem)] mx-auto'>
       <motion.div className='mx-auto text-center'>
@@ -96,7 +97,7 @@ export const HeroSection = () => {
             className='container max-w-7xl p-5 pb-0 rounded-bl-none rounded-br-none bg-[#E9E9E9]/40 border border-white mx-auto rounded-2xl'>
             <motion.div className='p-2 bg-white border-b-0 rounded-bl-none rounded-br-none max-w-7xl md:p-10 md:pb-2 rounded-2xl'>
               <motion.div
-                className='grid grid-cols-1 md:grid-cols-4 md:bg-[#E9E9E9]/30 p-2 md:p-3 rounded-md md:border-2 md:border-white gap-4 mb-2 md:mb-6'
+                className='grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 md:bg-[#E9E9E9]/30 p-2 md:p-3 rounded-md md:border-2 md:border-white gap-4 mb-2 md:mb-6'
                 variants={staggerContainer}
                 animate={heroInView ? 'animate' : 'initial'}>
                 {filterOptions.map((filter, index) => {
@@ -128,7 +129,7 @@ export const HeroSection = () => {
                         transition={{ duration: 0.5 }}>
                         <Icon className='w-5 h-5' />
                       </motion.div>
-                      <div className='flex flex-col items-start'>
+                      <div className='flex flex-col items-start justify-center text-start'>
                         <p className={`font-medium text-md ${textColor[filter.color as keyof typeof textColor]}`}>
                           {filter.value}
                         </p>
