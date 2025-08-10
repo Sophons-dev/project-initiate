@@ -9,7 +9,9 @@ import Image from 'next/image';
 
 export const ProfessionalSection = () => {
   return (
-    <section id='professionals' className='py-16 px-4 lg:px-6'>
+    <section
+      id='professionals'
+      className='py-16 px-4 lg:px-6'>
       <div className='container max-w-7xl mx-auto'>
         {/* Reverse grid */}
         <div className='flex flex-col-reverse md:flex-row gap-6 lg:gap-12 items-center'>
