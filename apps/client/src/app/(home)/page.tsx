@@ -1,4 +1,5 @@
 import { AcademicSection } from './_components/academic-section';
+import { AnnouncementSection } from './_components/announcement-section';
 import { FeatureSection } from './_components/feature-section';
 import { HeroSection } from './_components/hero-section';
 import { HowItWorksSection } from './_components/how-it-works-section';
@@ -14,6 +15,7 @@ export default function Home() {
       <HowItWorksSection />
       <AcademicSection />
       <ProfessionalSection />
+      <AnnouncementSection />
     </div>
   );
 }
