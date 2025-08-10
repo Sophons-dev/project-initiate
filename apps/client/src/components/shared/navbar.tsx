@@ -59,9 +59,7 @@ export const Navbar = () => {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={cn(
         'fixed w-full top-0 z-50 transition-all duration-300',
-        isScrolled || isMenuOpen
-          ? 'bg-white/80 backdrop-blur-md shadow h-16'
-          : 'h-24',
+        isScrolled || isMenuOpen ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
       )}>
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
@@ -99,8 +97,7 @@ export const Navbar = () => {
                   activeSection === item.href.replace('#', '')
                     ? 'text-yellow-600'
                     : 'text-gray-600 hover:text-gray-900',
-                )}
-              >
+                )}>
                 {/* Active animated pill (desktop) */}
                 <AnimatePresence>
                   {activeSection === item.href.replace('#', '') && (
@@ -143,8 +140,6 @@ export const Navbar = () => {
             </motion.div>
           </span>
 
-
-
           {/* Hamburger */}
           <button
             type='button'
@@ -154,27 +149,26 @@ export const Navbar = () => {
             onClick={() => setIsMenuOpen((v) => !v)}
             className={cn(
               'lg:hidden p-2 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors',
-              isMenuOpen && 'bg-gray-50'
-            )}
-          >
+              isMenuOpen && 'bg-gray-50',
+            )}>
             <span className='sr-only'>Open main menu</span>
             <div className='relative w-6 h-6'>
               <span
                 className={cn(
                   'absolute left-0 top-[5px] h-0.5 w-6 bg-gray-800 transition-transform',
-                  isMenuOpen ? 'translate-y-1.5 rotate-45' : ''
+                  isMenuOpen ? 'translate-y-1.5 rotate-45' : '',
                 )}
               />
               <span
                 className={cn(
                   'absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-6 bg-gray-800 transition-opacity',
-                  isMenuOpen ? 'opacity-0' : 'opacity-100'
+                  isMenuOpen ? 'opacity-0' : 'opacity-100',
                 )}
               />
               <span
                 className={cn(
                   'absolute left-0 bottom-[5px] h-0.5 w-6 bg-gray-800 transition-transform',
-                  isMenuOpen ? '-translate-y-1.5 -rotate-45' : ''
+                  isMenuOpen ? '-translate-y-1.5 -rotate-45' : '',
                 )}
               />
             </div>
@@ -191,8 +185,7 @@ export const Navbar = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className='lg:hidden absolute inset-x-0 top-full bg-white border-t shadow-md overflow-hidden'
-          >
+            className='lg:hidden absolute inset-x-0 top-full bg-white border-t shadow-md overflow-hidden'>
             <ul className='flex flex-col p-4 space-y-1'>
               {navLinks.map((item) => (
                 <li key={item.href}>
@@ -207,9 +200,8 @@ export const Navbar = () => {
                       'relative block w-full px-3 py-2 rounded-md text-sm font-medium transition-colors',
                       activeSection === item.href.replace('#', '')
                         ? 'text-yellow-700'
-                        : 'text-gray-700 hover:bg-gray-50'
-                    )}
-                  >
+                        : 'text-gray-700 hover:bg-gray-50',
+                    )}>
                     {/* Active animated background (mobile) */}
                     <AnimatePresence>
                       {activeSection === item.href.replace('#', '') && (
@@ -229,8 +221,7 @@ export const Navbar = () => {
                 <Link
                   href='/signin'
                   onClick={() => setIsMenuOpen(false)}
-                  className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
-                >
+                  className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'>
                   Sign In
                 </Link>
               </li>

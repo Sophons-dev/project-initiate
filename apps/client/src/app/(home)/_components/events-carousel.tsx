@@ -4,8 +4,8 @@ import { useEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Calendar, ChevronLeft, ChevronRight, MapPin, Tag, Target } from "lucide-react"
-import { motion, AnimatePresence, useReducedMotion, type Transition } from "framer-motion"
+import { Calendar, ChevronLeft, ChevronRight, MapPin, Target } from "lucide-react"
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 
@@ -45,9 +45,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
         "1": { x: offset, scale: 0.9, opacity: 0.65, zIndex: 2 },
     } as const
 
-    const spring: Transition = shouldReduceMotion
-        ? { duration: 0.2 }
-        : { type: "spring", stiffness: 260, damping: 26 }
+    const spring = shouldReduceMotion ? { duration: 0.2 } : { type: "spring", stiffness: 260, damping: 26 }
 
     return (
         <div className="relative mx-auto h-[600px] max-w-7xl my-20 mb-40">
@@ -97,7 +95,6 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                                 initial={{ x: 0, scale: 0.95, opacity: 0 }}
                                 animate={conf}
                                 exit={{ opacity: 0, scale: 0.95 }}
-                                transition={spring}
                                 style={{ zIndex: conf.zIndex }}
                                 aria-hidden={pos !== "0"}
                                 whileHover={pos === "0" ? { scale: 1.07 } : undefined}
