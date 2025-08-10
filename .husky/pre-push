@@ -2,6 +2,7 @@
 echo '🚀 Running pre-push checks...'
 
 echo '🧹 Linting and building all packages...'
+pnpm run test:e2e
 pnpm run lint
 pnpm run format
 pnpm run build

@@ -16,6 +16,12 @@
     },
     "format": {
       "dependsOn": ["^format"]
+    },
+    "test:e2e": {
+      "dependsOn": ["^test:e2e"]
+    },
+    "test:e2e:ui": {
+      "dependsOn": ["^test:e2e:ui"]
     }
   }
 }
