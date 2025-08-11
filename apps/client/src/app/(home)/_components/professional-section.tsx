@@ -130,7 +130,9 @@ export const ProfessionalSection = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button asChild className='bg-orange-600 hover:bg-orange-600'>
+              <Button
+                asChild
+                className='bg-orange-600 hover:bg-orange-600'>
                 <Link href='/signin'>Explore Professional Opportunities</Link>
               </Button>
             </motion.div>

@@ -74,7 +74,9 @@ export const AcademicSection = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button asChild className='bg-cyan-600 hover:bg-cyan-500'>
+              <Button
+                asChild
+                className='bg-cyan-600 hover:bg-cyan-500'>
                 <Link href='/signin'>Explore Student Opportunities</Link>
               </Button>
             </motion.div>
