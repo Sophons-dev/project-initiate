@@ -6,6 +6,7 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { BookOpen, Check, GraduationCap } from 'lucide-react';
 import { TextPill } from '@/components/shared/text-pill';
+import Link from 'next/link';
 
 export const AcademicSection = () => {
   return (
@@ -73,7 +74,9 @@ export const AcademicSection = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button className='bg-cyan-600 hover:bg-cyan-500'>Explore Student Opportunities</Button>
+              <Button asChild className='bg-cyan-600 hover:bg-cyan-500'>
+                <Link href='/signin'>Explore Student Opportunities</Link>
+              </Button>
             </motion.div>
           </motion.div>
 

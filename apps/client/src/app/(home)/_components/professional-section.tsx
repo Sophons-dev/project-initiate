@@ -6,6 +6,7 @@ import { slideInLeft, staggerContainer } from '@/lib/animation-variants';
 import { motion } from 'framer-motion';
 import { BookOpen, Check, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const ProfessionalSection = () => {
   return (
@@ -129,7 +130,9 @@ export const ProfessionalSection = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button className='bg-orange-600 hover:bg-orange-600'>Explore Professional Opportunities</Button>
+              <Button asChild className='bg-orange-600 hover:bg-orange-600'>
+                <Link href='/signin'>Explore Professional Opportunities</Link>
+              </Button>
             </motion.div>
           </motion.div>
         </div>

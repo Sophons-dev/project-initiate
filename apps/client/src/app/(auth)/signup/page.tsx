@@ -46,7 +46,7 @@ export default function SignUpPage() {
   });
 
   const onSubmit = (data: SignUpFormData) => {
-    signUpMutation.mutate(data)
+    signUpMutation.mutate(data);
   };
 
   return (

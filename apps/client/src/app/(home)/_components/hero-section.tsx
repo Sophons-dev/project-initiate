@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView } from 'framer-motion';
 import { ArrowRight, Blend, ChevronDown, CircleCheck, CircleUserRound, Sparkles, TrendingUp } from 'lucide-react';
+import Link from 'next/link';
 import { useRef } from 'react';
 
 export const HeroSection = () => {
@@ -72,18 +73,16 @@ export const HeroSection = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}>
           {/* Get Started Button */}
-          {/* TODO: Add gradient from top to bottom */}
-          <Button
-            size={'lg'}
+          <Button asChild
             className='relative py-5 mb-12 overflow-hidden border-4 rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 border-neutral-100 hover:bg-cyan-600 group'>
-            <span className='relative z-10 flex items-center gap-2'>
+            <Link href='/signin'>
               Start Journey
               <motion.div
                 animate={{ x: [0, 5, 0] }}
                 transition={{ repeat: Infinity, duration: 1.5 }}>
                 <ArrowRight className='w-4 h-4' />
               </motion.div>
-            </span>
+            </Link>
           </Button>
         </motion.div>
 
