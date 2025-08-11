@@ -150,6 +150,14 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                         </p>
                       </div>
 
+                      <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
+                      <div className='text-xs text-center md:text-left w-full md:w-2/3'>
+                        <p className='font-medium'>Ready to shape your future?</p>
+                        <p className='text-muted-foreground'>
+                          Register now and be part of this transformative experience.
+                        </p>
+                      </div>
+
                       <div className='flex flex-col md:flex-row gap-3 items-center justify-end md:w-1/2'>
                         <Link
                           className='text-xs'
