@@ -58,7 +58,7 @@ export default function SignInPage() {
                     Sign In
                 </div>
                 <Link
-                    href='/auth/signup'
+                    href='/signup'
                     className='flex-1 py-2 px-4 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 text-center transition-colors'>
                     Sign Up
                 </Link>
