@@ -97,8 +97,7 @@ export const Navbar = () => {
                   activeSection === item.href.replace('#', '')
                     ? 'text-yellow-600'
                     : 'text-gray-600 hover:text-gray-900',
-                )}
-              >
+                )}>
                 {/* Active animated pill (desktop) */}
                 <AnimatePresence>
                   {activeSection === item.href.replace('#', '') && (
@@ -126,17 +125,19 @@ export const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
               <Button
+                asChild
                 variant='ghost'
                 className='hidden md:inline-flex hover:bg-transparent'>
-                Sign In
+                <Link href='/signin'>Sign In</Link>
               </Button>
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
-                <motion.div className='absolute inset-0 bg-opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-                <span className='relative z-10'>Get Started</span>
+              <Button
+                asChild
+                className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
+                <Link href='/signup'>Get Started</Link>
               </Button>
             </motion.div>
           </span>
@@ -152,7 +153,6 @@ export const Navbar = () => {
               'lg:hidden p-2 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors',
               isMenuOpen && 'bg-gray-50',
             )}>
-
             <span className='sr-only'>Open main menu</span>
             <div className='relative w-6 h-6'>
               <span
@@ -204,7 +204,6 @@ export const Navbar = () => {
                         ? 'text-yellow-700'
                         : 'text-gray-700 hover:bg-gray-50',
                     )}>
-
                     {/* Active animated background (mobile) */}
                     <AnimatePresence>
                       {activeSection === item.href.replace('#', '') && (

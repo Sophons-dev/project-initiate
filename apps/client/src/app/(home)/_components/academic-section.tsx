@@ -6,10 +6,13 @@ import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { BookOpen, Check, GraduationCap } from 'lucide-react';
 import { TextPill } from '@/components/shared/text-pill';
+import Link from 'next/link';
 
 export const AcademicSection = () => {
   return (
-    <section id='students' className='py-16 px-4 lg:px-6'>
+    <section
+      id='students'
+      className='py-16 px-4 lg:px-6'>
       <div className='container max-w-7xl mx-auto'>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-12 items-center'>
           <motion.div
@@ -71,7 +74,11 @@ export const AcademicSection = () => {
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button className='bg-cyan-600 hover:bg-cyan-500'>Explore Student Opportunities</Button>
+              <Button
+                asChild
+                className='bg-cyan-600 hover:bg-cyan-500'>
+                <Link href='/signin'>Explore Student Opportunities</Link>
+              </Button>
             </motion.div>
           </motion.div>
 
