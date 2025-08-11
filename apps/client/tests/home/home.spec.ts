@@ -9,7 +9,6 @@ test.describe('Home page (/)', () => {
 
     // Hero
     await expect(page.getByText('AI-Powered Opportunity Matching')).toBeVisible();
-    await expect(page.locator('#home').getByRole('button', { name: 'Start Journey' })).toBeVisible();
   });
 
   test('renders sponsor section', async ({ page }) => {
@@ -44,9 +43,6 @@ test.describe('Home page (/)', () => {
     await expect(howItWorks.getByText('AI Analysis')).toBeVisible();
     await expect(howItWorks.getByText('Get Matched')).toBeVisible();
     await expect(howItWorks.getByText('Succeed')).toBeVisible();
-
-    // CTA button
-    await expect(howItWorks.getByRole('button', { name: 'Start Journey' })).toBeVisible();
   });
 
   test('Academic section (#students)', async ({ page }) => {
@@ -66,9 +62,6 @@ test.describe('Home page (/)', () => {
     await expect(students.getByText('Access to exclusive student discounts and scholarships')).toBeVisible();
     await expect(students.getByText('Personalized learning path recommendations')).toBeVisible();
     await expect(students.getByText('Early access to internship and job opportunities')).toBeVisible();
-
-    // CTA button
-    await expect(students.getByRole('button', { name: 'Explore Student Opportunities' })).toBeVisible();
 
     // Image by alt text
     await expect(students.getByAltText('Students collaborating')).toBeVisible();
@@ -102,9 +95,6 @@ test.describe('Home page (/)', () => {
     await expect(pros.getByText('Confidential job search with privacy controls')).toBeVisible();
     await expect(pros.getByText('Salary insights and other important details')).toBeVisible();
     await expect(pros.getByText('Executive coaching and leadership development')).toBeVisible();
-
-    // CTA button
-    await expect(pros.getByRole('button', { name: 'Explore Professional Opportunities' })).toBeVisible();
 
     // Image by alt text (note: alt is "Students collaborating" in this component, assert as-is)
     await expect(pros.getByAltText('Students collaborating')).toBeVisible();

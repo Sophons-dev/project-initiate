@@ -125,17 +125,19 @@ export const Navbar = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
               <Button
+                asChild
                 variant='ghost'
                 className='hidden md:inline-flex hover:bg-transparent'>
-                Sign In
+                <Link href='/signin'>Sign In</Link>
               </Button>
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
-              <Button className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
-                <motion.div className='absolute inset-0 bg-opacity-0 group-hover:opacity-100 transition-opacity duration-300' />
-                <span className='relative z-10'>Get Started</span>
+              <Button
+                asChild
+                className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
+                <Link href='/signup'>Get Started</Link>
               </Button>
             </motion.div>
           </span>

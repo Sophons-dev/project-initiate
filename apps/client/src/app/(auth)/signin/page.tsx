@@ -12,6 +12,7 @@ import { SignInFormData, signInSchema } from '@/lib/validations/auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { GoogleSignInButton } from '@/components/shared/google-signin-button';
+import { authApi } from '@/services/auth.api';
 
 export default function SignInPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -26,7 +27,7 @@ export default function SignInPage() {
   });
 
   const signInMutation = useMutation({
-    // mutationFn: authApi.signIn,
+    mutationFn: authApi.signIn,
     onSuccess: (data) => {
       console.log('Sign in successful:', data);
       // Handle successful sign in (store token, redirect, etc.)
@@ -39,7 +40,7 @@ export default function SignInPage() {
   });
 
   const onSubmit = (data: SignInFormData) => {
-    console.log(data);
+    signInMutation.mutate(data);
   };
 
   return (
@@ -88,7 +89,7 @@ export default function SignInPage() {
           <div className='flex justify-between items-center mb-2'>
             <label className='block text-sm font-medium text-gray-700'>Password</label>
             <Link
-              href='/auth/forgot-password'
+              href='/forgot-password'
               className='text-sm text-gray-500 hover:text-cyan-500 transition-colors'>
               forgot password?
             </Link>
