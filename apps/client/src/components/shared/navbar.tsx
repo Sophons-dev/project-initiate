@@ -97,8 +97,7 @@ export const Navbar = () => {
                   activeSection === item.href.replace('#', '')
                     ? 'text-yellow-600'
                     : 'text-gray-600 hover:text-gray-900',
-                )}
-              >
+                )}>
                 {/* Active animated pill (desktop) */}
                 <AnimatePresence>
                   {activeSection === item.href.replace('#', '') && (
@@ -152,7 +151,6 @@ export const Navbar = () => {
               'lg:hidden p-2 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors',
               isMenuOpen && 'bg-gray-50',
             )}>
-
             <span className='sr-only'>Open main menu</span>
             <div className='relative w-6 h-6'>
               <span
@@ -204,7 +202,6 @@ export const Navbar = () => {
                         ? 'text-yellow-700'
                         : 'text-gray-700 hover:bg-gray-50',
                     )}>
-
                     {/* Active animated background (mobile) */}
                     <AnimatePresence>
                       {activeSection === item.href.replace('#', '') && (
