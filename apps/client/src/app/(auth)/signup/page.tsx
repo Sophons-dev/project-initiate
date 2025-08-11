@@ -12,6 +12,7 @@ import { Input } from '../../../components/ui/input';
 import { Mail, Lock, User, Eye, EyeOff } from 'lucide-react';
 import { signUpSchema, type SignUpFormData } from '../../../lib/validations/auth';
 import { GoogleSignInButton } from '@/components/shared/google-signin-button';
+import { authApi } from '@/services/auth.api';
 
 export default function SignUpPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -27,12 +28,12 @@ export default function SignUpPage() {
   });
 
   const signUpMutation = useMutation({
-    // mutationFn: (data: SignUpFormData) =>
-    //   authApi.signUp({
-    //     fullName: data.fullName,
-    //     email: data.email,
-    //     password: data.password,
-    //   }),
+    mutationFn: (data: SignUpFormData) =>
+      authApi.signUp({
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+      }),
     onSuccess: (data) => {
       console.log('Sign up successful:', data);
       // Handle successful sign up (store token, redirect, etc.)
@@ -45,7 +46,7 @@ export default function SignUpPage() {
   });
 
   const onSubmit = (data: SignUpFormData) => {
-    // signUpMutation.mutate(data)
+    signUpMutation.mutate(data)
   };
 
   return (
@@ -160,7 +161,7 @@ export default function SignUpPage() {
         )}
 
         {/* Divider */}
-        <div className='relative my-6'>
+        <div className='relative'>
           <div className='absolute inset-0 flex items-center'>
             <div className='w-full border-t border-gray-200' />
           </div>
