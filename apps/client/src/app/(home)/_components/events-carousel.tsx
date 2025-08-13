@@ -151,25 +151,26 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                       </div>
 
                       <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
-                      <div className='text-xs text-center md:text-left w-full md:w-2/3'>
-                        <p className='font-medium'>Ready to shape your future?</p>
-                        <p className='text-muted-foreground'>
-                          Register now and be part of this transformative experience.
-                        </p>
-                      </div>
+                        <div className='text-xs text-center md:text-left w-full md:w-2/3'>
+                          <p className='font-medium'>Ready to shape your future?</p>
+                          <p className='text-muted-foreground'>
+                            Register now and be part of this transformative experience.
+                          </p>
+                        </div>
 
-                      <div className='flex flex-col md:flex-row gap-3 items-center justify-end md:w-1/2'>
-                        <Link
-                          className='text-xs'
-                          href={'/signin'}>
-                          Learn More
-                        </Link>
-                        <Button
-                          asChild
-                          size={'sm'}
-                          className='text-xs bg-yellow-500 rounded-full hover:bg-yellow-600'>
-                          <Link href='/signup'>Register Now</Link>
-                        </Button>
+                        <div className='flex flex-col md:flex-row gap-3 items-center justify-end md:w-1/2'>
+                          <Link
+                            className='text-xs'
+                            href={'/signin'}>
+                            Learn More
+                          </Link>
+                          <Button
+                            asChild
+                            size={'sm'}
+                            className='text-xs bg-yellow-500 rounded-full hover:bg-yellow-600'>
+                            <Link href='/signup'>Register Now</Link>
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </CardContent>

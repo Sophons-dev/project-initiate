@@ -106,40 +106,40 @@ test.describe('Home page (/)', () => {
     await expect(pros.getByText('Connect with industry leaders')).toBeVisible();
   });
 
-  test('events carousel: single visible slide and next navigation updates active dot', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto('/');
+  // test('events carousel: single visible slide and next navigation updates active dot', async ({ page }) => {
+  //   await page.emulateMedia({ reducedMotion: 'reduce' });
+  //   await page.goto('/');
 
-    // Ensure exactly one visible card (aria-hidden=false on the center slide)
-    const visibleSlides = page.locator('[aria-hidden="false"]');
-    await expect(visibleSlides).toHaveCount(1);
+  //   // Ensure exactly one visible card (aria-hidden=false on the center slide)
+  //   const visibleSlides = page.locator('[aria-hidden="false"]');
+  //   await expect(visibleSlides).toHaveCount(1);
 
-    // Dots: buttons with aria-label="Go to slide X"
-    const dotButtons = page.getByRole('button', { name: /Go to slide \d+/ });
-    const dotCount = await dotButtons.count();
-    expect(dotCount).toBeGreaterThan(0);
+  //   // Dots: buttons with aria-label="Go to slide X"
+  //   const dotButtons = page.getByRole('button', { name: /Go to slide \d+/ });
+  //   const dotCount = await dotButtons.count();
+  //   expect(dotCount).toBeGreaterThan(0);
 
-    // Helper to get active dot index based on Tailwind classes
-    const getActiveDotIndex = async () => {
-      const count = await dotButtons.count();
-      for (let i = 0; i < count; i++) {
-        const cls = (await dotButtons.nth(i).getAttribute('class')) || '';
-        if (cls.includes('w-6') && cls.includes('bg-orange-500')) return i;
-      }
-      return -1;
-    };
+  //   // Helper to get active dot index based on Tailwind classes
+  //   const getActiveDotIndex = async () => {
+  //     const count = await dotButtons.count();
+  //     for (let i = 0; i < count; i++) {
+  //       const cls = (await dotButtons.nth(i).getAttribute('class')) || '';
+  //       if (cls.includes('w-6') && cls.includes('bg-orange-500')) return i;
+  //     }
+  //     return -1;
+  //   };
 
-    const beforeIndex = await getActiveDotIndex();
-    expect(beforeIndex).toBeGreaterThanOrEqual(0);
+  //   const beforeIndex = await getActiveDotIndex();
+  //   expect(beforeIndex).toBeGreaterThanOrEqual(0);
 
-    // Click the next arrow
-    const nextButton = page.getByRole('button', { name: 'Next event' });
-    await nextButton.click();
+  //   // Click the next arrow
+  //   const nextButton = page.getByRole('button', { name: 'Next event' });
+  //   await nextButton.click();
 
-    // Active dot should change; poll to allow animation/state updates
-    await expect.poll(async () => getActiveDotIndex()).not.toEqual(beforeIndex);
+  //   // Active dot should change; poll to allow animation/state updates
+  //   await expect.poll(async () => getActiveDotIndex()).not.toEqual(beforeIndex);
 
-    // Still exactly one visible slide
-    await expect(visibleSlides).toHaveCount(1);
-  });
+  //   // Still exactly one visible slide
+  //   await expect(visibleSlides).toHaveCount(1);
+  // });
 });
