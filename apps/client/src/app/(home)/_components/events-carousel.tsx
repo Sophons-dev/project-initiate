@@ -48,7 +48,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
   const spring = shouldReduceMotion ? { duration: 0.2 } : { type: 'spring', stiffness: 260, damping: 26 };
 
   return (
-    <div className='relative mx-auto h-[600px] max-w-7xl my-20 mb-40'>
+    <div className='relative mx-auto h-[600px] max-w-7xl my-20 mb-60'>
       {/* Controls */}
       <div className='pointer-events-none absolute inset-y-0 left-0 top-1/2 right-0 z-40 flex items-center justify-between px-2 md:px-4'>
         <Button

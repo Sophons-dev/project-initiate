@@ -37,7 +37,7 @@ export default function SignUpPage() {
     onSuccess: (data) => {
       console.log('Sign up successful:', data);
       // Handle successful sign up (store token, redirect, etc.)
-      router.push('/dashboard'); // Redirect to dashboard or onboarding
+      router.push('/onboarding'); // Redirect to dashboard or onboarding
     },
     onError: (error) => {
       console.error('Sign up failed:', error);
@@ -47,6 +47,7 @@ export default function SignUpPage() {
 
   const onSubmit = (data: SignUpFormData) => {
     signUpMutation.mutate(data);
+    router.push('/onboarding');
   };
 
   return (
