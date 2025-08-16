@@ -13,7 +13,6 @@ export const DashboardContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const filters = ['Show All', 'Jobs', 'Courses', 'Events'];
 
-
   // Filter and search logic
   const filteredOpportunities = useMemo(() => {
     return opportunityData.filter((opportunity) => {
@@ -25,7 +24,8 @@ export const DashboardContent = () => {
         (activeFilter === 'Events' && opportunity.type === 'EVENT');
 
       // Search in title, organization, and description
-      const matchesSearch = searchQuery === '' ||
+      const matchesSearch =
+        searchQuery === '' ||
         opportunity.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         opportunity.organization.toLowerCase().includes(searchQuery.toLowerCase()) ||
         opportunity.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -62,8 +62,7 @@ export const DashboardContent = () => {
           <motion.div
             className='flex-1 relative max-w-md'
             whileHover={{ scale: 1.01 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
-          >
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}>
             <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
             <Input
               placeholder='Search opportunities'
@@ -82,10 +81,11 @@ export const DashboardContent = () => {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={() => setActiveFilter(filter)}
-                  className={`px-3 py-2 rounded border-b-2 transition-colors ${activeFilter === filter
-                    ? 'bg-white font-medium'
-                    : 'border-transparent text-gray-600 hover:text-gray-900'
-                    }`}>
+                  className={`px-3 py-2 rounded border-b-2 transition-colors ${
+                    activeFilter === filter
+                      ? 'bg-white font-medium'
+                      : 'border-transparent text-gray-600 hover:text-gray-900'
+                  }`}>
                   {filter}
                 </motion.button>
               ))}
@@ -98,7 +98,10 @@ export const DashboardContent = () => {
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3.5 bg-[#E9E9E9]/50 rounded'>
           {filteredOpportunities.length > 0 ? (
             filteredOpportunities.map((opportunity) => (
-              <RecommendedOpportunityCard key={opportunity.id} opportunity={opportunity} />
+              <RecommendedOpportunityCard
+                key={opportunity.id}
+                opportunity={opportunity}
+              />
             ))
           ) : (
             <div className='col-span-3 text-center py-10 text-gray-500'>

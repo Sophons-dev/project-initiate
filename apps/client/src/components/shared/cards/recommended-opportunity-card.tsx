@@ -108,8 +108,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Online',
     description:
       'Master React hooks, context API, and advanced state management patterns. Build complex applications with performance optimization techniques.',
-    matchReason:
-      'Matches your interest in frontend development and your experience with JavaScript frameworks.',
+    matchReason: 'Matches your interest in frontend development and your experience with JavaScript frameworks.',
     dueDate: 'Enroll by Feb 28, 2025',
   },
   {
@@ -122,8 +121,7 @@ export const opportunityData: Opportunity[] = [
     location: 'San Francisco, CA (Remote)',
     description:
       'Lead frontend development for our SaaS platform. Work with React, TypeScript, and modern web technologies in a fast-paced startup environment.',
-    matchReason:
-      '95% match with your skills in React, TypeScript, and UI/UX design experience.',
+    matchReason: '95% match with your skills in React, TypeScript, and UI/UX design experience.',
     dueDate: 'Apply by Feb 28, 2025',
   },
   {
@@ -136,8 +134,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Austin, TX',
     description:
       'Annual gathering of blockchain developers, entrepreneurs, and industry leaders. Featuring workshops, keynotes, and networking opportunities.',
-    matchReason:
-      'Based on your interest in decentralized technologies and previous blockchain projects.',
+    matchReason: 'Based on your interest in decentralized technologies and previous blockchain projects.',
     dueDate: 'Early bird ends Mar 1, 2025',
   },
   {
@@ -150,8 +147,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Online',
     description:
       'Learn to design and deploy scalable, highly available, and fault-tolerant systems on AWS. Covers EC2, S3, RDS, Lambda, and more.',
-    matchReason:
-      'Complements your experience with cloud technologies and system design skills.',
+    matchReason: 'Complements your experience with cloud technologies and system design skills.',
     dueDate: 'Access for 1 year',
   },
   {
@@ -164,8 +160,7 @@ export const opportunityData: Opportunity[] = [
     location: 'New York, NY (Hybrid)',
     description:
       'Create beautiful, intuitive interfaces for our enterprise clients. Work closely with product managers and developers to deliver exceptional user experiences.',
-    matchReason:
-      'Matches your design portfolio and experience with Figma and user research.',
+    matchReason: 'Matches your design portfolio and experience with Figma and user research.',
     dueDate: 'Apply by Mar 15, 2025',
   },
   {
@@ -178,8 +173,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Boston, MA',
     description:
       'Explore the latest advancements in AI and machine learning. Hands-on workshops, research presentations, and networking with industry leaders.',
-    matchReason:
-      'Based on your interest in AI applications and previous data science projects.',
+    matchReason: 'Based on your interest in AI applications and previous data science projects.',
     dueDate: 'Early bird ends Apr 1, 2025',
   },
   {
@@ -192,8 +186,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Online',
     description:
       'Intensive 12-week program covering Docker, Kubernetes, CI/CD pipelines, and infrastructure as code with Terraform.',
-    matchReason:
-      'Aligns with your goal to expand your DevOps skills and work with cloud infrastructure.',
+    matchReason: 'Aligns with your goal to expand your DevOps skills and work with cloud infrastructure.',
     dueDate: 'Apply by Mar 31, 2025',
   },
   {
@@ -206,8 +199,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Remote (Global)',
     description:
       'Work on cutting-edge web applications using React, Node.js, and modern cloud technologies. Full-time remote position with flexible hours.',
-    matchReason:
-      '92% match with your full-stack development experience and remote work preference.',
+    matchReason: '92% match with your full-stack development experience and remote work preference.',
     dueDate: 'Apply by Mar 15, 2025',
   },
   {
@@ -220,8 +212,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Chicago, IL',
     description:
       'For engineering leaders looking to grow their leadership skills. Topics include team management, technical strategy, and career growth.',
-    matchReason:
-      'Based on your recent promotion to team lead and interest in leadership development.',
+    matchReason: 'Based on your recent promotion to team lead and interest in leadership development.',
     dueDate: 'Early bird ends May 1, 2025',
   },
   {
@@ -234,8 +225,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Online',
     description:
       'Master advanced TypeScript features including decorators, generics, type inference, and functional programming patterns.',
-    matchReason:
-      'Complements your TypeScript skills and will help with your current project at work.',
+    matchReason: 'Complements your TypeScript skills and will help with your current project at work.',
     dueDate: 'Lifetime access',
   },
   {
@@ -248,8 +238,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Seattle, WA',
     description:
       'Build cross-platform mobile applications using React Native. Work with a talented team on consumer-facing apps with millions of users.',
-    matchReason:
-      'Matches your React experience and interest in mobile development.',
+    matchReason: 'Matches your React experience and interest in mobile development.',
     dueDate: 'Apply by Mar 1, 2025',
   },
   {
@@ -262,8 +251,7 @@ export const opportunityData: Opportunity[] = [
     location: 'Berlin, Germany',
     description:
       'The largest JavaScript conference in Europe. Featuring talks from industry experts, workshops, and networking opportunities.',
-    matchReason:
-      'Perfect opportunity to stay updated with the latest in JavaScript and network with other developers.',
+    matchReason: 'Perfect opportunity to stay updated with the latest in JavaScript and network with other developers.',
     dueDate: 'Early bird ends May 15, 2025',
   },
 ];
