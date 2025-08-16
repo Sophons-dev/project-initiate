@@ -7,7 +7,7 @@ import { Blend, CircleCheck, Sparkles, TrendingUp, UserCircle } from 'lucide-rea
 
 export const DashboardHero = () => {
   return (
-    <div className='hero-bg py-10'>
+    <div className='hero-bg py-10 border-b border-neutral-200'>
       <div className='max-w-7xl mx-auto px-4 md:px-0'>
         {/* Welcome Section */}
         <motion.div
@@ -47,7 +47,7 @@ export const DashboardHero = () => {
                       <stat.icon className={`w-6 h-6 ${stat.iconColor}`} />
                     </div>
                     <div>
-                      <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+                      <div className={`font-semibold ${stat.color}`}>{stat.value}</div>
                       <div className='text-sm text-gray-600'>{stat.label}</div>
                     </div>
                   </CardContent>
