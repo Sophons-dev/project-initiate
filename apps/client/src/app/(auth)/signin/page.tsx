@@ -31,7 +31,7 @@ export default function SignInPage() {
     onSuccess: (data) => {
       console.log('Sign in successful:', data);
       // Handle successful sign in (store token, redirect, etc.)
-      router.push('/dashboard'); // Redirect to dashboard or home
+      router.push('/onboarding'); // Redirect to dashboard or home
     },
     onError: (error) => {
       console.error('Sign in failed:', error);

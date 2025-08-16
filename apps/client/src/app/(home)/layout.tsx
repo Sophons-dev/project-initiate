@@ -1,4 +1,4 @@
-import { Navbar } from '@/components/shared/navbar';
+import { Navbar } from '@/components/shared/home-navbar';
 import { Footer } from '@/components/shared/footer';
 
 export default function HomeLayout({ children }: { children: React.ReactNode }) {

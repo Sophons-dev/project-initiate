@@ -6,6 +6,18 @@ import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { MenuIcon } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -19,6 +31,7 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +73,7 @@ export const Navbar = () => {
       className={cn(
         'fixed w-full top-0 z-50 transition-all duration-300',
         isScrolled || isMenuOpen ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
+        pathname === '/' ? '' : 'h-15 border-b shadow',
       )}>
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
@@ -78,8 +92,12 @@ export const Navbar = () => {
           </Link>
         </motion.div>
 
-        {/* Nav Links */}
-        <nav className='absolute hidden lg:flex left-1/2 transform -translate-x-1/2 items-center space-x-1'>
+        {/* Nav Links - NOT visible in dashboard */}
+        <nav
+          className={cn(
+            'absolute hidden left-1/2 transform -translate-x-1/2 items-center space-x-1',
+            pathname === '/dashboard' ? 'hidden' : 'lg:flex',
+          )}>
           {navLinks.map((item, index) => (
             <motion.div
               key={item.href}
@@ -114,13 +132,13 @@ export const Navbar = () => {
           ))}
         </nav>
 
-        {/* Buttons */}
+        {/* Buttons - NOT visible in dashboard */}
         <motion.div
-          className='flex items-center space-x-4'
+          className={cn('flex items-center space-x-4')}
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}>
-          <span className='items-center space-x-4 hidden lg:flex'>
+          <span className={cn('items-center space-x-4 hidden lg:flex')}>
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}>
