@@ -49,7 +49,6 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
 
   return (
     <div className='relative mx-auto h-[850px] lg:h-[1000px] xl:h-[950px] max-w-7xl overflow-hidden'>
-
       {/* Controls */}
       <div className='pointer-events-none absolute inset-y-0 left-0 top-1/2 -translate-y-1/2 right-0 z-40 flex items-center justify-between px-2 md:px-4'>
         <Button
