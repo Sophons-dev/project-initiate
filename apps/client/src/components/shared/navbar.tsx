@@ -6,6 +6,7 @@ import { Button } from '../ui/button';
 import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
+import { usePathname } from 'next/navigation';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -19,6 +20,7 @@ export const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,6 +62,7 @@ export const Navbar = () => {
       className={cn(
         'fixed w-full top-0 z-50 transition-all duration-300',
         isScrolled || isMenuOpen ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
+        pathname === '/' ? '' : 'h-15 border-b shadow',
       )}>
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
