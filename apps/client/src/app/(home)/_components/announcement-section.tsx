@@ -9,7 +9,7 @@ import { TextPill } from '@/components/shared/text-pill';
 export const AnnouncementSection = () => {
   return (
     <section className='-12'>
-      <div className='container max-w-7xl mx-auto py-30'>
+      <div className='container max-w-7xl mx-auto py-10'>
         <motion.div
           className='mb-15 text-center'
           variants={staggerContainer}
