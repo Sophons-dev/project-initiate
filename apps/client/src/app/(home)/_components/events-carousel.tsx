@@ -40,17 +40,18 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
   const go = (dir: number) => setIndex((i) => i + dir);
 
   const positions = {
-    '-1': { x: -offset, scale: 0.9, opacity: 0.65, zIndex: 1 },
-    '0': { x: 0, scale: 1.05, opacity: 1, zIndex: 3 },
-    '1': { x: offset, scale: 0.9, opacity: 0.65, zIndex: 2 },
+    '-1': { x: -offset, scale: 0.9, opacity: 0.8, zIndex: 1, filter: 'blur(2px)' },
+    '0': { x: 0, scale: 1.05, opacity: 1, zIndex: 3, filter: 'blur(0px)' },
+    '1': { x: offset, scale: 0.9, opacity: 0.8, zIndex: 2, filter: 'blur(2px)' },
   } as const;
 
   const spring = shouldReduceMotion ? { duration: 0.2 } : { type: 'spring', stiffness: 260, damping: 26 };
 
   return (
-    <div className='relative mx-auto h-[600px] max-w-7xl my-20 mb-60'>
+    <div className='relative mx-auto h-[850px] lg:h-[1000px] xl:h-[950px] max-w-7xl overflow-hidden'>
+
       {/* Controls */}
-      <div className='pointer-events-none absolute inset-y-0 left-0 top-1/2 right-0 z-40 flex items-center justify-between px-2 md:px-4'>
+      <div className='pointer-events-none absolute inset-y-0 left-0 top-1/2 -translate-y-1/2 right-0 z-40 flex items-center justify-between px-2 md:px-4'>
         <Button
           aria-label='Previous event'
           className='pointer-events-auto h-10 w-10 rounded-full bg-orange-500 text-white hover:bg-orange-600'
@@ -78,7 +79,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
       />
 
       {/* Stage */}
-      <div className='absolute left-1/2 top-0 z-10 h-full w-full -translate-x-1/2'>
+      <div className='absolute left-1/2 top-0 mt-10 z-10 h-full w-full -translate-x-1/2'>
         <AnimatePresence initial={false}>
           {trio.map((idx) => {
             const pos = idx === current ? '0' : idx === left ? '-1' : '1';
@@ -96,7 +97,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                 style={{ zIndex: conf.zIndex }}
                 aria-hidden={pos !== '0'}
                 whileHover={pos === '0' ? { scale: 1.07 } : undefined}>
-                <Card className='w-[300px] pt-0 overflow-hidden rounded-xl border lg:w-[550px]'>
+                <Card className='w-[320px] sm:w-[500px] pt-0 overflow-hidden rounded-xl border lg:w-[550px]'>
                   <Image
                     src={item.image || '/placeholder.svg'}
                     alt={item.title}
@@ -143,13 +144,6 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                     <Separator className='my-5' />
 
                     <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
-                      <div className='text-xs text-center md:text-left w-full md:w-2/3'>
-                        <p className='font-medium'>Ready to shape your future?</p>
-                        <p className='text-muted-foreground'>
-                          Register now and be part of this transformative experience.
-                        </p>
-                      </div>
-
                       <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
                         <div className='text-xs text-center md:text-left w-full md:w-2/3'>
                           <p className='font-medium'>Ready to shape your future?</p>
@@ -182,7 +176,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
       </div>
 
       {/* Dots */}
-      <div className='absolute -bottom-55 lg:-bottom-18 left-1/2 z-50 flex -translate-x-1/2 gap-2'>
+      <div className='absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 gap-2'>
         {items.map((_, i) => {
           const active = i === current;
           return (
