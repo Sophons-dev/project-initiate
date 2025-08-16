@@ -7,7 +7,15 @@ import Image from 'next/image';
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { usePathname } from 'next/navigation';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { MenuIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
@@ -85,7 +93,11 @@ export const Navbar = () => {
         </motion.div>
 
         {/* Nav Links - NOT visible in dashboard */}
-        <nav className={cn('absolute hidden left-1/2 transform -translate-x-1/2 items-center space-x-1', pathname === '/dashboard' ? 'hidden' : 'lg:flex')}>
+        <nav
+          className={cn(
+            'absolute hidden left-1/2 transform -translate-x-1/2 items-center space-x-1',
+            pathname === '/dashboard' ? 'hidden' : 'lg:flex',
+          )}>
           {navLinks.map((item, index) => (
             <motion.div
               key={item.href}
@@ -123,7 +135,9 @@ export const Navbar = () => {
         {/* Breadcrumbs and User profile dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant='ghost' className='hidden lg:flex relative h-8 w-8 p-0 rounded-full'>
+            <Button
+              variant='ghost'
+              className='hidden lg:flex relative h-8 w-8 p-0 rounded-full'>
               <span className='sr-only'>Open main menu</span>
               <Avatar>
                 <AvatarImage src='https://github.com/shadcn.png' />
@@ -131,7 +145,9 @@ export const Navbar = () => {
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent className='w-56' align='end'>
+          <DropdownMenuContent
+            className='w-56'
+            align='end'>
             <DropdownMenuLabel>My Account</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>

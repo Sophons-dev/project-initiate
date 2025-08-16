@@ -129,3 +129,9 @@
     background: linear-gradient(109deg, #fffcf7 20.4%, #fff 49.01%, #eff6ff 77.62%);
   }
 }
+
+/* Fix for shadcn dropdown menu scrolling bug */
+html body[data-scroll-locked] {
+  overflow: visible !important;
+  margin-right: 0 !important;
+}
