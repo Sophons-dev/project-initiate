@@ -81,7 +81,7 @@ export const MainNavbar = () => {
 
         {/* Breadcrumbs and User profile dropdown */}
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger className='border border-red-500' asChild>
             <Button
               variant='ghost'
               className='hidden lg:flex relative h-8 w-8 p-0 rounded-full'>
