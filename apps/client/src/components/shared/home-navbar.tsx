@@ -132,41 +132,6 @@ export const Navbar = () => {
           ))}
         </nav>
 
-        {/* Breadcrumbs and User profile dropdown */}
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button
-              variant='ghost'
-              className='hidden lg:flex relative h-8 w-8 p-0 rounded-full'>
-              <span className='sr-only'>Open main menu</span>
-              <Avatar>
-                <AvatarImage src='https://github.com/shadcn.png' />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent
-            className='w-56'
-            align='end'>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link href='/profile'>Profile</Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <Link href='/settings'>Settings</Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link href='/signout'>Sign out</Link>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
-          </DropdownMenuContent>
-        </DropdownMenu>
-
         {/* Buttons - NOT visible in dashboard */}
         <motion.div
           className={cn('flex items-center space-x-4')}
