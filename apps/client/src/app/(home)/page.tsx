@@ -10,6 +10,7 @@ export default function Home() {
   return (
     <div>
       <HeroSection />
+      <a href="/auth/login">Login</a>
       <SponsorSection />
       <FeatureSection />
       <HowItWorksSection />
