@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { MenuIcon } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { useUser } from '@auth0/nextjs-auth0';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -27,6 +28,7 @@ const navLinks = [
 ];
 
 export const Navbar = () => {
+  const { user } = useUser()
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -138,27 +140,53 @@ export const Navbar = () => {
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}>
-          <span className={cn('items-center space-x-4 hidden lg:flex')}>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}>
-              <Button
-                asChild
-                variant='ghost'
-                className='hidden md:inline-flex hover:bg-transparent'>
-                <Link href='/signin'>Sign In</Link>
-              </Button>
-            </motion.div>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}>
-              <Button
-                asChild
-                className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
-                <Link href='/signup'>Get Started</Link>
-              </Button>
-            </motion.div>
-          </span>
+          {user ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className='hidden cursor-pointer lg:flex items-center gap-2 rounded-full outline-none focus:ring-2 focus:ring-cyan-500'>
+                  <Avatar className='h-9 w-9'>
+                    <AvatarImage src={user.picture ?? ''} alt={user.name ?? 'User'} />
+                    <AvatarFallback>{(user.name ?? 'U').slice(0, 2).toUpperCase()}</AvatarFallback>
+                  </Avatar>
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align='end' className='w-56'>
+                <DropdownMenuLabel>
+                  <div className='flex flex-col'>
+                    <span className='font-medium truncate'>{user.name}</span>
+                    <span className='text-xs text-muted-foreground truncate'>{user.email}</span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuGroup>
+                  <DropdownMenuItem asChild>
+                    <Link href='/dashboard'>Dashboard</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link href='/profile'>Profile</Link>
+                  </DropdownMenuItem>
+                </DropdownMenuGroup>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link href='/auth/logout'>Sign out</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <span className={cn('items-center space-x-4 hidden lg:flex')}>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button asChild variant='ghost' className='hidden md:inline-flex hover:bg-transparent'>
+                  <Link href='/auth/login'>Sign In</Link>
+                </Button>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button asChild className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
+                  <Link href='/auth/signup'>Get Started</Link>
+                </Button>
+              </motion.div>
+            </span>
+          )}
+
 
           {/* Hamburger */}
           <button
