@@ -1,135 +1,268 @@
-# Turborepo starter
+# Project Initiate
 
-This Turborepo starter is maintained by the Turborepo core team.
+An AI-powered opportunity matching platform that connects students and professionals with personalized opportunities, courses, and career paths. Built with Next.js 15, TypeScript, and modern web technologies.
 
-## Using this example
+## 🚀 What is Project Initiate?
 
-Run the following command:
+Project Initiate is a comprehensive platform that helps users discover opportunities tailored to their goals and profile. Whether you're a student seeking educational courses or a professional looking for career advancement, our AI-powered system matches you with the perfect opportunities.
 
-```sh
-npx create-turbo@latest
-```
+### Key Features
 
-## What's inside?
+- **AI-Powered Matching**: Intelligent algorithms that match users with opportunities based on their profile and goals
+- **Multi-User Support**: Dedicated experiences for both students and professionals
+- **Comprehensive Onboarding**: Multi-step onboarding process to understand user preferences and strengths
+- **Dashboard Analytics**: Track your profile completion, matched opportunities, and match scores
+- **Modern UI/UX**: Beautiful, responsive design with smooth animations and intuitive navigation
 
-This Turborepo includes the following packages/apps:
+## 🏗️ Project Structure
 
-### Apps and Packages
-
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
-
-### Utilities
-
-This Turborepo has some additional tools already setup for you:
-
-- [TypeScript](https://www.typescriptlang.org/) for static type checking
-- [ESLint](https://eslint.org/) for code linting
-- [Prettier](https://prettier.io) for code formatting
-
-### Build
-
-To build all apps and packages, run the following command:
+This is a monorepo built with Turborepo, containing:
 
 ```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build
-yarn dlx turbo build
-pnpm exec turbo build
+project-initiate/
+├── apps/
+│   └── client/                 # Next.js 15 web application
+│       ├── src/
+│       │   ├── app/           # App Router structure
+│       │   │   ├── (auth)/    # Authentication pages
+│       │   │   ├── (home)/    # Landing page components
+│       │   │   └── (main)/    # Main app (dashboard, onboarding)
+│       │   ├── components/    # Reusable UI components
+│       │   ├── lib/          # Utilities and configurations
+│       │   └── services/     # API services
+│       └── public/           # Static assets
+├── packages/
+│   ├── eslint-config/        # Shared ESLint configuration
+│   └── typescript-config/    # Shared TypeScript configuration
+└── docker-compose.yml        # Docker development setup
 ```
 
-You can build a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
+## 🛠️ Tech Stack
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo build --filter=docs
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS 4, Framer Motion
+- **UI Components**: Radix UI, shadcn/ui
+- **State Management**: React Query (TanStack Query)
+- **Forms**: React Hook Form with Zod validation
+- **Testing**: Playwright for E2E testing
+- **Package Manager**: pnpm
+- **Monorepo**: Turborepo
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo build --filter=docs
-yarn exec turbo build --filter=docs
-pnpm exec turbo build --filter=docs
-```
+## 📋 Prerequisites
 
-### Develop
+Before you begin, ensure you have the following installed:
 
-To develop all apps and packages, run the following command:
+- **Node.js**: Version 18 or higher
+- **pnpm**: Version 10.14.0 or higher
+- **Git**: For version control
 
-```
-cd my-turborepo
+## 🚀 Getting Started
 
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev
+### 1. Clone the Repository
 
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev
-yarn exec turbo dev
-pnpm exec turbo dev
-```
-
-You can develop a specific package by using a [filter](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters):
-
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo dev --filter=web
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo dev --filter=web
-yarn exec turbo dev --filter=web
-pnpm exec turbo dev --filter=web
+```bash
+git clone <your-repository-url>
+cd project-initiate
 ```
 
-### Remote Caching
+### 2. Install Dependencies
 
-> [!TIP]
-> Vercel Remote Cache is free for all plans. Get started today at [vercel.com](https://vercel.com/signup?/signup?utm_source=remote-cache-sdk&utm_campaign=free_remote_cache).
+```bash
+# Install pnpm if you haven't already
+npm install -g pnpm
 
-Turborepo can use a technique known as [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching) to share cache artifacts across machines, enabling you to share build caches with your team and CI/CD pipelines.
-
-By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup?utm_source=turborepo-examples), then enter the following commands:
-
-```
-cd my-turborepo
-
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo login
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo login
-yarn exec turbo login
-pnpm exec turbo login
+# Install all dependencies
+pnpm install
 ```
 
-This will authenticate the Turborepo CLI with your [Vercel account](https://vercel.com/docs/concepts/personal-accounts/overview).
+### 3. Environment Setup
 
-Next, you can link your Turborepo to your Remote Cache by running the following command from the root of your Turborepo:
+Create environment files for the client application:
 
-```
-# With [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation) installed (recommended)
-turbo link
-
-# Without [global `turbo`](https://turborepo.com/docs/getting-started/installation#global-installation), use your package manager
-npx turbo link
-yarn exec turbo link
-pnpm exec turbo link
+```bash
+cd apps/client
+cp .env.example .env.local
 ```
 
-## Useful Links
+**Note**: If there's no `.env.example` file, you may need to create a `.env.local` file with the necessary environment variables for your specific setup. Make sure to include the MongoDB connection string pointing to your local database.
 
-Learn more about the power of Turborepo:
+### 4. Start MongoDB Database
 
-- [Tasks](https://turborepo.com/docs/crafting-your-repository/running-tasks)
-- [Caching](https://turborepo.com/docs/crafting-your-repository/caching)
-- [Remote Caching](https://turborepo.com/docs/core-concepts/remote-caching)
-- [Filtering](https://turborepo.com/docs/crafting-your-repository/running-tasks#using-filters)
-- [Configuration Options](https://turborepo.com/docs/reference/configuration)
-- [CLI Usage](https://turborepo.com/docs/reference/command-line-reference)
+Start the local MongoDB database using Docker Compose:
+
+```bash
+# Start MongoDB and other services
+docker-compose up -d
+
+# Verify services are running
+docker-compose ps
+
+# View logs if needed
+docker-compose logs -f
+```
+
+**Note**: The database needs to be running before starting the development server.
+
+### 5. Start Development
+
+```bash
+# From the root directory
+pnpm dev
+
+# Or navigate to the client app
+cd apps/client
+pnpm dev
+```
+
+The application will be available at `http://localhost:3000`
+
+**Important**: Ensure MongoDB is running via Docker Compose before starting the development server.
+
+## 🏃‍♂️ Available Scripts
+
+### Root Level Commands
+
+```bash
+# Development
+pnpm dev          # Start all apps in development mode
+
+# Building
+pnpm build        # Build all apps and packages
+
+# Code Quality
+pnpm lint         # Run ESLint across all packages
+pnpm format       # Format code with Prettier
+pnpm check-types  # Run TypeScript type checking
+
+# Testing
+pnpm test:e2e     # Run Playwright E2E tests
+pnpm test:e2e:ui  # Run Playwright tests with UI
+```
+
+### Client App Commands
+
+```bash
+cd apps/client
+
+# Development
+pnpm dev          # Start Next.js dev server with Turbopack
+pnpm build        # Build for production
+pnpm start        # Start production server
+
+# Testing
+pnpm test:e2e     # Run Playwright tests
+pnpm test:e2e:ui  # Run Playwright tests with UI
+```
+
+## 🐳 Docker Development
+
+The project includes a Docker Compose setup for local development services:
+
+```bash
+# Start MongoDB and other services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the environment
+docker-compose down
+
+# Restart services
+docker-compose restart
+```
+
+### Services Included
+
+- **MongoDB**: Local database for development
+- **Additional services**: Check `docker-compose.yml` for complete list
+
+**Note**: The MongoDB service must be running before starting the Next.js development server, as the application depends on database connectivity.
+
+## 🧪 Testing
+
+The project includes comprehensive testing setup:
+
+### E2E Testing with Playwright
+
+```bash
+# Install Playwright browsers (first time only)
+npx playwright install
+
+# Run tests
+pnpm test:e2e
+
+# Run tests with UI
+pnpm test:e2e:ui
+
+# Run tests in headed mode
+npx playwright test --headed
+```
+
+## 📁 Project Architecture
+
+### App Router Structure
+
+- **`(auth)`**: Authentication pages (signin, signup, forgot-password)
+- **`(home)`**: Landing page with hero, features, and marketing content
+- **`(main)`**: Main application (dashboard, onboarding flow)
+
+### Component Organization
+
+- **`components/shared/`**: Reusable components used across the app
+- **`components/ui/`**: Base UI components (buttons, inputs, cards, etc.)
+- **`app/_components/`**: Page-specific components
+
+### Key Features Implementation
+
+- **Onboarding Flow**: Multi-step process with context management
+- **Dashboard**: User analytics and opportunity tracking
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Animations**: Smooth transitions using Framer Motion
+
+## 🔧 Development Guidelines
+
+### Code Style
+
+- Use TypeScript for all new code
+- Follow the existing ESLint configuration
+- Use Prettier for code formatting
+- Follow React best practices and hooks patterns
+
+### Component Structure
+
+- Use functional components with hooks
+- Implement proper TypeScript interfaces
+- Follow the established naming conventions
+- Use the shared UI component library
+
+### State Management
+
+- Use React Query for server state
+- Use React Context for global client state
+- Keep component state local when possible
+
+## 🚀 Deployment
+
+### Building for Production
+
+```bash
+# Build all applications
+pnpm build
+
+# Build specific app
+pnpm build --filter=client
+```
+
+### Environment Variables
+
+Ensure all necessary environment variables are set in your production environment:
+
+- Database connection strings
+- API keys and secrets
+- Authentication configuration
+- External service URLs
+
+---
+
+**Happy coding! 🎉**
