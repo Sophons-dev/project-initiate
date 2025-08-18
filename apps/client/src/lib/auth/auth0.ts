@@ -3,7 +3,7 @@
 import { Auth0Client } from '@auth0/nextjs-auth0/server';
 
 const appBaseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
+  ? `https://project-initiate.vercel.app`
   : process.env.APP_BASE_URL || 'http://localhost:3000';
 
 // Initialize the Auth0 client
