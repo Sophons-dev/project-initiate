@@ -28,7 +28,7 @@ const navLinks = [
 ];
 
 export const Navbar = () => {
-  const { user } = useUser()
+  const { user } = useUser();
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -145,12 +145,17 @@ export const Navbar = () => {
               <DropdownMenuTrigger asChild>
                 <button className='hidden cursor-pointer lg:flex items-center gap-2 rounded-full outline-none focus:ring-2 focus:ring-cyan-500'>
                   <Avatar className='h-9 w-9'>
-                    <AvatarImage src={user.picture ?? ''} alt={user.name ?? 'User'} />
+                    <AvatarImage
+                      src={user.picture ?? ''}
+                      alt={user.name ?? 'User'}
+                    />
                     <AvatarFallback>{(user.name ?? 'U').slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align='end' className='w-56'>
+              <DropdownMenuContent
+                align='end'
+                className='w-56'>
                 <DropdownMenuLabel>
                   <div className='flex flex-col'>
                     <span className='font-medium truncate'>{user.name}</span>
@@ -174,19 +179,27 @@ export const Navbar = () => {
             </DropdownMenu>
           ) : (
             <span className={cn('items-center space-x-4 hidden lg:flex')}>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button asChild variant='ghost' className='hidden md:inline-flex hover:bg-transparent'>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}>
+                <Button
+                  asChild
+                  variant='ghost'
+                  className='hidden md:inline-flex hover:bg-transparent'>
                   <Link href='/auth/login'>Sign In</Link>
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button asChild className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}>
+                <Button
+                  asChild
+                  className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
                   <Link href='/auth/signup'>Get Started</Link>
                 </Button>
               </motion.div>
             </span>
           )}
-
 
           {/* Hamburger */}
           <button
