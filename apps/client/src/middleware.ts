@@ -1,17 +1,13 @@
-import { Auth0Client } from '@auth0/nextjs-auth0/server';
 import type { NextRequest } from 'next/server';
+import { auth0 } from './lib/auth/auth0';
 
-const appBaseUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : process.env.APP_BASE_URL || 'http://localhost:3000';
-
-const auth0 = new Auth0Client({
-  domain: process.env.AUTH0_DOMAIN,
-  secret: process.env.AUTH0_SECRET,
-  clientId: process.env.AUTH0_CLIENT_ID,
-  clientSecret: process.env.AUTH0_CLIENT_SECRET,
-  appBaseUrl,
-});
+// const auth0 = new Auth0Client({
+//   domain: process.env.AUTH0_DOMAIN,
+//   secret: process.env.AUTH0_SECRET,
+//   clientId: process.env.AUTH0_CLIENT_ID,
+//   clientSecret: process.env.AUTH0_CLIENT_SECRET,
+//   appBaseUrl: process.env.APP_BASE_URL || 'http://localhost:3000',
+// });
 
 export async function middleware(request: NextRequest) {
   return await auth0.middleware(request);
