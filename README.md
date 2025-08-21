@@ -116,7 +116,69 @@ pnpm dev
 
 The application will be available at `http://localhost:3000`
 
-**Important**: Ensure MongoDB is running via Docker Compose before starting the development server.
+## 🗄️ Prisma Database Setup
+
+This project uses Prisma as the database ORM with MongoDB. Follow these steps to set up and manage your database:
+
+### 1. Install Prisma CLI
+
+The Prisma CLI is already included in the project dependencies, but you can install it globally if needed:
+
+```bash
+pnpm add -g prisma
+```
+
+### 2. Database Schema
+
+The Prisma schema is located at `packages/db/prisma/schema.prisma`. This file defines:
+
+- Database connection configuration
+- Data models and relationships
+- Database indexes and constraints
+
+### 3. Generate Prisma Client
+
+After making changes to the schema, regenerate the Prisma client:
+
+```bash
+pnpm --filter @initiate/db generate
+```
+
+### 4. Database Operations
+
+For MongoDB, Prisma uses a different approach than traditional SQL databases. Use these commands from the root directory:
+
+```bash
+# Push schema changes to database (for development)
+pnpm --filter @initiate/db db:push
+
+# Reset database (⚠️ WARNING: This will delete all data)
+pnpm --filter @initiate/db db:push --force-reset
+
+# View database in Prisma Studio
+pnpm --filter @initiate/db studio
+
+# Format Prisma schema file
+pnpm --filter @initiate/db format
+```
+
+### 5. Environment Variables
+
+Ensure your database connection string is properly configured in your environment files:
+
+```bash
+cd ./packages/db
+cat .env.example >> .env
+```
+
+### 6. Database Seeding
+
+To populate your database with initial data:
+
+```bash
+# From the root directory
+pnpm --filter @initiate/db db:seed
+```
 
 ## 🏃‍♂️ Available Scripts
 
