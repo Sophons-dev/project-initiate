@@ -8,17 +8,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-/// Auth.js models
 model User {
-  id                String                 @id @default(auto()) @map("_id") @db.ObjectId
-  name              String?
-  email             String?  @unique
-  emailVerified     DateTime?
-  image             String?
-  auth0Id           String? @unique
+  id            String    @id @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  auth0Id       String?   @unique
 
-  profile           UserProfile?
-  preferences       UserPreferences?
+  // Profile fields
+  fullName     String?
+  avatarUrl    String?
+  bio          String?
+  location     String?
+  organization String?
+  website      String?
+
+  // Preferences fields
+  interests                 String[]
+  goals                     String?
+  preferredOpportunityTypes String[]
+  skills                    String[]
+  onboardingCompleted       Boolean   @default(false)
+  preferencesUpdatedAt      DateTime?
+
+  // Relations
   opportunities     UserOpportunity[]
   questionAnswers   UserQuestionAnswer[]
   modelData         UserModelData?
@@ -101,36 +115,9 @@ enum OrganizationType {
   other
 }
 
-/// User profile & preferences
-model UserProfile {
-  userId       String @id @map("_id") @db.ObjectId
-  fullName     String?
-  avatarUrl    String?
-  bio          String?
-  location     String?
-  organization String?
-  website      String?
-  user         User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-}
-
-model UserPreferences {
-  userId                     String   @id @map("_id") @db.ObjectId
-  interests                  String[]
-  goals                      String?
-  preferredOpportunityTypes  String[]
-  skills                     String[]
-  onboardingCompleted        Boolean  @default(false)
-  updatedAt                  DateTime?
-  user                       User     @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-}
-
 /// Questions & answers
 model Question {
-  id             String              @id @default(auto()) @map("_id") @db.ObjectId
+  id             String               @id @map("_id") @db.ObjectId
   questionText   String
   questionType   QuestionType
   category       QuestionCategory
@@ -138,22 +125,22 @@ model Question {
   targetField    String
   userTypes      String[]
   order          Int
-  active         Boolean             @default(true)
-  processingType ProcessingType      @default(direct)
-  stage          QuestionStage       @default(onboarding)
+  active         Boolean              @default(true)
+  processingType ProcessingType       @default(direct)
+  stage          QuestionStage        @default(onboarding)
   createdAt      DateTime?
   updatedAt      DateTime?
   answers        UserQuestionAnswer[]
 }
 
 model UserQuestionAnswer {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId     String   @db.ObjectId
-  questionId String   @db.ObjectId
+  id         String    @id @map("_id") @db.ObjectId
+  userId     String    @db.ObjectId
+  questionId String    @db.ObjectId
   answer     String
   updatedAt  DateTime?
-  user       User     @relation(fields: [userId], references: [id])
-  question   Question @relation(fields: [questionId], references: [id])
+  user       User      @relation(fields: [userId], references: [id])
+  question   Question  @relation(fields: [questionId], references: [id])
 
   @@index([userId])
   @@index([questionId])
@@ -161,27 +148,26 @@ model UserQuestionAnswer {
 
 /// User model data
 model UserModelData {
-  userId             String @id @map("_id") @db.ObjectId
-  learningStyle      String
-  availability       String
-  preferredWorkEnv   String
-  remoteFriendly     Boolean
-  updatedAt          DateTime?
-  user               User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
+  id               String    @id @map("_id") @db.ObjectId
+  userId           String    @unique @db.ObjectId
+  learningStyle    String
+  availability     String
+  preferredWorkEnv String
+  remoteFriendly   Boolean
+  updatedAt        DateTime?
+  user             User      @relation(fields: [userId], references: [id])
 }
 
 /// Auth providers
 model AuthProvider {
-  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  id          String           @id @map("_id") @db.ObjectId
   userId      String           @db.ObjectId
   provider    AuthProviderType
   providerUid String
   email       String
   lastLoginAt DateTime?
   createdAt   DateTime?
-  user        User @relation(fields: [userId], references: [id])
+  user        User             @relation(fields: [userId], references: [id])
 
   @@index([userId])
   @@index([provider, providerUid])
@@ -189,31 +175,31 @@ model AuthProvider {
 
 /// Opportunities & recommendations
 model Opportunity {
-  id                 String                   @id @default(auto()) @map("_id") @db.ObjectId
-  type               OpportunityType
-  subtype            CourseSubtype?
-  title              String
-  description        String?
-  tags               String[]
-  organizationId     String   @db.ObjectId
-  location           String?
-  deliveryMode       String?
-  startDate          DateTime?
-  endDate            DateTime?
-  deadline           DateTime?
-  metadata           Json?
-  createdBy          String   @db.ObjectId
-  createdAt          DateTime?
-  updatedAt          DateTime?
-  recommendations    OpportunityRecommendation[]
-  userOpportunities  UserOpportunity[]
+  id                String                      @id @map("_id") @db.ObjectId
+  type              OpportunityType
+  subtype           CourseSubtype?
+  title             String
+  description       String?
+  tags              String[]
+  organizationId    String                      @db.ObjectId
+  location          String?
+  deliveryMode      String?
+  startDate         DateTime?
+  endDate           DateTime?
+  deadline          DateTime?
+  metadata          Json?
+  createdBy         String                      @db.ObjectId
+  createdAt         DateTime?
+  updatedAt         DateTime?
+  recommendations   OpportunityRecommendation[]
+  userOpportunities UserOpportunity[]
 
   @@index([organizationId])
   @@index([createdBy])
 }
 
 model OpportunityRecommendation {
-  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  id            String      @id @map("_id") @db.ObjectId
   userId        String      @db.ObjectId
   opportunityId String      @db.ObjectId
   score         Float?
@@ -230,14 +216,14 @@ model OpportunityRecommendation {
 }
 
 model UserOpportunity {
-  id            String                @id @default(auto()) @map("_id") @db.ObjectId
+  id            String                @id @map("_id") @db.ObjectId
   userId        String                @db.ObjectId
   opportunityId String                @db.ObjectId
   status        UserOpportunityStatus @default(saved)
   createdAt     DateTime?
   updatedAt     DateTime?
-  user          User        @relation(fields: [userId], references: [id])
-  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+  user          User                  @relation(fields: [userId], references: [id])
+  opportunity   Opportunity           @relation(fields: [opportunityId], references: [id])
 
   @@index([userId])
   @@index([opportunityId])
@@ -245,7 +231,7 @@ model UserOpportunity {
 
 /// Organizations
 model Organization {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  id          String           @id @map("_id") @db.ObjectId
   name        String
   type        OrganizationType
   description String?
@@ -258,25 +244,21 @@ model Organization {
 
 /// Career insights
 model CareerInsight {
-  id               String @id @default(auto()) @map("_id") @db.ObjectId
-  userId           String @db.ObjectId
+  id               String    @id @map("_id") @db.ObjectId
+  userId           String    @unique @db.ObjectId
   summary          String
   recommendedPaths Json?
   skillsGap        Json?
   createdAt        DateTime?
   updatedAt        DateTime?
-  user             User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
+  user             User      @relation(fields: [userId], references: [id])
 }
 
 model CareerInsightLog {
-  id          String @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String @db.ObjectId
+  id          String    @id @map("_id") @db.ObjectId
+  userId      String    @unique @db.ObjectId
   triggeredBy String?
   triggerId   String?
   createdAt   DateTime?
-  user        User   @relation(fields: [userId], references: [id])
-
-  @@index([userId])
+  user        User      @relation(fields: [userId], references: [id])
 }
