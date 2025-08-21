@@ -6,12 +6,19 @@
     "@prisma/client": "latest"
   },
   "devDependencies": {
-    "prisma": "latest"
+    "prisma": "latest",
+    "ts-node": "latest",
+    "typescript": "latest",
+    "@types/node": "latest"
   },
   "scripts": {
     "generate": "prisma generate",
     "db:push": "prisma db push",
     "studio": "prisma studio",
-    "format": "prisma format"
+    "format": "prisma format",
+    "db:seed": "prisma db seed"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
   }
 }
