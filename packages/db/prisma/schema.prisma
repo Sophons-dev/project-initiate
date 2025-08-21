@@ -76,7 +76,6 @@ model User {
   image         String?
   auth0Id       String?   @unique
   userType      UserType
-  
 
   // Profile fields
   fullName     String?
@@ -102,8 +101,6 @@ model User {
   careerInsights    CareerInsight[]
   careerInsightLogs CareerInsightLog[]
 }
-
-
 
 /// Questions & answers
 model Question {
