@@ -125,11 +125,11 @@ importers:
   packages/db:
     dependencies:
       '@prisma/client':
-        specifier: ^6.14.0
+        specifier: latest
         version: 6.14.0(prisma@6.14.0(typescript@5.8.3))(typescript@5.8.3)
     devDependencies:
       prisma:
-        specifier: ^6.14.0
+        specifier: latest
         version: 6.14.0(typescript@5.8.3)
 
   packages/eslint-config:
