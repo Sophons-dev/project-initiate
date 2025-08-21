@@ -9,7 +9,7 @@ async function main() {
 main()
   .catch((e) => {
     console.error(e);
-    if (typeof globalThis.process !== "undefined") {
+    if (typeof globalThis.process !== 'undefined') {
       globalThis.process.exit(1);
     }
   })
