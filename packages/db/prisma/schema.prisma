@@ -8,47 +8,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id            String    @id @map("_id") @db.ObjectId
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  auth0Id       String?   @unique
-
-  // Profile fields
-  fullName     String?
-  avatarUrl    String?
-  bio          String?
-  location     String?
-  organization String?
-  website      String?
-
-  // Preferences fields
-  interests                 String[]
-  goals                     String?
-  preferredOpportunityTypes String[]
-  skills                    String[]
-  onboardingCompleted       Boolean   @default(false)
-  preferencesUpdatedAt      DateTime?
-
-  // Relations
-  opportunities     UserOpportunity[]
-  questionAnswers   UserQuestionAnswer[]
-  modelData         UserModelData?
-  authProviders     AuthProvider[]
-  recommendations   OpportunityRecommendation[]
-  careerInsights    CareerInsight[]
-  careerInsightLogs CareerInsightLog[]
-}
-
 /// Enums
-enum UserRoleEnum {
-  admin
-  student
-  professional
-}
-
 enum UserType {
   student
   graduate
@@ -80,13 +40,6 @@ enum QuestionStage {
   both
 }
 
-enum AuthProviderType {
-  google
-  password
-  github
-  linkedin
-}
-
 enum OpportunityType {
   job
   course
@@ -114,6 +67,43 @@ enum OrganizationType {
   ngo
   other
 }
+
+model User {
+  id            String    @id @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  auth0Id       String?   @unique
+  userType      UserType
+  
+
+  // Profile fields
+  fullName     String?
+  avatarUrl    String?
+  bio          String?
+  location     String?
+  organization String?
+  website      String?
+
+  // Preferences fields
+  interests                 String[]
+  goals                     String?
+  preferredOpportunityTypes String[]
+  skills                    String[]
+  onboardingCompleted       Boolean   @default(false)
+  preferencesUpdatedAt      DateTime?
+
+  // Relations
+  opportunities     UserOpportunity[]
+  questionAnswers   UserQuestionAnswer[]
+  modelData         UserModelData?
+  recommendations   OpportunityRecommendation[]
+  careerInsights    CareerInsight[]
+  careerInsightLogs CareerInsightLog[]
+}
+
+
 
 /// Questions & answers
 model Question {
@@ -156,21 +146,6 @@ model UserModelData {
   remoteFriendly   Boolean
   updatedAt        DateTime?
   user             User      @relation(fields: [userId], references: [id])
-}
-
-/// Auth providers
-model AuthProvider {
-  id          String           @id @map("_id") @db.ObjectId
-  userId      String           @db.ObjectId
-  provider    AuthProviderType
-  providerUid String
-  email       String
-  lastLoginAt DateTime?
-  createdAt   DateTime?
-  user        User             @relation(fields: [userId], references: [id])
-
-  @@index([userId])
-  @@index([provider, providerUid])
 }
 
 /// Opportunities & recommendations
