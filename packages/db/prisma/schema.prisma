@@ -1,0 +1,282 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+/// Auth.js models
+model User {
+  id                String                 @id @default(auto()) @map("_id") @db.ObjectId
+  name              String?
+  email             String?  @unique
+  emailVerified     DateTime?
+  image             String?
+  auth0Id           String? @unique
+
+  profile           UserProfile?
+  preferences       UserPreferences?
+  opportunities     UserOpportunity[]
+  questionAnswers   UserQuestionAnswer[]
+  modelData         UserModelData?
+  authProviders     AuthProvider[]
+  recommendations   OpportunityRecommendation[]
+  careerInsights    CareerInsight[]
+  careerInsightLogs CareerInsightLog[]
+}
+
+/// Enums
+enum UserRoleEnum {
+  admin
+  student
+  professional
+}
+
+enum UserType {
+  student
+  graduate
+  company
+  school
+}
+
+enum QuestionCategory {
+  onboarding
+  personalization
+}
+
+enum QuestionType {
+  single_choice
+  multi_choice
+  text
+  scale
+}
+
+enum ProcessingType {
+  direct
+  ai
+  custom
+}
+
+enum QuestionStage {
+  onboarding
+  personalization
+  both
+}
+
+enum AuthProviderType {
+  google
+  password
+  github
+  linkedin
+}
+
+enum OpportunityType {
+  job
+  course
+}
+
+enum CourseSubtype {
+  school_course
+  online_cert
+  online_degree
+  bootcamp
+}
+
+enum UserOpportunityStatus {
+  saved
+  applied
+  rejected
+}
+
+enum OrganizationType {
+  company
+  university
+  bootcamp
+  online_platform
+  government
+  ngo
+  other
+}
+
+/// User profile & preferences
+model UserProfile {
+  userId       String @id @map("_id") @db.ObjectId
+  fullName     String?
+  avatarUrl    String?
+  bio          String?
+  location     String?
+  organization String?
+  website      String?
+  user         User   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model UserPreferences {
+  userId                     String   @id @map("_id") @db.ObjectId
+  interests                  String[]
+  goals                      String?
+  preferredOpportunityTypes  String[]
+  skills                     String[]
+  onboardingCompleted        Boolean  @default(false)
+  updatedAt                  DateTime?
+  user                       User     @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+/// Questions & answers
+model Question {
+  id             String              @id @default(auto()) @map("_id") @db.ObjectId
+  questionText   String
+  questionType   QuestionType
+  category       QuestionCategory
+  options        String[]
+  targetField    String
+  userTypes      String[]
+  order          Int
+  active         Boolean             @default(true)
+  processingType ProcessingType      @default(direct)
+  stage          QuestionStage       @default(onboarding)
+  createdAt      DateTime?
+  updatedAt      DateTime?
+  answers        UserQuestionAnswer[]
+}
+
+model UserQuestionAnswer {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId     String   @db.ObjectId
+  questionId String   @db.ObjectId
+  answer     String
+  updatedAt  DateTime?
+  user       User     @relation(fields: [userId], references: [id])
+  question   Question @relation(fields: [questionId], references: [id])
+
+  @@index([userId])
+  @@index([questionId])
+}
+
+/// User model data
+model UserModelData {
+  userId             String @id @map("_id") @db.ObjectId
+  learningStyle      String
+  availability       String
+  preferredWorkEnv   String
+  remoteFriendly     Boolean
+  updatedAt          DateTime?
+  user               User   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+/// Auth providers
+model AuthProvider {
+  id          String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String           @db.ObjectId
+  provider    AuthProviderType
+  providerUid String
+  email       String
+  lastLoginAt DateTime?
+  createdAt   DateTime?
+  user        User @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+  @@index([provider, providerUid])
+}
+
+/// Opportunities & recommendations
+model Opportunity {
+  id                 String                   @id @default(auto()) @map("_id") @db.ObjectId
+  type               OpportunityType
+  subtype            CourseSubtype?
+  title              String
+  description        String?
+  tags               String[]
+  organizationId     String   @db.ObjectId
+  location           String?
+  deliveryMode       String?
+  startDate          DateTime?
+  endDate            DateTime?
+  deadline           DateTime?
+  metadata           Json?
+  createdBy          String   @db.ObjectId
+  createdAt          DateTime?
+  updatedAt          DateTime?
+  recommendations    OpportunityRecommendation[]
+  userOpportunities  UserOpportunity[]
+
+  @@index([organizationId])
+  @@index([createdBy])
+}
+
+model OpportunityRecommendation {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String      @db.ObjectId
+  opportunityId String      @db.ObjectId
+  score         Float?
+  rank          Int?
+  reasoning     String?
+  tagsMatched   String[]
+  modelVersion  String?
+  createdAt     DateTime?
+  user          User        @relation(fields: [userId], references: [id])
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+
+  @@index([userId])
+  @@index([opportunityId])
+}
+
+model UserOpportunity {
+  id            String                @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String                @db.ObjectId
+  opportunityId String                @db.ObjectId
+  status        UserOpportunityStatus @default(saved)
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  user          User        @relation(fields: [userId], references: [id])
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+
+  @@index([userId])
+  @@index([opportunityId])
+}
+
+/// Organizations
+model Organization {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  type        OrganizationType
+  description String?
+  website     String?
+  logoUrl     String?
+  location    String?
+  createdAt   DateTime?
+  updatedAt   DateTime?
+}
+
+/// Career insights
+model CareerInsight {
+  id               String @id @default(auto()) @map("_id") @db.ObjectId
+  userId           String @db.ObjectId
+  summary          String
+  recommendedPaths Json?
+  skillsGap        Json?
+  createdAt        DateTime?
+  updatedAt        DateTime?
+  user             User   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
+
+model CareerInsightLog {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String @db.ObjectId
+  triggeredBy String?
+  triggerId   String?
+  createdAt   DateTime?
+  user        User   @relation(fields: [userId], references: [id])
+
+  @@index([userId])
+}
