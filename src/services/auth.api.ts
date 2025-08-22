@@ -31,6 +31,8 @@ export const authApi = {
   },
 
   sendResetCode: async (email: string) => {
+    console.log(email);
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
@@ -42,6 +44,7 @@ export const authApi = {
   },
 
   verifyResetCode: async (email: string, code: string) => {
+    console.log(email, code);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -50,6 +53,8 @@ export const authApi = {
   },
 
   resetPassword: async (resetToken: string, newPassword: string) => {
+    console.log(resetToken, newPassword);
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
