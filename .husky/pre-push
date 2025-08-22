@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo '🚀 Starting pre-push checks...'
 
 echo '🔍 Linting ...'
@@ -12,13 +14,13 @@ bun format || {
   exit 1
 }
 
-echo '😎 Building ...'
+echo '🔨 Building ...'
 bun build || {
   echo '❌ Building failed. Please fix building errors before pushing.'
   exit 1
 }
 
-echo '🧪 Running tests...'
+# echo '🧪 Running tests...'
 # bun test || {
 #   echo '❌ Tests failed. Please fix test failures before pushing.'
 #   exit 1

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 echo '👷‍♂️ Starting pre-commit checks...'
 
 echo '🧹 Linting ...'
