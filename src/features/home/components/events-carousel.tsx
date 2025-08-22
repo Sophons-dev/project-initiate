@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Calendar, ChevronLeft, ChevronRight, MapPin, Target } from 'lucide-react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
 
@@ -22,7 +22,6 @@ type EventItem = {
 export default function EventsCarousel({ items }: { items: EventItem[] }) {
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(160);
-  const shouldReduceMotion = useReducedMotion();
 
   useEffect(() => {
     const set = () => setOffset(window.innerWidth >= 768 ? 280 : 160);
@@ -44,8 +43,6 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
     '0': { x: 0, scale: 1.05, opacity: 1, zIndex: 3, filter: 'blur(0px)' },
     '1': { x: offset, scale: 0.9, opacity: 0.8, zIndex: 2, filter: 'blur(2px)' },
   } as const;
-
-  const spring = shouldReduceMotion ? { duration: 0.2 } : { type: 'spring', stiffness: 260, damping: 26 };
 
   return (
     <div className='relative mx-auto h-[850px] lg:h-[1000px] xl:h-[950px] max-w-7xl overflow-hidden'>

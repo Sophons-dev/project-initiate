@@ -1,147 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Next.js + Bun + Prisma + Auth0
 
-## Getting Started
+This project is built with [Next.js](https://nextjs.org/), powered by [Bun](https://bun.sh) as the runtime and package manager, using [Prisma](https://www.prisma.io/) as the ORM, and [Auth0](https://auth0.com/) for authentication.
 
-First, run the development server:
+## 🚀 Getting Started
+
+First, install dependencies with Bun:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+Run the development server:
+
+```bash
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ⚙️ Environment Setup
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Before running the project, create a `.env.local` file in the root directory and configure the following:
 
-## Database Setup
-
-This project uses MongoDB with Prisma, configured to run in a Docker container.
-
-**Note**: For development purposes, MongoDB is running as a standalone instance. If you need transactions in production, you'll need to configure MongoDB as a replica set.
-
-**Quick Start**: Copy `.env.example` to `.env` and run `bun run db:up` to get started.
-
-### Prerequisites
-
-- Docker and Docker Compose installed
-- Node.js and npm/yarn/bun
-
-### Environment Variables
-
-Copy the `.env.example` file to `.env` and update the values as needed:
+### Database URL (Prisma)
 
 ```bash
-cp .env.example .env
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/mydb"
 ```
 
-The `.env` file should contain:
-
-```env
-# MongoDB Configuration
-MONGO_PORT=27017
-
-# Database Connection String (for replica set without authentication)
-DATABASE_URL="mongodb://localhost:27017/project-initiate?replicaSet=rs0&directConnection=true"
-
-# Add your other environment variables here
-```
-
-### Starting the Database
+### Auth0
 
 ```bash
-# Start MongoDB with replica set
-bun run db:up
-
-# Or manually
-docker-compose up -d
+AUTH0_SECRET="your-random-generated-secret"
+AUTH0_BASE_URL="http://localhost:3000"
+AUTH0_ISSUER_BASE_URL="https://your-tenant.auth0.com"
+AUTH0_CLIENT_ID="your-auth0-client-id"
+AUTH0_CLIENT_SECRET="your-auth0-client-secret"
 ```
 
-### Database Management
+### 🔑 Important:
+
+- `DATABASE_URL` must point to your database.
+- Replace all `AUTH0_*` variables with the credentials from your Auth0 application.
+- The `.env.local` file should not be committed to version control.
+
+## 🗄️ Database & Prisma
+
+### Generate Prisma Client
+
+Run after making schema changes:
 
 ```bash
-# Generate Prisma client
-bun run db:generate
-
-# Push schema changes to database
-bun run db:push
-
-# Seed the database with initial data
-bun run db:seed
-
-# Open Prisma Studio (database GUI)
-bun run db:studio
-
-# Stop the database
-bun run db:down
-
-# Reset database (removes all data)
-bun run db:reset
+bunx prisma generate
 ```
 
-### Database GUI - Prisma Studio
+### Run Migrations
 
-**Prisma Studio** is the recommended tool for database management and inspection. It provides:
+Apply migrations to your database:
 
-- **Visual Database Browser**: View and edit collections, documents, and relationships
-- **Real-time Updates**: See changes as they happen
-- **Query Builder**: Build and test queries visually
-- **Schema Validation**: Ensure data integrity
-- **User-friendly Interface**: No need for command-line database tools
+```bash
+bunx prisma migrate dev
+```
 
-Launch it with: `bun run db:studio`
+### Seeding the Database
 
-### Important Notes
+To populate the database with initial data, run:
 
-- MongoDB is configured as a replica set (`rs0`) which is required for Prisma transactions
-- Authentication is disabled for development purposes (`--noauth`)
-- The `mongo-init` service automatically initializes the replica set
-- Use Prisma Studio for database management: `bun run db:studio`
-- Wait for the replica set to initialize before running Prisma operations
+```bash
+bunx prisma db seed
+```
 
-### Troubleshooting
+The seeding script can be found in `prisma/seed.ts`. Modify this file as needed for your project.
 
-If you encounter connection issues:
+## 🔐 Auth0 Integration
 
-1. **Check Database Status**:
-   ```bash
-   docker-compose ps
-   docker-compose logs initiate-mongo
-   ```
+Authentication is handled via the Auth0 Next.js SDK.
 
-2. **Verify Replica Set**:
-   ```bash
-   docker-compose logs mongo-init
-   docker-compose exec initiate-mongo mongosh --eval "rs.status()"
-   ```
+- Update `.env.local` with your Auth0 values (see above).
+- Ensure the callback URLs in your Auth0 dashboard include:
+  - `http://localhost:3000/api/auth/callback` (for local development)
+  - Your production domain `/api/auth/callback`
+- Login and logout routes are handled under `/api/auth/[...auth0].ts`.
 
-3. **Inspect Database with Prisma Studio**:
-   ```bash
-   bun run db:studio
-   ```
+## 📜 Scripts
 
-4. **Reset if Needed**:
-   ```bash
-   bun run db:reset
-   ```
+```bash
+bun dev               # Start development server
+bun build             # Build production bundle
+bun start             # Run production build
+bunx prisma studio    # Open Prisma Studio (DB UI)
+bunx prisma migrate dev  # Run migrations
+bunx prisma db seed   # Seed database
+```
 
-## Learn More
+## 📂 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+.
+├── prisma/             # Prisma schema and seed script
+├── src/
+│   ├── app/            # Next.js app directory
+│   ├── pages/api/      # API routes (includes Auth0)
+│   └── components/     # UI components
+├── .env.local          # Environment variables (not committed)
+├── bun.lockb           # Bun lockfile
+├── package.json        # Dependencies
+└── README.md           # This file
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✅ Notes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Always run `bunx prisma generate` after modifying your `schema.prisma`.
+- Keep your `.env.local` file updated with the correct values for Prisma and Auth0.
+- For production, set environment variables directly on your deployment platform.
 
-## Deploy on Vercel
+### Changes Made:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Fixed inconsistent heading levels and spacing.
+2. Corrected missing backticks for code blocks and inline code.
+3. Improved formatting for environment variables (used single backticks for consistency).
+4. Added proper Markdown list syntax for the "Important" section.
+5. Fixed indentation and alignment in the project structure section.
+6. Ensured consistent use of backticks for file paths and commands.
+7. Removed trailing empty lines and fixed minor typos.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Regarding Your Question:
+
+You asked whether to include an example Prisma seed code snippet (e.g., a `User.create` example). Since you requested to keep the docs clean unless specified, I’ve excluded the seed code snippet for now. If you’d like to add it, I can provide a concise example like this:
+
+### Example Seed Script
+
+In `prisma/seed.ts`, you can add:
+
+```ts
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function main() {
+  await prisma.user.create({
+    data: {
+      email: 'example@domain.com',
+      name: 'John Doe',
+    },
+  });
+}
+
+main()
+  .catch((e) => console.error(e))
+  .finally(async () => await prisma.$disconnect());
+```
