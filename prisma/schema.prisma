@@ -1,0 +1,242 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+/// Enums
+enum UserType {
+  student
+  graduate
+  company
+  school
+}
+
+enum QuestionCategory {
+  onboarding
+  personalization
+}
+
+enum QuestionType {
+  single_choice
+  multi_choice
+  text
+  scale
+}
+
+enum ProcessingType {
+  direct
+  ai
+  custom
+}
+
+enum QuestionStage {
+  onboarding
+  personalization
+  both
+}
+
+enum OpportunityType {
+  job
+  course
+}
+
+enum CourseSubtype {
+  school_course
+  online_cert
+  online_degree
+  bootcamp
+}
+
+enum UserOpportunityStatus {
+  saved
+  applied
+  rejected
+}
+
+enum OrganizationType {
+  company
+  university
+  bootcamp
+  online_platform
+  government
+  ngo
+  other
+}
+
+model User {
+  id            String    @id @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  auth0Id       String?   @unique
+  userType      UserType
+
+  // Profile fields
+  fullName     String?
+  avatarUrl    String?
+  bio          String?
+  location     String?
+  organization String?
+  website      String?
+
+  // Preferences fields
+  interests                 String[]
+  goals                     String?
+  preferredOpportunityTypes String[]
+  skills                    String[]
+  onboardingCompleted       Boolean   @default(false)
+  preferencesUpdatedAt      DateTime?
+
+  // Relations
+  opportunities     UserOpportunity[]
+  questionAnswers   UserQuestionAnswer[]
+  modelData         UserModelData?
+  recommendations   OpportunityRecommendation[]
+  careerInsights    CareerInsight[]
+  careerInsightLogs CareerInsightLog[]
+}
+
+/// Questions & answers
+model Question {
+  id             String               @id @map("_id") @db.ObjectId
+  questionText   String
+  questionType   QuestionType
+  category       QuestionCategory
+  options        String[]
+  targetField    String
+  userTypes      String[]
+  order          Int
+  active         Boolean              @default(true)
+  processingType ProcessingType       @default(direct)
+  stage          QuestionStage        @default(onboarding)
+  createdAt      DateTime?
+  updatedAt      DateTime?
+  answers        UserQuestionAnswer[]
+}
+
+model UserQuestionAnswer {
+  id         String    @id @map("_id") @db.ObjectId
+  userId     String    @db.ObjectId
+  questionId String    @db.ObjectId
+  answer     String
+  updatedAt  DateTime?
+  user       User      @relation(fields: [userId], references: [id])
+  question   Question  @relation(fields: [questionId], references: [id])
+
+  @@index([userId])
+  @@index([questionId])
+}
+
+/// User model data
+model UserModelData {
+  id               String    @id @map("_id") @db.ObjectId
+  userId           String    @unique @db.ObjectId
+  learningStyle    String
+  availability     String
+  preferredWorkEnv String
+  remoteFriendly   Boolean
+  updatedAt        DateTime?
+  user             User      @relation(fields: [userId], references: [id])
+}
+
+/// Opportunities & recommendations
+model Opportunity {
+  id                String                      @id @map("_id") @db.ObjectId
+  type              OpportunityType
+  subtype           CourseSubtype?
+  title             String
+  description       String?
+  tags              String[]
+  organizationId    String                      @db.ObjectId
+  location          String?
+  deliveryMode      String?
+  startDate         DateTime?
+  endDate           DateTime?
+  deadline          DateTime?
+  metadata          Json?
+  createdBy         String                      @db.ObjectId
+  createdAt         DateTime?
+  updatedAt         DateTime?
+  recommendations   OpportunityRecommendation[]
+  userOpportunities UserOpportunity[]
+
+  @@index([organizationId])
+  @@index([createdBy])
+}
+
+model OpportunityRecommendation {
+  id            String      @id @map("_id") @db.ObjectId
+  userId        String      @db.ObjectId
+  opportunityId String      @db.ObjectId
+  score         Float?
+  rank          Int?
+  reasoning     String?
+  tagsMatched   String[]
+  modelVersion  String?
+  createdAt     DateTime?
+  user          User        @relation(fields: [userId], references: [id])
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+
+  @@index([userId])
+  @@index([opportunityId])
+}
+
+model UserOpportunity {
+  id            String                @id @map("_id") @db.ObjectId
+  userId        String                @db.ObjectId
+  opportunityId String                @db.ObjectId
+  status        UserOpportunityStatus @default(saved)
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  user          User                  @relation(fields: [userId], references: [id])
+  opportunity   Opportunity           @relation(fields: [opportunityId], references: [id])
+
+  @@index([userId])
+  @@index([opportunityId])
+}
+
+/// Organizations
+model Organization {
+  id          String           @id @map("_id") @db.ObjectId
+  name        String
+  type        OrganizationType
+  description String?
+  website     String?
+  logoUrl     String?
+  location    String?
+  createdAt   DateTime?
+  updatedAt   DateTime?
+}
+
+/// Career insights
+model CareerInsight {
+  id               String    @id @map("_id") @db.ObjectId
+  userId           String    @unique @db.ObjectId
+  summary          String
+  recommendedPaths Json?
+  skillsGap        Json?
+  createdAt        DateTime?
+  updatedAt        DateTime?
+  user             User      @relation(fields: [userId], references: [id])
+}
+
+model CareerInsightLog {
+  id          String    @id @map("_id") @db.ObjectId
+  userId      String    @unique @db.ObjectId
+  triggeredBy String?
+  triggerId   String?
+  createdAt   DateTime?
+  user        User      @relation(fields: [userId], references: [id])
+}

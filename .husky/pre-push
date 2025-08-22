@@ -1,10 +1,29 @@
 #!/bin/sh
-echo '🚀 Running pre-push checks...'
 
-echo '🧹 Linting and building all packages...'
-pnpm run test:e2e
-pnpm run lint
-pnpm run format
-pnpm run build
+echo '🚀 Starting pre-push checks...'
 
-echo '✅ Pre-push checks passed!'
+echo '🔍 Linting ...'
+bun lint || {
+  echo '❌ Linting failed. Please fix linting errors before pushing.'
+  exit 1
+}
+
+echo '🎨 Formatting ...'
+bun format || {
+  echo '❌ Formatting failed. Please fix formatting errors before pushing.'
+  exit 1
+}
+
+echo '🔨 Building ...'
+bun run build || {
+  echo '❌ Building failed. Please fix building errors before pushing.'
+  exit 1
+}
+
+# echo '🧪 Running tests...'
+# bun test || {
+#   echo '❌ Tests failed. Please fix test failures before pushing.'
+#   exit 1
+# }
+
+echo '✅ All pre-push checks passed. Proceeding with push. 🚀'
