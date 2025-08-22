@@ -30,7 +30,9 @@ export const authApi = {
     };
   },
 
-  sendResetCode: async () => {
+  sendResetCode: async (email: string) => {
+    console.log(email);
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
@@ -41,7 +43,8 @@ export const authApi = {
     return { success: true, code }; // In real app, don't return the code
   },
 
-  verifyResetCode: async () => {
+  verifyResetCode: async (email: string, code: string) => {
+    console.log(email, code);
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -49,7 +52,9 @@ export const authApi = {
     return { success: true, resetToken: 'mock-reset-token' };
   },
 
-  resetPassword: async () => {
+  resetPassword: async (resetToken: string, newPassword: string) => {
+    console.log(resetToken, newPassword);
+
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
