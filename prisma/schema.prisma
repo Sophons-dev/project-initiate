@@ -14,13 +14,6 @@ datasource db {
 }
 
 /// Enums
-enum UserType {
-  student
-  graduate
-  company
-  school
-}
-
 enum QuestionCategory {
   onboarding
   personalization
@@ -80,8 +73,6 @@ model User {
   emailVerified DateTime?
   image         String?
   auth0Id       String?   @unique
-  userType      UserType
-
 
   // Role Reference
   roleId        String    @db.ObjectId
@@ -120,7 +111,7 @@ model Question {
   category       QuestionCategory
   options        String[]
   targetField    String
-  userTypes      String[]
+  userRoles      String[]
   order          Int
   active         Boolean              @default(true)
   processingType ProcessingType       @default(direct)

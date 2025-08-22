@@ -84,7 +84,7 @@ export function UserInfoStep() {
           </select>
         </div>
 
-        {data.userType === 'student' && (
+        {data.role === 'student' && (
           <div>
             <label className='block text-sm font-medium text-gray-700 mb-2'>Grade Level</label>
             <select
@@ -102,11 +102,11 @@ export function UserInfoStep() {
 
         <div>
           <label className='block text-sm font-medium text-gray-700 mb-2'>
-            {data.userType === 'student' ? 'School' : 'Company/Organization'}
+            {data.role === 'student' ? 'School' : 'Company/Organization'}
           </label>
           <Input
             type='text'
-            placeholder={data.userType === 'student' ? 'Enter your school' : 'Enter your company'}
+            placeholder={data.role === 'student' ? 'Enter your school' : 'Enter your company'}
             value={formData.school}
             onChange={(e) => handleInputChange('school', e.target.value)}
             className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
