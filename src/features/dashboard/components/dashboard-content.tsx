@@ -4,11 +4,9 @@ import { opportunityData, RecommendedOpportunityCard } from '@/components/shared
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
-import { useRouter } from 'next/navigation';
 import { useMemo, useState } from 'react';
 
 export const DashboardContent = () => {
-  const router = useRouter();
   const [activeFilter, setActiveFilter] = useState('Show All');
   const [searchQuery, setSearchQuery] = useState('');
   const filters = ['Show All', 'Jobs', 'Courses', 'Events'];

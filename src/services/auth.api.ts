@@ -30,7 +30,7 @@ export const authApi = {
     };
   },
 
-  sendResetCode: async (email: string) => {
+  sendResetCode: async () => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 
@@ -41,7 +41,7 @@ export const authApi = {
     return { success: true, code }; // In real app, don't return the code
   },
 
-  verifyResetCode: async (email: string, code: string) => {
+  verifyResetCode: async () => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -49,7 +49,7 @@ export const authApi = {
     return { success: true, resetToken: 'mock-reset-token' };
   },
 
-  resetPassword: async (resetToken: string, newPassword: string) => {
+  resetPassword: async () => {
     // Simulate API call
     await new Promise((resolve) => setTimeout(resolve, 1500));
 

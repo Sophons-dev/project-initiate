@@ -4,9 +4,8 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import Image from 'next/image';
-import { useEffect, useRef, useState } from 'react';
+import { useRef } from 'react';
 import { cn } from '@/lib/utils';
-import { usePathname } from 'next/navigation';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,42 +18,13 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { useUser } from '@auth0/nextjs-auth0';
 
-const navLinks = [
-  { label: 'Home', href: '#home' },
-  { label: 'How it Works', href: '#how-it-works' },
-  { label: 'For Students', href: '#students' },
-  { label: 'For Professionals', href: '#professionals' },
-];
-
 /**
  * Main Navbar component
  * @description Used in the main pages such as Dashboard, Careers, Profile, etc.
  */
 export const MainNavbar = () => {
   const { user } = useUser();
-  const [isScrolled, setIsScrolled] = useState(false);
   const headerRef = useRef<HTMLElement | null>(null);
-  const pathname = usePathname();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      setIsScrolled(scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToSection = (hash: string) => {
-    if (!hash.startsWith('#')) return;
-    const target = document.querySelector(hash) as HTMLElement | null;
-    if (!target) return;
-    const headerHeight = headerRef.current?.offsetHeight ?? 0;
-    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8; // small spacer
-    window.scrollTo({ top, behavior: 'smooth' });
-  };
 
   return (
     <motion.header
