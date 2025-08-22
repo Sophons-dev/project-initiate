@@ -42,9 +42,9 @@ export const Navbar = () => {
       for (const link of navLinks) {
         const section = document.querySelector(link.href);
         if (section) {
-          const top = (section as HTMLElement).offsetTop - 100;
+          const top = (section as HTMLElement).offsetTop - 150;
           const bottom = top + (section as HTMLElement).offsetHeight;
-          if (scrollY >= top && scrollY < bottom) {
+          if (scrollY >= top && scrollY <= bottom) {
             setActiveSection(link.href.replace('#', ''));
           }
         }
