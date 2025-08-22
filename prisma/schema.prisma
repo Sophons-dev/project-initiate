@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
-  output   = "../node_modules/generated/prisma"
 }
 
 datasource db {
@@ -75,13 +74,18 @@ enum OrganizationType {
 }
 
 model User {
-  id            String    @id @map("_id") @db.ObjectId
+  id            String    @id @map("_id") @db.ObjectId @default(auto())
   name          String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
   auth0Id       String?   @unique
   userType      UserType
+
+
+  // Role Reference
+  roleId        String    @db.ObjectId
+  role          Role      @relation("UserToRole", fields: [roleId], references: [id])
 
   // Profile fields
   fullName     String?
@@ -239,4 +243,43 @@ model CareerInsightLog {
   triggerId   String?
   createdAt   DateTime?
   user        User      @relation(fields: [userId], references: [id])
+}
+
+/// Roles & Permissions
+model Role {
+  id              String           @id @map("_id") @db.ObjectId @default(auto())
+  name            String           @unique
+  description     String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  rolePermissions RolePermission[] @relation("RoleToRolePermission")
+  users           User[]           @relation("UserToRole")
+}
+
+model Permission {
+  id              String           @id @map("_id") @db.ObjectId @default(auto())
+  name            String           @unique
+  description     String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  rolePermissions RolePermission[] @relation("PermissionToRolePermission")
+}
+
+model RolePermission {
+  id              String           @id @map("_id") @db.ObjectId @default(auto())
+  roleId       String     @db.ObjectId
+  permissionId String     @db.ObjectId
+  createdAt    DateTime   @default(now())
+
+  // Relations
+  role         Role       @relation("RoleToRolePermission", fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation("PermissionToRolePermission", fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
 }
