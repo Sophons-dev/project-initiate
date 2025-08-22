@@ -1,19 +1,18 @@
-#!/bin/sh
-
 echo '👷‍♂️ Starting pre-commit checks...'
 
-STAGED_FILES=$(git diff --cached --name-only)
-echo '🔍 Staged files:'
-echo "$STAGED_FILES"
+echo '🧹 Linting ...'
+bun lint . --ext .ts,.tsx || {
+  echo '❌ Linting failed. Please fix the errors before committing.'
+  exit 1
+}
 
-HAS_CLIENT_CHANGES=$(echo "$STAGED_FILES" | grep -E '^apps/client/' || true)
+echo '🎨 Formatting ...'
+bun format || {
+  echo '❌ Formatting failed.'
+  exit 1
+}
 
-if [ -n "$HAS_CLIENT_CHANGES" ]; then
-  echo '📦 Changes detected in /client...'
-  echo '🧹 Linting client app...'
-  pnpm --filter client run lint || exit 1
-  echo '🎨 Formatting client app...'
-  pnpm --filter client run format || exit 1
-fi
+# Add staged files back after formatting
+git add .
 
-echo '✅ All relevant checks passed. Proceeding with commit. 🚀'
+echo '✅ All pre-commit checks passed. Proceeding with commit. 🚀'
