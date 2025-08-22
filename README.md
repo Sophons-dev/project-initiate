@@ -1,36 +1,330 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Project Initiate
 
-## Getting Started
+An AI-powered opportunity matching platform that connects students and professionals with personalized opportunities, courses, and career paths. Built with Next.js 15, TypeScript, and modern web technologies.
 
-First, run the development server:
+## 🚀 What is Project Initiate?
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+Project Initiate is a comprehensive platform that helps users discover opportunities tailored to their goals and profile. Whether you're a student seeking educational courses or a professional looking for career advancement, our AI-powered system matches you with the perfect opportunities.
+
+### Key Features
+
+- **AI-Powered Matching**: Intelligent algorithms that match users with opportunities based on their profile and goals
+- **Multi-User Support**: Dedicated experiences for both students and professionals
+- **Comprehensive Onboarding**: Multi-step onboarding process to understand user preferences and strengths
+- **Dashboard Analytics**: Track your profile completion, matched opportunities, and match scores
+- **Modern UI/UX**: Beautiful, responsive design with smooth animations and intuitive navigation
+
+## 🏗️ Project Structure
+
+This is a monorepo built with Turborepo, containing:
+
+```
+project-initiate/
+├── apps/
+│   └── client/                 # Next.js 15 web application
+│       ├── src/
+│       │   ├── app/           # App Router structure
+│       │   │   ├── (auth)/    # Authentication pages
+│       │   │   ├── (home)/    # Landing page components
+│       │   │   └── (main)/    # Main app (dashboard, onboarding)
+│       │   ├── components/    # Reusable UI components
+│       │   ├── lib/          # Utilities and configurations
+│       │   └── services/     # API services
+│       └── public/           # Static assets
+├── packages/
+│   ├── eslint-config/        # Shared ESLint configuration
+│   └── typescript-config/    # Shared TypeScript configuration
+└── docker-compose.yml        # Docker development setup
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**: Next.js 15, React 19, TypeScript
+- **Styling**: Tailwind CSS 4, Framer Motion
+- **UI Components**: Radix UI, shadcn/ui
+- **State Management**: React Query (TanStack Query)
+- **Forms**: React Hook Form with Zod validation
+- **Testing**: Playwright for E2E testing
+- **Package Manager**: pnpm
+- **Monorepo**: Turborepo
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📋 Prerequisites
 
-## Learn More
+Before you begin, ensure you have the following installed:
 
-To learn more about Next.js, take a look at the following resources:
+- **Node.js**: Version 18 or higher
+- **pnpm**: Version 10.14.0 or higher
+- **Git**: For version control
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🚀 Getting Started
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### 1. Clone the Repository
 
-## Deploy on Vercel
+```bash
+git clone <your-repository-url>
+cd project-initiate
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 2. Install Dependencies
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+# Install pnpm if you haven't already
+npm install -g pnpm
+
+# Install all dependencies
+pnpm install
+```
+
+### 3. Environment Setup
+
+Create environment files for the client application:
+
+```bash
+cd apps/client
+cp .env.example .env.local
+```
+
+**Note**: If there's no `.env.example` file, you may need to create a `.env.local` file with the necessary environment variables for your specific setup. Make sure to include the MongoDB connection string pointing to your local database.
+
+### 4. Start MongoDB Database
+
+Start the local MongoDB database using Docker Compose:
+
+```bash
+# Start MongoDB and other services
+docker-compose up -d
+
+# Verify services are running
+docker-compose ps
+
+# View logs if needed
+docker-compose logs -f
+```
+
+**Note**: The database needs to be running before starting the development server.
+
+### 5. Start Development
+
+```bash
+# From the root directory
+pnpm dev
+
+# Or navigate to the client app
+cd apps/client
+pnpm dev
+```
+
+The application will be available at `http://localhost:3000`
+
+## 🗄️ Prisma Database Setup
+
+This project uses Prisma as the database ORM with MongoDB. Follow these steps to set up and manage your database:
+
+### 1. Install Prisma CLI
+
+The Prisma CLI is already included in the project dependencies, but you can install it globally if needed:
+
+```bash
+pnpm add -g prisma
+```
+
+### 2. Database Schema
+
+The Prisma schema is located at `packages/db/prisma/schema.prisma`. This file defines:
+
+- Database connection configuration
+- Data models and relationships
+- Database indexes and constraints
+
+### 3. Generate Prisma Client
+
+After making changes to the schema, regenerate the Prisma client:
+
+```bash
+pnpm --filter @initiate/db generate
+```
+
+### 4. Database Operations
+
+For MongoDB, Prisma uses a different approach than traditional SQL databases. Use these commands from the root directory:
+
+```bash
+# Push schema changes to database (for development)
+pnpm --filter @initiate/db db:push
+
+# Reset database (⚠️ WARNING: This will delete all data)
+pnpm --filter @initiate/db db:push --force-reset
+
+# View database in Prisma Studio
+pnpm --filter @initiate/db studio
+
+# Format Prisma schema file
+pnpm --filter @initiate/db format
+```
+
+### 5. Environment Variables
+
+Ensure your database connection string is properly configured in your environment files:
+
+```bash
+cd ./packages/db
+cat .env.example >> .env
+```
+
+### 6. Database Seeding
+
+To populate your database with initial data:
+
+```bash
+# From the root directory
+pnpm --filter @initiate/db db:seed
+```
+
+## 🏃‍♂️ Available Scripts
+
+### Root Level Commands
+
+```bash
+# Development
+pnpm dev          # Start all apps in development mode
+
+# Building
+pnpm build        # Build all apps and packages
+
+# Code Quality
+pnpm lint         # Run ESLint across all packages
+pnpm format       # Format code with Prettier
+pnpm check-types  # Run TypeScript type checking
+
+# Testing
+pnpm test:e2e     # Run Playwright E2E tests
+pnpm test:e2e:ui  # Run Playwright tests with UI
+```
+
+### Client App Commands
+
+```bash
+cd apps/client
+
+# Development
+pnpm dev          # Start Next.js dev server with Turbopack
+pnpm build        # Build for production
+pnpm start        # Start production server
+
+# Testing
+pnpm test:e2e     # Run Playwright tests
+pnpm test:e2e:ui  # Run Playwright tests with UI
+```
+
+## 🐳 Docker Development
+
+The project includes a Docker Compose setup for local development services:
+
+```bash
+# Start MongoDB and other services
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop the environment
+docker-compose down
+
+# Restart services
+docker-compose restart
+```
+
+### Services Included
+
+- **MongoDB**: Local database for development
+- **Additional services**: Check `docker-compose.yml` for complete list
+
+**Note**: The MongoDB service must be running before starting the Next.js development server, as the application depends on database connectivity.
+
+## 🧪 Testing
+
+The project includes comprehensive testing setup:
+
+### E2E Testing with Playwright
+
+```bash
+# Install Playwright browsers (first time only)
+npx playwright install
+
+# Run tests
+pnpm test:e2e
+
+# Run tests with UI
+pnpm test:e2e:ui
+
+# Run tests in headed mode
+npx playwright test --headed
+```
+
+## 📁 Project Architecture
+
+### App Router Structure
+
+- **`(auth)`**: Authentication pages (signin, signup, forgot-password)
+- **`(home)`**: Landing page with hero, features, and marketing content
+- **`(main)`**: Main application (dashboard, onboarding flow)
+
+### Component Organization
+
+- **`components/shared/`**: Reusable components used across the app
+- **`components/ui/`**: Base UI components (buttons, inputs, cards, etc.)
+- **`app/_components/`**: Page-specific components
+
+### Key Features Implementation
+
+- **Onboarding Flow**: Multi-step process with context management
+- **Dashboard**: User analytics and opportunity tracking
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **Animations**: Smooth transitions using Framer Motion
+
+## 🔧 Development Guidelines
+
+### Code Style
+
+- Use TypeScript for all new code
+- Follow the existing ESLint configuration
+- Use Prettier for code formatting
+- Follow React best practices and hooks patterns
+
+### Component Structure
+
+- Use functional components with hooks
+- Implement proper TypeScript interfaces
+- Follow the established naming conventions
+- Use the shared UI component library
+
+### State Management
+
+- Use React Query for server state
+- Use React Context for global client state
+- Keep component state local when possible
+
+## 🚀 Deployment
+
+### Building for Production
+
+```bash
+# Build all applications
+pnpm build
+
+# Build specific app
+pnpm build --filter=client
+```
+
+### Environment Variables
+
+Ensure all necessary environment variables are set in your production environment:
+
+- Database connection strings
+- API keys and secrets
+- Authentication configuration
+- External service URLs
+
+---
+
+**Happy coding! 🎉**
