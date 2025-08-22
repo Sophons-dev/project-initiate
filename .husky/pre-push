@@ -15,7 +15,7 @@ bun format || {
 }
 
 echo '🔨 Building ...'
-bun build || {
+bun run build || {
   echo '❌ Building failed. Please fix building errors before pushing.'
   exit 1
 }
