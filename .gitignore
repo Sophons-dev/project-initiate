@@ -12,7 +12,6 @@
 
 # testing
 /coverage
-/legacy
 
 # next.js
 /.next/
