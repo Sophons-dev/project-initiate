@@ -1,8 +1,20 @@
 echo '🚀 Starting pre-push checks...'
 
-echo '🔍 Type checking ...'
-bun check-types || {
-  echo '❌ Type checking failed. Please fix type errors before pushing.'
+echo '🔍 Linting ...'
+bun lint || {
+  echo '❌ Linting failed. Please fix linting errors before pushing.'
+  exit 1
+}
+
+echo '🎨 Formatting ...'
+bun format || {
+  echo '❌ Formatting failed. Please fix formatting errors before pushing.'
+  exit 1
+}
+
+echo '😎 Building ...'
+bun build || {
+  echo '❌ Building failed. Please fix building errors before pushing.'
   exit 1
 }
 
