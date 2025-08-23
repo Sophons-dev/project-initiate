@@ -1,0 +1,40 @@
+// Role Models
+// This file contains all role and permission-related models
+
+model Role {
+  id              String           @id @map("_id") @db.ObjectId @default(auto())
+  name            String           @unique
+  description     String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  rolePermissions RolePermission[] @relation("RoleToRolePermission")
+  users           User[]           @relation("UserToRole")
+}
+
+model Permission {
+  id              String           @id @map("_id") @db.ObjectId @default(auto())
+  name            String           @unique
+  description     String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+
+  // Relations
+  rolePermissions RolePermission[] @relation("PermissionToRolePermission")
+}
+
+model RolePermission {
+  id              String           @id @map("_id") @db.ObjectId @default(auto())
+  roleId       String     @db.ObjectId
+  permissionId String     @db.ObjectId
+  createdAt    DateTime   @default(now())
+
+  // Relations
+  role         Role       @relation("RoleToRolePermission", fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation("PermissionToRolePermission", fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, permissionId])
+  @@index([roleId])
+  @@index([permissionId])
+}

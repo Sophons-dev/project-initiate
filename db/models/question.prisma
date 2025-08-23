@@ -1,0 +1,19 @@
+// Question Models
+// This file contains all question-related models
+
+model Question {
+  id             String               @id @map("_id") @db.ObjectId
+  questionText   String
+  questionType   QuestionType
+  category       QuestionCategory
+  options        String[]
+  targetField    String
+  userRoles      String[]
+  order          Int
+  active         Boolean              @default(true)
+  processingType ProcessingType       @default(direct)
+  stage          QuestionStage        @default(onboarding)
+  createdAt      DateTime?
+  updatedAt      DateTime?
+  answers        UserQuestionAnswer[]
+}

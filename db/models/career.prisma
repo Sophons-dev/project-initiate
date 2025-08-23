@@ -1,0 +1,22 @@
+// Career Models
+// This file contains all career-related models
+
+model CareerInsight {
+  id               String    @id @map("_id") @db.ObjectId
+  userId           String    @unique @db.ObjectId
+  summary          String
+  recommendedPaths Json?
+  skillsGap        Json?
+  createdAt        DateTime?
+  updatedAt        DateTime?
+  user             User      @relation(fields: [userId], references: [id])
+}
+
+model CareerInsightLog {
+  id          String    @id @map("_id") @db.ObjectId
+  userId      String    @unique @db.ObjectId
+  triggeredBy String?
+  triggerId   String?
+  createdAt   DateTime?
+  user        User      @relation(fields: [userId], references: [id])
+}

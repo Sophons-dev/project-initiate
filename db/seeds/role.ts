@@ -1,17 +1,13 @@
 import { PrismaClient } from '@prisma/client';
 
-const prisma = new PrismaClient();
+export async function seedRoles(prisma: PrismaClient) {
+  console.log('Seeding roles and permissions...');
 
-async function main() {
-  console.log('🌱 Starting database seeding...');
-
-  // Define roles
   const roles = [
     { name: 'student', description: 'Student user with access to learning resources and opportunities' },
     { name: 'professional', description: 'Professional user with access to career development resources' }
   ] as const;
 
-  // Define permissions
   const permissions = [
     { name: 'sign_up', description: 'Ability to create a new account' },
     { name: 'log_in', description: 'Ability to authenticate and access the system' },
@@ -27,7 +23,7 @@ async function main() {
     { name: 'view_event_listings', description: 'Ability to browse available events' }
   ] as const;
 
-  console.log('📝 Creating roles...');
+  console.log('Creating roles...');
   const createdRoles = await Promise.all(
     roles.map(role =>
       prisma.role.upsert({
@@ -37,9 +33,9 @@ async function main() {
       })
     )
   );
-  createdRoles.forEach(r => console.log(`✅ Created role: ${r.name}`));
+  createdRoles.forEach(r => console.log(`Created role: ${r.name}`));
 
-  console.log('🔐 Creating permissions...');
+  console.log('Creating permissions...');
   const createdPermissions = await Promise.all(
     permissions.map(permission =>
       prisma.permission.upsert({
@@ -49,9 +45,9 @@ async function main() {
       })
     )
   );
-  createdPermissions.forEach(p => console.log(`✅ Created permission: ${p.name}`));
+  createdPermissions.forEach(p => console.log(`Created permission: ${p.name}`));
 
-  console.log('🔗 Creating role-permission relationships...');
+  console.log('Creating role-permission relationships...');
   await Promise.all(
     createdRoles.flatMap(role =>
       createdPermissions.map(permission =>
@@ -71,22 +67,11 @@ async function main() {
       )
     )
   );
-  createdRoles.forEach(r => console.log(`✅ Assigned all permissions to role: ${r.name}`));
+  createdRoles.forEach(r => console.log(`Assigned all permissions to role: ${r.name}`));
 
-  console.log('🎉 Database seeding completed successfully!');
-  console.log(`📊 Summary:`);
-  console.log(`   - Created ${createdRoles.length} roles`);
-  console.log(`   - Created ${createdPermissions.length} permissions`);
-  console.log(`   - Created ${createdRoles.length * createdPermissions.length} role-permission relationships`);
+  console.log('Auth seeding completed successfully!');
+  console.log(`Summary:`);
+  console.log(` - Created ${createdRoles.length} roles`);
+  console.log(` - Created ${createdPermissions.length} permissions`);
+  console.log(` - Created ${createdRoles.length * createdPermissions.length} role-permission relationships`);
 }
-
-main()
-  .catch((e) => {
-    console.error(e);
-    if (typeof globalThis.process !== "undefined") {
-      globalThis.process.exit(1);
-    }
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
