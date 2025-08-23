@@ -26,12 +26,17 @@ const strengthOptions = [
 ];
 
 export function StrengthsStep() {
-  const { data, updateData, setCurrentStep, currentStep, totalSteps } = useOnboarding();
-  const [selectedStrengths, setSelectedStrengths] = useState<string[]>(data.strengths);
+  const { data, updateData, setCurrentStep, currentStep, totalSteps } =
+    useOnboarding();
+  const [selectedStrengths, setSelectedStrengths] = useState<string[]>(
+    data.strengths
+  );
 
   const toggleStrength = (strength: string) => {
-    setSelectedStrengths((prev) =>
-      prev.includes(strength) ? prev.filter((s) => s !== strength) : [...prev, strength],
+    setSelectedStrengths(prev =>
+      prev.includes(strength)
+        ? prev.filter(s => s !== strength)
+        : [...prev, strength]
     );
   };
 
@@ -48,11 +53,15 @@ export function StrengthsStep() {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.5 }}
+    >
       <div className='mb-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>What are your strengths?</h2>
+        <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+          What are your strengths?
+        </h2>
         <p className='text-gray-600 text-sm'>
-          Select all that apply. This helps us match you with the right opportunities.
+          Select all that apply. This helps us match you with the right
+          opportunities.
         </p>
       </div>
 
@@ -73,7 +82,7 @@ export function StrengthsStep() {
 
       {/* Strengths Grid */}
       <div className='grid grid-cols-2 bg-neutral-100 p-3 rounded-xl gap-3 mb-8'>
-        {strengthOptions.map((strength) => (
+        {strengthOptions.map(strength => (
           <motion.div
             key={strength}
             whileHover={{ scale: 1.02 }}
@@ -83,7 +92,8 @@ export function StrengthsStep() {
                 ? 'border-cyan-500 bg-cyan-50 text-cyan-700'
                 : 'border-gray-200 hover:border-gray-300 bg-white text-gray-700'
             }`}
-            onClick={() => toggleStrength(strength)}>
+            onClick={() => toggleStrength(strength)}
+          >
             <span className='text-sm font-medium'>{strength}</span>
           </motion.div>
         ))}
@@ -92,7 +102,8 @@ export function StrengthsStep() {
       {/* Selected count */}
       <div className='text-center mb-6'>
         <p className='text-sm text-gray-600'>
-          {selectedStrengths.length} strength{selectedStrengths.length !== 1 ? 's' : ''} selected
+          {selectedStrengths.length} strength
+          {selectedStrengths.length !== 1 ? 's' : ''} selected
         </p>
       </div>
 
@@ -101,13 +112,15 @@ export function StrengthsStep() {
         <Button
           onClick={handleBack}
           variant='ghost'
-          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'>
+          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'
+        >
           <ArrowLeft className='w-4 h-4 mr-2' /> Back
         </Button>
         <Button
           onClick={handleNext}
           disabled={selectedStrengths.length === 0}
-          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'>
+          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'
+        >
           Next <ArrowRight className='w-4 h-4 ml-2' />
         </Button>
       </div>

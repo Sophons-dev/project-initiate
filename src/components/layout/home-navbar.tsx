@@ -61,7 +61,8 @@ export const Navbar = () => {
     const target = document.querySelector(hash) as HTMLElement | null;
     if (!target) return;
     const headerHeight = headerRef.current?.offsetHeight ?? 0;
-    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8; // small spacer
+    const top =
+      target.getBoundingClientRect().top + window.scrollY - headerHeight - 8; // small spacer
     window.scrollTo({ top, behavior: 'smooth' });
   };
 
@@ -73,15 +74,19 @@ export const Navbar = () => {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={cn(
         'fixed w-full top-0 z-50 transition-all duration-300',
-        isScrolled || isMenuOpen ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
-        pathname === '/' ? '' : 'h-15 border-b shadow',
-      )}>
+        isScrolled || isMenuOpen
+          ? 'bg-white/80 backdrop-blur-md shadow h-16'
+          : 'h-24',
+        pathname === '/' ? '' : 'h-15 border-b shadow'
+      )}
+    >
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
         <motion.div
           className='flex items-center space-x-2'
           whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}>
+          whileTap={{ scale: 0.95 }}
+        >
           <Link href='/'>
             <Image
               src='/project-initiate-logo.png'
@@ -97,17 +102,19 @@ export const Navbar = () => {
         <nav
           className={cn(
             'absolute hidden left-1/2 transform -translate-x-1/2 items-center space-x-1',
-            pathname === '/dashboard' ? 'hidden' : 'lg:flex',
-          )}>
+            pathname === '/dashboard' ? 'hidden' : 'lg:flex'
+          )}
+        >
           {navLinks.map((item, index) => (
             <motion.div
               key={item.href}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 + 0.3 }}>
+              transition={{ delay: index * 0.1 + 0.3 }}
+            >
               <Link
                 href={item.href}
-                onClick={(e) => {
+                onClick={e => {
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}
@@ -115,15 +122,20 @@ export const Navbar = () => {
                   'relative group text-sm px-4 py-1.5 rounded-full font-medium transition-colors duration-200',
                   activeSection === item.href.replace('#', '')
                     ? 'text-yellow-600'
-                    : 'text-gray-600 hover:text-gray-900',
-                )}>
+                    : 'text-gray-600 hover:text-gray-900'
+                )}
+              >
                 {/* Active animated pill (desktop) */}
                 <AnimatePresence>
                   {activeSection === item.href.replace('#', '') && (
                     <motion.span
                       layoutId='nav-active-pill'
                       className='absolute inset-0 rounded-full bg-[#FFF4DE]'
-                      transition={{ type: 'spring', stiffness: 300, damping: 50 }}
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 50,
+                      }}
                     />
                   )}
                 </AnimatePresence>
@@ -138,7 +150,8 @@ export const Navbar = () => {
           className={cn('flex items-center space-x-4')}
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.4 }}>
+          transition={{ delay: 0.4 }}
+        >
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -148,17 +161,19 @@ export const Navbar = () => {
                       src={user.picture ?? ''}
                       alt={user.name ?? 'User'}
                     />
-                    <AvatarFallback>{(user.name ?? 'U').slice(0, 2).toUpperCase()}</AvatarFallback>
+                    <AvatarFallback>
+                      {(user.name ?? 'U').slice(0, 2).toUpperCase()}
+                    </AvatarFallback>
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align='end'
-                className='w-56'>
+              <DropdownMenuContent align='end' className='w-56'>
                 <DropdownMenuLabel>
                   <div className='flex flex-col'>
                     <span className='font-medium truncate'>{user.name}</span>
-                    <span className='text-xs text-muted-foreground truncate'>{user.email}</span>
+                    <span className='text-xs text-muted-foreground truncate'>
+                      {user.email}
+                    </span>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -180,20 +195,24 @@ export const Navbar = () => {
             <span className={cn('items-center space-x-4 hidden lg:flex')}>
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}>
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   asChild
                   variant='ghost'
-                  className='hidden md:inline-flex hover:bg-transparent'>
+                  className='hidden md:inline-flex hover:bg-transparent'
+                >
                   <Link href='/auth/login'>Sign In</Link>
                 </Button>
               </motion.div>
               <motion.div
                 whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}>
+                whileTap={{ scale: 0.95 }}
+              >
                 <Button
                   asChild
-                  className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'>
+                  className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'
+                >
                   <Link href='/auth/signup'>Get Started</Link>
                 </Button>
               </motion.div>
@@ -206,29 +225,30 @@ export const Navbar = () => {
             aria-label='Toggle navigation'
             aria-controls='mobile-nav'
             aria-expanded={isMenuOpen}
-            onClick={() => setIsMenuOpen((v) => !v)}
+            onClick={() => setIsMenuOpen(v => !v)}
             className={cn(
               'lg:hidden p-2 rounded-md border border-gray-200 hover:bg-gray-50 transition-colors',
-              isMenuOpen && 'bg-gray-50',
-            )}>
+              isMenuOpen && 'bg-gray-50'
+            )}
+          >
             <span className='sr-only'>Open main menu</span>
             <div className='relative w-6 h-6'>
               <span
                 className={cn(
                   'absolute left-0 top-[5px] h-0.5 w-6 bg-gray-800 transition-transform',
-                  isMenuOpen ? 'translate-y-1.5 rotate-45' : '',
+                  isMenuOpen ? 'translate-y-1.5 rotate-45' : ''
                 )}
               />
               <span
                 className={cn(
                   'absolute left-0 top-1/2 -translate-y-1/2 h-0.5 w-6 bg-gray-800 transition-opacity',
-                  isMenuOpen ? 'opacity-0' : 'opacity-100',
+                  isMenuOpen ? 'opacity-0' : 'opacity-100'
                 )}
               />
               <span
                 className={cn(
                   'absolute left-0 bottom-[5px] h-0.5 w-6 bg-gray-800 transition-transform',
-                  isMenuOpen ? '-translate-y-1.5 -rotate-45' : '',
+                  isMenuOpen ? '-translate-y-1.5 -rotate-45' : ''
                 )}
               />
             </div>
@@ -245,13 +265,14 @@ export const Navbar = () => {
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className='lg:hidden absolute inset-x-0 top-full bg-white border-t shadow-md overflow-hidden'>
+            className='lg:hidden absolute inset-x-0 top-full bg-white border-t shadow-md overflow-hidden'
+          >
             <ul className='flex flex-col p-4 space-y-1'>
-              {navLinks.map((item) => (
+              {navLinks.map(item => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    onClick={(e) => {
+                    onClick={e => {
                       e.preventDefault();
                       scrollToSection(item.href);
                       setIsMenuOpen(false);
@@ -260,15 +281,20 @@ export const Navbar = () => {
                       'relative block w-full px-3 py-2 rounded-md text-sm font-medium transition-colors',
                       activeSection === item.href.replace('#', '')
                         ? 'text-yellow-700'
-                        : 'text-gray-700 hover:bg-gray-50',
-                    )}>
+                        : 'text-gray-700 hover:bg-gray-50'
+                    )}
+                  >
                     {/* Active animated background (mobile) */}
                     <AnimatePresence>
                       {activeSection === item.href.replace('#', '') && (
                         <motion.span
                           layoutId='mobile-nav-active'
                           className='absolute inset-0 rounded-md bg-[#FFF4DE]'
-                          transition={{ type: 'spring', stiffness: 500, damping: 35 }}
+                          transition={{
+                            type: 'spring',
+                            stiffness: 500,
+                            damping: 35,
+                          }}
                         />
                       )}
                     </AnimatePresence>
@@ -281,7 +307,8 @@ export const Navbar = () => {
                 <Link
                   href='/signin'
                   onClick={() => setIsMenuOpen(false)}
-                  className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'>
+                  className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
+                >
                   Sign In
                 </Link>
               </li>

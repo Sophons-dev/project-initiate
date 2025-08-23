@@ -12,29 +12,34 @@ export const FeatureSection = () => {
 
   const { scrollYProgress } = useScroll();
 
-  const featuresInView = useInView(featuresRef, { once: true, margin: '-200px' });
+  const featuresInView = useInView(featuresRef, {
+    once: true,
+    margin: '-200px',
+  });
   const yFeatures = useTransform(scrollYProgress, [0.2, 0.6], [0, -30]);
 
   return (
-    <section
-      ref={featuresRef}
-      className='mx-auto py-30 px-4 md:mx-0'>
+    <section ref={featuresRef} className='mx-auto py-30 px-4 md:mx-0'>
       <motion.div
         style={{ y: yFeatures }}
-        className='container max-w-7xl mx-auto'>
+        className='container max-w-7xl mx-auto'
+      >
         <motion.div
           className='text-center mb-12'
           initial={{ opacity: 0, y: 50 }}
           animate={featuresInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}>
+          transition={{ duration: 0.8 }}
+        >
           <TextPill
             icon={<Sparkles className='w-4 h-4' />}
             text='What we offer'
           />
-          <h2 className='text-2xl lg:text-3xl text-black mb-4'>Powerful Features for Your Success</h2>
+          <h2 className='text-2xl lg:text-3xl text-black mb-4'>
+            Powerful Features for Your Success
+          </h2>
           <p className='max-w-2xl mx-auto'>
-            Discover how our platform uses cutting-edge technology to connect you with the right opportunities at the
-            right time.
+            Discover how our platform uses cutting-edge technology to connect
+            you with the right opportunities at the right time.
           </p>
         </motion.div>
 
@@ -42,11 +47,10 @@ export const FeatureSection = () => {
           className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5'
           variants={staggerContainer}
           initial='initial'
-          animate={featuresInView ? 'animate' : 'initial'}>
+          animate={featuresInView ? 'animate' : 'initial'}
+        >
           {features.map((feature, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}>
+            <motion.div key={index} variants={fadeInUp}>
               <Card className='p-6 h-full hover:shadow-xl transition-all border duration-300 group cursor-pointer bg-[#F9F8FC]'>
                 <CardContent className='p-0 flex flex-col gap-y-6'>
                   <motion.div
@@ -55,7 +59,8 @@ export const FeatureSection = () => {
                     transition={{ duration: 0.6 }}
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}>
+                    viewport={{ once: true }}
+                  >
                     {feature.content}
                   </motion.div>
 
@@ -63,13 +68,15 @@ export const FeatureSection = () => {
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6 }}
-                    viewport={{ once: true }}>
+                    viewport={{ once: true }}
+                  >
                     <motion.h3
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.4 }}
                       viewport={{ once: true }}
-                      className='mb-2'>
+                      className='mb-2'
+                    >
                       {feature.title}
                     </motion.h3>
                     <motion.p
@@ -77,7 +84,8 @@ export const FeatureSection = () => {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: 0.6 }}
                       viewport={{ once: true }}
-                      className='text-gray-600 text-sm'>
+                      className='text-gray-600 text-sm'
+                    >
                       {feature.description}
                     </motion.p>
                   </motion.div>
@@ -118,8 +126,8 @@ const features = [
               Why this matches you:
             </p>
             <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-5'>
-              Based on your design portfolio, this workshop will enhance your UX research skills and expand your design
-              thinking methodology.
+              Based on your design portfolio, this workshop will enhance your UX
+              research skills and expand your design thinking methodology.
             </p>
           </div>
         </div>
@@ -156,8 +164,9 @@ const features = [
             </div>
 
             <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-3'>
-              A comprehensive 3-day workshop covering user research, wireframing, prototyping, and usability testing.
-              Perfect for designers looking to enhance their design skills.
+              A comprehensive 3-day workshop covering user research,
+              wireframing, prototyping, and usability testing. Perfect for
+              designers looking to enhance their design skills.
             </p>
 
             <div className='p-2 bg-[#F8F9FA] rounded-xl'>
@@ -166,8 +175,8 @@ const features = [
                 Why this matches you:
               </p>
               <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-2'>
-                Based on your design portfolio, this workshop will enhance your UX research skills and expand your
-                design thinking methodology.
+                Based on your design portfolio, this workshop will enhance your
+                UX research skills and expand your design thinking methodology.
               </p>
             </div>
           </div>
@@ -208,8 +217,9 @@ const features = [
             </div>
 
             <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-3'>
-              A comprehensive 3-day workshop covering user research, wireframing, prototyping, and usability testing.
-              Perfect for designers looking to enhance their design skills.
+              A comprehensive 3-day workshop covering user research,
+              wireframing, prototyping, and usability testing. Perfect for
+              designers looking to enhance their design skills.
             </p>
 
             <div className='p-2 bg-[#F8F9FA] rounded-xl'>
@@ -218,8 +228,8 @@ const features = [
                 Why this matches you:
               </p>
               <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-2'>
-                Based on your design portfolio, this workshop will enhance your UX research skills and expand your
-                design thinking methodology.
+                Based on your design portfolio, this workshop will enhance your
+                UX research skills and expand your design thinking methodology.
               </p>
             </div>
           </div>
@@ -245,8 +255,9 @@ const features = [
             </div>
 
             <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-3'>
-              A comprehensive 3-day workshop covering user research, wireframing, prototyping, and usability testing.
-              Perfect for designers looking to enhance their design skills.
+              A comprehensive 3-day workshop covering user research,
+              wireframing, prototyping, and usability testing. Perfect for
+              designers looking to enhance their design skills.
             </p>
 
             <div className='p-2 bg-[#F8F9FA] rounded-xl'>
@@ -255,8 +266,8 @@ const features = [
                 Why this matches you:
               </p>
               <p className='text-xs text-gray-600 line-clamp-3 xl:line-clamp-2'>
-                Based on your design portfolio, this workshop will enhance your UX research skills and expand your
-                design thinking methodology.
+                Based on your design portfolio, this workshop will enhance your
+                UX research skills and expand your design thinking methodology.
               </p>
             </div>
           </div>

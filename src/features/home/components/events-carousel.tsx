@@ -4,7 +4,13 @@ import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Calendar, ChevronLeft, ChevronRight, MapPin, Target } from 'lucide-react';
+import {
+  Calendar,
+  ChevronLeft,
+  ChevronRight,
+  MapPin,
+  Target,
+} from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
@@ -36,12 +42,24 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
   const right = (current + 1) % n;
 
   const trio = useMemo(() => [left, current, right], [left, current, right]);
-  const go = (dir: number) => setIndex((i) => i + dir);
+  const go = (dir: number) => setIndex(i => i + dir);
 
   const positions = {
-    '-1': { x: -offset, scale: 0.9, opacity: 0.8, zIndex: 1, filter: 'blur(2px)' },
+    '-1': {
+      x: -offset,
+      scale: 0.9,
+      opacity: 0.8,
+      zIndex: 1,
+      filter: 'blur(2px)',
+    },
     '0': { x: 0, scale: 1.05, opacity: 1, zIndex: 3, filter: 'blur(0px)' },
-    '1': { x: offset, scale: 0.9, opacity: 0.8, zIndex: 2, filter: 'blur(2px)' },
+    '1': {
+      x: offset,
+      scale: 0.9,
+      opacity: 0.8,
+      zIndex: 2,
+      filter: 'blur(2px)',
+    },
   } as const;
 
   return (
@@ -51,13 +69,15 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
         <Button
           aria-label='Previous event'
           className='pointer-events-auto h-10 w-10 rounded-full bg-orange-500 text-white hover:bg-orange-600'
-          onClick={() => go(-1)}>
+          onClick={() => go(-1)}
+        >
           <ChevronLeft className='h-5 w-5' />
         </Button>
         <Button
           aria-label='Next event'
           className='pointer-events-auto h-10 w-10 rounded-full bg-orange-500 text-white hover:bg-orange-600'
-          onClick={() => go(1)}>
+          onClick={() => go(1)}
+        >
           <ChevronRight className='h-5 w-5' />
         </Button>
       </div>
@@ -77,7 +97,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
       {/* Stage */}
       <div className='absolute left-1/2 top-0 mt-10 z-10 h-full w-full -translate-x-1/2'>
         <AnimatePresence initial={false}>
-          {trio.map((idx) => {
+          {trio.map(idx => {
             const pos = idx === current ? '0' : idx === left ? '-1' : '1';
             const item = items[idx];
             const key = `item-${item.id}-${pos}`;
@@ -92,7 +112,8 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                 exit={{ opacity: 0, scale: 0.95 }}
                 style={{ zIndex: conf.zIndex }}
                 aria-hidden={pos !== '0'}
-                whileHover={pos === '0' ? { scale: 1.07 } : undefined}>
+                whileHover={pos === '0' ? { scale: 1.07 } : undefined}
+              >
                 <Card className='w-[320px] sm:w-[500px] pt-0 overflow-hidden rounded-xl border lg:w-[550px]'>
                   <Image
                     src={item.image || '/placeholder.svg'}
@@ -109,8 +130,12 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                           <Calendar className='w-5 h-5 text-orange-500' />
                         </div>
                         <span className='flex flex-col'>
-                          <div className='text-xs text-muted-foreground'>Event Date</div>
-                          <div className='text-xs font-medium line-clamp-1'>{item.date}</div>
+                          <div className='text-xs text-muted-foreground'>
+                            Event Date
+                          </div>
+                          <div className='text-xs font-medium line-clamp-1'>
+                            {item.date}
+                          </div>
                         </span>
                       </div>
 
@@ -120,8 +145,12 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                           <MapPin className='w-5 h-5 text-blue-500' />
                         </div>
                         <span className='flex flex-col'>
-                          <div className='text-xs text-muted-foreground'>Venue</div>
-                          <div className='text-xs font-medium line-clamp-1'>{item.location}</div>
+                          <div className='text-xs text-muted-foreground'>
+                            Venue
+                          </div>
+                          <div className='text-xs font-medium line-clamp-1'>
+                            {item.location}
+                          </div>
                         </span>
                       </div>
 
@@ -131,8 +160,12 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                           <Target className='w-5 h-5 text-red-500' />
                         </div>
                         <span className='flex flex-col'>
-                          <div className='text-xs text-muted-foreground'>Focus</div>
-                          <div className='text-xs font-medium line-clamp-1'>{item.focus}</div>
+                          <div className='text-xs text-muted-foreground'>
+                            Focus
+                          </div>
+                          <div className='text-xs font-medium line-clamp-1'>
+                            {item.focus}
+                          </div>
                         </span>
                       </div>
                     </div>
@@ -142,22 +175,24 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                     <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
                       <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
                         <div className='text-xs text-center md:text-left w-full md:w-2/3'>
-                          <p className='font-medium'>Ready to shape your future?</p>
+                          <p className='font-medium'>
+                            Ready to shape your future?
+                          </p>
                           <p className='text-muted-foreground'>
-                            Register now and be part of this transformative experience.
+                            Register now and be part of this transformative
+                            experience.
                           </p>
                         </div>
 
                         <div className='flex flex-col md:flex-row gap-3 items-center justify-end md:w-1/2'>
-                          <Link
-                            className='text-xs'
-                            href={'/signin'}>
+                          <Link className='text-xs' href={'/signin'}>
                             Learn More
                           </Link>
                           <Button
                             asChild
                             size={'sm'}
-                            className='text-xs bg-yellow-500 rounded-full hover:bg-yellow-600'>
+                            className='text-xs bg-yellow-500 rounded-full hover:bg-yellow-600'
+                          >
                             <Link href='/signup'>Register Now</Link>
                           </Button>
                         </div>

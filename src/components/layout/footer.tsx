@@ -63,22 +63,28 @@ export const Footer = () => {
           variants={fadeInUp}
           initial='hidden'
           whileInView='show'
-          viewport={{ once: true, amount: 0.3 }}>
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <div>Stay updated with new opportunities</div>
           <div className='text-sm text-muted-foreground my-3'>
-            Get notified about the latest courses, jobs, and events that match your profile
+            Get notified about the latest courses, jobs, and events that match
+            your profile
           </div>
           <div className='mt-3 flex items-center gap-2'>
             <Input
               type='email'
               placeholder='Enter your email'
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={e => setEmail(e.target.value)}
               className='h-9 border border-neutral-600'
             />
-            <Button className='h-9 rounded-md bg-teal-600 text-white hover:bg-teal-700'>Subscribe</Button>
+            <Button className='h-9 rounded-md bg-teal-600 text-white hover:bg-teal-700'>
+              Subscribe
+            </Button>
           </div>
-          <p className='mt-2 text-[11px] text-muted-foreground'>We respect your inbox. Unsubscribe anytime.</p>
+          <p className='mt-2 text-[11px] text-muted-foreground'>
+            We respect your inbox. Unsubscribe anytime.
+          </p>
         </motion.div>
 
         <Separator className='my-8' />
@@ -89,7 +95,8 @@ export const Footer = () => {
             variants={fadeInUp}
             initial='hidden'
             whileInView='show'
-            viewport={{ once: true }}>
+            viewport={{ once: true }}
+          >
             <div className='flex items-center gap-2'>
               <Image
                 src='/project-initiate-logo.png'
@@ -99,24 +106,24 @@ export const Footer = () => {
               />
             </div>
             <p className='text-sm text-muted-foreground'>
-              Connecting ambitious individuals with life-changing opportunities through AI-powered matching.
+              Connecting ambitious individuals with life-changing opportunities
+              through AI-powered matching.
             </p>
           </motion.div>
 
-          {footerSections.map((section) => (
+          {footerSections.map(section => (
             <motion.div
               key={section.title}
               variants={fadeInUp}
               initial='hidden'
               whileInView='show'
-              viewport={{ once: true }}>
+              viewport={{ once: true }}
+            >
               <div className='mb-2 font-semibold'>{section.title}</div>
               <ul className='space-y-1 text-sm text-muted-foreground'>
-                {section.links.map((link) => (
+                {section.links.map(link => (
                   <li key={link.label}>
-                    <Link
-                      href={link.href}
-                      className='hover:text-yellow-600'>
+                    <Link href={link.href} className='hover:text-yellow-600'>
                       {link.label}
                     </Link>
                   </li>
@@ -135,7 +142,8 @@ export const Footer = () => {
               <Link
                 key={index}
                 href={link.href}
-                className='hover:text-yellow-600'>
+                className='hover:text-yellow-600'
+              >
                 {link.icon}
               </Link>
             ))}

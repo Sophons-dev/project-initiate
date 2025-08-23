@@ -2,7 +2,7 @@
 export const authApi = {
   signIn: async (data: { email: string; password: string }) => {
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     // Mock response
     return {
@@ -15,9 +15,13 @@ export const authApi = {
     };
   },
 
-  signUp: async (data: { fullName: string; email: string; password: string }) => {
+  signUp: async (data: {
+    fullName: string;
+    email: string;
+    password: string;
+  }) => {
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     // Mock response
     return {
@@ -34,7 +38,7 @@ export const authApi = {
     console.log(email);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     // Generate mock verification code
     const code = Math.random().toString(36).substring(2, 8).toUpperCase();
@@ -46,7 +50,7 @@ export const authApi = {
   verifyResetCode: async (email: string, code: string) => {
     console.log(email, code);
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     // Mock verification (in real app, verify against backend)
     return { success: true, resetToken: 'mock-reset-token' };
@@ -56,14 +60,14 @@ export const authApi = {
     console.log(resetToken, newPassword);
 
     // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    await new Promise(resolve => setTimeout(resolve, 1500));
 
     return { success: true };
   },
 
   signInWithGoogle: async () => {
     // Simulate Google OAuth
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     return {
       user: {

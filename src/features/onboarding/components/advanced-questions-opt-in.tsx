@@ -7,8 +7,11 @@ import { useOnboarding } from '../contexts/onboarding-context';
 import { ArrowLeft, ArrowRight, Target, Clock } from 'lucide-react';
 
 export function AdvancedQuestionsOptIn() {
-  const { data, updateData, setCurrentStep, currentStep, totalSteps } = useOnboarding();
-  const [wantsAdvanced, setWantsAdvanced] = useState<boolean | null>(data.wantsAdvancedQuestions);
+  const { data, updateData, setCurrentStep, currentStep, totalSteps } =
+    useOnboarding();
+  const [wantsAdvanced, setWantsAdvanced] = useState<boolean | null>(
+    data.wantsAdvancedQuestions
+  );
 
   const handleNext = () => {
     updateData({ wantsAdvancedQuestions: wantsAdvanced || false });
@@ -27,11 +30,15 @@ export function AdvancedQuestionsOptIn() {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.5 }}
+    >
       <div className='mb-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>Would you like to answer more advanced questions?</h2>
+        <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+          Would you like to answer more advanced questions?
+        </h2>
         <p className='text-gray-600 text-sm'>
-          This will help us match you more accurately with opportunities that fit your specific interests and goals.
+          This will help us match you more accurately with opportunities that
+          fit your specific interests and goals.
         </p>
       </div>
 
@@ -74,19 +81,31 @@ export function AdvancedQuestionsOptIn() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-            wantsAdvanced === true ? 'border-cyan-500 bg-cyan-50' : 'border-gray-200 hover:border-gray-300 bg-white'
+            wantsAdvanced === true
+              ? 'border-cyan-500 bg-cyan-50'
+              : 'border-gray-200 hover:border-gray-300 bg-white'
           }`}
-          onClick={() => setWantsAdvanced(true)}>
+          onClick={() => setWantsAdvanced(true)}
+        >
           <div className='flex items-center space-x-3'>
             <div
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                wantsAdvanced === true ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300'
-              }`}>
-              {wantsAdvanced === true && <div className='w-2 h-2 bg-white rounded-full' />}
+                wantsAdvanced === true
+                  ? 'border-cyan-500 bg-cyan-500'
+                  : 'border-gray-300'
+              }`}
+            >
+              {wantsAdvanced === true && (
+                <div className='w-2 h-2 bg-white rounded-full' />
+              )}
             </div>
             <div>
-              <span className='font-medium text-gray-900'>Yes, I want better matches</span>
-              <p className='text-sm text-gray-600'>Answer a few more questions for personalized recommendations</p>
+              <span className='font-medium text-gray-900'>
+                Yes, I want better matches
+              </span>
+              <p className='text-sm text-gray-600'>
+                Answer a few more questions for personalized recommendations
+              </p>
             </div>
           </div>
         </motion.div>
@@ -95,19 +114,31 @@ export function AdvancedQuestionsOptIn() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-            wantsAdvanced === false ? 'border-cyan-500 bg-cyan-50' : 'border-gray-200 hover:border-gray-300 bg-white'
+            wantsAdvanced === false
+              ? 'border-cyan-500 bg-cyan-50'
+              : 'border-gray-200 hover:border-gray-300 bg-white'
           }`}
-          onClick={() => setWantsAdvanced(false)}>
+          onClick={() => setWantsAdvanced(false)}
+        >
           <div className='flex items-center space-x-3'>
             <div
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                wantsAdvanced === false ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300'
-              }`}>
-              {wantsAdvanced === false && <div className='w-2 h-2 bg-white rounded-full' />}
+                wantsAdvanced === false
+                  ? 'border-cyan-500 bg-cyan-500'
+                  : 'border-gray-300'
+              }`}
+            >
+              {wantsAdvanced === false && (
+                <div className='w-2 h-2 bg-white rounded-full' />
+              )}
             </div>
             <div>
-              <span className='font-medium text-gray-900'>No, skip for now</span>
-              <p className='text-sm text-gray-600'>Continue with basic matching</p>
+              <span className='font-medium text-gray-900'>
+                No, skip for now
+              </span>
+              <p className='text-sm text-gray-600'>
+                Continue with basic matching
+              </p>
             </div>
           </div>
         </motion.div>
@@ -118,14 +149,17 @@ export function AdvancedQuestionsOptIn() {
         <Button
           onClick={handleBack}
           variant='ghost'
-          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'>
+          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'
+        >
           <ArrowLeft className='w-4 h-4 mr-2' /> Back
         </Button>
         <Button
           onClick={handleNext}
           disabled={wantsAdvanced === null}
-          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'>
-          {wantsAdvanced ? 'Continue' : 'Skip'} <ArrowRight className='w-4 h-4 ml-2' />
+          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'
+        >
+          {wantsAdvanced ? 'Continue' : 'Skip'}{' '}
+          <ArrowRight className='w-4 h-4 ml-2' />
         </Button>
       </div>
     </motion.div>
