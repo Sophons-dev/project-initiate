@@ -5,7 +5,7 @@ export async function seedRoles(prisma: PrismaClient) {
 
   const roles = [
     { name: 'student', description: 'Student user with access to learning resources and opportunities' },
-    { name: 'professional', description: 'Professional user with access to career development resources' }
+    { name: 'professional', description: 'Professional user with access to career development resources' },
   ] as const;
 
   const permissions = [
@@ -20,54 +20,54 @@ export async function seedRoles(prisma: PrismaClient) {
     { name: 'view_recommendations', description: 'Ability to view personalized recommendations' },
     { name: 'view_course_listings', description: 'Ability to browse available courses' },
     { name: 'view_job_listings', description: 'Ability to browse available job opportunities' },
-    { name: 'view_event_listings', description: 'Ability to browse available events' }
+    { name: 'view_event_listings', description: 'Ability to browse available events' },
   ] as const;
 
   console.log('Creating roles...');
   const createdRoles = await Promise.all(
-    roles.map(role =>
+    roles.map((role) =>
       prisma.role.upsert({
         where: { name: role.name },
         update: role,
-        create: role
-      })
-    )
+        create: role,
+      }),
+    ),
   );
-  createdRoles.forEach(r => console.log(`Created role: ${r.name}`));
+  createdRoles.forEach((r) => console.log(`Created role: ${r.name}`));
 
   console.log('Creating permissions...');
   const createdPermissions = await Promise.all(
-    permissions.map(permission =>
+    permissions.map((permission) =>
       prisma.permission.upsert({
         where: { name: permission.name },
         update: permission,
-        create: permission
-      })
-    )
+        create: permission,
+      }),
+    ),
   );
-  createdPermissions.forEach(p => console.log(`Created permission: ${p.name}`));
+  createdPermissions.forEach((p) => console.log(`Created permission: ${p.name}`));
 
   console.log('Creating role-permission relationships...');
   await Promise.all(
-    createdRoles.flatMap(role =>
-      createdPermissions.map(permission =>
+    createdRoles.flatMap((role) =>
+      createdPermissions.map((permission) =>
         prisma.rolePermission.upsert({
           where: {
             roleId_permissionId: {
               roleId: role.id,
-              permissionId: permission.id
-            }
+              permissionId: permission.id,
+            },
           },
           update: {},
           create: {
             roleId: role.id,
-            permissionId: permission.id
-          }
-        })
-      )
-    )
+            permissionId: permission.id,
+          },
+        }),
+      ),
+    ),
   );
-  createdRoles.forEach(r => console.log(`Assigned all permissions to role: ${r.name}`));
+  createdRoles.forEach((r) => console.log(`Assigned all permissions to role: ${r.name}`));
 
   console.log('Auth seeding completed successfully!');
   console.log(`Summary:`);
