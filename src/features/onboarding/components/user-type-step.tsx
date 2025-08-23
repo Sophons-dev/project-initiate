@@ -8,11 +8,11 @@ import { Button } from '@/components/ui/button';
 
 export function UserTypeStep() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } = useOnboarding();
-  const [selectedType, setSelectedType] = useState<'student' | 'professional' | null>(data.userType);
+  const [selectedRole, setSelectedRole] = useState<'student' | 'professional' | null>(data.role);
 
   const handleNext = () => {
-    if (selectedType) {
-      updateData({ userType: selectedType });
+    if (selectedRole) {
+      updateData({ role: selectedRole });
       setCurrentStep(2);
     }
   };
@@ -50,15 +50,15 @@ export function UserTypeStep() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border rounded-lg cursor-pointer transition-all ${
-            selectedType === 'student' ? 'border-cyan-500 bg-cyan-50' : 'border-gray-200 hover:border-gray-300 bg-white'
+            selectedRole === 'student' ? 'border-cyan-500 bg-cyan-50' : 'border-gray-200 hover:border-gray-300 bg-white'
           }`}
-          onClick={() => setSelectedType('student')}>
+          onClick={() => setSelectedRole('student')}>
           <div className='flex items-center space-x-3'>
             <div
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                selectedType === 'student' ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300'
+                selectedRole === 'student' ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300'
               }`}>
-              {selectedType === 'student' && <div className='w-2 h-2 bg-white rounded-full' />}
+              {selectedRole === 'student' && <div className='w-2 h-2 bg-white rounded-full' />}
             </div>
             <GraduationCap className='w-6 h-6 text-gray-600' />
             <span className='font-medium text-gray-900'>Student</span>
@@ -69,17 +69,17 @@ export function UserTypeStep() {
           whileHover={{ scale: 1.02 }}
           whileTap={{ scale: 0.98 }}
           className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
-            selectedType === 'professional'
+            selectedRole === 'professional'
               ? 'border-cyan-500 bg-cyan-50'
               : 'border-gray-200 hover:border-gray-300 bg-white'
           }`}
-          onClick={() => setSelectedType('professional')}>
+          onClick={() => setSelectedRole('professional')}>
           <div className='flex items-center space-x-3'>
             <div
               className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                selectedType === 'professional' ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300'
+                selectedRole === 'professional' ? 'border-cyan-500 bg-cyan-500' : 'border-gray-300'
               }`}>
-              {selectedType === 'professional' && <div className='w-2 h-2 bg-white rounded-full' />}
+              {selectedRole === 'professional' && <div className='w-2 h-2 bg-white rounded-full' />}
             </div>
             <Briefcase className='w-6 h-6 text-gray-600' />
             <span className='font-medium text-gray-900'>Professional / Post Grad</span>
@@ -92,7 +92,7 @@ export function UserTypeStep() {
         <Button
           size={'lg'}
           onClick={handleNext}
-          disabled={!selectedType}
+          disabled={!selectedRole}
           className='bg-cyan-600 !px-6 hover:bg-cyan-700 text-white rounded-full disabled:opacity-50'>
           Next <ArrowRight className='w-4 h-4 ml-2' />
         </Button>

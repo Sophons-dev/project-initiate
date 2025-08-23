@@ -4,7 +4,7 @@ import type React from 'react';
 import { createContext, useContext, useState } from 'react';
 
 export interface OnboardingData {
-  userType: 'student' | 'professional' | null;
+  role: 'student' | 'professional' | null;
   age: string;
   gender: string;
   gradeLevel: string;
@@ -31,7 +31,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   const totalSteps = 7;
 
   const [data, setData] = useState<OnboardingData>({
-    userType: null,
+    role: null,
     age: '',
     gender: '',
     gradeLevel: '',
