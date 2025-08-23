@@ -2,15 +2,15 @@
 
 echo '🚀 Starting pre-push checks...'
 
-echo '🔍 Linting ...'
-bun lint || {
-  echo '❌ Linting failed. Please fix linting errors before pushing.'
-  exit 1
-}
-
 echo '🎨 Formatting ...'
 bun format || {
   echo '❌ Formatting failed. Please fix formatting errors before pushing.'
+  exit 1
+}
+
+echo '🔍 Linting ...'
+bun lint || {
+  echo '❌ Linting failed. Please fix linting errors before pushing.'
   exit 1
 }
 

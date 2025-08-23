@@ -2,15 +2,15 @@
 
 echo '👷‍♂️ Starting pre-commit checks...'
 
-echo '🧹 Linting ...'
-bun lint . --ext .ts,.tsx || {
-  echo '❌ Linting failed. Please fix the errors before committing.'
-  exit 1
-}
-
 echo '🎨 Formatting ...'
 bun format || {
   echo '❌ Formatting failed.'
+  exit 1
+}
+
+echo '🧹 Linting ...'
+bun lint . --ext .ts,.tsx || {
+  echo '❌ Linting failed. Please fix the errors before committing.'
   exit 1
 }
 
