@@ -1,0 +1,14 @@
+// Organization Models
+// This file contains all organization-related models
+
+model Organization {
+  id          String           @id @map("_id") @db.ObjectId
+  name        String
+  type        OrganizationType
+  description String?
+  website     String?
+  logoUrl     String?
+  location    String?
+  createdAt   DateTime?
+  updatedAt   DateTime?
+}

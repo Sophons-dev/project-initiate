@@ -1,0 +1,54 @@
+// Enums
+// This file contains all enum definitions used throughout the schema
+
+enum QuestionCategory {
+  onboarding
+  personalization
+}
+
+enum QuestionType {
+  single_choice
+  multi_choice
+  text
+  scale
+}
+
+enum ProcessingType {
+  direct
+  ai
+  custom
+}
+
+enum QuestionStage {
+  onboarding
+  personalization
+  both
+}
+
+enum OpportunityType {
+  job
+  course
+}
+
+enum CourseSubtype {
+  school_course
+  online_cert
+  online_degree
+  bootcamp
+}
+
+enum UserOpportunityStatus {
+  saved
+  applied
+  rejected
+}
+
+enum OrganizationType {
+  company
+  university
+  bootcamp
+  online_platform
+  government
+  ngo
+  other
+}
