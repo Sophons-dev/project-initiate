@@ -8,7 +8,8 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
 export function UserInfoStep() {
-  const { data, updateData, setCurrentStep, currentStep, totalSteps } = useOnboarding();
+  const { data, updateData, setCurrentStep, currentStep, totalSteps } =
+    useOnboarding();
   const [formData, setFormData] = useState({
     age: data.age,
     gender: data.gender,
@@ -18,7 +19,7 @@ export function UserInfoStep() {
   });
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleNext = () => {
@@ -36,9 +37,12 @@ export function UserInfoStep() {
     <motion.div
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.5 }}
+    >
       <div className='mb-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>User Information</h2>
+        <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+          User Information
+        </h2>
         <p className='text-gray-600 text-sm'>Please fill up the fields below</p>
       </div>
 
@@ -60,22 +64,27 @@ export function UserInfoStep() {
       {/* Form */}
       <div className='space-y-6 mb-8'>
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>Age</label>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Age
+          </label>
           <Input
             type='number'
             placeholder='Enter your age'
             value={formData.age}
-            onChange={(e) => handleInputChange('age', e.target.value)}
+            onChange={e => handleInputChange('age', e.target.value)}
             className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
           />
         </div>
 
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>Gender</label>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Gender
+          </label>
           <select
             value={formData.gender}
-            onChange={(e) => handleInputChange('gender', e.target.value)}
-            className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'>
+            onChange={e => handleInputChange('gender', e.target.value)}
+            className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+          >
             <option value=''>Select gender</option>
             <option value='male'>Male</option>
             <option value='female'>Female</option>
@@ -86,11 +95,14 @@ export function UserInfoStep() {
 
         {data.role === 'student' && (
           <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>Grade Level</label>
+            <label className='block text-sm font-medium text-gray-700 mb-2'>
+              Grade Level
+            </label>
             <select
               value={formData.gradeLevel}
-              onChange={(e) => handleInputChange('gradeLevel', e.target.value)}
-              className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'>
+              onChange={e => handleInputChange('gradeLevel', e.target.value)}
+              className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+            >
               <option value=''>Select grade level</option>
               <option value='high-school'>High School</option>
               <option value='undergraduate'>Undergraduate</option>
@@ -106,20 +118,26 @@ export function UserInfoStep() {
           </label>
           <Input
             type='text'
-            placeholder={data.role === 'student' ? 'Enter your school' : 'Enter your company'}
+            placeholder={
+              data.role === 'student'
+                ? 'Enter your school'
+                : 'Enter your company'
+            }
             value={formData.school}
-            onChange={(e) => handleInputChange('school', e.target.value)}
+            onChange={e => handleInputChange('school', e.target.value)}
             className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
           />
         </div>
 
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>Location</label>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Location
+          </label>
           <Input
             type='text'
             placeholder='Enter your location'
             value={formData.location}
-            onChange={(e) => handleInputChange('location', e.target.value)}
+            onChange={e => handleInputChange('location', e.target.value)}
             className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
           />
         </div>
@@ -131,14 +149,16 @@ export function UserInfoStep() {
           size={'lg'}
           onClick={handleBack}
           variant='ghost'
-          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'>
+          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'
+        >
           <ArrowLeft className='w-4 h-4 mr-2' /> Back
         </Button>
         <Button
           size={'lg'}
           onClick={handleNext}
           disabled={!isFormValid}
-          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'>
+          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'
+        >
           Next <ArrowRight className='w-4 h-4 ml-2' />
         </Button>
       </div>

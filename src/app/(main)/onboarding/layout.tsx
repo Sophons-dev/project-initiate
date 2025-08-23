@@ -2,7 +2,11 @@ import type React from 'react';
 import Image from 'next/image';
 import { OnboardingProvider } from '@/features/onboarding/contexts/onboarding-context';
 
-export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
+export default function OnboardingLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <main className='relative grid grid-cols-1 lg:grid-cols-12 min-h-screen bg-gradient-to-br from-orange-100 via-white to-blue-100'>
       {/* Left Side - Branding */}
@@ -18,9 +22,12 @@ export default function OnboardingLayout({ children }: { children: React.ReactNo
         </div>
         <div className='mb-8'>
           <h1 className='text-4xl font-semibold text-gray-900 mb-6 leading-tight'>
-            A few clicks away from finding the opportunities that are right for you.
+            A few clicks away from finding the opportunities that are right for
+            you.
           </h1>
-          <p className='text-lg text-gray-600'>Help us personalize your experience with a few questions</p>
+          <p className='text-lg text-gray-600'>
+            Help us personalize your experience with a few questions
+          </p>
         </div>
       </div>
 

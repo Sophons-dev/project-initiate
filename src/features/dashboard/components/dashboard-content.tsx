@@ -1,6 +1,9 @@
 'use client';
 
-import { opportunityData, RecommendedOpportunityCard } from '@/components/shared/cards/recommended-opportunity-card';
+import {
+  opportunityData,
+  RecommendedOpportunityCard,
+} from '@/components/shared/cards/recommended-opportunity-card';
 import { Input } from '@/components/ui/input';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
@@ -13,7 +16,7 @@ export const DashboardContent = () => {
 
   // Filter and search logic
   const filteredOpportunities = useMemo(() => {
-    return opportunityData.filter((opportunity) => {
+    return opportunityData.filter(opportunity => {
       // Filter by type
       const matchesFilter =
         activeFilter === 'Show All' ||
@@ -25,8 +28,12 @@ export const DashboardContent = () => {
       const matchesSearch =
         searchQuery === '' ||
         opportunity.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        opportunity.organization.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        opportunity.description.toLowerCase().includes(searchQuery.toLowerCase());
+        opportunity.organization
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase()) ||
+        opportunity.description
+          .toLowerCase()
+          .includes(searchQuery.toLowerCase());
 
       return matchesFilter && matchesSearch;
     });
@@ -42,15 +49,21 @@ export const DashboardContent = () => {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}>
+        transition={{ delay: 0.3 }}
+      >
         <div className='flex items-center justify-between mb-6'>
           <div>
-            <h2 className='text-xl font-semibold text-gray-900 mb-1'>Recommended Opportunities</h2>
-            <p className='text-gray-600'>Here are your AI-powered personalized recommendations.</p>
+            <h2 className='text-xl font-semibold text-gray-900 mb-1'>
+              Recommended Opportunities
+            </h2>
+            <p className='text-gray-600'>
+              Here are your AI-powered personalized recommendations.
+            </p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
-            className='text-cyan-500 hover:text-cyan-600 font-medium'>
+            className='text-cyan-500 hover:text-cyan-600 font-medium'
+          >
             View All →
           </motion.button>
         </div>
@@ -60,7 +73,8 @@ export const DashboardContent = () => {
           <motion.div
             className='flex-1 relative max-w-md'
             whileHover={{ scale: 1.01 }}
-            transition={{ type: 'spring', stiffness: 400, damping: 10 }}>
+            transition={{ type: 'spring', stiffness: 400, damping: 10 }}
+          >
             <Search className='absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400' />
             <Input
               placeholder='Search opportunities'
@@ -73,7 +87,7 @@ export const DashboardContent = () => {
           {/* Filter Tabs */}
           <div className='p-1.5 bg-[#E9E9E9]/50 rounded'>
             <div className='flex items-center space-x-6'>
-              {filters.map((filter) => (
+              {filters.map(filter => (
                 <motion.button
                   key={filter}
                   whileHover={{ scale: 1.05 }}
@@ -83,7 +97,8 @@ export const DashboardContent = () => {
                     activeFilter === filter
                       ? 'bg-white font-medium'
                       : 'border-transparent text-gray-600 hover:text-gray-900'
-                  }`}>
+                  }`}
+                >
                   {filter}
                 </motion.button>
               ))}
@@ -95,7 +110,7 @@ export const DashboardContent = () => {
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3.5 bg-[#E9E9E9]/50 rounded'>
           {filteredOpportunities.length > 0 ? (
-            filteredOpportunities.map((opportunity) => (
+            filteredOpportunities.map(opportunity => (
               <RecommendedOpportunityCard
                 key={opportunity.id}
                 opportunity={opportunity}

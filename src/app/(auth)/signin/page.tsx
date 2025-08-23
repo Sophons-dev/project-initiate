@@ -28,12 +28,12 @@ export default function SignInPage() {
 
   const signInMutation = useMutation({
     mutationFn: authApi.signIn,
-    onSuccess: (data) => {
+    onSuccess: data => {
       console.log('Sign in successful:', data);
       // Handle successful sign in (store token, redirect, etc.)
       router.push('/onboarding'); // Redirect to dashboard or home
     },
-    onError: (error) => {
+    onError: error => {
       console.error('Sign in failed:', error);
       // Handle error (show toast, etc.)
     },
@@ -47,10 +47,15 @@ export default function SignInPage() {
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}>
+      transition={{ duration: 0.5 }}
+    >
       <div className='text-center mb-8'>
-        <h1 className='text-2xl font-semibold text-gray-900 mb-2'>Welcome to Initiate</h1>
-        <p className='text-gray-600 text-sm'>Your journey to the perfect career starts here</p>
+        <h1 className='text-2xl font-semibold text-gray-900 mb-2'>
+          Welcome to Initiate
+        </h1>
+        <p className='text-gray-600 text-sm'>
+          Your journey to the perfect career starts here
+        </p>
       </div>
 
       {/* Tab Navigation */}
@@ -60,18 +65,19 @@ export default function SignInPage() {
         </div>
         <Link
           href='/signup'
-          className='flex-1 py-2 px-4 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 text-center transition-colors'>
+          className='flex-1 py-2 px-4 rounded-md text-sm font-medium text-gray-600 hover:text-gray-900 text-center transition-colors'
+        >
           Sign Up
         </Link>
       </div>
 
       {/* Form */}
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className='space-y-6'>
+      <form onSubmit={handleSubmit(onSubmit)} className='space-y-6'>
         {/* Email Field */}
         <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>Email Address</label>
+          <label className='block text-sm font-medium text-gray-700 mb-2'>
+            Email Address
+          </label>
           <div className='relative'>
             <Mail className='absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5' />
             <Input
@@ -81,16 +87,21 @@ export default function SignInPage() {
               className='pl-10 h-12 bg-gray-100 border-0 focus:bg-white focus:ring-2 focus:ring-cyan-500'
             />
           </div>
-          {errors.email && <p className='mt-1 text-sm text-red-600'>{errors.email.message}</p>}
+          {errors.email && (
+            <p className='mt-1 text-sm text-red-600'>{errors.email.message}</p>
+          )}
         </div>
 
         {/* Password Field */}
         <div>
           <div className='flex justify-between items-center mb-2'>
-            <label className='block text-sm font-medium text-gray-700'>Password</label>
+            <label className='block text-sm font-medium text-gray-700'>
+              Password
+            </label>
             <Link
               href='/forgot-password'
-              className='text-sm text-gray-500 hover:text-cyan-500 transition-colors'>
+              className='text-sm text-gray-500 hover:text-cyan-500 transition-colors'
+            >
               forgot password?
             </Link>
           </div>
@@ -105,18 +116,28 @@ export default function SignInPage() {
             <button
               type='button'
               onClick={() => setShowPassword(!showPassword)}
-              className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'>
-              {showPassword ? <EyeOff className='w-5 h-5' /> : <Eye className='w-5 h-5' />}
+              className='absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600'
+            >
+              {showPassword ? (
+                <EyeOff className='w-5 h-5' />
+              ) : (
+                <Eye className='w-5 h-5' />
+              )}
             </button>
           </div>
-          {errors.password && <p className='mt-1 text-sm text-red-600'>{errors.password.message}</p>}
+          {errors.password && (
+            <p className='mt-1 text-sm text-red-600'>
+              {errors.password.message}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
         <Button
           type='submit'
           disabled={signInMutation.isPending}
-          className='w-full h-12 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-lg disabled:opacity-50'>
+          className='w-full h-12 bg-cyan-500 hover:bg-cyan-600 text-white font-medium rounded-lg disabled:opacity-50'
+        >
           {signInMutation.isPending ? 'Signing in...' : 'Sign In'}
         </Button>
 
@@ -144,15 +165,11 @@ export default function SignInPage() {
       {/* Terms */}
       <p className='text-center text-xs text-gray-500 mt-8'>
         By continuing, you agree to our{' '}
-        <Link
-          href='/terms'
-          className='text-cyan-500 hover:underline'>
+        <Link href='/terms' className='text-cyan-500 hover:underline'>
           Terms of Service
         </Link>{' '}
         and{' '}
-        <Link
-          href='/privacy'
-          className='text-cyan-500 hover:underline'>
+        <Link href='/privacy' className='text-cyan-500 hover:underline'>
           Privacy Policy
         </Link>
       </p>

@@ -15,7 +15,8 @@ export const AnnouncementSection = () => {
           variants={staggerContainer}
           initial='hidden'
           whileInView='show'
-          viewport={{ once: true, amount: 0.3 }}>
+          viewport={{ once: true, amount: 0.3 }}
+        >
           <TextPill
             className='mx-auto mb-8 mt-0 !text-xs'
             icon={<Sparkles className='w-4 h-4' />}
@@ -23,8 +24,9 @@ export const AnnouncementSection = () => {
           />
           <h3 className='mt-3 text-xl text-black'>Upcoming Events</h3>
           <p className='mx-auto mt-1 max-w-2xl text-sm text-muted-foreground'>
-            Explore our latest events, workshops, and webinars designed to inspire, inform, and bring our community
-            together. Be the first to know what’s happening next.
+            Explore our latest events, workshops, and webinars designed to
+            inspire, inform, and bring our community together. Be the first to
+            know what’s happening next.
           </p>
         </motion.div>
 

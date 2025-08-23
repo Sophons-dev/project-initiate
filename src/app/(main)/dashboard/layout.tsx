@@ -1,7 +1,11 @@
 import { Footer } from '@/components/layout/footer';
 import { MainNavbar } from '@/components/layout/main-navbar';
 
-export default function DashboardLayout({ children }: { children: React.ReactNode }) {
+export default function DashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <main className='flex flex-col min-h-screen'>
       <MainNavbar />

@@ -4,7 +4,11 @@ import { ArrowLeft } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function AuthLayout({ children }: { children: React.ReactNode }) {
+export default function AuthLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <CustomQueryClientProvider>
       <div className='min-h-screen bg-gray-50 flex flex-col'>
@@ -12,7 +16,8 @@ export default function AuthLayout({ children }: { children: React.ReactNode }) 
         <div className='lg:p-10 p-4'>
           <Link
             href='/'
-            className='inline-flex items-center gap-2 text-neutral-700 font-semibold transition-colors text-sm md:text-base'>
+            className='inline-flex items-center gap-2 text-neutral-700 font-semibold transition-colors text-sm md:text-base'
+          >
             <ArrowLeft className='w-4 h-4' />
             Back to Home
           </Link>
