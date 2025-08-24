@@ -38,6 +38,7 @@
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.541.0",
     "next": "15.4.5",
+    "openai": "^5.15.0",
     "prisma": "^6.14.0",
     "project-initiate": ".",
     "react": "19.1.0",
@@ -45,7 +46,7 @@
     "react-hook-form": "^7.62.0",
     "tailwind-merge": "^3.3.1",
     "tsx": "^4.20.4",
-    "zod": "^4.0.17"
+    "zod": "^4.1.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
