@@ -7,6 +7,9 @@ export default function OnboardingLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // TODO: add propver validation if user is already onboarded
+  // TODO: onboarding should not be accessible if user is already onboarded
+
   return (
     <main className='relative grid grid-cols-1 lg:grid-cols-12 min-h-screen bg-gradient-to-br from-orange-100 via-white to-blue-100'>
       {/* Left Side - Branding */}

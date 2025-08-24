@@ -1,11 +1,14 @@
 import { Footer } from '@/components/layout/footer';
 import { MainNavbar } from '@/components/layout/main-navbar';
+import { requireOnboarded } from '@/lib/auth/require-onboarded';
 
-export default function DashboardLayout({
+export default async function OnboardedLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  await requireOnboarded();
+
   return (
     <main className='flex flex-col min-h-screen'>
       <MainNavbar />
