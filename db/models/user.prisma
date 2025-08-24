@@ -13,40 +13,44 @@ model User {
   roleId        String    @db.ObjectId
   role          Role      @relation("UserToRole", fields: [roleId], references: [id])
 
-  // Profile fields
+  // Embedded objects
+  profile       UserProfile?
+  preferences   UserPreferences?
+  modelData         UserModelData?
+
+  // Relations
+  opportunities     UserOpportunity[]
+  questionAnswers   UserQuestionAnswer[]
+  recommendations   OpportunityRecommendation[]
+  careerInsights    CareerInsight[]
+  careerInsightLogs CareerInsightLog[]
+}
+
+// Embedded object types
+type UserProfile {
   fullName     String?
   avatarUrl    String?
   bio          String?
   location     String?
   organization String?
   website      String?
+}
 
-  // Preferences fields
+type UserPreferences {
   interests                 String[]
   goals                     String?
   preferredOpportunityTypes String[]
   skills                    String[]
   onboardingCompleted       Boolean   @default(false)
   preferencesUpdatedAt      DateTime?
-
-  // Relations
-  opportunities     UserOpportunity[]
-  questionAnswers   UserQuestionAnswer[]
-  modelData         UserModelData?
-  recommendations   OpportunityRecommendation[]
-  careerInsights    CareerInsight[]
-  careerInsightLogs CareerInsightLog[]
 }
 
-model UserModelData {
-  id               String    @id @map("_id") @db.ObjectId
-  userId           String    @unique @db.ObjectId
-  learningStyle    String
-  availability     String
-  preferredWorkEnv String
-  remoteFriendly   Boolean
+type UserModelData {
+  learningStyle    String?
+  availability     String?
+  preferredWorkEnv String?
+  remoteFriendly   Boolean?
   updatedAt        DateTime?
-  user             User      @relation(fields: [userId], references: [id])
 }
 
 model UserQuestionAnswer {
@@ -60,4 +64,18 @@ model UserQuestionAnswer {
 
   @@index([userId])
   @@index([questionId])
+}
+
+model UserOpportunity {
+  id            String                @id @map("_id") @db.ObjectId
+  userId        String                @db.ObjectId
+  opportunityId String                @db.ObjectId
+  status        UserOpportunityStatus @default(saved)
+  createdAt     DateTime?
+  updatedAt     DateTime?
+  user          User                  @relation(fields: [userId], references: [id])
+  opportunity   Opportunity           @relation(fields: [opportunityId], references: [id])
+
+  @@index([userId])
+  @@index([opportunityId])
 }
