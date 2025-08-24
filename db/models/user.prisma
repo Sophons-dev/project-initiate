@@ -53,8 +53,6 @@ type UserModelData {
   updatedAt        DateTime?
 }
 
-
-
 model UserQuestionAnswer {
   id         String    @id @map("_id") @db.ObjectId
   userId     String    @db.ObjectId
