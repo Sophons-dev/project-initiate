@@ -10,7 +10,24 @@ import { auth0 } from './lib/auth/auth0';
 // });
 
 export async function middleware(request: NextRequest) {
-  return await auth0.middleware(request);
+  const auth0Response = await auth0.middleware(request);
+
+  const headers = new Headers();
+  headers.set('x-current-path', request.nextUrl.pathname);
+  headers.set('x-full-url', request.url);
+
+  if (auth0Response) {
+    const existingHeaders = new Headers(auth0Response.headers);
+    headers.forEach((value, key) => {
+      existingHeaders.set(key, value);
+    });
+
+    return new Response(auth0Response.body, {
+      status: auth0Response.status,
+      statusText: auth0Response.statusText,
+      headers: existingHeaders,
+    });
+  }
 }
 
 export const config = {
