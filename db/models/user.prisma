@@ -9,6 +9,10 @@ model User {
   image         String?
   auth0Id       String?   @unique
 
+  // Role Reference
+  roleId        String    @db.ObjectId
+  role          Role      @relation("UserToRole", fields: [roleId], references: [id])
+
   // Embedded objects
   profile       UserProfile?
   preferences   UserPreferences?
