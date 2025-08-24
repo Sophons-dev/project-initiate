@@ -2,6 +2,9 @@
 
 echo '👷‍♂️ Starting pre-commit checks...'
 
+# Get list of staged files before formatting
+STAGED_FILES=$(git diff --cached --name-only)
+
 echo '🎨 Formatting ...'
 bun run format || {
   echo '❌ Formatting failed.'
@@ -14,7 +17,9 @@ bun run lint || {
   exit 1
 }
 
-# Add staged files back after formatting
-git add .
+# Only add back the files that were originally staged
+if [ -n "$STAGED_FILES" ]; then
+  echo "$STAGED_FILES" | xargs git add
+fi
 
 echo '✅ All pre-commit checks passed. Proceeding with commit. 🚀'
