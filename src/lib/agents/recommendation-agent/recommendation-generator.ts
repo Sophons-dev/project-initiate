@@ -13,7 +13,7 @@ export async function generateRecommendations({
 }) {
   try {
     const response = await client.responses.parse({
-      model: 'gpt-4o',
+      model: 'gpt-4o-mini-search-preview',
       instructions: SYSTEM_PROMPT,
       tools: [{ type: 'web_search_preview' }],
       input: context,
