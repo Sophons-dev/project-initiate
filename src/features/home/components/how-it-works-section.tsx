@@ -120,7 +120,7 @@ export const HowItWorksSection = () => {
             size={'lg'}
             className='relative py-5 mb-12 overflow-hidden border-4 rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 border-neutral-100 hover:bg-cyan-600 group'
           >
-            <Link href='/signin'>
+            <Link href='/auth/login'>
               <span className='relative z-10 flex items-center gap-2'>
                 Start Journey
                 <motion.div
