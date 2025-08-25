@@ -213,7 +213,7 @@ export const Navbar = () => {
                   asChild
                   className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'
                 >
-                  <Link href='/auth/signup'>Get Started</Link>
+                  <Link href='/auth/login?screen_hint=signup'>Get Started</Link>
                 </Button>
               </motion.div>
             </span>
@@ -302,6 +302,7 @@ export const Navbar = () => {
                   </Link>
                 </li>
               ))}
+
               {/* Mobile: Sign In link */}
               <li>
                 {!user ? (

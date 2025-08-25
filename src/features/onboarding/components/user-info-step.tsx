@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useOnboarding } from '../contexts/onboarding-context';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { SchoolSelect } from './school-search-input';
 
 export function UserInfoStep() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
@@ -112,20 +113,13 @@ export function UserInfoStep() {
           </div>
         )}
 
-        <div>
+        <div className='w-full relative'>
           <label className='block text-sm font-medium text-gray-700 mb-2'>
             {data.role === 'student' ? 'School' : 'Company/Organization'}
           </label>
-          <Input
-            type='text'
-            placeholder={
-              data.role === 'student'
-                ? 'Enter your school'
-                : 'Enter your company'
-            }
+          <SchoolSelect
             value={formData.school}
-            onChange={e => handleInputChange('school', e.target.value)}
-            className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+            onChange={val => handleInputChange('school', val)}
           />
         </div>
 

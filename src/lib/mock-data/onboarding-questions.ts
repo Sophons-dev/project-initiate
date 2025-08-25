@@ -1,4 +1,4 @@
-import { Question } from '@/features/onboarding/types';
+import { Question } from '@/features/onboarding/types/question';
 
 export const studentOnboardingQuestions: Question[] = [
   {
