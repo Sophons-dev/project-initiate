@@ -9,14 +9,12 @@ export function GoogleSignInButton() {
 
   const googleSignInMutation = useMutation({
     // mutationFn: authApi.signInWithGoogle,
-    onSuccess: data => {
-      console.log('Google sign in successful:', data);
+    onSuccess: () => {
       // Handle successful sign in (store token, redirect, etc.)
       router.push('/dashboard'); // Redirect to dashboard or home
     },
-    onError: error => {
-      console.error('Google sign in failed:', error);
-      // Handle error (show toast, etc.)
+    onError: () => {
+      // Error handling can be implemented here (e.g., show toast)
     },
   });
 
