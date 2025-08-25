@@ -13,15 +13,11 @@ export function TermsStep() {
 
   const handleNext = () => {
     updateData({ agreedToTerms });
-    setCurrentStep(7);
+    setCurrentStep(currentStep + 1);
   };
 
   const handleBack = () => {
-    if (data.wantsAdvancedQuestions) {
-      setCurrentStep(5);
-    } else {
-      setCurrentStep(4);
-    }
+    setCurrentStep(currentStep - 1);
   };
 
   return (
@@ -29,10 +25,10 @@ export function TermsStep() {
       initial={{ opacity: 0, x: 20 }}
       animate={{ opacity: 1, x: 0 }}
       transition={{ duration: 0.5 }}
-      className='w-[500px]'
+      className='md:w-[500px]'
     >
       <div className='mb-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>
+        <h2 className='text-xl md:text-2xl font-bold text-gray-900 mb-2'>
           Privacy Policy & Terms of Use
         </h2>
         <p className='text-gray-600 text-sm'>
@@ -56,7 +52,7 @@ export function TermsStep() {
       </div>
 
       {/* Terms Content */}
-      <div className='h-[500px] p-3 text-sm rounded-xl overflow-y-auto bg-gray-100 mb-8 border'>
+      <div className='h-[500px] w-full p-3 text-sm rounded-xl overflow-y-auto bg-gray-100 mb-8 border'>
         <p>Last updated: 2025-08-13</p>
         <p className='mb-3'>
           We value your privacy and are committed to protecting your personal

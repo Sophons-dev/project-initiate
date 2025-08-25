@@ -119,10 +119,6 @@ export function CompletionStep() {
               <span className='text-gray-600'>{data.school}</span>
             </div>
           )}
-          <div className='md:col-span-2'>
-            <span className='font-medium text-gray-700'>Strengths:</span>{' '}
-            <span className='text-gray-600'>{data.strengths.join(', ')}</span>
-          </div>
         </div>
       </motion.div>
 

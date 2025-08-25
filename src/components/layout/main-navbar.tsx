@@ -59,7 +59,7 @@ export const MainNavbar = () => {
           <DropdownMenuTrigger className='border border-red-500' asChild>
             <Button
               variant='ghost'
-              className='hidden lg:flex relative h-8 w-8 p-0 rounded-full'
+              className='relative h-8 w-8 p-0 rounded-full'
             >
               <span className='sr-only'>Open main menu</span>
               <Avatar className='h-9 w-9'>
@@ -87,7 +87,9 @@ export const MainNavbar = () => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href='/auth/logout'>Sign out</Link>
+                <Link className='w-full' href='/auth/logout'>
+                  Sign out
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

@@ -304,13 +304,23 @@ export const Navbar = () => {
               ))}
               {/* Mobile: Sign In link */}
               <li>
-                <Link
-                  href='/signin'
-                  onClick={() => setIsMenuOpen(false)}
-                  className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
-                >
-                  Sign In
-                </Link>
+                {!user ? (
+                  <Link
+                    href='/auth/login'
+                    onClick={() => setIsMenuOpen(false)}
+                    className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
+                  >
+                    Sign In
+                  </Link>
+                ) : (
+                  <Link
+                    href='/auth/logout'
+                    onClick={() => setIsMenuOpen(false)}
+                    className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
+                  >
+                    Sign Out
+                  </Link>
+                )}
               </li>
             </ul>
           </motion.nav>
