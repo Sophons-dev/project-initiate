@@ -1,6 +1,10 @@
 'use client';
 
-import type React from 'react';
+import {
+  studentOnboardingQuestions,
+  professionalOnboardingQuestions,
+} from '@/lib/mock-data/onboarding-questions';
+import { Question } from '@/features/onboarding/types';
 import { createContext, useContext, useState } from 'react';
 
 export interface OnboardingData {
@@ -10,9 +14,8 @@ export interface OnboardingData {
   gradeLevel: string;
   school: string;
   location: string;
-  strengths: string[];
-  wantsAdvancedQuestions: boolean;
-  advancedAnswers: Record<string, string>;
+  answers: Record<string, string | string[]>;
+  wantsAdvancedQuestions: boolean; // This can be repurposed or removed
   agreedToTerms: boolean;
 }
 
@@ -22,6 +25,8 @@ interface OnboardingContextType {
   currentStep: number;
   setCurrentStep: (step: number) => void;
   totalSteps: number;
+  questions: Question[];
+  fetchQuestions: (role: 'student' | 'professional') => void;
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(
@@ -34,7 +39,7 @@ export function OnboardingProvider({
   children: React.ReactNode;
 }) {
   const [currentStep, setCurrentStep] = useState(1);
-  const totalSteps = 7;
+  const [questions, setQuestions] = useState<Question[]>([]);
 
   const [data, setData] = useState<OnboardingData>({
     role: null,
@@ -43,19 +48,37 @@ export function OnboardingProvider({
     gradeLevel: '',
     school: '',
     location: '',
-    strengths: [],
+    answers: {},
     wantsAdvancedQuestions: false,
-    advancedAnswers: {},
     agreedToTerms: false,
   });
+
+  const fetchQuestions = (role: 'student' | 'professional') => {
+    if (role === 'student') {
+      setQuestions(studentOnboardingQuestions);
+    } else {
+      setQuestions(professionalOnboardingQuestions);
+    }
+  };
 
   const updateData = (updates: Partial<OnboardingData>) => {
     setData(prev => ({ ...prev, ...updates }));
   };
 
+  // 2 fixed steps (UserInfo, Terms) + dynamic questions
+  const totalSteps = 4 + questions.length; // UserType, UserInfo, Questions, Terms, Completion
+
   return (
     <OnboardingContext.Provider
-      value={{ data, updateData, currentStep, setCurrentStep, totalSteps }}
+      value={{
+        data,
+        updateData,
+        currentStep,
+        setCurrentStep,
+        totalSteps,
+        questions,
+        fetchQuestions,
+      }}
     >
       {children}
     </OnboardingContext.Provider>
