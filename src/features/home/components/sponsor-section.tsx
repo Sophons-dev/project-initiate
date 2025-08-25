@@ -40,25 +40,23 @@ export const SponsorSection = () => {
           whileInView='animate'
           viewport={{ once: true }}
         >
-          {['amazon', 'dribbble', 'hubspot', 'notion', 'netflix', 'zoom'].map(
-            (sponsor, index) => (
-              <motion.span
-                key={index}
-                variants={fadeInUp}
-                className='flex-shrink-0 text-2xl font-bold transition-opacity cursor-pointer opacity-60 hover:opacity-100'
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Image
-                  src={`/sponsors/${sponsor}.png`}
-                  alt={sponsor}
-                  width={100}
-                  height={100}
-                  className='mix-blend-luminosity'
-                />
-              </motion.span>
-            )
-          )}
+          {['ecop', 'pcci', 'create8', 'dole2'].map((sponsor, index) => (
+            <motion.span
+              key={index}
+              variants={fadeInUp}
+              className='flex-shrink-0 text-2xl font-bold transition-opacity cursor-pointer opacity-60 hover:opacity-100'
+              whileHover={{ scale: 1.1, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Image
+                src={`/sponsors/${sponsor}.png`}
+                alt={sponsor}
+                width={160}
+                height={160}
+                className='mix-blend-luminosity'
+              />
+            </motion.span>
+          ))}
         </motion.div>
       </div>
     </motion.section>
