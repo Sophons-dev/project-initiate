@@ -1,5 +1,6 @@
-import { DashboardContent } from '../../../../features/dashboard/components/dashboard-content';
-import { DashboardHero } from '../../../../features/dashboard/components/dashboard-hero';
+import { DashboardContent } from '@/features/dashboard/components/dashboard-content';
+import { DashboardHero } from '@/features/dashboard/components/dashboard-hero';
+import { useUser } from '@auth0/nextjs-auth0';
 
 export default function Dashboard() {
   return (

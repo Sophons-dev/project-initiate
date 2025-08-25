@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { useUser } from '@auth0/nextjs-auth0';
 import { motion } from 'framer-motion';
 import {
   Blend,
@@ -12,9 +13,11 @@ import {
 } from 'lucide-react';
 
 export const DashboardHero = () => {
+  const { user } = useUser();
+
   return (
     <div className='hero-bg py-10 border-b border-neutral-200'>
-      <div className='max-w-7xl mx-auto px-4 md:px-0'>
+      <div className='max-w-7xl mx-auto px-2 lg:px-0'>
         {/* Welcome Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -23,7 +26,7 @@ export const DashboardHero = () => {
         >
           <div>
             <h1 className='text-2xl font-semibold text-gray-900 mb-1'>
-              Welcome, John Doe!
+              Welcome, {user?.given_name || user?.name}!
             </h1>
             <p className='text-gray-600'>
               Here are your AI-powered personalized recommendations.

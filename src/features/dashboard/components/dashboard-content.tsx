@@ -12,7 +12,13 @@ import { useMemo, useState } from 'react';
 export const DashboardContent = () => {
   const [activeFilter, setActiveFilter] = useState('Show All');
   const [searchQuery, setSearchQuery] = useState('');
-  const filters = ['Show All', 'Jobs', 'Courses', 'Events'];
+  const filters = ['Show All', 'Jobs', 'Courses', 'Events'] as const;
+
+  const filterColors = {
+    Jobs: 'bg-blue-500',
+    Courses: 'bg-orange-500',
+    Events: 'bg-red-500',
+  } as const;
 
   // Filter and search logic
   const filteredOpportunities = useMemo(() => {
@@ -44,7 +50,7 @@ export const DashboardContent = () => {
   };
 
   return (
-    <div className='max-w-7xl mx-auto py-10 px-4 md:px-0'>
+    <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
       {/* Recommended Opportunities */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -68,10 +74,10 @@ export const DashboardContent = () => {
           </motion.button>
         </div>
 
-        <div className='flex items-center justify-between mb-6'>
+        <div className='flex flex-col md:flex-row gap-3 items-center justify-between mb-6'>
           {/* Search */}
           <motion.div
-            className='flex-1 relative max-w-md'
+            className='flex-1 relative w-full md:max-w-md'
             whileHover={{ scale: 1.01 }}
             transition={{ type: 'spring', stiffness: 400, damping: 10 }}
           >
@@ -85,23 +91,31 @@ export const DashboardContent = () => {
           </motion.div>
 
           {/* Filter Tabs */}
-          <div className='p-1.5 bg-[#E9E9E9]/50 rounded'>
-            <div className='flex items-center space-x-6'>
-              {filters.map(filter => (
-                <motion.button
-                  key={filter}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={() => setActiveFilter(filter)}
-                  className={`px-3 py-2 rounded border-b-2 transition-colors ${
-                    activeFilter === filter
-                      ? 'bg-white font-medium'
-                      : 'border-transparent text-gray-600 hover:text-gray-900'
-                  }`}
-                >
-                  {filter}
-                </motion.button>
-              ))}
+          <div className='w-full md:w-fit'>
+            <div className='relative rounded-lg h-fit p-1.5 bg-[#E9E9E9]/50'>
+              <div className='flex space-x-1 overflow-x-auto md:overflow-hidden hide-scrollbar'>
+                {filters.map(filter => (
+                  <motion.button
+                    key={filter}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => setActiveFilter(filter)}
+                    className={`flex flex-row items-center gap-x-2 whitespace-nowrap cursor-pointer px-4 py-2.5 rounded-lg text-sm font-medium border-2 transition-all ${
+                      activeFilter === filter
+                        ? 'bg-white shadow-sm'
+                        : 'border-transparent text-gray-600 hover:bg-white/50 hover:border-gray-200'
+                    }`}
+                  >
+                    {filter in filterColors && (
+                      <div
+                        className={`h-2 w-2 rounded-full ${filterColors[filter as keyof typeof filterColors]}`}
+                      />
+                    )}
+                    {filter}
+                  </motion.button>
+                ))}
+              </div>
+              <div className='absolute right-0 top-0 bottom-0 w-8 bg-gradient-to-l from-[#E9E9E9] to-transparent pointer-events-none' />
             </div>
           </div>
         </div>

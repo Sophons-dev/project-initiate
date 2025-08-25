@@ -87,7 +87,9 @@ export const MainNavbar = () => {
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
-                <Link href='/auth/logout'>Sign out</Link>
+                <Link className='w-full' href='/auth/logout'>
+                  Sign out
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
