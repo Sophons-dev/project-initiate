@@ -1,29 +1,39 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useOnboarding } from '../contexts/onboarding-context';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SchoolSelect } from './school-search-input';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { userInfoSchema, UserInfoFormData } from '../validations/onboarding';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
 
 export function UserInfoStep() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
     useOnboarding();
-  const [formData, setFormData] = useState({
-    age: data.age,
-    gender: data.gender,
-    gradeLevel: data.gradeLevel,
-    school: data.school,
-    location: data.location,
+
+  const form = useForm<UserInfoFormData>({
+    resolver: zodResolver(userInfoSchema),
+    defaultValues: {
+      dateOfBirth: data.dateOfBirth || '',
+      gender: data.gender || '',
+      gradeLevel: data.gradeLevel || '',
+      school: data.school || '',
+      location: data.location || '',
+    },
   });
 
-  const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
-
-  const handleNext = () => {
+  const handleNext = (formData: UserInfoFormData) => {
     updateData(formData);
     setCurrentStep(3);
   };
@@ -31,8 +41,6 @@ export function UserInfoStep() {
   const handleBack = () => {
     setCurrentStep(1);
   };
-
-  const isFormValid = formData.age && formData.gender && formData.location;
 
   return (
     <motion.div
@@ -62,100 +70,140 @@ export function UserInfoStep() {
         </div>
       </div>
 
-      {/* Form */}
-      <div className='space-y-6 mb-8'>
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            Age
-          </label>
-          <Input
-            type='number'
-            placeholder='Enter your age'
-            value={formData.age}
-            onChange={e => handleInputChange('age', e.target.value)}
-            className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(handleNext)}
+          className='space-y-6 mb-8'
+        >
+          <FormField
+            control={form.control}
+            name='dateOfBirth'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Date of Birth</FormLabel>
+                <FormControl>
+                  <Input
+                    type='date'
+                    className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500 [&::-webkit-calendar-picker-indicator]:opacity-100 [&::-webkit-calendar-picker-indicator]:cursor-pointer'
+                    max={new Date().toISOString().split('T')[0]}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            Gender
-          </label>
-          <select
-            value={formData.gender}
-            onChange={e => handleInputChange('gender', e.target.value)}
-            className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-          >
-            <option value=''>Select gender</option>
-            <option value='male'>Male</option>
-            <option value='female'>Female</option>
-            <option value='non-binary'>Non-binary</option>
-            <option value='prefer-not-to-say'>Prefer not to say</option>
-          </select>
-        </div>
+          <FormField
+            control={form.control}
+            name='gender'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Gender</FormLabel>
+                <FormControl>
+                  <select
+                    className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+                    {...field}
+                  >
+                    <option value=''>Select gender</option>
+                    <option value='male'>Male</option>
+                    <option value='female'>Female</option>
+                    <option value='non-binary'>Non-binary</option>
+                    <option value='prefer-not-to-say'>Prefer not to say</option>
+                  </select>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        {data.role === 'student' && (
-          <div>
-            <label className='block text-sm font-medium text-gray-700 mb-2'>
-              Grade Level
-            </label>
-            <select
-              value={formData.gradeLevel}
-              onChange={e => handleInputChange('gradeLevel', e.target.value)}
-              className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-            >
-              <option value=''>Select grade level</option>
-              <option value='high-school'>High School</option>
-              <option value='undergraduate'>Undergraduate</option>
-              <option value='graduate'>Graduate</option>
-              <option value='postgraduate'>Postgraduate</option>
-            </select>
+          {data.role === 'student' && (
+            <FormField
+              control={form.control}
+              name='gradeLevel'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Grade Level</FormLabel>
+                  <FormControl>
+                    <select
+                      className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+                      {...field}
+                    >
+                      <option value=''>Select grade level</option>
+                      <option value='high-school'>High School</option>
+                      <option value='undergraduate'>Undergraduate</option>
+                      <option value='graduate'>Graduate</option>
+                      <option value='postgraduate'>Postgraduate</option>
+                    </select>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          )}
+
+          <div className='w-full relative'>
+            <FormField
+              control={form.control}
+              name='school'
+              render={({ field }) => (
+                <FormItem className='relative w-full'>
+                  <FormLabel>
+                    {data.role === 'student'
+                      ? 'School'
+                      : 'Company/Organization'}
+                  </FormLabel>
+                  <FormControl>
+                    <SchoolSelect
+                      value={field.value}
+                      onChange={field.onChange}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
           </div>
-        )}
 
-        <div className='w-full relative'>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            {data.role === 'student' ? 'School' : 'Company/Organization'}
-          </label>
-          <SchoolSelect
-            value={formData.school}
-            onChange={val => handleInputChange('school', val)}
+          <FormField
+            control={form.control}
+            name='location'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Location</FormLabel>
+                <FormControl>
+                  <Input
+                    type='text'
+                    placeholder='Enter your location'
+                    className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
           />
-        </div>
 
-        <div>
-          <label className='block text-sm font-medium text-gray-700 mb-2'>
-            Location
-          </label>
-          <Input
-            type='text'
-            placeholder='Enter your location'
-            value={formData.location}
-            onChange={e => handleInputChange('location', e.target.value)}
-            className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-          />
-        </div>
-      </div>
-
-      {/* Navigation */}
-      <div className='flex justify-between'>
-        <Button
-          size={'lg'}
-          onClick={handleBack}
-          variant='ghost'
-          className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'
-        >
-          <ArrowLeft className='w-4 h-4 mr-2' /> Back
-        </Button>
-        <Button
-          size={'lg'}
-          onClick={handleNext}
-          disabled={!isFormValid}
-          className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'
-        >
-          Next <ArrowRight className='w-4 h-4 ml-2' />
-        </Button>
-      </div>
+          <div className='flex justify-between pt-4'>
+            <Button
+              type='button'
+              size={'lg'}
+              onClick={handleBack}
+              variant='ghost'
+              className='text-gray-600 hover:text-gray-900 px-4 py-2 rounded-full'
+            >
+              <ArrowLeft className='w-4 h-4 mr-2' /> Back
+            </Button>
+            <Button
+              type='submit'
+              size={'lg'}
+              className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full'
+            >
+              Next <ArrowRight className='w-4 h-4 ml-2' />
+            </Button>
+          </div>
+        </form>
+      </Form>
     </motion.div>
   );
 }

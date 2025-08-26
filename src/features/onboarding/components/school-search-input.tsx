@@ -60,19 +60,20 @@ export function SchoolSelect({
         <Button
           variant='outline'
           role='combobox'
-          className='w-full justify-between h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+          className='relative  justify-between h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
         >
-          <span className='w-full font-normal text-[16px] text-left truncate'>
+          <p className='w-60 lg:w-85 font-normal text-[16px] text-left truncate'>
             {value || 'Select or search school'}
-          </span>
+          </p>
           <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className='w-90 lg:w-110 p-0'>
-        <Command shouldFilter={false}>
+      <PopoverContent className='w-[var(--radix-popover-trigger-width)] max-w-[90vw] p-0  '>
+        <Command shouldFilter={false} className='w-full'>
           <CommandInput
             placeholder='Search school...'
             onValueChange={val => setQuery(val)}
+            className='w-full'
           />
           <CommandList>
             <CommandEmpty>
