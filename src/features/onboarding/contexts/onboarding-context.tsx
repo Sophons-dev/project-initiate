@@ -6,16 +6,12 @@ import {
 } from '@/lib/mock-data/onboarding-questions';
 import { Question } from '@/features/onboarding/types/question';
 import { createContext, useContext, useState } from 'react';
+import { UserInfoFormData } from '../validations/onboarding';
 
-export interface OnboardingData {
+export interface OnboardingData extends UserInfoFormData {
   role: 'student' | 'professional' | null;
-  age: string;
-  gender: string;
-  gradeLevel: string;
-  school: string;
-  location: string;
   answers: Record<string, string | string[]>;
-  wantsAdvancedQuestions: boolean; // This can be repurposed or removed
+  wantsAdvancedQuestions: boolean;
   agreedToTerms: boolean;
 }
 
@@ -43,7 +39,7 @@ export function OnboardingProvider({
 
   const [data, setData] = useState<OnboardingData>({
     role: null,
-    age: '',
+    dateOfBirth: '',
     gender: '',
     gradeLevel: '',
     school: '',
