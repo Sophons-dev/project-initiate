@@ -225,7 +225,7 @@ export const Navbar = () => {
                   asChild
                   className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'
                 >
-                  <Link href='/auth/login?screen_hint=signup'>Get Started</Link>
+                  <Link href='/sign-up'>Get Started</Link>
                 </Button>
               </motion.div>
             </span>
@@ -322,7 +322,7 @@ export const Navbar = () => {
                     onClick={() => setIsMenuOpen(false)}
                     className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
                   >
-                    <SignInButton />
+                    <Link href={'/sign-in'}>Sign In</Link>
                   </div>
                 ) : (
                   <div

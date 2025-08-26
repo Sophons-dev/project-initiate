@@ -13,8 +13,10 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Project Initiate',
-  description: 'Your project description here',
+  description: '',
 };
+
+const appUrl = process.env.NEXT_PUBLIC_APP_BASE_URL;
 
 export default function RootLayout({
   children,
@@ -23,6 +25,11 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider
+      signInUrl={`/sign-in`}
+      signUpUrl={`/sign-up`}
+      signInFallbackRedirectUrl={`${appUrl}/dashboard`}
+      signUpFallbackRedirectUrl={`${appUrl}/dashboard`}
+      afterSignOutUrl={appUrl}
       appearance={{
         variables: {
           colorPrimary: '#019789',
@@ -34,6 +41,13 @@ export default function RootLayout({
         captcha: {
           theme: 'auto',
           size: 'flexible',
+        },
+        elements: {
+          card: '!bg-transparent !shadow-none',
+          cardBox: '!bg-transparent !shadow-none',
+          input: '!p-2.5',
+          formButtonPrimary: '!p-2.5',
+          socialButtonsBlockButton: '!p-2.5',
         },
       }}
     >
