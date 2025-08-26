@@ -1,12 +1,21 @@
-import { db } from '@/lib/db';
+'use server';
 
-export async function updateOnboardingStatus(id: string, completed: boolean) {
+import { db } from '@/lib/db';
+import { auth } from '@clerk/nextjs/server';
+
+export async function updateOnboardingStatus() {
+  const { userId, isAuthenticated } = await auth();
+
+  if (!userId && !isAuthenticated) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
   try {
     const user = await db.user.update({
-      where: { id },
+      where: { clerkId: userId },
       data: {
         preferences: {
-          onboardingCompleted: completed,
+          onboardingCompleted: true,
           preferencesUpdatedAt: new Date(),
         },
       },
@@ -14,6 +23,7 @@ export async function updateOnboardingStatus(id: string, completed: boolean) {
     return { success: true, data: user };
   } catch (error) {
     console.error('Error updating onboarding status:', error);
+
     return { success: false, error: 'Failed to update onboarding status' };
   }
 }

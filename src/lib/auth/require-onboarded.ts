@@ -1,4 +1,3 @@
-// src/lib/auth.ts
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { getUserByClerkId } from '@/features/user/actions';
