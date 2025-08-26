@@ -18,28 +18,31 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 
-export function UserInfoStep() {
+export function UserInfo1Step() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
     useOnboarding();
 
   const form = useForm<UserInfoFormData>({
     resolver: zodResolver(userInfoSchema),
     defaultValues: {
+      fullName: data.fullName || '',
+      contactInfo: data.contactInfo || '',
       dateOfBirth: data.dateOfBirth || '',
       gender: data.gender || '',
       gradeLevel: data.gradeLevel || '',
       school: data.school || '',
       location: data.location || '',
+      interests: data.interests || '',
     },
   });
 
   const handleNext = (formData: UserInfoFormData) => {
     updateData(formData);
-    setCurrentStep(3);
+    setCurrentStep(currentStep + 1);
   };
 
   const handleBack = () => {
-    setCurrentStep(1);
+    setCurrentStep(currentStep - 1);
   };
 
   return (
@@ -75,6 +78,25 @@ export function UserInfoStep() {
           onSubmit={form.handleSubmit(handleNext)}
           className='space-y-6 mb-8'
         >
+          <FormField
+            control={form.control}
+            name='fullName'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input
+                    type='text'
+                    placeholder='Enter your full name'
+                    className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <FormField
             control={form.control}
             name='dateOfBirth'
@@ -117,73 +139,6 @@ export function UserInfoStep() {
             )}
           />
 
-          {data.role === 'student' && (
-            <FormField
-              control={form.control}
-              name='gradeLevel'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Grade Level</FormLabel>
-                  <FormControl>
-                    <select
-                      className='w-full h-12 bg-gray-100 border-1 rounded-md px-3 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-                      {...field}
-                    >
-                      <option value=''>Select grade level</option>
-                      <option value='high-school'>High School</option>
-                      <option value='undergraduate'>Undergraduate</option>
-                      <option value='graduate'>Graduate</option>
-                      <option value='postgraduate'>Postgraduate</option>
-                    </select>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          )}
-
-          <div className='w-full relative'>
-            <FormField
-              control={form.control}
-              name='school'
-              render={({ field }) => (
-                <FormItem className='relative w-full'>
-                  <FormLabel>
-                    {data.role === 'student'
-                      ? 'School'
-                      : 'Company/Organization'}
-                  </FormLabel>
-                  <FormControl>
-                    <SchoolSelect
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
-
-          <FormField
-            control={form.control}
-            name='location'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Location</FormLabel>
-                <FormControl>
-                  <Input
-                    type='text'
-                    placeholder='Enter your location'
-                    className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
           <div className='flex justify-between pt-4'>
             <Button
               type='button'
@@ -197,6 +152,7 @@ export function UserInfoStep() {
             <Button
               type='submit'
               size={'lg'}
+              onClick={() => handleNext(form.getValues())}
               className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full'
             >
               Next <ArrowRight className='w-4 h-4 ml-2' />

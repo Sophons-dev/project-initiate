@@ -39,11 +39,14 @@ export function OnboardingProvider({
 
   const [data, setData] = useState<OnboardingData>({
     role: null,
+    fullName: '',
+    contactInfo: '',
     dateOfBirth: '',
     gender: '',
     gradeLevel: '',
     school: '',
     location: '',
+    interests: '',
     answers: {},
     wantsAdvancedQuestions: false,
     agreedToTerms: false,
@@ -61,8 +64,8 @@ export function OnboardingProvider({
     setData(prev => ({ ...prev, ...updates }));
   };
 
-  // 2 fixed steps (UserInfo, Terms) + dynamic questions
-  const totalSteps = 4 + questions.length; // UserType, UserInfo, Questions, Terms, Completion
+  // 2 fixed steps (UserInfo1, UserInfo2) + dynamic questions + 2 fixed steps (Terms, Completion)
+  const totalSteps = 5 + questions.length; // UserType, UserInfo1, UserInfo2, Questions, Terms, Completion
 
   return (
     <OnboardingContext.Provider
