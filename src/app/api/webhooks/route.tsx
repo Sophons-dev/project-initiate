@@ -17,7 +17,6 @@ export async function POST(req: NextRequest) {
     const userData = evt.data;
 
     if (eventType === 'user.created') {
-      // Now TypeScript knows userData has the expected properties
       await createUser({
         clerkId: userData.id,
         name: `${userData.first_name || ''} ${userData.last_name || ''}`.trim(),
