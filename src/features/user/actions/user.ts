@@ -3,11 +3,11 @@
 import { db } from '@/lib/db';
 
 /**
- * Create a new user (minimal data from Auth0)
- * This should be called immediately after Auth0 authentication
+ * Create a new user (minimal data from Clerk)
+ * This should be called immediately after Clerk authentication
  */
 export async function createUser(userData: {
-  auth0Id: string;
+  clerkId: string;
   roleId: string;
   name?: string;
   email?: string;
