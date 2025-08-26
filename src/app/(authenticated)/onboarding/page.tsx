@@ -13,27 +13,24 @@ export default function OnboardingPage() {
 
   const renderStep = () => {
     const questionSteps = questions.length;
+    const step = currentStep;
 
-    if (currentStep === 1) {
-      return <UserTypeStep />;
+    switch (true) {
+      case step === 1:
+        return <UserTypeStep />;
+      case step === 2:
+        return <UserInfo1Step />;
+      case step === 3:
+        return <UserInfo2Step />;
+      case step > 3 && step < 3 + questionSteps:
+        return <DynamicQuestionStep />;
+      case step === 3 + questionSteps:
+        return <TermsStep />;
+      case step === 4 + questionSteps:
+        return <CompletionStep />;
+      default:
+        return <UserTypeStep />;
     }
-    if (currentStep === 2) {
-      return <UserInfo1Step />;
-    }
-    if (currentStep === 3) {
-      return <UserInfo2Step />;
-    }
-    if (currentStep > 3 && currentStep < 3 + questionSteps) {
-      return <DynamicQuestionStep />;
-    }
-    if (currentStep === 3 + questionSteps) {
-      return <TermsStep />;
-    }
-    if (currentStep === 4 + questionSteps) {
-      return <CompletionStep />;
-    }
-
-    return <UserTypeStep />;
   };
 
   return renderStep();
