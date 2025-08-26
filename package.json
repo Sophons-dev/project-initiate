@@ -23,7 +23,8 @@
     "test:ci": "jest --ci --coverage --watchAll=false"
   },
   "dependencies": {
-    "@auth0/nextjs-auth0": "^4.9.0",
+    "@clerk/elements": "^0.23.57",
+    "@clerk/nextjs": "^6.31.4",
     "@hookform/resolvers": "^5.2.1",
     "@prisma/client": "^6.14.0",
     "@radix-ui/react-avatar": "^1.1.10",

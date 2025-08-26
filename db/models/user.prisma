@@ -7,7 +7,7 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  auth0Id       String?   @unique
+  clerkId       String?   @unique
 
   // Role Reference
   roleId        String    @db.ObjectId

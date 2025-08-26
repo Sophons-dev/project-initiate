@@ -18,7 +18,7 @@ services:
   mongo-init:
     image: mongo:6
     container_name: mongo_init
-    restart: "no"
+    restart: 'no'
     depends_on:
       initiate-mongo:
         condition: service_healthy
