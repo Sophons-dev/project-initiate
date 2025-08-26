@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { useUser } from '@auth0/nextjs-auth0';
+import { useUser } from '@clerk/nextjs';
 import { motion } from 'framer-motion';
 import {
   Blend,
@@ -26,7 +26,7 @@ export const DashboardHero = () => {
         >
           <div>
             <h1 className='text-2xl font-semibold text-gray-900 mb-1'>
-              Welcome, {user?.given_name || user?.name}!
+              Welcome, {user?.firstName}!
             </h1>
             <p className='text-gray-600'>
               Here are your AI-powered personalized recommendations.
