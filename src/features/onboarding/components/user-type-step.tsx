@@ -43,21 +43,6 @@ export function UserTypeStep() {
         </p>
       </div>
 
-      {/* Progress */}
-      <div className='mb-8'>
-        <div className='flex justify-between items-center mb-2'>
-          <span className='text-sm text-gray-500'>
-            Step {currentStep} of {totalSteps}
-          </span>
-        </div>
-        <div className='w-full bg-gray-200 rounded-full h-2'>
-          <div
-            className='bg-cyan-500 h-2 rounded-full transition-all duration-300'
-            style={{ width: `${(currentStep / totalSteps) * 100}%` }}
-          />
-        </div>
-      </div>
-
       {/* Options */}
       <div className='space-y-2 mb-8 bg-neutral-100 p-3 rounded-xl'>
         <motion.div
