@@ -17,6 +17,7 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { LocationSelect } from './location-search-input';
 
 export function UserInfo2Step() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
@@ -132,11 +133,9 @@ export function UserInfo2Step() {
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <Input
-                      type='text'
-                      placeholder='Enter your location'
-                      className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-                      {...field}
+                    <LocationSelect
+                      value={field.value}
+                      onChange={field.onChange}
                     />
                   </FormControl>
                   <FormMessage />

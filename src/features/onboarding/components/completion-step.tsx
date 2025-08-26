@@ -109,7 +109,13 @@ export function CompletionStep() {
           </div>
           <div>
             <span className='font-medium text-gray-700'>Age:</span>{' '}
-            <span className='text-gray-600'>{data.age}</span>
+            {/* Get age from date of birth */}
+            <span className='text-gray-600'>
+              {data.dateOfBirth
+                ? new Date().getFullYear() -
+                  new Date(data.dateOfBirth).getFullYear()
+                : ''}
+            </span>
           </div>
           {data.school && (
             <div>
