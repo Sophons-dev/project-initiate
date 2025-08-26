@@ -93,7 +93,7 @@ export const MainNavbar = () => {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem asChild className='w-full'>
+              <DropdownMenuItem asChild className='w-full cursor-pointer'>
                 <SignOutButton />
               </DropdownMenuItem>
             </DropdownMenuGroup>
