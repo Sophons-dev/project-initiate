@@ -150,20 +150,3 @@ html body[data-scroll-locked] {
 #button {
   @apply cursor-pointer;
 }
-
-/* Clerk stylings */
-.cl-internal-1dauvpw {
-  @apply !hidden;
-}
-
-.cl-cardBox {
-  @apply !shadow-none !bg-transparent;
-}
-.cl-signIn-start,
-.cl-signUp-start {
-  @apply !shadow-none bg-transparent;
-}
-/*
-.cl-formButtonPrimary {
-  @apply bg-[#019789] border-[#019789];
-} */

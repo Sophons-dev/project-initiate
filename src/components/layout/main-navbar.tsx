@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { useUser } from '@clerk/nextjs';
+import { SignOutButton, useUser } from '@clerk/nextjs';
 
 /**
  * Main Navbar component
@@ -93,10 +93,8 @@ export const MainNavbar = () => {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link className='w-full' href='/auth/logout'>
-                  Sign out
-                </Link>
+              <DropdownMenuItem asChild className='w-full'>
+                <SignOutButton />
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

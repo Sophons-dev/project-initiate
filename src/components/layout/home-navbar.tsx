@@ -225,9 +225,7 @@ export const Navbar = () => {
                   asChild
                   className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'
                 >
-                  <Link href='/auth/login?screen_hint=signup'>
-                    Get Startedasd
-                  </Link>
+                  <Link href='/auth/login?screen_hint=signup'>Get Started</Link>
                 </Button>
               </motion.div>
             </span>
