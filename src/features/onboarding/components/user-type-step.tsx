@@ -68,7 +68,7 @@ export function UserTypeStep() {
               )}
             </div>
             <GraduationCap className='w-6 h-6 text-gray-600' />
-            <span className='font-medium text-gray-900'>Student</span>
+            <span className='text-gray-900'>Student</span>
           </div>
         </motion.div>
 
@@ -95,9 +95,7 @@ export function UserTypeStep() {
               )}
             </div>
             <Briefcase className='w-6 h-6 text-gray-600' />
-            <span className='font-medium text-gray-900'>
-              Professional / Post Grad
-            </span>
+            <span className='text-gray-900'>Professional / Post Grad</span>
           </div>
         </motion.div>
       </div>
