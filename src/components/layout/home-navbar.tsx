@@ -17,7 +17,14 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { useUser } from '@auth0/nextjs-auth0';
+import {
+  SignIn,
+  SignInButton,
+  SignInWithMetamaskButton,
+  SignOutButton,
+  useAuth,
+  useUser,
+} from '@clerk/nextjs';
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -27,7 +34,9 @@ const navLinks = [
 ];
 
 export const Navbar = () => {
+  const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
+
   const [activeSection, setActiveSection] = useState<string>('home');
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -152,17 +161,17 @@ export const Navbar = () => {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.4 }}
         >
-          {user ? (
+          {user && isLoaded && isSignedIn ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className='hidden cursor-pointer lg:flex items-center gap-2 rounded-full outline-none focus:ring-2 focus:ring-cyan-500'>
                   <Avatar className='h-9 w-9'>
                     <AvatarImage
-                      src={user.picture ?? ''}
-                      alt={user.name ?? 'User'}
+                      src={user.imageUrl ?? ''}
+                      alt={user.firstName ?? 'User'}
                     />
                     <AvatarFallback>
-                      {(user.name ?? 'U').slice(0, 2).toUpperCase()}
+                      {(user.firstName ?? 'U').slice(0, 2).toUpperCase()}
                     </AvatarFallback>
                   </Avatar>
                 </button>
@@ -170,9 +179,11 @@ export const Navbar = () => {
               <DropdownMenuContent align='end' className='w-56'>
                 <DropdownMenuLabel>
                   <div className='flex flex-col'>
-                    <span className='font-medium truncate'>{user.name}</span>
+                    <span className='font-medium truncate'>
+                      {user.firstName}
+                    </span>
                     <span className='text-xs text-muted-foreground truncate'>
-                      {user.email}
+                      {user.emailAddresses[0].emailAddress}
                     </span>
                   </div>
                 </DropdownMenuLabel>
@@ -186,8 +197,8 @@ export const Navbar = () => {
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem asChild>
-                  <Link href='/auth/logout'>Sign out</Link>
+                <DropdownMenuItem asChild className='w-full'>
+                  <SignOutButton />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -202,7 +213,8 @@ export const Navbar = () => {
                   variant='ghost'
                   className='hidden md:inline-flex hover:bg-transparent'
                 >
-                  <Link href='/auth/login'>Sign In</Link>
+                  <Link href='/sign-in'>Sign In</Link>
+                  {/* <SignInButton /> */}
                 </Button>
               </motion.div>
               <motion.div
@@ -213,7 +225,9 @@ export const Navbar = () => {
                   asChild
                   className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'
                 >
-                  <Link href='/auth/login?screen_hint=signup'>Get Started</Link>
+                  <Link href='/auth/login?screen_hint=signup'>
+                    Get Startedasd
+                  </Link>
                 </Button>
               </motion.div>
             </span>
@@ -304,23 +318,21 @@ export const Navbar = () => {
               ))}
 
               {/* Mobile: Sign In link */}
-              <li>
+              <li className='w-full'>
                 {!user ? (
-                  <Link
-                    href='/auth/login'
+                  <div
                     onClick={() => setIsMenuOpen(false)}
                     className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
                   >
-                    Sign In
-                  </Link>
+                    <SignInButton />
+                  </div>
                 ) : (
-                  <Link
-                    href='/auth/logout'
+                  <div
                     onClick={() => setIsMenuOpen(false)}
                     className='block w-full px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50'
                   >
-                    Sign Out
-                  </Link>
+                    <SignOutButton />
+                  </div>
                 )}
               </li>
             </ul>
