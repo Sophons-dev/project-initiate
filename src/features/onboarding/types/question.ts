@@ -5,16 +5,16 @@ export type QuestionStage = 'onboarding' | 'personalization' | 'both';
 
 export interface Question {
   id: string;
-  question_text: string;
-  question_type: QuestionType;
+  questionText: string;
+  questionType: QuestionType;
   category: QuestionCategory;
-  options?: string[];
-  target_field: string;
-  user_types: string[];
+  options: string[];
+  targetField: string;
+  userTypes: string[];
   order: number;
   active: boolean;
-  processing_type: ProcessingType;
+  processingType: ProcessingType;
   stage: QuestionStage;
-  created_at?: Date;
-  updated_at?: Date;
+  createdAt: Date | null;
+  updatedAt: Date | null;
 }

@@ -21,9 +21,6 @@ model User {
   recommendations   OpportunityRecommendation[]
   careerInsights    CareerInsight[]
   careerInsightLogs CareerInsightLog[]
-
-  @@index([id])
-  @@index([clerkId])
 }
 
 // Embedded object types
