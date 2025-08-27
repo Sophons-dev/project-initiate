@@ -425,7 +425,9 @@ describe('User Actions', () => {
       const error = new Error('Update failed');
       mockDb.user.update.mockRejectedValue(error);
 
-      const result = await updateUser(mockUser.id, { email: 'jane@example.com' });
+      const result = await updateUser(mockUser.id, {
+        email: 'jane@example.com',
+      });
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Failed to update user');

@@ -1,4 +1,8 @@
+'use server';
+
 import { db } from '@/lib/db';
+import { auth } from '@clerk/nextjs/server';
+import { Prisma } from '@prisma/client';
 
 export async function createUser(userData: {
   clerkId: string;
@@ -91,7 +95,7 @@ export async function updateUser(
   }
 ) {
   try {
-    const updatePayload: any = {};
+    const updatePayload: Prisma.UserUpdateInput = {};
 
     // Handle basic fields
     if (updateData.email !== undefined) updatePayload.email = updateData.email;
@@ -200,11 +204,28 @@ export async function deleteUser(userId: string) {
 }
 
 export async function updateOnboardingStatus() {
-  // This function uses Clerk auth and should only be called from server components
-  // Implementation depends on your auth setup
-  throw new Error(
-    'This function should be implemented with proper auth context'
-  );
+  const { userId, isAuthenticated } = await auth();
+
+  if (!userId && !isAuthenticated) {
+    return { success: false, error: 'Unauthorized' };
+  }
+
+  try {
+    const user = await db.user.update({
+      where: { clerkId: userId },
+      data: {
+        preferences: {
+          onboardingCompleted: true,
+          preferencesUpdatedAt: new Date(),
+        },
+      },
+    });
+    return { success: true, data: user };
+  } catch (error) {
+    console.error('Error updating onboarding status:', error);
+
+    return { success: false, error: 'Failed to update onboarding status' };
+  }
 }
 
 export async function updateUserPreferences(

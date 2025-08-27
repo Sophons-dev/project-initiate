@@ -8,7 +8,11 @@ export const userInfoSchema = z.object({
   gradeLevel: z.string().optional(),
   school: z.string().min(1, 'School is required'),
   location: z.string().min(1, 'Location is required'),
-  interests: z.string().optional(),
+  interests: z
+    .array(
+      z.string().min(2, 'At least 2 characters').max(20, 'Max 20 characters')
+    )
+    .optional(),
 });
 
 export type UserInfoFormData = z.infer<typeof userInfoSchema>;

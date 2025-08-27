@@ -7,14 +7,7 @@ import { useOnboarding } from '../contexts/onboarding-context';
 import { Button } from '@/components/ui/button';
 
 export function UserTypeStep() {
-  const {
-    data,
-    updateData,
-    setCurrentStep,
-    currentStep,
-    totalSteps,
-    fetchQuestions,
-  } = useOnboarding();
+  const { data, updateData, setCurrentStep, fetchQuestions } = useOnboarding();
   const [selectedUserType, setSelectedUserType] = useState<
     'student' | 'professional' | null
   >(data.userType);
@@ -22,6 +15,7 @@ export function UserTypeStep() {
   const handleNext = () => {
     if (selectedUserType) {
       updateData({ userType: selectedUserType });
+
       fetchQuestions(selectedUserType);
       setCurrentStep(2);
     }
