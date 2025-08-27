@@ -1,9 +1,5 @@
 'use client';
 
-import {
-  studentOnboardingQuestions,
-  professionalOnboardingQuestions,
-} from '@/lib/mock-data/onboarding-questions';
 import { Question } from '@/features/onboarding/types/question';
 import { createContext, useContext, useState } from 'react';
 import { UserInfoFormData } from '../validations/onboarding';

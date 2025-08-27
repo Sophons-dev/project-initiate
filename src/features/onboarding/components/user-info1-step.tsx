@@ -16,22 +16,24 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
+import { useUser } from '@clerk/nextjs';
 
 export function UserInfo1Step() {
+  const { user } = useUser();
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
     useOnboarding();
 
   const form = useForm<UserInfoFormData>({
     resolver: zodResolver(userInfoSchema),
     defaultValues: {
-      fullName: data.fullName || '',
+      fullName: user?.fullName || data.fullName || '',
       contactInfo: data.contactInfo || '',
       dateOfBirth: data.dateOfBirth || '',
       gender: data.gender || '',
       gradeLevel: data.gradeLevel || '',
       school: data.school || '',
       location: data.location || '',
-      interests: data.interests || '',
+      interests: data.interests || [],
     },
   });
 
