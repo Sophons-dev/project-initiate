@@ -1,5 +1,8 @@
+'use server';
+
 import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server';
+import { Prisma } from '@prisma/client';
 
 export async function createUser(userData: {
   clerkId: string;
@@ -92,7 +95,7 @@ export async function updateUser(
   }
 ) {
   try {
-    const updatePayload: any = {};
+    const updatePayload: Prisma.UserUpdateInput = {};
 
     // Handle basic fields
     if (updateData.email !== undefined) updatePayload.email = updateData.email;

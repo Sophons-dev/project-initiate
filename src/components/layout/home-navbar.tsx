@@ -17,14 +17,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import {
-  SignIn,
-  SignInButton,
-  SignInWithMetamaskButton,
-  SignOutButton,
-  useAuth,
-  useUser,
-} from '@clerk/nextjs';
+import { SignOutButton, useAuth, useUser } from '@clerk/nextjs';
 
 const navLinks = [
   { label: 'Home', href: '#home' },

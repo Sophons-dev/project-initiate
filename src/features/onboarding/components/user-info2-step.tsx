@@ -17,6 +17,7 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { LocationSelect } from './location-search-input';
+import { InterestTagInput } from './interest-tag-input';
 
 export function UserInfo2Step() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
@@ -32,7 +33,7 @@ export function UserInfo2Step() {
       gradeLevel: data.gradeLevel || '',
       school: data.school || '',
       location: data.location || '',
-      interests: data.interests || '',
+      interests: data.interests || [],
     },
   });
 
@@ -149,10 +150,10 @@ export function UserInfo2Step() {
                 <FormItem>
                   <FormLabel>Interests & Hobbies</FormLabel>
                   <FormControl>
-                    <textarea
+                    <InterestTagInput
+                      value={field.value || []}
+                      onChange={field.onChange}
                       placeholder='What are your interests or hobbies?'
-                      className='w-full h-24 bg-gray-100 border-1 rounded-md px-3 py-2 focus:bg-white focus:ring-2 focus:ring-cyan-500'
-                      {...field}
                     />
                   </FormControl>
                   <FormMessage />
