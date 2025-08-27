@@ -54,7 +54,7 @@ const eslintConfig = [
       "react/display-name": "warn",
 
       // General rules
-      "no-console": "warn",
+      // "no-console": "warn",
       "no-debugger": "error",
       "no-unused-vars": "off", // Use TypeScript version instead
       "prefer-const": "warn",

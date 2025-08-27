@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useOnboarding } from '../contexts/onboarding-context';
-import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SchoolSelect } from './school-search-input';
 import { useForm } from 'react-hook-form';

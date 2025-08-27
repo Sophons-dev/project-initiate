@@ -5,7 +5,6 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useOnboarding } from '../contexts/onboarding-context';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { SchoolSelect } from './school-search-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { userInfoSchema, UserInfoFormData } from '../validations/onboarding';
