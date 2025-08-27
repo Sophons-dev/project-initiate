@@ -56,7 +56,7 @@ export function DynamicQuestionStep() {
         </div>
       </div>
 
-      {question.question_type === 'single_choice' && (
+      {question.questionType === 'single_choice' && (
         <SingleChoiceQuestion
           question={question}
           value={answer || ''}
@@ -64,7 +64,7 @@ export function DynamicQuestionStep() {
         />
       )}
 
-      {question.question_type === 'multi_choice' && (
+      {question.questionType === 'multi_choice' && (
         <MultiChoiceQuestion
           question={question}
           value={answer || []}

@@ -30,7 +30,7 @@ export function MultiChoiceQuestion({
 
   return (
     <div>
-      <h3 className='font-semibold text-lg mb-4'>{question.question_text}</h3>
+      <h3 className='font-semibold text-lg mb-4'>{question.questionText}</h3>
       <div className='space-y-2'>
         {question.options?.map(option => {
           const isChecked = value.includes(option);
