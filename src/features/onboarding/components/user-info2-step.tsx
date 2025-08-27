@@ -80,7 +80,7 @@ export function UserInfo2Step() {
           className='space-y-6 mb-8'
         >
           <>
-            {data.role === 'student' && (
+            {data.userType === 'student' && (
               <FormField
                 control={form.control}
                 name='gradeLevel'
@@ -111,7 +111,7 @@ export function UserInfo2Step() {
               render={({ field }) => (
                 <FormItem className='relative w-full'>
                   <FormLabel>
-                    {data.role === 'student'
+                    {data.userType === 'student'
                       ? 'School'
                       : 'Company/Organization'}
                   </FormLabel>

@@ -1,6 +1,11 @@
 // Enums
 // This file contains all enum definitions used throughout the schema
 
+enum UserType {
+  student
+  professional
+}
+
 enum QuestionCategory {
   onboarding
   personalization

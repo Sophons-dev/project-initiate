@@ -3,20 +3,17 @@
 
 model User {
   id            String    @id @map("_id") @db.ObjectId @default(auto())
-  name          String?
+  clerkId       String    @unique @map("clerkId")
+  userType      UserType?
+
+  // Basic auth info
   email         String?   @unique
   emailVerified DateTime?
-  image         String?
-  clerkId       String?   @unique
-
-  // Role Reference
-  roleId        String    @db.ObjectId
-  role          Role      @relation("UserToRole", fields: [roleId], references: [id])
 
   // Embedded objects
   profile       UserProfile?
   preferences   UserPreferences?
-  modelData         UserModelData?
+  modelData     UserModelData?
 
   // Relations
   opportunities     UserOpportunity[]
@@ -34,7 +31,7 @@ type UserProfile {
   location     String?
   organization String?
   website      String?
-}
+  }
 
 type UserPreferences {
   interests                 String[]

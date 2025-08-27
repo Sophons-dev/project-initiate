@@ -22,7 +22,6 @@ export async function POST(req: NextRequest) {
         name: `${userData.first_name || ''} ${userData.last_name || ''}`.trim(),
         email: userData.email_addresses?.[0]?.email_address,
         image: userData.image_url,
-        roleId: '68adf3557d3db47fd5e489b5',
       });
 
       console.log('User synced to DB:', userData.id);
