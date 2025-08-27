@@ -1,13 +1,13 @@
 model User {
   id                  String           @id @default(auto()) @map("_id") @db.ObjectId
   clerkId             String           @unique @map("clerkId")
-  userType            UserType?
   email               String?          @unique
-  emailVerified       DateTime?
+  userType            UserType?
   onboardingCompleted Boolean          @default(false)
   profile             UserProfile?
   preferences         UserPreferences?
   modelData           UserModelData?
+  updatedAt           DateTime?
 
   CareerInsight             CareerInsight?
   CareerInsightLog          CareerInsightLog?
@@ -49,17 +49,12 @@ type UserProfile {
   image       String?
   gender      String?
   dateOfBirth DateTime?
-  website     String?
-  contact     ContactDetails?
+  phoneNumber String?
   address     Address?
   occupation  Occupation?
   education   Education?
 }
 
-type ContactDetails {
-  email       String?
-  phoneNumber String?
-}
 
 type Address {
   street   String?
@@ -84,7 +79,6 @@ type UserPreferences {
   goals                     String?
   preferredOpportunityTypes String[]
   skills                    String[]
-  updatedAt                 DateTime?
 }
 
 type UserModelData {
@@ -93,5 +87,4 @@ type UserModelData {
   availability     String?
   preferredWorkEnv String?
   remoteFriendly   Boolean?
-  updatedAt        DateTime?
 }
