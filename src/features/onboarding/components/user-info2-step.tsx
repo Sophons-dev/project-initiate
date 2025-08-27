@@ -7,7 +7,10 @@ import { Button } from '@/components/ui/button';
 import { SchoolSelect } from './school-search-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { userInfoSchema, UserInfoFormData } from '../validations/onboarding';
+import {
+  UserInfoStep2FormData,
+  userInfoStep2Schema,
+} from '../validations/onboarding';
 import {
   Form,
   FormControl,
@@ -18,18 +21,16 @@ import {
 } from '@/components/ui/form';
 import { LocationSelect } from './location-search-input';
 import { InterestTagInput } from './interest-tag-input';
+import { Input } from '@/components/ui/input';
 
 export function UserInfo2Step() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
     useOnboarding();
 
-  const form = useForm<UserInfoFormData>({
-    resolver: zodResolver(userInfoSchema),
+  const form = useForm<UserInfoStep2FormData>({
+    resolver: zodResolver(userInfoStep2Schema),
     defaultValues: {
-      fullName: data.fullName || '',
       contactInfo: data.contactInfo || '',
-      dateOfBirth: data.dateOfBirth || '',
-      gender: data.gender || '',
       gradeLevel: data.gradeLevel || '',
       school: data.school || '',
       location: data.location || '',
@@ -37,7 +38,7 @@ export function UserInfo2Step() {
     },
   });
 
-  const handleNext = (formData: UserInfoFormData) => {
+  const handleNext = (formData: UserInfoStep2FormData) => {
     updateData(formData);
     setCurrentStep(currentStep + 1);
   };
@@ -79,6 +80,26 @@ export function UserInfo2Step() {
           onSubmit={form.handleSubmit(handleNext)}
           className='space-y-6 mb-8'
         >
+          {/* Contact Info */}
+          <FormField
+            control={form.control}
+            name='contactInfo'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Contact Info</FormLabel>
+                <FormControl>
+                  <Input
+                    type='text'
+                    placeholder='Enter your contact info'
+                    className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           <>
             {data.userType === 'student' && (
               <FormField
@@ -175,8 +196,8 @@ export function UserInfo2Step() {
             </Button>
             <Button
               type='submit'
-              size='lg'
-              onClick={() => handleNext(form.getValues())}
+              size={'lg'}
+              disabled={!form.formState.isValid || form.formState.isSubmitting}
               className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full'
             >
               Next <ArrowRight className='w-4 h-4 ml-2' />

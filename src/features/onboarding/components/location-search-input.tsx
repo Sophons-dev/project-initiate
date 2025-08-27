@@ -45,7 +45,6 @@ export function LocationSelect({
       setLoading(true);
 
       const results = await fetchLocationSuggestions(query);
-      console.log(results);
 
       if (isMounted) setSuggestions(results);
 
@@ -84,6 +83,20 @@ export function LocationSelect({
               {loading ? 'Loading...' : 'No results found'}
             </CommandEmpty>
             <CommandGroup>
+              {/* Always show custom input first */}
+              {query.trim() && (
+                <CommandItem
+                  value={query}
+                  onSelect={() => {
+                    onChange(query);
+                    setOpen(false);
+                  }}
+                >
+                  Use &quot;{query}&quot;
+                </CommandItem>
+              )}
+
+              {/* Render API suggestions */}
               {suggestions.map((s, idx) => (
                 <CommandItem
                   key={idx}
@@ -93,7 +106,7 @@ export function LocationSelect({
                     setOpen(false);
                   }}
                 >
-                  {'isCustom' in s ? `Use "${s.display_name}"` : s.display_name}
+                  {s.display_name}
                 </CommandItem>
               ))}
             </CommandGroup>

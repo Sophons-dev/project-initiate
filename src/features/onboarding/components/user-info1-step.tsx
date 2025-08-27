@@ -7,7 +7,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { userInfoSchema, UserInfoFormData } from '../validations/onboarding';
+import {
+  UserInfoFormData,
+  UserInfoStep1FormData,
+  userInfoStep1Schema,
+} from '../validations/onboarding';
 import {
   Form,
   FormControl,
@@ -23,21 +27,17 @@ export function UserInfo1Step() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
     useOnboarding();
 
-  const form = useForm<UserInfoFormData>({
-    resolver: zodResolver(userInfoSchema),
+  const form = useForm<UserInfoStep1FormData>({
+    resolver: zodResolver(userInfoStep1Schema),
+    mode: 'onChange',
     defaultValues: {
       fullName: user?.fullName || data.fullName || '',
-      contactInfo: data.contactInfo || '',
       dateOfBirth: data.dateOfBirth || '',
       gender: data.gender || '',
-      gradeLevel: data.gradeLevel || '',
-      school: data.school || '',
-      location: data.location || '',
-      interests: data.interests || [],
     },
   });
 
-  const handleNext = (formData: UserInfoFormData) => {
+  const handleNext = (formData: UserInfoStep1FormData) => {
     updateData(formData);
     setCurrentStep(currentStep + 1);
   };
@@ -153,7 +153,7 @@ export function UserInfo1Step() {
             <Button
               type='submit'
               size={'lg'}
-              onClick={() => handleNext(form.getValues())}
+              disabled={!form.formState.isValid || form.formState.isSubmitting}
               className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full'
             >
               Next <ArrowRight className='w-4 h-4 ml-2' />

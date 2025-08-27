@@ -52,10 +52,11 @@ export function OnboardingProvider({
   const fetchQuestions = async (userType: 'student' | 'professional') => {
     try {
       const questions = await getQuestionsByUserType(userType);
-      console.log(questions);
+
       setQuestions(questions?.data ?? []);
     } catch (error) {
       console.error('Error fetching questions:', error);
+
       setQuestions([]);
     }
   };
