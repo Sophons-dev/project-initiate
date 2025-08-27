@@ -36,6 +36,9 @@ export function DynamicQuestionStep() {
 
   const answer = data.answers[question.id];
 
+  // Determine if the question has been answered
+  const isAnswered = Array.isArray(answer) ? answer.length > 0 : !!answer;
+
   return (
     <motion.div
       initial={{ opacity: 0, x: 20 }}
@@ -56,7 +59,7 @@ export function DynamicQuestionStep() {
         </div>
       </div>
 
-      {question.question_type === 'single_choice' && (
+      {question.questionType === 'single_choice' && (
         <SingleChoiceQuestion
           question={question}
           value={answer || ''}
@@ -64,7 +67,7 @@ export function DynamicQuestionStep() {
         />
       )}
 
-      {question.question_type === 'multi_choice' && (
+      {question.questionType === 'multi_choice' && (
         <MultiChoiceQuestion
           question={question}
           value={answer || []}
@@ -84,6 +87,7 @@ export function DynamicQuestionStep() {
         </Button>
         <Button
           onClick={handleNext}
+          disabled={!isAnswered}
           className='bg-cyan-500 hover:bg-cyan-600 text-white px-8 py-2 rounded-full disabled:opacity-50'
         >
           Next <ArrowRight className='w-4 h-4 ml-2' />

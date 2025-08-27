@@ -1,12 +1,9 @@
 'use client';
 
-import {
-  studentOnboardingQuestions,
-  professionalOnboardingQuestions,
-} from '@/lib/mock-data/onboarding-questions';
 import { Question } from '@/features/onboarding/types/question';
 import { createContext, useContext, useState } from 'react';
 import { UserInfoFormData } from '../validations/onboarding';
+import { getQuestionsByUserType } from '../actions';
 
 export interface OnboardingData extends UserInfoFormData {
   userType: 'student' | 'professional' | null;
@@ -46,17 +43,21 @@ export function OnboardingProvider({
     gradeLevel: '',
     school: '',
     location: '',
-    interests: '',
+    interests: [],
     answers: {},
     wantsAdvancedQuestions: false,
     agreedToTerms: false,
   });
 
-  const fetchQuestions = (userType: 'student' | 'professional') => {
-    if (userType === 'student') {
-      setQuestions(studentOnboardingQuestions);
-    } else {
-      setQuestions(professionalOnboardingQuestions);
+  const fetchQuestions = async (userType: 'student' | 'professional') => {
+    try {
+      const questions = await getQuestionsByUserType(userType);
+
+      setQuestions(questions?.data ?? []);
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+
+      setQuestions([]);
     }
   };
 

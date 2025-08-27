@@ -16,4 +16,6 @@ model Question {
   createdAt      DateTime?
   updatedAt      DateTime?
   answers        UserQuestionAnswer[]
+
+  @@index([userTypes])
 }

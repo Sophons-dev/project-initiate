@@ -15,4 +15,22 @@ export const userInfoSchema = z.object({
     .optional(),
 });
 
+export const userInfoStep1Schema = userInfoSchema.pick({
+  fullName: true,
+  dateOfBirth: true,
+  gender: true,
+});
+
+export const userInfoStep2Schema = userInfoSchema.pick({
+  contactInfo: true,
+  gradeLevel: true,
+  school: true,
+  location: true,
+  interests: true,
+});
+
+export type UserInfoStep1FormData = z.infer<typeof userInfoStep1Schema>;
+
+export type UserInfoStep2FormData = z.infer<typeof userInfoStep2Schema>;
+
 export type UserInfoFormData = z.infer<typeof userInfoSchema>;
