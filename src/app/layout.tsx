@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
-import { Auth0Provider } from '@auth0/nextjs-auth0';
+import { ClerkProvider } from '@clerk/nextjs';
+import '../styles/clerk.css';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -12,8 +13,10 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: 'Project Initiate',
-  description: 'Your project description here',
+  description: '',
 };
+
+const appUrl = process.env.NEXT_PUBLIC_APP_BASE_URL;
 
 export default function RootLayout({
   children,
@@ -21,12 +24,38 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body className={`${poppins.variable} font-sans antialiased`}>
-        <Auth0Provider>
+    <ClerkProvider
+      signInUrl={`/sign-in`}
+      signUpUrl={`/sign-up`}
+      signInFallbackRedirectUrl={`/dashboard`}
+      signUpFallbackRedirectUrl={`/dashboard`}
+      afterSignOutUrl={appUrl}
+      appearance={{
+        variables: {
+          colorPrimary: '#019789',
+        },
+        layout: {
+          socialButtonsPlacement: 'bottom',
+          shimmer: true,
+        },
+        captcha: {
+          theme: 'auto',
+          size: 'flexible',
+        },
+        elements: {
+          card: '!bg-transparent !shadow-none',
+          cardBox: '!bg-transparent !shadow-none',
+          input: '!p-2.5',
+          formButtonPrimary: '!p-2.5',
+          socialButtonsBlockButton: '!p-2.5',
+        },
+      }}
+    >
+      <html lang='en'>
+        <body className={`${poppins.variable} font-sans antialiased`}>
           <main>{children}</main>
-        </Auth0Provider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

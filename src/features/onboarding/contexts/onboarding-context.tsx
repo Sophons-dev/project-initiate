@@ -9,7 +9,7 @@ import { createContext, useContext, useState } from 'react';
 import { UserInfoFormData } from '../validations/onboarding';
 
 export interface OnboardingData extends UserInfoFormData {
-  role: 'student' | 'professional' | null;
+  userType: 'student' | 'professional' | null;
   answers: Record<string, string | string[]>;
   wantsAdvancedQuestions: boolean;
   agreedToTerms: boolean;
@@ -22,7 +22,7 @@ interface OnboardingContextType {
   setCurrentStep: (step: number) => void;
   totalSteps: number;
   questions: Question[];
-  fetchQuestions: (role: 'student' | 'professional') => void;
+  fetchQuestions: (userType: 'student' | 'professional') => void;
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(
@@ -38,7 +38,7 @@ export function OnboardingProvider({
   const [questions, setQuestions] = useState<Question[]>([]);
 
   const [data, setData] = useState<OnboardingData>({
-    role: null,
+    userType: null,
     fullName: '',
     contactInfo: '',
     dateOfBirth: '',
@@ -52,8 +52,8 @@ export function OnboardingProvider({
     agreedToTerms: false,
   });
 
-  const fetchQuestions = (role: 'student' | 'professional') => {
-    if (role === 'student') {
+  const fetchQuestions = (userType: 'student' | 'professional') => {
+    if (userType === 'student') {
       setQuestions(studentOnboardingQuestions);
     } else {
       setQuestions(professionalOnboardingQuestions);

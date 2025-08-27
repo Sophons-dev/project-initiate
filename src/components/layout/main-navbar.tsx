@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { useUser } from '@auth0/nextjs-auth0';
+import { SignOutButton, useUser } from '@clerk/nextjs';
 
 /**
  * Main Navbar component
@@ -64,17 +64,24 @@ export const MainNavbar = () => {
               <span className='sr-only'>Open main menu</span>
               <Avatar className='h-9 w-9'>
                 <AvatarImage
-                  src={user?.picture ?? ''}
-                  alt={user?.name ?? 'User'}
+                  src={user?.imageUrl ?? ''}
+                  alt={user?.firstName ?? 'User'}
                 />
                 <AvatarFallback>
-                  {(user?.name ?? 'U').slice(0, 2).toUpperCase()}
+                  {(user?.fullName ?? 'U').slice(0, 2).toUpperCase()}
                 </AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className='w-56' align='end'>
-            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuLabel>
+              <div className='flex flex-col'>
+                <span className='font-medium truncate'>{user?.firstName}</span>
+                <span className='text-xs text-muted-foreground truncate'>
+                  {user?.emailAddresses[0].emailAddress}
+                </span>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
               <DropdownMenuItem>
@@ -86,10 +93,8 @@ export const MainNavbar = () => {
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <Link className='w-full' href='/auth/logout'>
-                  Sign out
-                </Link>
+              <DropdownMenuItem asChild className='w-full cursor-pointer'>
+                <SignOutButton />
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

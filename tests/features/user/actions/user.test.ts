@@ -30,7 +30,9 @@ import {
   updateOnboardingStatus,
   updateUserPreferences,
   updateUserModelData,
-} from '@/features/user/actions/user';
+  updateUserType,
+  getUserByClerkId,
+} from '@/features/user/actions';
 
 describe('User Actions', () => {
   beforeEach(() => {
@@ -42,10 +44,22 @@ describe('User Actions', () => {
   });
 
   describe('createUser', () => {
-    it('should create a user successfully', async () => {
+    it('should create a user successfully with minimal data', async () => {
+      const userData = {
+        clerkId: 'clerk_123456789',
+        name: 'John Doe',
+        email: 'john@example.com',
+        image: 'https://example.com/avatar.jpg',
+      };
+
       const expectedUser = {
-        ...mockUser,
-        profile: {},
+        id: '507f1f77bcf86cd799439011',
+        clerkId: userData.clerkId,
+        email: userData.email,
+        profile: {
+          name: userData.name,
+          image: userData.image,
+        },
         preferences: {
           interests: [],
           preferredOpportunityTypes: [],
@@ -64,14 +78,78 @@ describe('User Actions', () => {
 
       mockDb.user.create.mockResolvedValue(expectedUser);
 
-      const result = await createUser(mockUserInput);
+      const result = await createUser(userData);
 
       expect(result.success).toBe(true);
       expect(result.data).toEqual(expectedUser);
       expect(mockDb.user.create).toHaveBeenCalledWith({
         data: {
-          ...mockUserInput,
-          profile: {},
+          clerkId: userData.clerkId,
+          email: userData.email,
+          profile: {
+            name: userData.name,
+            image: userData.image,
+          },
+          preferences: {
+            interests: [],
+            preferredOpportunityTypes: [],
+            skills: [],
+            onboardingCompleted: false,
+            preferencesUpdatedAt: expect.any(Date),
+          },
+          modelData: {
+            learningStyle: null,
+            availability: null,
+            preferredWorkEnv: null,
+            remoteFriendly: null,
+            updatedAt: expect.any(Date),
+          },
+        },
+      });
+    });
+
+    it('should create a user with only required clerkId', async () => {
+      const userData = {
+        clerkId: 'clerk_123456789',
+      };
+
+      const expectedUser = {
+        id: '507f1f77bcf86cd799439011',
+        clerkId: userData.clerkId,
+        profile: {
+          name: undefined,
+          image: undefined,
+        },
+        preferences: {
+          interests: [],
+          preferredOpportunityTypes: [],
+          skills: [],
+          onboardingCompleted: false,
+          preferencesUpdatedAt: expect.any(Date),
+        },
+        modelData: {
+          learningStyle: null,
+          availability: null,
+          preferredWorkEnv: null,
+          remoteFriendly: null,
+          updatedAt: expect.any(Date),
+        },
+      };
+
+      mockDb.user.create.mockResolvedValue(expectedUser);
+
+      const result = await createUser(userData);
+
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(expectedUser);
+      expect(mockDb.user.create).toHaveBeenCalledWith({
+        data: {
+          clerkId: userData.clerkId,
+          email: undefined,
+          profile: {
+            name: undefined,
+            image: undefined,
+          },
           preferences: {
             interests: [],
             preferredOpportunityTypes: [],
@@ -91,10 +169,15 @@ describe('User Actions', () => {
     });
 
     it('should handle database errors', async () => {
+      const userData = {
+        clerkId: 'clerk_123456789',
+        name: 'John Doe',
+      };
+
       const error = new Error('Database connection failed');
       mockDb.user.create.mockRejectedValue(error);
 
-      const result = await createUser(mockUserInput);
+      const result = await createUser(userData);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Failed to create user');
@@ -103,32 +186,28 @@ describe('User Actions', () => {
 
   describe('updateUserProfile', () => {
     it('should update user profile successfully', async () => {
-      const updatedUser = { ...mockUser, ...mockProfileData };
+      const profileData = {
+        name: 'Jane Doe',
+        image: 'https://example.com/new-avatar.jpg',
+        location: 'New York',
+        organization: 'Tech Corp',
+        position: 'Software Engineer',
+        website: 'https://janedoe.com',
+        gender: 'Female',
+        dateOfBirth: new Date('1990-01-01'),
+      };
+
+      const updatedUser = { ...mockUser, profile: profileData };
       mockDb.user.update.mockResolvedValue(updatedUser);
 
-      const result = await updateUserProfile(mockUser.id, mockProfileData);
+      const result = await updateUserProfile(mockUser.id, profileData);
 
       expect(result.success).toBe(true);
       expect(result.data).toEqual(updatedUser);
       expect(mockDb.user.update).toHaveBeenCalledWith({
         where: { id: mockUser.id },
         data: {
-          profile: {
-            fullName: mockProfileData.fullName,
-            avatarUrl: mockProfileData.avatarUrl,
-            bio: mockProfileData.bio,
-            location: mockProfileData.location,
-            organization: mockProfileData.organization,
-            website: mockProfileData.website,
-          },
-          preferences: {
-            interests: mockProfileData.interests,
-            goals: mockProfileData.goals,
-            preferredOpportunityTypes:
-              mockProfileData.preferredOpportunityTypes,
-            skills: mockProfileData.skills,
-            preferencesUpdatedAt: expect.any(Date),
-          },
+          profile: profileData,
         },
       });
     });
@@ -137,7 +216,7 @@ describe('User Actions', () => {
       const error = new Error('Update failed');
       mockDb.user.update.mockRejectedValue(error);
 
-      const result = await updateUserProfile(mockUser.id, mockProfileData);
+      const result = await updateUserProfile(mockUser.id, { name: 'Jane Doe' });
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Failed to update user profile');
@@ -155,7 +234,6 @@ describe('User Actions', () => {
       expect(mockDb.user.findUnique).toHaveBeenCalledWith({
         where: { id: mockUser.id },
         include: {
-          role: true,
           opportunities: true,
           questionAnswers: true,
           recommendations: true,
@@ -185,9 +263,49 @@ describe('User Actions', () => {
     });
   });
 
+  describe('getUserByClerkId', () => {
+    it('should get user by Clerk ID successfully', async () => {
+      mockDb.user.findFirst.mockResolvedValue(mockUser);
+
+      const result = await getUserByClerkId('clerk_123456789');
+
+      expect(result.success).toBe(true);
+      expect(result.data).toEqual(mockUser);
+      expect(mockDb.user.findFirst).toHaveBeenCalledWith({
+        where: { clerkId: 'clerk_123456789' },
+        include: {
+          opportunities: true,
+          questionAnswers: true,
+          recommendations: true,
+          careerInsights: true,
+          careerInsightLogs: true,
+        },
+      });
+    });
+
+    it('should return error when user not found', async () => {
+      mockDb.user.findFirst.mockResolvedValue(null);
+
+      const result = await getUserByClerkId('nonexistent-clerk-id');
+
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('User not found');
+    });
+
+    it('should handle database errors', async () => {
+      const error = new Error('Database error');
+      mockDb.user.findFirst.mockRejectedValue(error);
+
+      const result = await getUserByClerkId('clerk_123456789');
+
+      expect(result.success).toBe(false);
+      expect(result.error).toBe('Failed to fetch user');
+    });
+  });
+
   describe('updateUser', () => {
     it('should update user basic fields successfully', async () => {
-      const updateData = { name: 'Jane Doe', email: 'jane@example.com' };
+      const updateData = { email: 'jane@example.com' };
       const updatedUser = { ...mockUser, ...updateData };
       mockDb.user.update.mockResolvedValue(updatedUser);
 
@@ -203,9 +321,10 @@ describe('User Actions', () => {
 
     it('should update user profile fields successfully', async () => {
       const updateData = {
-        fullName: 'Jane Doe',
-        bio: 'Software Engineer',
+        name: 'Jane Doe',
         location: 'New York',
+        organization: 'Tech Corp',
+        position: 'Senior Engineer',
       };
       const updatedUser = {
         ...mockUser,
@@ -221,12 +340,14 @@ describe('User Actions', () => {
         where: { id: mockUser.id },
         data: {
           profile: {
-            fullName: 'Jane Doe',
-            bio: 'Software Engineer',
+            name: 'Jane Doe',
             location: 'New York',
-            avatarUrl: undefined,
-            organization: undefined,
+            organization: 'Tech Corp',
+            position: 'Senior Engineer',
+            image: undefined,
             website: undefined,
+            gender: undefined,
+            dateOfBirth: undefined,
           },
         },
       });
@@ -259,27 +380,25 @@ describe('User Actions', () => {
             skills: ['Python', 'TensorFlow'],
             goals: undefined,
             preferredOpportunityTypes: undefined,
-            onboardingCompleted: undefined,
             preferencesUpdatedAt: expect.any(Date),
           },
         },
       });
     });
 
-    it('should update mixed fields successfully', async () => {
+    it('should update user model data fields successfully', async () => {
       const updateData = {
-        name: 'Jane Doe',
-        fullName: 'Jane Doe',
-        interests: ['AI'],
+        learningStyle: 'visual',
+        availability: 'full-time',
+        preferredWorkEnv: 'remote',
+        remoteFriendly: true,
       };
       const updatedUser = {
         ...mockUser,
-        name: 'Jane Doe',
-        profile: { ...mockUser.profile, fullName: 'Jane Doe' },
-        preferences: {
-          ...mockUser.preferences,
-          interests: ['AI'],
-          preferencesUpdatedAt: expect.any(Date),
+        modelData: {
+          ...mockUser.modelData,
+          ...updateData,
+          updatedAt: expect.any(Date),
         },
       };
       mockDb.user.update.mockResolvedValue(updatedUser);
@@ -291,22 +410,12 @@ describe('User Actions', () => {
       expect(mockDb.user.update).toHaveBeenCalledWith({
         where: { id: mockUser.id },
         data: {
-          name: 'Jane Doe',
-          profile: {
-            fullName: 'Jane Doe',
-            avatarUrl: undefined,
-            bio: undefined,
-            location: undefined,
-            organization: undefined,
-            website: undefined,
-          },
-          preferences: {
-            interests: ['AI'],
-            goals: undefined,
-            preferredOpportunityTypes: undefined,
-            skills: undefined,
-            onboardingCompleted: undefined,
-            preferencesUpdatedAt: expect.any(Date),
+          modelData: {
+            learningStyle: 'visual',
+            availability: 'full-time',
+            preferredWorkEnv: 'remote',
+            remoteFriendly: true,
+            updatedAt: expect.any(Date),
           },
         },
       });
@@ -316,7 +425,7 @@ describe('User Actions', () => {
       const error = new Error('Update failed');
       mockDb.user.update.mockRejectedValue(error);
 
-      const result = await updateUser(mockUser.id, { name: 'Jane Doe' });
+      const result = await updateUser(mockUser.id, { email: 'jane@example.com' });
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Failed to update user');
@@ -346,25 +455,19 @@ describe('User Actions', () => {
     });
   });
 
-  describe('updateOnboardingStatus', () => {
-    it('should update onboarding status successfully', async () => {
-      const updatedUser = {
-        ...mockUser,
-        preferences: { ...mockUser.preferences, onboardingCompleted: true },
-      };
+  describe('updateUserType', () => {
+    it('should update user type successfully', async () => {
+      const updatedUser = { ...mockUser, userType: 'professional' };
       mockDb.user.update.mockResolvedValue(updatedUser);
 
-      const result = await updateOnboardingStatus(mockUser.id, true);
+      const result = await updateUserType(mockUser.id, 'professional');
 
       expect(result.success).toBe(true);
       expect(result.data).toEqual(updatedUser);
       expect(mockDb.user.update).toHaveBeenCalledWith({
         where: { id: mockUser.id },
         data: {
-          preferences: {
-            onboardingCompleted: true,
-            preferencesUpdatedAt: expect.any(Date),
-          },
+          userType: 'professional',
         },
       });
     });
@@ -373,10 +476,10 @@ describe('User Actions', () => {
       const error = new Error('Update failed');
       mockDb.user.update.mockRejectedValue(error);
 
-      const result = await updateOnboardingStatus(mockUser.id, true);
+      const result = await updateUserType(mockUser.id, 'student');
 
       expect(result.success).toBe(false);
-      expect(result.error).toBe('Failed to update onboarding status');
+      expect(result.error).toBe('Failed to update user type');
     });
   });
 
@@ -451,6 +554,14 @@ describe('User Actions', () => {
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Failed to update user model data');
+    });
+  });
+
+  describe('updateOnboardingStatus', () => {
+    it('should throw error for server-only function', async () => {
+      await expect(updateOnboardingStatus()).rejects.toThrow(
+        'This function should be implemented with proper auth context'
+      );
     });
   });
 });

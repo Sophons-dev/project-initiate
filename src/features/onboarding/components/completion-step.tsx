@@ -5,14 +5,24 @@ import { Button } from '@/components/ui/button';
 import { useOnboarding } from '../contexts/onboarding-context';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
+import { updateOnboardingStatus } from '@/features/user/actions';
 
 export function CompletionStep() {
   const { data } = useOnboarding();
   const router = useRouter();
 
-  const handleGoToDashboard = () => {
+  const handleGoToDashboard = async () => {
     // TODO: Save onboarding data to backend
     console.log('Onboarding completed with data:', data);
+
+    // Update the onboarding status of the user
+    const res = await updateOnboardingStatus();
+
+    if (!res.success) {
+      console.error(res.error);
+      return;
+    }
+
     router.push('/dashboard');
   };
 
@@ -100,8 +110,8 @@ export function CompletionStep() {
         </h3>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4 text-sm'>
           <div>
-            <span className='font-medium text-gray-700'>Role:</span>{' '}
-            <span className='text-gray-600 capitalize'>{data.role}</span>
+            <span className='font-medium text-gray-700'>User Type:</span>{' '}
+            <span className='text-gray-600 capitalize'>{data.userType}</span>
           </div>
           <div>
             <span className='font-medium text-gray-700'>Location:</span>{' '}
@@ -109,12 +119,18 @@ export function CompletionStep() {
           </div>
           <div>
             <span className='font-medium text-gray-700'>Age:</span>{' '}
-            <span className='text-gray-600'>{data.age}</span>
+            {/* Get age from date of birth */}
+            <span className='text-gray-600'>
+              {data.dateOfBirth
+                ? new Date().getFullYear() -
+                  new Date(data.dateOfBirth).getFullYear()
+                : ''}
+            </span>
           </div>
           {data.school && (
             <div>
               <span className='font-medium text-gray-700'>
-                {data.role === 'student' ? 'School:' : 'Company:'}
+                {data.userType === 'student' ? 'School:' : 'Company:'}
               </span>{' '}
               <span className='text-gray-600'>{data.school}</span>
             </div>

@@ -1,4 +1,8 @@
+'use client';
+
 import { Question } from '@/features/onboarding/types/question';
+import { motion } from 'framer-motion';
+import { Check } from 'lucide-react';
 
 interface MultiChoiceQuestionProps {
   question: Question;
@@ -28,22 +32,40 @@ export function MultiChoiceQuestion({
     <div>
       <h3 className='font-semibold text-lg mb-4'>{question.question_text}</h3>
       <div className='space-y-2'>
-        {question.options?.map(option => (
-          <label
-            key={option}
-            className='flex items-center p-4 border rounded-lg cursor-pointer hover:bg-gray-50'
-          >
-            <input
-              type='checkbox'
-              name={question.id}
-              value={option}
-              checked={value.includes(option)}
-              onChange={() => handleCheckboxChange(option)}
-              className='mr-4'
-            />
-            <span>{option}</span>
-          </label>
-        ))}
+        {question.options?.map(option => {
+          const isChecked = value.includes(option);
+
+          return (
+            <motion.label
+              key={option}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className={`flex items-center p-4 border rounded-xl cursor-pointer transition-colors ${
+                isChecked
+                  ? 'bg-cyan-50 border-cyan-500'
+                  : 'bg-white border-gray-200 hover:bg-gray-50'
+              }`}
+              onClick={() => handleCheckboxChange(option)}
+            >
+              <div
+                className={`w-5 h-5 flex items-center justify-center border rounded-sm mr-3 transition-colors ${
+                  isChecked ? 'bg-cyan-500 border-cyan-500' : 'border-gray-300'
+                }`}
+              >
+                {isChecked && (
+                  <motion.span
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <Check className='w-4 h-4 text-white' />
+                  </motion.span>
+                )}
+              </div>
+              <span className='text-gray-800'>{option}</span>
+            </motion.label>
+          );
+        })}
       </div>
     </div>
   );
