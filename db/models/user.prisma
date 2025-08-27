@@ -1,63 +1,28 @@
-// User Models
-// This file contains all user-related models
-
 model User {
-  id            String    @id @map("_id") @db.ObjectId @default(auto())
-  clerkId       String    @unique @map("clerkId")
-  userType      UserType?
+  id                  String           @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId             String           @unique @map("clerkId")
+  userType            UserType?
+  email               String?          @unique
+  emailVerified       DateTime?
+  onboardingCompleted Boolean          @default(false)
+  profile             UserProfile?
+  preferences         UserPreferences?
+  modelData           UserModelData?
 
-  // Basic auth info
-  email         String?   @unique
-  emailVerified DateTime?
-
-  // Embedded objects
-  profile       UserProfile?
-  preferences   UserPreferences?
-  modelData     UserModelData?
-
-  // Relations
-  opportunities     UserOpportunity[]
-  questionAnswers   UserQuestionAnswer[]
-  recommendations   OpportunityRecommendation[]
-  careerInsights    CareerInsight[]
-  careerInsightLogs CareerInsightLog[]
+  CareerInsight             CareerInsight?
+  CareerInsightLog          CareerInsightLog?
+  OpportunityRecommendation OpportunityRecommendation[]
+  UserAnswer                UserAnswer[]
+  UserOpportunity           UserOpportunity[]
 }
 
-// Embedded object types
-type UserProfile {
-  name          String?
-  image         String?
-  location      String?
-  organization  String?
-  position      String?
-  website       String?
-  gender        String?
-  dateOfBirth   DateTime?
-}
-
-type UserPreferences {
-  interests                 String[]
-  goals                     String?
-  preferredOpportunityTypes String[]
-  skills                    String[]
-  onboardingCompleted       Boolean   @default(false)
-  preferencesUpdatedAt      DateTime?
-}
-
-type UserModelData {
-  learningStyle    String?
-  availability     String?
-  preferredWorkEnv String?
-  remoteFriendly   Boolean?
-  updatedAt        DateTime?
-}
-
-model UserQuestionAnswer {
+model UserAnswer {
   id         String    @id @map("_id") @db.ObjectId
   userId     String    @db.ObjectId
   questionId String    @db.ObjectId
-  answer     String
-  updatedAt  DateTime?
+  version    Int       @default(1)
+  value      String
+  answeredAt DateTime?
   user       User      @relation(fields: [userId], references: [id])
   question   Question  @relation(fields: [questionId], references: [id])
 
@@ -77,4 +42,56 @@ model UserOpportunity {
 
   @@index([userId])
   @@index([opportunityId])
+}
+
+type UserProfile {
+  name        String?
+  image       String?
+  gender      String?
+  dateOfBirth DateTime?
+  website     String?
+  contact     ContactDetails?
+  address     Address?
+  occupation  Occupation?
+  education   Education?
+}
+
+type ContactDetails {
+  email       String?
+  phoneNumber String?
+}
+
+type Address {
+  street   String?
+  city     String?
+  province String?
+  country  String?
+}
+
+type Occupation {
+  company  String?
+  position String?
+}
+
+type Education {
+  school String?
+  degree String?
+  level  EducationLevel
+}
+
+type UserPreferences {
+  interests                 String[]
+  goals                     String?
+  preferredOpportunityTypes String[]
+  skills                    String[]
+  updatedAt                 DateTime?
+}
+
+type UserModelData {
+  version          Int       @default(1)
+  learningStyle    String?
+  availability     String?
+  preferredWorkEnv String?
+  remoteFriendly   Boolean?
+  updatedAt        DateTime?
 }

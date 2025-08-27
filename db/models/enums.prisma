@@ -6,6 +6,17 @@ enum UserType {
   professional
 }
 
+enum EducationLevel {
+  primary
+  secondary
+  bachelor
+  master
+  doctorate
+  diploma
+  certificate
+  other
+}
+
 enum QuestionCategory {
   onboarding
   personalization
@@ -27,7 +38,6 @@ enum ProcessingType {
 enum QuestionStage {
   onboarding
   personalization
-  both
 }
 
 enum OpportunityType {

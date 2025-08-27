@@ -1,21 +1,17 @@
-// Question Models
-// This file contains all question-related models
-
 model Question {
-  id             String               @id @map("_id") @db.ObjectId
-  questionText   String
-  questionType   QuestionType
-  category       QuestionCategory
-  options        String[]
-  targetField    String
-  userTypes      UserType[]
-  order          Int
-  active         Boolean              @default(true)
-  processingType ProcessingType       @default(direct)
-  stage          QuestionStage        @default(onboarding)
-  createdAt      DateTime?
-  updatedAt      DateTime?
-  answers        UserQuestionAnswer[]
+  id          String        @id @map("_id") @db.ObjectId
+  version     Int           @default(1)
+  text        String
+  targetField String
+  type        QuestionType
+  options     String[]
+  isActive    Boolean       @default(true)
+  order       Int?
+  stage       QuestionStage
+  userTypes   UserType[]
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  UserAnswer  UserAnswer[]
 
   @@index([userTypes])
 }
