@@ -110,8 +110,8 @@ export function CompletionStep() {
         </h3>
         <div className='grid grid-cols-1 md:grid-cols-2 gap-4 text-sm'>
           <div>
-            <span className='font-medium text-gray-700'>Role:</span>{' '}
-            <span className='text-gray-600 capitalize'>{data.role}</span>
+            <span className='font-medium text-gray-700'>User Type:</span>{' '}
+            <span className='text-gray-600 capitalize'>{data.userType}</span>
           </div>
           <div>
             <span className='font-medium text-gray-700'>Location:</span>{' '}
@@ -130,7 +130,7 @@ export function CompletionStep() {
           {data.school && (
             <div>
               <span className='font-medium text-gray-700'>
-                {data.role === 'student' ? 'School:' : 'Company:'}
+                {data.userType === 'student' ? 'School:' : 'Company:'}
               </span>{' '}
               <span className='text-gray-600'>{data.school}</span>
             </div>

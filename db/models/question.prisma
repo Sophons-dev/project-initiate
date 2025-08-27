@@ -8,7 +8,7 @@ model Question {
   category       QuestionCategory
   options        String[]
   targetField    String
-  userRoles      String[]
+  userTypes      UserType[]
   order          Int
   active         Boolean              @default(true)
   processingType ProcessingType       @default(direct)
