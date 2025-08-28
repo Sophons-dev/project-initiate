@@ -6,6 +6,13 @@ enum UserType {
   professional
 }
 
+enum Gender {
+  male
+  female
+  binary
+  prefer_not_to_say
+}
+
 enum EducationLevel {
   primary
   secondary

@@ -46,7 +46,7 @@ model UserOpportunity {
 type UserProfile {
   name        String
   image       String?
-  gender      String?
+  gender      Gender?
   dateOfBirth DateTime?
   phoneNumber String?
   education   Education?
