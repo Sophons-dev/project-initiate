@@ -114,10 +114,14 @@ export function UserInfo2Step() {
                         {...field}
                       >
                         <option value=''>Select grade level</option>
-                        <option value='high-school'>High School</option>
-                        <option value='undergraduate'>Undergraduate</option>
-                        <option value='graduate'>Graduate</option>
-                        <option value='postgraduate'>Postgraduate</option>
+                        <option value='primary'>Primary</option>
+                        <option value='secondary'>Secondary</option>
+                        <option value='bachelor'>Bachelor</option>
+                        <option value='master'>Master</option>
+                        <option value='doctorate'>Doctorate</option>
+                        <option value='diploma'>Diploma</option>
+                        <option value='certificate'>Certificate</option>
+                        <option value='other'>Other</option>
                       </select>
                     </FormControl>
                     <FormMessage />

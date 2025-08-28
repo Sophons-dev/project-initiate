@@ -17,14 +17,18 @@ export async function POST(req: NextRequest) {
     const userData = evt.data;
 
     if (eventType === 'user.created') {
-      await createUser({
+      const result = await createUser({
         clerkId: userData.id,
         name: `${userData.first_name || ''} ${userData.last_name || ''}`.trim(),
         email: userData.email_addresses?.[0]?.email_address,
         image: userData.image_url,
       });
 
-      console.log('User synced to DB:', userData.id);
+      if (result.success) {
+        console.log('User synced to DB:', result.data.userId);
+      } else {
+        console.error('Error syncing user to DB:', result.error);
+      }
     }
 
     return new Response('Webhook received', { status: 200 });
