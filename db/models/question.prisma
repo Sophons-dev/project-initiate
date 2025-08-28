@@ -1,5 +1,5 @@
 model Question {
-  id          String        @id @map("_id") @db.ObjectId
+  id          String        @id @default(auto()) @map("_id") @db.ObjectId
   version     Int           @default(1)
   text        String
   targetField String
