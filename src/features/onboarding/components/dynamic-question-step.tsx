@@ -15,7 +15,9 @@ export function DynamicQuestionStep() {
     totalSteps,
   } = useOnboarding();
 
-  const questionIndex = currentStep - 3; // 1: type, 2: info, 3...n: questions
+  const DYNAMIC_QUESTION_START_INDEX = 3;
+
+  const questionIndex = currentStep - DYNAMIC_QUESTION_START_INDEX; // 1: type, 2: info, 3...n: questions
   const question = questions[questionIndex];
 
   const handleAnswerChange = (value: string | string[]) => {
@@ -59,7 +61,7 @@ export function DynamicQuestionStep() {
         </div>
       </div>
 
-      {question.questionType === 'single_choice' && (
+      {question.type === 'single_choice' && (
         <SingleChoiceQuestion
           question={question}
           value={answer || ''}
@@ -67,7 +69,7 @@ export function DynamicQuestionStep() {
         />
       )}
 
-      {question.questionType === 'multi_choice' && (
+      {question.type === 'multi_choice' && (
         <MultiChoiceQuestion
           question={question}
           value={answer || []}
