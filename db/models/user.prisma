@@ -1,12 +1,10 @@
 model User {
-  id                  String           @id @default(auto()) @map("_id") @db.ObjectId
-  clerkId             String           @unique @map("clerkId")
-  email               String?          @unique
+  id                  String       @id @default(auto()) @map("_id") @db.ObjectId
+  clerkId             String       @unique @map("clerkId")
+  email               String?      @unique
   userType            UserType?
-  onboardingCompleted Boolean          @default(false)
+  onboardingCompleted Boolean      @default(false)
   profile             UserProfile?
-  preferences         UserPreferences?
-  modelData           UserModelData?
   updatedAt           DateTime?
 
   careerInsight              CareerInsight?
@@ -17,7 +15,7 @@ model User {
 }
 
 model UserAnswer {
-  id         String    @id @map("_id") @db.ObjectId
+  id         String    @id @default(auto()) @map("_id") @db.ObjectId
   userId     String    @db.ObjectId
   questionId String    @db.ObjectId
   version    Int       @default(1)
@@ -50,9 +48,9 @@ type UserProfile {
   gender      String?
   dateOfBirth DateTime?
   phoneNumber String?
-  address     Address?
-  occupation  Occupation?
   education   Education?
+  location    String?
+  interests   String[]
 }
 
 type Address {
@@ -71,13 +69,6 @@ type Education {
   school String?
   degree String?
   level  EducationLevel
-}
-
-type UserPreferences {
-  interests                 String[]
-  goals                     String?
-  preferredOpportunityTypes String[]
-  skills                    String[]
 }
 
 type UserModelData {

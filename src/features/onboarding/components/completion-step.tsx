@@ -5,18 +5,16 @@ import { Button } from '@/components/ui/button';
 import { useOnboarding } from '../contexts/onboarding-context';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
-import { updateOnboardingStatus } from '@/features/user/actions';
+import { onboardUser } from '@/features/user/actions';
 
 export function CompletionStep() {
   const { data } = useOnboarding();
   const router = useRouter();
 
   const handleGoToDashboard = async () => {
-    // TODO: Save onboarding data to backend
     console.log('Onboarding completed with data:', data);
 
-    // Update the onboarding status of the user
-    const res = await updateOnboardingStatus();
+    const res = await onboardUser(data);
 
     if (!res.success) {
       console.error(res.error);

@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { User } from '@prisma/client';
+import { User, EducationLevel } from '@prisma/client';
 import { auth } from '@clerk/nextjs/server';
 import { Prisma } from '@prisma/client';
 
@@ -43,7 +43,7 @@ export async function getUser(
     const user = await db.user.findFirst({
       where: { [key]: value },
       include: {
-        careerInsights: true,
+        careerInsight: true,
         careerInsightLogs: true,
         opportunityRecommendations: true,
         userAnswers: true,
@@ -59,6 +59,114 @@ export async function getUser(
   } catch (error) {
     console.error('Error fetching user:', error);
     return { success: false, error: 'Failed to fetch user' };
+  }
+}
+
+const gradeLevelMap: Record<string, EducationLevel> = {
+  primary: EducationLevel.primary,
+  secondary: EducationLevel.secondary,
+  bachelor: EducationLevel.bachelor,
+  master: EducationLevel.master,
+  doctorate: EducationLevel.doctorate,
+  diploma: EducationLevel.diploma,
+  certificate: EducationLevel.certificate,
+  other: EducationLevel.other,
+};
+
+export async function onboardUser(onboardingData: {
+  userType: 'student' | 'professional';
+  fullName: string;
+  contactInfo: string;
+  dateOfBirth: string;
+  gender: string;
+  gradeLevel?: string;
+  school: string;
+  location: string;
+  interests: string[];
+  answers: Record<string, string | string[]>;
+  wantsAdvancedQuestions: boolean;
+  agreedToTerms: boolean;
+}) {
+  console.log('Onboarding user with data:', onboardingData);
+
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      throw new Error('User not authenticated');
+    }
+
+    // Convert dateOfBirth string to Date object
+    const dateOfBirth = new Date(onboardingData.dateOfBirth);
+
+    // Update user profile and basic info
+    const level = onboardingData.gradeLevel;
+
+    const updatedUser = await db.user.update({
+      where: { clerkId: userId },
+      data: {
+        userType: onboardingData.userType,
+        onboardingCompleted: true,
+        profile: {
+          name: onboardingData.fullName,
+          gender: onboardingData.gender,
+          dateOfBirth: dateOfBirth,
+          phoneNumber: onboardingData.contactInfo,
+          interests: onboardingData.interests,
+          location: onboardingData.location,
+          education: {
+            school: onboardingData.school,
+            level:
+              gradeLevelMap[onboardingData.gradeLevel] || EducationLevel.other,
+          },
+        },
+        updatedAt: new Date(),
+      },
+    });
+
+    // Create user answers for each question
+    const userAnswers = await Promise.all(
+      Object.entries(onboardingData.answers).map(
+        async ([questionId, answer]) => {
+          const answerValue = Array.isArray(answer)
+            ? answer.join(', ')
+            : answer;
+
+          // get user id from clerkId
+          const user = await db.user.findFirst({
+            where: { clerkId: userId },
+          });
+          if (!user) {
+            throw new Error('User not found');
+          }
+
+          return await db.userAnswer.create({
+            data: {
+              userId: user.id,
+              questionId: questionId,
+              value: answerValue,
+              answeredAt: new Date(),
+            },
+          });
+        }
+      )
+    );
+
+    console.log(`✅ Onboarding completed for user ${userId}`);
+    console.log(`📝 Created ${userAnswers.length} user answers`);
+
+    return {
+      success: true,
+      data: {
+        user: updatedUser,
+        userAnswers: userAnswers,
+      },
+    };
+  } catch (error) {
+    console.error('Error during onboarding:', error);
+    return {
+      success: false,
+      error: 'Failed to complete onboarding',
+    };
   }
 }
 
@@ -221,30 +329,27 @@ export async function getUser(
 //   }
 // }
 
-// export async function updateOnboardingStatus() {
-//   const { userId, isAuthenticated } = await auth();
+export async function updateOnboardingStatus() {
+  const { userId, isAuthenticated } = await auth();
 
-//   if (!userId && !isAuthenticated) {
-//     return { success: false, error: 'Unauthorized' };
-//   }
+  if (!userId && !isAuthenticated) {
+    return { success: false, error: 'Unauthorized' };
+  }
 
-//   try {
-//     const user = await db.user.update({
-//       where: { clerkId: userId },
-//       data: {
-//         preferences: {
-//           onboardingCompleted: true,
-//           preferencesUpdatedAt: new Date(),
-//         },
-//       },
-//     });
-//     return { success: true, data: user };
-//   } catch (error) {
-//     console.error('Error updating onboarding status:', error);
+  try {
+    const user = await db.user.update({
+      where: { clerkId: userId },
+      data: {
+        onboardingCompleted: true,
+      },
+    });
+    return { success: true, data: user };
+  } catch (error) {
+    console.error('Error updating onboarding status:', error);
 
-//     return { success: false, error: 'Failed to update onboarding status' };
-//   }
-// }
+    return { success: false, error: 'Failed to update onboarding status' };
+  }
+}
 
 // export async function updateUserPreferences(
 //   userId: string,
