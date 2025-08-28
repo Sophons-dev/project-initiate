@@ -9,11 +9,11 @@ model User {
   modelData           UserModelData?
   updatedAt           DateTime?
 
-  CareerInsight             CareerInsight?
-  CareerInsightLog          CareerInsightLog?
-  OpportunityRecommendation OpportunityRecommendation[]
-  UserAnswer                UserAnswer[]
-  UserOpportunity           UserOpportunity[]
+  careerInsight              CareerInsight?
+  careerInsightLogs          CareerInsightLog[]
+  opportunityRecommendations OpportunityRecommendation[]
+  userAnswers                UserAnswer[]
+  userOpportunities          UserOpportunity[]
 }
 
 model UserAnswer {
@@ -55,7 +55,6 @@ type UserProfile {
   education   Education?
 }
 
-
 type Address {
   street   String?
   city     String?
@@ -82,7 +81,7 @@ type UserPreferences {
 }
 
 type UserModelData {
-  version          Int       @default(1)
+  version          Int      @default(1)
   learningStyle    String?
   availability     String?
   preferredWorkEnv String?

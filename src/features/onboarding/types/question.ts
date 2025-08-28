@@ -2,19 +2,19 @@ export type QuestionCategory = 'onboarding' | 'personalization';
 export type QuestionType = 'single_choice' | 'multi_choice' | 'text' | 'scale';
 export type ProcessingType = 'direct' | 'ai' | 'custom';
 export type QuestionStage = 'onboarding' | 'personalization' | 'both';
+export type UserType = 'student' | 'professional';
 
 export interface Question {
   id: string;
-  questionText: string;
-  questionType: QuestionType;
-  category: QuestionCategory;
-  options: string[];
+  version: number;
+  text: string;
   targetField: string;
-  userTypes: string[];
+  type: QuestionType;
+  options: string[];
+  isActive: boolean;
   order: number;
-  active: boolean;
-  processingType: ProcessingType;
   stage: QuestionStage;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  userTypes: UserType[];
+  createdAt: Date;
+  updatedAt: Date;
 }

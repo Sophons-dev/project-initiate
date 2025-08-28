@@ -1,10 +1,11 @@
 'use server';
 
 import { db } from '@/lib/db';
+import type { Question, UserType } from '@prisma/client';
 
 export async function getQuestionsByUserType(
-  userTypes: 'student' | 'professional'
-) {
+  userTypes: UserType
+): Promise<{ success: boolean; data?: Question[]; error?: string }> {
   try {
     const questions = await db.question.findMany({
       where: { userTypes: { has: userTypes } },
