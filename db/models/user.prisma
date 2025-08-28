@@ -1,11 +1,12 @@
 model User {
   id                  String       @id @default(auto()) @map("_id") @db.ObjectId
   clerkId             String       @unique @map("clerkId")
-  email               String?      @unique
+  email               String       @unique
   userType            UserType?
   onboardingCompleted Boolean      @default(false)
   profile             UserProfile?
-  updatedAt           DateTime?
+  createdAt           DateTime     @default(now())
+  updatedAt           DateTime     @updatedAt
 
   careerInsight              CareerInsight?
   careerInsightLogs          CareerInsightLog[]
@@ -20,7 +21,7 @@ model UserAnswer {
   questionId String    @db.ObjectId
   version    Int       @default(1)
   value      String
-  answeredAt DateTime?
+  answeredAt DateTime  @default(now())
   user       User      @relation(fields: [userId], references: [id])
   question   Question  @relation(fields: [questionId], references: [id])
 
@@ -43,7 +44,7 @@ model UserOpportunity {
 }
 
 type UserProfile {
-  name        String?
+  name        String
   image       String?
   gender      String?
   dateOfBirth DateTime?
