@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
 import { getUser } from '@/features/user/actions';
+import { GetUserResult } from '@/features/user/types';
 
 export async function requireOnboarded() {
   // Get current session user from Clerk
@@ -12,11 +13,19 @@ export async function requireOnboarded() {
   }
 
   // Fetch user from DB
-  const { success, data: user } = await getUser('clerkId', userId);
+  const result: GetUserResult = await getUser({
+    key: 'clerkId',
+    value: userId,
+  });
 
-  if (!success || !user) {
-    // User not found in DB
-    redirect('/onboarding'); // or an error page
+  if (!result.success) {
+    redirect('/onboarding');
+  }
+
+  const user = result.data;
+
+  if (!user) {
+    redirect('/onboarding');
   }
 
   // Check onboarding status
