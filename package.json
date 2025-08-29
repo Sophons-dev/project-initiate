@@ -24,6 +24,7 @@
     "seed:questions": "bun run scripts/seedQuestions.ts"
   },
   "dependencies": {
+    "@bprogress/next": "^3.2.12",
     "@clerk/elements": "^0.23.57",
     "@clerk/nextjs": "^6.31.4",
     "@hookform/resolvers": "^5.2.1",
