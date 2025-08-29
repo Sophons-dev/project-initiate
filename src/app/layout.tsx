@@ -4,7 +4,6 @@ import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import '../styles/clerk.css';
 import { Toaster } from '@/components/ui/sonner';
-import { ProgressProvider } from '@bprogress/next/app';
 import { LoadingProgressProvider } from '@/providers/load-progress.provider';
 
 const poppins = Poppins({
