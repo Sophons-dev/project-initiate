@@ -72,7 +72,7 @@ export function OnboardingProvider({
   };
 
   // 2 fixed steps (UserInfo1, UserInfo2) + dynamic questions + 2 fixed steps (Terms, Completion)
-  const totalSteps = 5 + questions.length; // UserType, UserInfo1, UserInfo2, Questions, Terms, Completion
+  const totalSteps = 3 + questions.length; // UserType, UserInfo1, UserInfo2, Questions, Terms, Completion
 
   return (
     <OnboardingContext.Provider
