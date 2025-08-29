@@ -47,7 +47,7 @@ export function OnboardingProvider({
 
   const fetchQuestions = async (userType: UserType) => {
     start();
-
+    
     try {
       const questions = await getQuestionsByUserType(userType);
 
