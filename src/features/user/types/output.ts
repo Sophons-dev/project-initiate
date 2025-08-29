@@ -13,7 +13,7 @@ export type User = {
     dateOfBirth: Date;
     phoneNumber: string;
     location: string;
-    education: {
+    education?: {
       school: string;
       level: EducationLevel;
     };
