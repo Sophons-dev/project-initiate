@@ -1,25 +1,18 @@
 'use client';
 
-import { Question } from '@/features/onboarding/types/question';
+import { Question, UserType } from '@/features/onboarding/types/question';
 import { createContext, useContext, useState } from 'react';
-import { UserInfoFormData } from '../validations/onboarding';
 import { getQuestionsByUserType } from '../actions';
-
-export interface OnboardingData extends UserInfoFormData {
-  userType: 'student' | 'professional' | null;
-  answers: Record<string, string | string[]>;
-  wantsAdvancedQuestions: boolean;
-  agreedToTerms: boolean;
-}
+import { OnboardingUserParams } from '../types/onboarding';
 
 interface OnboardingContextType {
-  data: OnboardingData;
-  updateData: (updates: Partial<OnboardingData>) => void;
+  data: OnboardingUserParams;
+  updateData: (updates: Partial<OnboardingUserParams>) => void;
   currentStep: number;
   setCurrentStep: (step: number) => void;
   totalSteps: number;
   questions: Question[];
-  fetchQuestions: (userType: 'student' | 'professional') => void;
+  fetchQuestions: (userType: UserType) => void;
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(
@@ -34,8 +27,8 @@ export function OnboardingProvider({
   const [currentStep, setCurrentStep] = useState(1);
   const [questions, setQuestions] = useState<Question[]>([]);
 
-  const [data, setData] = useState<OnboardingData>({
-    userType: null,
+  const [data, setData] = useState<OnboardingUserParams>({
+    userType: 'student',
     fullName: '',
     contactInfo: '',
     dateOfBirth: '',
@@ -49,7 +42,9 @@ export function OnboardingProvider({
     agreedToTerms: false,
   });
 
-  const fetchQuestions = async (userType: 'student' | 'professional') => {
+  console.log(questions);
+
+  const fetchQuestions = async (userType: UserType) => {
     try {
       const questions = await getQuestionsByUserType(userType);
 
@@ -61,7 +56,7 @@ export function OnboardingProvider({
     }
   };
 
-  const updateData = (updates: Partial<OnboardingData>) => {
+  const updateData = (updates: Partial<OnboardingUserParams>) => {
     setData(prev => ({ ...prev, ...updates }));
   };
 
