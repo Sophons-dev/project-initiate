@@ -1,28 +1,26 @@
 'use server';
 
-import OpenAI from 'openai';
+import { google } from '@ai-sdk/google';
+import { generateObject } from 'ai';
 import { SYSTEM_PROMPT } from './contants';
-import { zodTextFormat } from 'openai/helpers/zod.mjs';
-import { RecommendationsSchema } from './types';
-const client = new OpenAI();
+import { RecommendationSchema } from './types';
 
 export async function generateRecommendations({
   context,
+  recommendationCount,
 }: {
   context: string;
+  recommendationCount: number;
 }) {
   try {
-    const response = await client.responses.parse({
-      model: 'gpt-4o-mini-search-preview',
-      instructions: SYSTEM_PROMPT,
-      tools: [{ type: 'web_search_preview' }],
-      input: context,
-      text: {
-        format: zodTextFormat(RecommendationsSchema, 'recommendations'),
-      },
+    const result = await generateObject({
+      model: google('gemini-2.5-pro'),
+      system: SYSTEM_PROMPT,
+      schema: RecommendationSchema,
+      prompt: `Based on the ${context} process and generate a list of ${recommendationCount} recommendations.`,
     });
 
-    console.log(response.output_parsed);
+    console.log(result);
   } catch (error) {
     console.error('Error generating recommendations:', error);
     throw error;
