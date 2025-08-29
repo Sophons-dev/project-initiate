@@ -15,9 +15,6 @@ export default function OnboardingPage() {
     const questionSteps = questions.length;
     const step = currentStep;
 
-    console.log(questions);
-    console.log(questionSteps);
-
     switch (true) {
       case step === 1:
         return <UserTypeStep />;
