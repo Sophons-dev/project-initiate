@@ -5,14 +5,19 @@ import { auth } from '@clerk/nextjs/server';
 import {
   CreateUserParams,
   CreateUserResult,
-  OnboardUserParams,
   OnboardUserResult,
 } from '../types';
+import { OnboardingUserParams } from '@/features/onboarding/types/onboarding';
 
 export async function createUser(
   userData: CreateUserParams
 ): Promise<CreateUserResult> {
   console.log('Creating user with data:', userData);
+
+  if (!userData.email || !userData.name || !userData.clerkId) {
+    return { success: false, error: 'Missing required fields' };
+  }
+
   try {
     const user = await db.user.create({
       data: {
@@ -54,7 +59,7 @@ const genderMap: Record<string, Gender> = {
 };
 
 export async function onboardUser(
-  onboardingData: OnboardUserParams
+  onboardingData: OnboardingUserParams
 ): Promise<OnboardUserResult> {
   console.log('Onboarding user with data:', onboardingData);
 
