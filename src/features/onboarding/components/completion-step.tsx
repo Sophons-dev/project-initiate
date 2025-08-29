@@ -6,22 +6,41 @@ import { useOnboarding } from '../contexts/onboarding-context';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
+import { useProgress } from '@bprogress/next';
+import { toast } from 'sonner';
 
 export function CompletionStep() {
+  const { start, stop } = useProgress();
   const { data } = useOnboarding();
   const router = useRouter();
 
+  // Handle onboarding process and navigate to dashboard
   const handleGoToDashboard = async () => {
-    console.log('Onboarding completed with data:', data);
+    try {
+      start();
+      const res = await onboardUser(data);
 
-    const res = await onboardUser(data);
+      if (!res.success) {
+        console.error('Onboarding failed:', res.error);
 
-    if (!res.success) {
-      console.error(res.error);
-      return;
+        toast.error(
+          'Failed to save your information. Please try again or contact support if the issue persists.'
+        );
+
+        throw new Error(res.error);
+      }
+
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('An unexpected error occurred during onboarding:', error);
+
+      throw error;
+    } finally {
+      toast.success(
+        'Profile updated successfully! Taking you to your dashboard...'
+      );
+      stop();
     }
-
-    router.push('/dashboard');
   };
 
   return (
