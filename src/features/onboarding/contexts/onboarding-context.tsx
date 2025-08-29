@@ -4,6 +4,8 @@ import { Question, UserType } from '@/features/onboarding/types/question';
 import { createContext, useContext, useState } from 'react';
 import { getQuestionsByUserType } from '../actions';
 import { OnboardingUserParams } from '../types/onboarding';
+import { useProgress } from '@bprogress/next';
+import { toast } from 'sonner';
 
 interface OnboardingContextType {
   data: OnboardingUserParams;
@@ -24,6 +26,7 @@ export function OnboardingProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const { start, stop } = useProgress();
   const [currentStep, setCurrentStep] = useState(1);
   const [questions, setQuestions] = useState<Question[]>([]);
 
@@ -42,17 +45,25 @@ export function OnboardingProvider({
     agreedToTerms: false,
   });
 
-  console.log(questions);
-
   const fetchQuestions = async (userType: UserType) => {
+    start();
+
     try {
       const questions = await getQuestionsByUserType(userType);
+
+      if (!questions.success) {
+        throw new Error('Failed to fetch questions');
+      }
 
       setQuestions(questions?.data ?? []);
     } catch (error) {
       console.error('Error fetching questions:', error);
 
+      toast.error(`Error fetching questions: ${error}`);
+
       setQuestions([]);
+    } finally {
+      stop();
     }
   };
 
@@ -61,7 +72,7 @@ export function OnboardingProvider({
   };
 
   // 2 fixed steps (UserInfo1, UserInfo2) + dynamic questions + 2 fixed steps (Terms, Completion)
-  const totalSteps = 5 + questions.length; // UserType, UserInfo1, UserInfo2, Questions, Terms, Completion
+  const totalSteps = 3 + questions.length; // UserType, UserInfo1, UserInfo2, Questions, Terms, Completion
 
   return (
     <OnboardingContext.Provider

@@ -23,15 +23,21 @@ export async function getUser(params: GetUserParams): Promise<GetUserResult> {
       clerkId: user.clerkId,
       email: user.email as string,
       onboardingCompleted: user.onboardingCompleted,
+      userType: user.userType ?? 'student',
       profile: user.profile
         ? {
             name: user.profile.name,
             image: user.profile?.image,
-            gender: user.profile.gender,
-            dateOfBirth: user.profile.dateOfBirth,
-            phoneNumber: user.profile.phoneNumber,
-            location: user.profile.location,
-            education: user.profile.education,
+            gender: user.profile.gender ?? 'unknown',
+            dateOfBirth: user.profile.dateOfBirth ?? new Date(),
+            phoneNumber: user.profile.phoneNumber ?? '',
+            location: user.profile.location ?? '',
+            education: user.profile.education
+              ? {
+                  school: user.profile.education.school ?? '',
+                  level: user.profile.education.level ?? '',
+                }
+              : undefined,
           }
         : undefined,
     };
