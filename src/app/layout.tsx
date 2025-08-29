@@ -3,6 +3,9 @@ import { Poppins } from 'next/font/google';
 import './globals.css';
 import { ClerkProvider } from '@clerk/nextjs';
 import '../styles/clerk.css';
+import { Toaster } from '@/components/ui/sonner';
+import { ProgressProvider } from '@bprogress/next/app';
+import { LoadingProgressProvider } from '@/providers/load-progress.provider';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -53,7 +56,10 @@ export default function RootLayout({
     >
       <html lang='en'>
         <body className={`${poppins.variable} font-sans antialiased`}>
-          <main>{children}</main>
+          <LoadingProgressProvider>
+            <main>{children}</main>
+          </LoadingProgressProvider>
+          <Toaster position='top-right' richColors theme='light' />
         </body>
       </html>
     </ClerkProvider>

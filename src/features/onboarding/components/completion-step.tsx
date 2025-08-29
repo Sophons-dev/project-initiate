@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
 import { useProgress } from '@bprogress/next';
+import { toast } from 'sonner';
 
 export function CompletionStep() {
   const { start, stop } = useProgress();
@@ -22,6 +23,10 @@ export function CompletionStep() {
       if (!res.success) {
         console.error('Onboarding failed:', res.error);
 
+        toast.error(
+          'Failed to save your information. Please try again or contact support if the issue persists.'
+        );
+
         throw new Error(res.error);
       }
 
@@ -31,6 +36,9 @@ export function CompletionStep() {
 
       throw error;
     } finally {
+      toast.success(
+        'Profile updated successfully! Taking you to your dashboard...'
+      );
       stop();
     }
   };
