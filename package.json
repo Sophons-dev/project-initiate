@@ -20,7 +20,8 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "test:ci": "jest --ci --coverage --watchAll=false"
+    "test:ci": "jest --ci --coverage --watchAll=false",
+    "seed:questions": "bun run scripts/seedQuestions.ts"
   },
   "dependencies": {
     "@clerk/elements": "^0.23.57",

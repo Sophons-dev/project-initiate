@@ -12,7 +12,7 @@ export interface Question {
   type: QuestionType;
   options: string[];
   isActive: boolean;
-  order: number;
+  order: number | null;
   stage: QuestionStage;
   userTypes: UserType[];
   createdAt: Date;
