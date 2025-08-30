@@ -1,6 +1,6 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import Link from 'next/link';
 import { Button } from '../ui/button';
 import Image from 'next/image';
@@ -17,14 +17,20 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { SignOutButton, useUser } from '@clerk/nextjs';
+import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 
-/**
- * Main Navbar component
- * @description Used in the main pages such as Dashboard, Careers, Profile, etc.
- */
+const navLinks = [
+  { label: 'Dashboard', href: '/dashboard' },
+  { label: 'Opportunities', href: '/opportunities' },
+  { label: 'Organizations', href: '/organizations' },
+];
+
 export const MainNavbar = () => {
   const { user } = useUser();
   const headerRef = useRef<HTMLElement | null>(null);
+  const pathname = usePathname();
+  const router = useRouter();
 
   return (
     <motion.header
@@ -53,6 +59,52 @@ export const MainNavbar = () => {
             />
           </Link>
         </motion.div>
+
+        <nav
+          className={cn(
+            'absolute hidden left-1/2 transform -translate-x-1/2 items-center space-x-1',
+            pathname === '/' ? 'hidden' : 'lg:flex'
+          )}
+        >
+          {navLinks.map((item, index) => (
+            <motion.div
+              key={item.href}
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 + 0.3 }}
+            >
+              <Link
+                href={item.href}
+                onClick={e => {
+                  e.preventDefault();
+                  router.push(item.href);
+                }}
+                className={cn(
+                  'relative group text-sm px-4 py-1.5 rounded-full font-medium transition-colors duration-200',
+                  pathname === item.href
+                    ? 'text-yellow-600'
+                    : 'text-gray-600 hover:text-gray-900'
+                )}
+              >
+                {/* Active animated pill (desktop) */}
+                <AnimatePresence>
+                  {pathname === item.href && (
+                    <motion.span
+                      layoutId='nav-active-pill'
+                      className='absolute inset-0 rounded-full bg-[#FFF4DE]'
+                      transition={{
+                        type: 'spring',
+                        stiffness: 300,
+                        damping: 50,
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
+                <span className='relative z-10'>{item.label}</span>
+              </Link>
+            </motion.div>
+          ))}
+        </nav>
 
         {/* Breadcrumbs and User profile dropdown */}
         <DropdownMenu>
