@@ -39,15 +39,9 @@ export const OpportunitiesContent = () => {
               Recommended Opportunities
             </h2>
             <p className='text-gray-600'>
-              Here are your AI-powered personalized recommendations.
+              Here is the list all of the available opportunities.
             </p>
           </div>
-          <motion.button
-            whileHover={{ scale: 1.05 }}
-            className='text-cyan-500 hover:text-cyan-600 font-medium'
-          >
-            View All →
-          </motion.button>
         </div>
 
         <div className='flex flex-col md:flex-row gap-3 items-center justify-between mb-6'>
