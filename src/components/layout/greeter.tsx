@@ -20,8 +20,6 @@ export default function Greeter({ children, action, message }: GreeterProps) {
   const router = useRouter();
   const { user } = useUser();
 
-  console.log(user);
-
   return (
     <div className='hero-bg py-10 border-b border-neutral-200'>
       <div className='max-w-7xl mx-auto px-2 lg:px-0'>

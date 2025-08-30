@@ -2,7 +2,7 @@
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { opportunityData } from '@/lib/utils';
-import { Opportunity } from '@/components/shared/cards/recommended-opportunity-card';
+import { Opportunity } from '@/features/opportunities/components/opportunity-card';
 
 // TODO: remove this dummy function once the backend is ready
 const getOpportunities = async (): Promise<Opportunity[]> => {
