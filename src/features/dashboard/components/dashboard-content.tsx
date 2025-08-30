@@ -1,6 +1,5 @@
 'use client';
 
-import { opportunityData } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import { OpportunitiesList } from '@/features/opportunities/components/opportunities-list';
 import { Opportunity } from '@/components/shared/cards/recommended-opportunity-card';
@@ -8,8 +7,11 @@ import { useFilter } from '@/hooks/useFilter';
 import { FilterTabs } from '@/components/shared/filter-tabs';
 import { SearchInput } from '@/components/shared/search';
 import { filterColors } from '@/lib/constants';
+import { useOpportunities } from '@/features/opportunities/hooks/useOpportunities';
 
-export const DashboardContent = () => {
+export const OpportunitiesContent = () => {
+  const { data: opportunityData, isLoading, error } = useOpportunities();
+
   const filters = [
     { label: 'Show All', predicate: () => true },
     { label: 'Jobs', predicate: (op: Opportunity) => op.type === 'JOB' },
@@ -23,7 +25,7 @@ export const DashboardContent = () => {
     searchQuery,
     setSearchQuery,
     filteredData,
-  } = useFilter(opportunityData, filters);
+  } = useFilter(opportunityData ?? [], filters);
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
@@ -67,7 +69,11 @@ export const DashboardContent = () => {
           />
         </div>
 
-        <OpportunitiesList opportunities={filteredData} />
+        <OpportunitiesList
+          opportunities={filteredData}
+          isLoading={isLoading}
+          error={error ?? undefined}
+        />
       </motion.div>
     </div>
   );
