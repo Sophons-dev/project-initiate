@@ -1,4 +1,4 @@
-import { Opportunity } from '@/components/shared/cards/recommended-opportunity-card';
+import { Opportunity } from '@/components/shared';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 

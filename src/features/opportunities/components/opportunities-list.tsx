@@ -1,7 +1,4 @@
-import {
-  Opportunity,
-  RecommendedOpportunityCard,
-} from '@/components/shared/cards/recommended-opportunity-card';
+import { Opportunity, RecommendedOpportunityCard } from '@/components/shared';
 
 interface OpportunitiesListProps {
   opportunities: Opportunity[];

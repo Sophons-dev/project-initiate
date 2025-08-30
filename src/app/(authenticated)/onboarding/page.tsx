@@ -1,12 +1,14 @@
 'use client';
 
-import { CompletionStep } from '@/features/onboarding/components/completion-step';
-import { TermsStep } from '@/features/onboarding/components/term-step';
-import { UserTypeStep } from '@/features/onboarding/components/user-type-step';
-import { DynamicQuestionStep } from '@/features/onboarding/components/dynamic-question-step';
-import { useOnboarding } from '@/features/onboarding/contexts/onboarding-context';
-import { UserInfo1Step } from '@/features/onboarding/components/user-info1-step';
-import { UserInfo2Step } from '@/features/onboarding/components/user-info2-step';
+import {
+  CompletionStep,
+  TermsStep,
+  UserTypeStep,
+  DynamicQuestionStep,
+  UserInfo1Step,
+  UserInfo2Step,
+} from '@/features/onboarding/components';
+import { useOnboarding } from '@/features/onboarding/contexts';
 
 export default function OnboardingPage() {
   const { currentStep, questions } = useOnboarding();

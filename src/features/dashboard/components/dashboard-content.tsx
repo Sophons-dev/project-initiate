@@ -1,15 +1,13 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { OpportunitiesList } from '@/features/opportunities/components/opportunities-list';
-import { Opportunity } from '@/components/shared/cards/recommended-opportunity-card';
+import { OpportunitiesList } from '@/features/opportunities/components';
+import { Opportunity, FilterTabs, SearchInput } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
-import { FilterTabs } from '@/components/shared/filter-tabs';
-import { SearchInput } from '@/components/shared/search';
 import { filterColors } from '@/lib/constants';
-import { useOpportunities } from '@/features/opportunities/hooks/useOpportunities';
+import { useOpportunities } from '@/features/opportunities/hooks';
 
-export const OpportunitiesContent = () => {
+export const DashboardContent = () => {
   const { data: opportunityData, isLoading, error } = useOpportunities();
 
   const filters = [
