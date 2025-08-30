@@ -5,11 +5,33 @@ import {
 
 interface OpportunitiesListProps {
   opportunities: Opportunity[];
+  isLoading?: boolean;
+  error?: Error;
 }
 
 export const OpportunitiesList = ({
   opportunities,
+  isLoading,
+  error,
 }: OpportunitiesListProps) => {
+  // TODO: add proper loading like skeleton or loader
+  if (isLoading) {
+    return (
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3.5 bg-[#E9E9E9]/50 rounded'>
+        <div>Loading...</div>
+      </div>
+    );
+  }
+
+  // TODO: add proper error UI
+  if (error) {
+    return (
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3.5 bg-[#E9E9E9]/50 rounded'>
+        <div>Error: {error.message}</div>
+      </div>
+    );
+  }
+
   return (
     <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-3.5 bg-[#E9E9E9]/50 rounded'>
       {opportunities.length > 0 ? (
