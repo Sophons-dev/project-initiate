@@ -7,10 +7,7 @@ import { Button } from '@/components/ui/button';
 import { SchoolSelect } from './school-search-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  UserInfoStep2FormData,
-  userInfoStep2Schema,
-} from '../validations/onboarding';
+import { UserInfoStep2FormData, userInfoStep2Schema } from '../validations';
 import {
   Form,
   FormControl,

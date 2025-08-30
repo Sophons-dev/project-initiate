@@ -1,5 +1,7 @@
-import { DashboardContent } from '@/features/dashboard/components/dashboard-content';
-import { DashboardHero } from '@/features/dashboard/components/dashboard-hero';
+import {
+  DashboardContent,
+  DashboardHero,
+} from '@/features/dashboard/components';
 
 export default function Dashboard() {
   return (

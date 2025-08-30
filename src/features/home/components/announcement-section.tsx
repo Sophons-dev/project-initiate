@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { staggerContainer } from '@/lib/animation-variants';
 import EventsCarousel from './events-carousel';
 import { Sparkles } from 'lucide-react';
-import { TextPill } from '@/components/shared/text-pill';
+import { TextPill } from '@/components/shared';
 
 export const AnnouncementSection = () => {
   return (

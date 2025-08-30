@@ -5,7 +5,7 @@ import { slideInLeft, staggerContainer } from '@/lib/animation-variants';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { BookOpen, Check, GraduationCap } from 'lucide-react';
-import { TextPill } from '@/components/shared/text-pill';
+import { TextPill } from '@/components/shared';
 import Link from 'next/link';
 
 export const AcademicSection = () => {

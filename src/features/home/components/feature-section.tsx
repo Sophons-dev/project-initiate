@@ -1,6 +1,6 @@
 'use client';
 
-import { TextPill } from '@/components/shared/text-pill';
+import { TextPill } from '@/components/shared';
 import { Card, CardContent } from '@/components/ui/card';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView, useScroll, useTransform } from 'framer-motion';

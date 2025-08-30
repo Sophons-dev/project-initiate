@@ -1,6 +1,6 @@
 'use client';
 
-import { TextPill } from '@/components/shared/text-pill';
+import { TextPill } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { slideInLeft, staggerContainer } from '@/lib/animation-variants';
 import { motion } from 'framer-motion';
