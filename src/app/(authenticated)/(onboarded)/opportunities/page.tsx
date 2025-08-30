@@ -1,6 +1,6 @@
 'use client';
 
-import { DashboardContent } from '@/features/dashboard/components/dashboard-content';
+import { OpportunitiesContent } from '@/features/opportunities/components/opportunities-content';
 import { OpportuntiesHero } from '@/features/opportunities/components/opportunities-hero';
 
 export default function OpportunitiesPage() {
@@ -9,7 +9,7 @@ export default function OpportunitiesPage() {
       {/* Main Content */}
       <main>
         <OpportuntiesHero />
-        <DashboardContent />
+        <OpportunitiesContent />
       </main>
     </div>
   );
