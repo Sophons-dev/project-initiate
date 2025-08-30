@@ -17,7 +17,7 @@ export interface Opportunity {
   dueDate: string;
 }
 
-export const RecommendedOpportunityCard = ({
+export const OpportunityCard = ({
   opportunity,
 }: {
   opportunity: Opportunity;

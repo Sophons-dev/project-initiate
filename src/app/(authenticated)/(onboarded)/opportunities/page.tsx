@@ -7,7 +7,7 @@ import {
 
 export default function OpportunitiesPage() {
   return (
-    <div className='min-h-screen bg-gray-50'>
+    <div className='min-h-screen'>
       {/* Main Content */}
       <main>
         <OpportuntiesHero />

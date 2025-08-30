@@ -1,6 +1,8 @@
 import { Opportunity } from '@/components/shared';
+import { Organization } from '@/features/organizations/types';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import { OrganizationType } from '@/features/organizations/types';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -175,5 +177,164 @@ export const opportunityData: Opportunity[] = [
     matchReason:
       'Perfect opportunity to stay updated with the latest in JavaScript and network with other developers.',
     dueDate: 'Early bird ends May 15, 2025',
+  },
+];
+
+// TODO: remove this here once the backend for organizations is ready
+export const organizationData: Organization[] = [
+  {
+    id: '1',
+    name: 'University of the Philippines',
+    type: OrganizationType.university,
+    description:
+      'A premier institution of higher learning in the Philippines, offering a wide range of undergraduate and postgraduate programs.',
+    website: 'https://up.edu.ph',
+    logoUrl: '/public/sponsors/ecop.png', // Placeholder, replace with actual logo URL
+    location: 'Diliman, Quezon City, Philippines',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '2',
+    name: 'Google',
+    type: OrganizationType.company,
+    description:
+      'A multinational technology company focusing on online advertising, search engine technology, cloud computing, computer software, quantum computing, e-commerce, artificial intelligence, and consumer electronics.',
+    website: 'https://about.google/',
+    logoUrl: '/public/sponsors/create8.png', // Placeholder, replace with actual logo URL
+    location: 'Mountain View, California, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '3',
+    name: 'Dole Food Company',
+    type: OrganizationType.company,
+    description:
+      "One of the world's largest producers and marketers of fresh fruit and vegetables.",
+    website: 'https://www.dole.com/',
+    logoUrl: '/public/sponsors/dole.png', // Placeholder, replace with actual logo URL
+    location: 'Charlotte, North Carolina, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '4',
+    name: 'Microsoft',
+    type: OrganizationType.company,
+    description:
+      'A global technology company that develops, manufactures, licenses, supports, and sells computer software, consumer electronics, personal computers, and related services.',
+    website: 'https://www.microsoft.com/',
+    logoUrl: '/public/sponsors/dole2.png',
+    location: 'Redmond, Washington, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '5',
+    name: 'Stanford University',
+    type: OrganizationType.university,
+    description:
+      "One of the world's leading research and teaching institutions, located in Stanford, California.",
+    website: 'https://www.stanford.edu/',
+    logoUrl: '/public/sponsors/ecop.png',
+    location: 'Stanford, California, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '6',
+    name: 'Meta Platforms',
+    type: OrganizationType.company,
+    description:
+      'An American multinational technology conglomerate based in Menlo Park, California.',
+    website: 'https://about.meta.com/',
+    logoUrl: '/public/sponsors/create8.png',
+    location: 'Menlo Park, California, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '7',
+    name: 'Harvard University',
+    type: OrganizationType.university,
+    description:
+      'A private Ivy League research university in Cambridge, Massachusetts.',
+    website: 'https://www.harvard.edu/',
+    logoUrl: '/public/sponsors/ecop.png',
+    location: 'Cambridge, Massachusetts, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '8',
+    name: 'Amazon',
+    type: OrganizationType.company,
+    description:
+      'An American multinational technology company focusing on e-commerce, cloud computing, online advertising, digital streaming, and artificial intelligence.',
+    website: 'https://www.amazon.com/',
+    logoUrl: '/public/sponsors/dole.png',
+    location: 'Seattle, Washington, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '9',
+    name: 'California Institute of Technology',
+    type: OrganizationType.university,
+    description:
+      'A world-renowned science and engineering research and education institution, located in Pasadena, California.',
+    website: 'https://www.caltech.edu/',
+    logoUrl: '/public/sponsors/ecop.png',
+    location: 'Pasadena, California, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '10',
+    name: 'Apple Inc.',
+    type: OrganizationType.company,
+    description:
+      'An American multinational technology company headquartered in Cupertino, California.',
+    website: 'https://www.apple.com/',
+    logoUrl: '/public/sponsors/dole2.png',
+    location: 'Cupertino, California, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '11',
+    name: 'University of Cambridge',
+    type: OrganizationType.university,
+    description:
+      'A collegiate research university in Cambridge, United Kingdom.',
+    website: 'https://www.cam.ac.uk/',
+    logoUrl: '/public/sponsors/ecop.png',
+    location: 'Cambridge, United Kingdom',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '12',
+    name: 'Netflix',
+    type: OrganizationType.company,
+    description:
+      'An American subscription streaming service and production company.',
+    website: 'https://www.netflix.com/',
+    logoUrl: '/public/sponsors/create8.png',
+    location: 'Los Gatos, California, USA',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: '13',
+    name: 'Oxford University',
+    type: OrganizationType.university,
+    description: 'A collegiate research university in Oxford, England.',
+    website: 'https://www.ox.ac.uk/',
+    logoUrl: '/public/sponsors/ecop.png',
+    location: 'Oxford, England',
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];
