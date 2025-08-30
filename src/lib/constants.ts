@@ -2,7 +2,7 @@ import { Opportunity } from '@/features/opportunities/components/opportunity-car
 import { Organization } from '@/features/organizations/types';
 
 export const filterColors = {
-  jobs: 'bg-blue-500',
+  job: 'bg-blue-500',
   course: 'bg-orange-500',
   event: 'bg-red-500',
 } as const;
