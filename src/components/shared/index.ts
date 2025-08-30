@@ -1,4 +1,3 @@
-export * from './cards/recommended-opportunity-card';
-export * from './filter-tabs';
+export * from './tab-filter';
 export * from './search';
 export * from './text-pill';
