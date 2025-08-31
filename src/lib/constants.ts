@@ -1,10 +1,14 @@
-import { Opportunity } from '@/features/opportunities/components/opportunity-card';
-import { Organization } from '@/features/organizations/types';
+import { OpportunityDTO } from '@/features/opportunities/types';
+import { OrganizationDTO } from '@/features/organizations/types';
 
 export const filterColors = {
   job: 'bg-blue-500',
   course: 'bg-orange-500',
-  event: 'bg-red-500',
+} as const;
+
+export const opportunityTypeColors = {
+  job: 'bg-blue-100 text-blue-800',
+  course: 'bg-yellow-100 text-yellow-800',
 } as const;
 
 export const opportunityFilters = [
@@ -12,17 +16,12 @@ export const opportunityFilters = [
   {
     label: 'Jobs',
     value: 'job',
-    predicate: (op: Opportunity) => op.type === 'JOB',
+    predicate: (op: OpportunityDTO) => op.type === 'job',
   },
   {
     label: 'Courses',
     value: 'course',
-    predicate: (op: Opportunity) => op.type === 'COURSE',
-  },
-  {
-    label: 'Events',
-    value: 'event',
-    predicate: (op: Opportunity) => op.type === 'EVENT',
+    predicate: (op: OpportunityDTO) => op.type === 'course',
   },
 ];
 
@@ -31,36 +30,36 @@ export const organizationFilters = [
   {
     label: 'Company',
     value: 'company',
-    predicate: (org: Organization) => org.type === 'company',
+    predicate: (org: OrganizationDTO) => org.type === 'company',
   },
   {
     label: 'University',
     value: 'university',
-    predicate: (org: Organization) => org.type === 'university',
+    predicate: (org: OrganizationDTO) => org.type === 'university',
   },
   {
     label: 'Bootcamp',
     value: 'bootcamp',
-    predicate: (org: Organization) => org.type === 'bootcamp',
+    predicate: (org: OrganizationDTO) => org.type === 'bootcamp',
   },
   {
     label: 'Online Platform',
     value: 'online_platform',
-    predicate: (org: Organization) => org.type === 'online_platform',
+    predicate: (org: OrganizationDTO) => org.type === 'online_platform',
   },
   {
     label: 'Government',
     value: 'government',
-    predicate: (org: Organization) => org.type === 'government',
+    predicate: (org: OrganizationDTO) => org.type === 'government',
   },
   {
     label: 'NGO',
     value: 'ngo',
-    predicate: (org: Organization) => org.type === 'ngo',
+    predicate: (org: OrganizationDTO) => org.type === 'ngo',
   },
   {
     label: 'Other',
     value: 'other',
-    predicate: (org: Organization) => org.type === 'other',
+    predicate: (org: OrganizationDTO) => org.type === 'other',
   },
 ];
