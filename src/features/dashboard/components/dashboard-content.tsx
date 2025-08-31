@@ -5,11 +5,11 @@ import { OpportunitiesList } from '@/features/opportunities/components';
 import { TabFilter, SearchInput } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
-import { useOpportunities } from '@/features/opportunities/hooks';
+import { useGetAllOpportunities } from '@/features/opportunities/hooks';
 import { opportunityFilters } from '@/lib/constants';
 
 export const DashboardContent = () => {
-  const { data: opportunityData, isLoading, error } = useOpportunities();
+  const { data: opportunityData, isLoading, error } = useGetAllOpportunities();
   const {
     activeFilter,
     setActiveFilter,

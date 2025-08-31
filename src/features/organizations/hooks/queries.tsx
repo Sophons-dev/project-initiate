@@ -11,7 +11,7 @@ const getOrganizations = async (): Promise<Organization[]> => {
   });
 };
 
-export const useOrganizations = (): UseQueryResult<Organization[]> => {
+export const useGetAllOrganizations = (): UseQueryResult<Organization[]> => {
   return useQuery<Organization[]>({
     queryKey: ['organizations'],
     queryFn: () => getOrganizations(),

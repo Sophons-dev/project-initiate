@@ -1,5 +1,5 @@
 import { SearchInput } from '@/components/shared';
-import { useOrganizations } from '../hooks/useOrganizations';
+import { useGetAllOrganizations } from '../hooks';
 import { OrganizationDetails } from './organization-details';
 import { OrganizationsList } from './organizations-list';
 import { motion } from 'framer-motion';
@@ -12,7 +12,7 @@ import { Organization } from '../types';
 export const OrganizationsContent = () => {
   const [selectedOrganization, setSelectedOrganization] =
     useState<Organization | null>(null);
-  const { data: organizationData, isLoading, error } = useOrganizations();
+  const { data: organizationData, isLoading, error } = useGetAllOrganizations();
   const {
     activeFilter,
     setActiveFilter,
