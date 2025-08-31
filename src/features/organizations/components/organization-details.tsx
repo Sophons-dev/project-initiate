@@ -6,16 +6,12 @@ import { OrganizationDTO } from '../types';
 import { useGetOpportunitiesByOrganizationId } from '@/features/opportunities/hooks';
 
 interface OrganizationDetailsProps {
-  organization: OrganizationDTO | null;
+  organization: OrganizationDTO;
 }
 
 export const OrganizationDetails = ({
   organization,
 }: OrganizationDetailsProps) => {
-  if (!organization) {
-    return null;
-  }
-
   const {
     data: opportunities,
     isLoading: opportunitiesLoading,
