@@ -160,7 +160,7 @@ export const Navbar = () => {
                 <button className='hidden cursor-pointer lg:flex items-center gap-2 rounded-full outline-none focus:ring-2 focus:ring-cyan-500'>
                   <Avatar className='h-9 w-9'>
                     <AvatarImage
-                      src={user.imageUrl ?? ''}
+                      src={user.imageUrl}
                       alt={user.firstName ?? 'User'}
                     />
                     <AvatarFallback>

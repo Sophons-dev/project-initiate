@@ -116,7 +116,7 @@ export const MainNavbar = () => {
               <span className='sr-only'>Open main menu</span>
               <Avatar className='h-9 w-9'>
                 <AvatarImage
-                  src={user?.imageUrl ?? ''}
+                  src={user?.imageUrl}
                   alt={user?.firstName ?? 'User'}
                 />
                 <AvatarFallback>
