@@ -59,9 +59,10 @@ export const OpportunityDetailsContent = () => {
         <p>{opportunity.description}</p>
         <p>{opportunity.location}</p>
         <p>{opportunity.type}</p>
-        <p>{opportunity.dueDate}</p>
-        <p>{opportunity.matchReason}</p>
-        <p>{opportunity.date}</p>
+        <p>{opportunity.deadline?.toLocaleDateString()}</p>
+        <p>{opportunity.organization?.name}</p>
+        <p>{opportunity.createdAt?.toLocaleDateString()}</p>
+        <p>{opportunity.updatedAt?.toLocaleDateString()}</p>
       </motion.div>
     </div>
   );

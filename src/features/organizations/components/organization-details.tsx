@@ -1,27 +1,33 @@
 import { Badge } from '@/components/ui/badge';
 import { OpportunitiesList } from '@/features/opportunities/components';
-import { opportunityData } from '@/lib/utils';
 import { Phone, Mail } from 'lucide-react';
-import { Organization } from '../types';
 import { motion } from 'framer-motion';
+import { OrganizationDTO } from '../types';
+import { useGetOpportunitiesByOrganizationId } from '@/features/opportunities/hooks';
 
 interface OrganizationDetailsProps {
-  organization: Organization;
-  isLoading?: boolean;
-  error?: Error;
+  organization: OrganizationDTO | null;
 }
 
 export const OrganizationDetails = ({
   organization,
-  isLoading,
-  error,
 }: OrganizationDetailsProps) => {
-  if (isLoading) {
-    return <div>Loading...</div>;
+  if (!organization) {
+    return null;
   }
 
-  if (error) {
-    return <div>Error: {error.message}</div>;
+  const {
+    data: opportunities,
+    isLoading: opportunitiesLoading,
+    error: opportunitiesError,
+  } = useGetOpportunitiesByOrganizationId(organization.id);
+
+  if (opportunitiesLoading) {
+    return <div>Loading opportunities...</div>;
+  }
+
+  if (opportunitiesError) {
+    return <div>Error loading opportunities: {opportunitiesError.message}</div>;
   }
 
   return (
@@ -45,7 +51,7 @@ export const OrganizationDetails = ({
                     View All →
                   </motion.button>
                 </div>
-                <OpportunitiesList opportunities={opportunityData} />
+                <OpportunitiesList opportunities={opportunities ?? []} />
               </div>
             </div>
           </div>
@@ -55,7 +61,7 @@ export const OrganizationDetails = ({
   );
 };
 
-function ProfileHeader({ organization }: { organization: Organization }) {
+function ProfileHeader({ organization }: { organization: OrganizationDTO }) {
   return (
     <div className='flex items-center gap-4'>
       {/* Logo */}
@@ -86,7 +92,7 @@ function ProfileHeader({ organization }: { organization: Organization }) {
   );
 }
 
-function AboutSection({ organization }: { organization: Organization }) {
+function AboutSection({ organization }: { organization: OrganizationDTO }) {
   return (
     <div>
       <h2 className='text-lg font-medium text-gray-900 mb-4'>About</h2>
@@ -100,7 +106,7 @@ function AboutSection({ organization }: { organization: Organization }) {
 export function ContactsSection({
   organization,
 }: {
-  organization: Organization;
+  organization: OrganizationDTO;
 }) {
   return (
     <div>

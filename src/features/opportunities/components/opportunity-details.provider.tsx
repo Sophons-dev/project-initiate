@@ -1,11 +1,11 @@
 'use client';
 
+import { OpportunityDTO } from '../types';
 import { createContext, useContext } from 'react';
-import { Opportunity } from '@/features/opportunities/components/opportunity-card';
 import { useGetOpportunityById } from '@/features/opportunities/hooks/queries';
 
 interface OpportunityDetailsContextType {
-  opportunity: Opportunity | undefined;
+  opportunity: OpportunityDTO | undefined;
   isLoading: boolean;
   error: Error | null;
 }
