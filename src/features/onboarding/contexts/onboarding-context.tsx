@@ -44,7 +44,6 @@ export function OnboardingProvider({
     wantsAdvancedQuestions: false,
     agreedToTerms: false,
   });
-  console.log(data);
 
   const fetchQuestions = async (userType: UserType) => {
     start();
