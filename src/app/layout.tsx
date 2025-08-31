@@ -7,6 +7,8 @@ import { Toaster } from '@/components/ui/sonner';
 import { LoadingProgressProvider } from '@/providers/load-progress.provider';
 import { Providers as QueryClientProvider } from '@/providers/query-client.provider';
 
+import 'react-phone-input-2/lib/style.css';
+
 const poppins = Poppins({
   variable: '--font-poppins',
   weight: ['400', '500', '600', '700'],
