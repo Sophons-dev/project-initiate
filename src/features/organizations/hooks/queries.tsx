@@ -1,19 +1,23 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { Organization } from '../types';
-import { organizationData } from '@/lib/utils';
+import {
+  getOrganizationById,
+  getOrganizations,
+} from '@/lib/mock/actions/organizations';
+import { OrganizationDTO } from '../types';
 
-// TODO: remove this dummy function once the backend is ready
-const getOrganizations = async (): Promise<Organization[]> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(organizationData);
-    }, 1000); // Simulate network delay of 1 second
+export const useGetAllOrganizations = (): UseQueryResult<OrganizationDTO[]> => {
+  return useQuery<OrganizationDTO[]>({
+    queryKey: ['organizations'],
+    queryFn: () => getOrganizations(),
   });
 };
 
-export const useGetAllOrganizations = (): UseQueryResult<Organization[]> => {
-  return useQuery<Organization[]>({
-    queryKey: ['organizations'],
-    queryFn: () => getOrganizations(),
+export const useGetOrganizationById = (
+  organizationId: string
+): UseQueryResult<OrganizationDTO | null> => {
+  return useQuery<OrganizationDTO | null>({
+    queryKey: ['organizations', organizationId],
+    queryFn: () => getOrganizationById(organizationId),
+    enabled: !!organizationId,
   });
 };
