@@ -2,10 +2,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 // TODO: Move this type to separate file
 export interface Opportunity {
-  id: number;
+  id: string;
   type: 'JOB' | 'COURSE' | 'EVENT';
   typeColor: string;
   date: string;
@@ -22,6 +23,8 @@ export const OpportunityCard = ({
 }: {
   opportunity: Opportunity;
 }) => {
+  const router = useRouter();
+
   return (
     <>
       <motion.div
@@ -31,6 +34,7 @@ export const OpportunityCard = ({
         transition={{ delay: 0.1 }}
         whileHover={{ scale: 1.02, y: -5 }}
         className='cursor-pointer'
+        onClick={() => router.push(`/opportunities/${opportunity.id}`)}
       >
         <Card className='h-full rounded border hover:shadow transition-all duration-300'>
           <CardContent className=''>
