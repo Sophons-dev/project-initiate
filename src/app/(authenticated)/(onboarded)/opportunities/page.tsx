@@ -2,7 +2,7 @@
 
 import {
   OpportunitiesContent,
-  OpportuntiesHero,
+  OpportunitiesHero,
 } from '@/features/opportunities/components';
 
 export default function OpportunitiesPage() {
@@ -10,7 +10,7 @@ export default function OpportunitiesPage() {
     <div className='min-h-screen'>
       {/* Main Content */}
       <main>
-        <OpportuntiesHero />
+        <OpportunitiesHero />
         <OpportunitiesContent />
       </main>
     </div>

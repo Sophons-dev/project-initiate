@@ -1,23 +1,11 @@
-// TODO: change the file name or structure in the future
-
-export type Organization = {
+export type OrganizationDTO = {
   id: string;
   name: string;
-  type: OrganizationType;
-  description: string;
-  website: string;
-  logoUrl: string;
-  location: string;
-  createdAt: Date;
-  updatedAt: Date;
+  type: string;
+  description?: string | null;
+  website?: string | null;
+  logoUrl?: string | null;
+  location?: string | null;
+  createdAt?: Date | null;
+  updatedAt?: Date | null;
 };
-
-export enum OrganizationType {
-  company = 'company',
-  university = 'university',
-  bootcamp = 'bootcamp',
-  online_platform = 'online_platform',
-  government = 'government',
-  ngo = 'ngo',
-  other = 'other',
-}

@@ -4,10 +4,10 @@ import { TabFilter, SearchInput } from '@/components/shared';
 import { opportunityFilters } from '@/lib/constants';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
-import { useOpportunities } from '@/features/opportunities/hooks';
+import { useGetAllOpportunities } from '@/features/opportunities/hooks';
 
 export const OpportunitiesContent = () => {
-  const { data: opportunityData, isLoading, error } = useOpportunities();
+  const { data: opportunityData, isLoading, error } = useGetAllOpportunities();
   const {
     activeFilter,
     setActiveFilter,
