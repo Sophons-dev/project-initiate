@@ -1,9 +1,9 @@
 'use client';
 
-import { Question, UserType } from '@/features/onboarding/types/question';
+import { Question, UserType } from '@/features/onboarding/types';
 import { createContext, useContext, useState } from 'react';
 import { getQuestionsByUserType } from '../actions';
-import { OnboardingUserParams } from '../types/onboarding';
+import { OnboardingUserParams } from '../types';
 import { useProgress } from '@bprogress/next';
 import { toast } from 'sonner';
 

@@ -1,6 +1,6 @@
 import type React from 'react';
 import Image from 'next/image';
-import { OnboardingProvider } from '@/features/onboarding/contexts/onboarding-context';
+import { OnboardingProvider } from '@/features/onboarding/contexts';
 
 export default function OnboardingLayout({
   children,

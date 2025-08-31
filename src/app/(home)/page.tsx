@@ -1,10 +1,12 @@
-import { AcademicSection } from '../../features/home/components/academic-section';
-import { AnnouncementSection } from '../../features/home/components/announcement-section';
-import { FeatureSection } from '../../features/home/components/feature-section';
-import { HeroSection } from '../../features/home/components/hero-section';
-import { HowItWorksSection } from '../../features/home/components/how-it-works-section';
-import { ProfessionalSection } from '../../features/home/components/professional-section';
-import { SponsorSection } from '../../features/home/components/sponsor-section';
+import {
+  AcademicSection,
+  AnnouncementSection,
+  FeatureSection,
+  HeroSection,
+  HowItWorksSection,
+  ProfessionalSection,
+  SponsorSection,
+} from '@/features/home/components';
 
 export default function Home() {
   return (

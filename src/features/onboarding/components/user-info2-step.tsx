@@ -7,10 +7,7 @@ import { Button } from '@/components/ui/button';
 import { SchoolSelect } from './school-search-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  UserInfoStep2FormData,
-  userInfoStep2Schema,
-} from '../validations/onboarding';
+import { UserInfoStep2FormData, userInfoStep2Schema } from '../validations';
 import {
   Form,
   FormControl,
@@ -21,7 +18,7 @@ import {
 } from '@/components/ui/form';
 import { LocationSelect } from './location-search-input';
 import { InterestTagInput } from './interest-tag-input';
-import { Input } from '@/components/ui/input';
+import PhoneInput from 'react-phone-input-2';
 
 export function UserInfo2Step() {
   const { data, updateData, setCurrentStep, currentStep, totalSteps } =
@@ -88,10 +85,32 @@ export function UserInfo2Step() {
               <FormItem>
                 <FormLabel>Contact Info</FormLabel>
                 <FormControl>
-                  <Input
-                    type='text'
+                  <PhoneInput
                     placeholder='Enter your contact info'
-                    className='w-full h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
+                    country={'ph'}
+                    preferredCountries={['ph']}
+                    buttonStyle={{
+                      border: 'none',
+                      position: 'absolute',
+                      left: '10px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      height: '38px',
+                      backgroundColor: 'transparent',
+                    }}
+                    inputStyle={{
+                      border: '1px solid #ccc',
+                      borderRadius: '0.625rem',
+                      width: '100%',
+                      height: '48px',
+                      padding: '0px 60px',
+                      backgroundColor: '#f2f5f6',
+                      position: 'relative',
+                    }}
+                    dropdownStyle={{
+                      width: '100%',
+                      position: 'relative',
+                    }}
                     {...field}
                   />
                 </FormControl>
