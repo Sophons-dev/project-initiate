@@ -1,4 +1,4 @@
-import { SignInSkeleton } from '@/features/auth/components/skeletons';
+import { SignInSkeleton } from '@/features/auth/components';
 import { SignIn } from '@clerk/nextjs';
 
 export default function SignInPage() {
