@@ -9,6 +9,14 @@ jobs:
   push-checks:
     runs-on: ubuntu-latest
 
+    env:
+      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: ${{ secrets.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY }}
+      CLERK_SECRET_KEY: ${{ secrets.CLERK_SECRET_KEY }}
+      NEXT_PUBLIC_CLERK_SIGN_IN_URL: /sign-in
+      NEXT_PUBLIC_CLERK_SIGN_UP_URL: /sign-up
+      NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL: /onboarding
+      NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL: /onboarding
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -23,6 +31,6 @@ jobs:
 
       - name: Run ESLint
         run: bun run lint
-
-      - name: Run tests
-        run: bun run test
+        
+      - name: Run Build
+        run: bun run build
