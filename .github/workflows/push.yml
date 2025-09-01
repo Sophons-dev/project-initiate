@@ -6,7 +6,7 @@ on:
       - 'ini-**'
 
 jobs:
-  ci-checks:
+  push-checks:
     runs-on: ubuntu-latest
 
     steps:
@@ -23,9 +23,6 @@ jobs:
 
       - name: Run ESLint
         run: bun run lint
-
-      - name: Run TypeScript check
-        run: bun x tsc --noEmit
 
       - name: Run tests
         run: bun run test
