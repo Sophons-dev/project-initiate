@@ -5,11 +5,16 @@ import { OpportunitiesList } from '@/features/opportunities/components';
 import { TabFilter, SearchInput } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
-import { useGetAllOpportunities } from '@/features/opportunities/hooks';
+import { useGetRecommendedOpportunities } from '@/features/opportunities/hooks';
 import { opportunityFilters } from '@/lib/constants';
 
 export const DashboardContent = () => {
-  const { data: opportunityData, isLoading, error } = useGetAllOpportunities();
+  const userId = 'user1'; // TODO: get user id from auth context once backend is ready
+  const {
+    data: opportunityData,
+    isLoading,
+    error,
+  } = useGetRecommendedOpportunities(userId);
   const {
     activeFilter,
     setActiveFilter,

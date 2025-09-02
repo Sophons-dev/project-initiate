@@ -34,6 +34,51 @@ export async function getUserRecommendations(
   });
 }
 
+export async function getUserRecommendationById(
+  opportunityId: string,
+  userId: string
+): Promise<OpportunityRecommendationDTO | null> {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      const recommendation = mockOpportunityRecommendations.find(
+        rec => rec.opportunityId === opportunityId && rec.userId === userId
+      );
+
+      if (recommendation) {
+        const opportunity = mockOpportunities.find(
+          opp => opp.id === recommendation.opportunityId
+        );
+
+        if (opportunity) {
+          const opportunityDTO: OpportunityDTO = {
+            id: opportunity.id,
+            type: opportunity.type,
+            subtype: opportunity.subtype,
+            title: opportunity.title,
+            description: opportunity.description,
+            tags: opportunity.tags,
+            organizationId: opportunity.organizationId,
+            location: opportunity.location,
+            deliveryMode: opportunity.deliveryMode,
+            startDate: opportunity.startDate,
+            endDate: opportunity.endDate,
+            deadline: opportunity.deadline,
+            metadata: opportunity.metadata as Record<string, unknown>,
+            createdBy: opportunity.createdBy,
+            createdAt: opportunity.createdAt,
+            updatedAt: opportunity.updatedAt,
+          };
+          resolve({ ...recommendation, opportunity: opportunityDTO });
+        } else {
+          resolve(recommendation);
+        }
+      } else {
+        resolve(null);
+      }
+    }, 1000);
+  });
+}
+
 // --- Saved Opportunities ---
 export async function getUserOpportunities(
   userId: string
