@@ -1,11 +1,14 @@
 'use client';
 
-import { OpportunityDTO } from '../types';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
 import { createContext, useContext } from 'react';
-import { useGetOpportunityById } from '@/features/opportunities/hooks/queries';
+import {
+  useGetOpportunityById,
+  useGetRecommendedOpportunityById,
+} from '@/features/opportunities/hooks/queries';
 
 interface OpportunityDetailsContextType {
-  opportunity: OpportunityDTO | undefined;
+  opportunity: OpportunityDTO | OpportunityRecommendationDTO | undefined;
   isLoading: boolean;
   error: Error | null;
 }
@@ -21,18 +24,29 @@ export const OpportunityDetailsProvider = ({
   children: React.ReactNode;
   opportunityId: string;
 }) => {
+  // TODO: get user id from auth context once backend is ready
+  const userId = 'user1';
+
   const {
     data: opportunity,
-    isLoading,
-    error,
+    isLoading: isLoadingOpportunity,
+    error: errorOpportunity,
   } = useGetOpportunityById(opportunityId);
+
+  const {
+    data: recommendedOpportunity,
+    isLoading: isLoadingRecommendedOpportunity,
+    error: errorRecommendedOpportunity,
+  } = useGetRecommendedOpportunityById(opportunityId, userId);
 
   return (
     <OpportunityDetailsContext.Provider
       value={{
-        opportunity: opportunity ?? undefined,
-        isLoading,
-        error,
+        opportunity: recommendedOpportunity ?? opportunity ?? undefined,
+        isLoading: isLoadingOpportunity || isLoadingRecommendedOpportunity,
+        error: recommendedOpportunity
+          ? errorRecommendedOpportunity
+          : errorOpportunity,
       }}
     >
       {children}

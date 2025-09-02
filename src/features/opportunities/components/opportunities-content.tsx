@@ -27,7 +27,7 @@ export const OpportunitiesContent = () => {
         <div className='flex items-center justify-between mb-6'>
           <div>
             <h2 className='text-xl font-semibold text-gray-900 mb-1'>
-              Recommended Opportunities
+              All Opportunities
             </h2>
             <p className='text-gray-600'>
               Here is the list all of the available opportunities.
