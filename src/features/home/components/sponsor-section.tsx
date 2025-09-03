@@ -40,7 +40,7 @@ export const SponsorSection = () => {
           whileInView='animate'
           viewport={{ once: true }}
         >
-          {['ecop', 'pcci', 'create8', 'dole2'].map((sponsor, index) => (
+          {['ecop', 'create8', 'dole2'].map((sponsor, index) => (
             <motion.span
               key={index}
               variants={fadeInUp}
