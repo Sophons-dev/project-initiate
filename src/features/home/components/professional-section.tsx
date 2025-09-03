@@ -81,13 +81,7 @@ export const ProfessionalSection = () => {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            className='md:w-1/2'
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
+          <div className='md:w-1/2'>
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
@@ -116,13 +110,7 @@ export const ProfessionalSection = () => {
               your career forward.
             </p>
 
-            <motion.div
-              className='space-y-4 mb-8'
-              variants={staggerContainer}
-              initial='initial'
-              whileInView='animate'
-              viewport={{ once: true }}
-            >
+            <div className='space-y-4 mb-8'>
               {[
                 'Confidential job search with privacy controls',
                 'Salary insights and other important details',
@@ -146,14 +134,14 @@ export const ProfessionalSection = () => {
                   </span>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button asChild className='bg-orange-600 hover:bg-orange-600'>
                 <Link href='/signin'>Explore Professional Opportunities</Link>
               </Button>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
