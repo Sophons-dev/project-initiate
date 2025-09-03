@@ -16,7 +16,7 @@ export default function Home() {
       <FeatureSection />
       <HowItWorksSection />
       <AcademicSection />
-      <ProfessionalSection />
+      {/* <ProfessionalSection /> */}
       <AnnouncementSection />
     </div>
   );
