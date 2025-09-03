@@ -1,4 +1,4 @@
-name: Push Checks
+name: Feature Branch Push Checks
 
 on:
   push:
