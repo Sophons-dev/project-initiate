@@ -8,7 +8,6 @@ export async function requireOnboarded() {
   const { userId } = await auth();
 
   if (!userId) {
-    // User not logged in
     redirect('/sign-in');
   }
 
@@ -18,21 +17,18 @@ export async function requireOnboarded() {
     value: userId,
   });
 
-  if (!result.success) {
+  // 🚨 Redirect to onboarding if no record yet
+  if (!result.success || !result.data) {
     redirect('/onboarding');
   }
 
   const user = result.data;
-
-  if (!user) {
-    redirect('/onboarding');
-  }
 
   // Check onboarding status
   if (!user.onboardingCompleted) {
     redirect('/onboarding');
   }
 
-  // User is onboarded, return the user object if needed
+  // ✅ User is onboarded
   return user;
 }
