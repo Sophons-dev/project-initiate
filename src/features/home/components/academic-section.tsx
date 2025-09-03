@@ -85,13 +85,7 @@ export const AcademicSection = () => {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            className='relative'
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
+          <div className='relative'>
             <motion.div
               whileHover={{ scale: 1.02, rotate: 1 }}
               transition={{ duration: 0.3 }}
@@ -104,13 +98,7 @@ export const AcademicSection = () => {
                 className='rounded-2xl'
               />
             </motion.div>
-            <motion.div
-              className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
+            <div className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
               <motion.div
                 className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'
                 whileHover={{ scale: 1.05, y: -5 }}
@@ -149,8 +137,8 @@ export const AcademicSection = () => {
                   </div>
                 </div>
               </motion.div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

@@ -82,18 +82,6 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
         </Button>
       </div>
 
-      {/* Drag layer for swipe gestures */}
-      <motion.div
-        className='absolute inset-0 z-30'
-        drag='x'
-        dragElastic={0.15}
-        onDragEnd={(_, info) => {
-          if (info.offset.x < -60) go(1);
-          else if (info.offset.x > 60) go(-1);
-        }}
-        style={{ background: 'transparent' }}
-      />
-
       {/* Stage */}
       <div className='absolute left-1/2 top-0 mt-10 z-10 h-full w-full -translate-x-1/2'>
         <AnimatePresence initial={false}>
