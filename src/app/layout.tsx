@@ -6,6 +6,7 @@ import '../styles/clerk.css';
 import { Toaster } from '@/components/ui/sonner';
 import { LoadingProgressProvider } from '@/providers/load-progress.provider';
 import { Providers as QueryClientProvider } from '@/providers/query-client.provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const poppins = Poppins({
   variable: '--font-poppins',
@@ -64,6 +65,7 @@ export default function RootLayout({
           </body>
         </html>
       </ClerkProvider>
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }

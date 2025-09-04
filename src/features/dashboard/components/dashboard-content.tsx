@@ -7,9 +7,17 @@ import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { useOpportunities } from '@/features/opportunities/hooks';
 import { opportunityFilters } from '@/lib/constants';
+import { useEffect, useState } from 'react';
 
 export const DashboardContent = () => {
-  const { data: opportunityData, isLoading, error } = useOpportunities();
+  // TODO: Refactor, uses hacky solution for context, uses onboardingData defined in completion step
+  const [context, setContext] = useState<string | null>(null);
+
+  const {
+    data: opportunityData,
+    isLoading,
+    error,
+  } = useOpportunities({ context: context ?? '' });
   const {
     activeFilter,
     setActiveFilter,
@@ -17,6 +25,13 @@ export const DashboardContent = () => {
     setSearchQuery,
     filteredData,
   } = useFilter(opportunityData ?? [], opportunityFilters);
+
+  useEffect(() => {
+    const context = window.localStorage.getItem('onboardingData');
+    if (context) {
+      setContext(context);
+    }
+  }, []);
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>

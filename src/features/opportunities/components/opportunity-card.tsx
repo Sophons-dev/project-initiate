@@ -5,8 +5,8 @@ import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
 
 // TODO: Move this type to separate file
 export interface Opportunity {
-  id: number;
-  type: 'JOB' | 'COURSE' | 'EVENT';
+  id: string | number;
+  type: string;
   typeColor: string;
   date: string;
   title: string;

@@ -18,6 +18,7 @@ export function CompletionStep() {
   const handleGoToDashboard = async () => {
     try {
       start();
+
       const res = await onboardUser(data);
 
       if (!res.success) {
@@ -29,6 +30,9 @@ export function CompletionStep() {
 
         throw new Error(res.error);
       }
+
+      // TODO: use zustand for better state management, this is a temporary solution. Used in dashboard to generate stuff...
+      window.localStorage.setItem('onboardingData', JSON.stringify(data));
 
       router.push('/dashboard');
     } catch (error) {
