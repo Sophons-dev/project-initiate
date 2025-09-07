@@ -34,13 +34,13 @@ export const SponsorSection = () => {
           mission possible.
         </motion.p>
         <motion.div
-          className='flex items-center gap-8 pb-4 overflow-x-auto md:flex-wrap md:justify-between md:overflow-visible'
+          className='flex items-center gap-5 max-w-3xl mx-auto pb-4 overflow-x-auto md:flex-wrap md:justify-between md:overflow-visible'
           variants={staggerContainer}
           initial='initial'
           whileInView='animate'
           viewport={{ once: true }}
         >
-          {['ecop', 'pcci', 'create8', 'dole2'].map((sponsor, index) => (
+          {['ecop', 'create8', 'dole2'].map((sponsor, index) => (
             <motion.span
               key={index}
               variants={fadeInUp}
@@ -53,7 +53,7 @@ export const SponsorSection = () => {
                 alt={sponsor}
                 width={160}
                 height={160}
-                className='mix-blend-luminosity'
+                className='lg:mix-blend-luminosity'
               />
             </motion.span>
           ))}

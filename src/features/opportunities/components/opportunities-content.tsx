@@ -4,10 +4,10 @@ import { TabFilter, SearchInput } from '@/components/shared';
 import { opportunityFilters } from '@/lib/constants';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
-import { useOpportunities } from '@/features/opportunities/hooks';
+import { useGetAllOpportunities } from '@/features/opportunities/hooks';
 
 export const OpportunitiesContent = () => {
-  const { data: opportunityData, isLoading, error } = useOpportunities();
+  const { data: opportunityData, isLoading, error } = useGetAllOpportunities();
   const {
     activeFilter,
     setActiveFilter,
@@ -27,7 +27,7 @@ export const OpportunitiesContent = () => {
         <div className='flex items-center justify-between mb-6'>
           <div>
             <h2 className='text-xl font-semibold text-gray-900 mb-1'>
-              Recommended Opportunities
+              All Opportunities
             </h2>
             <p className='text-gray-600'>
               Here is the list all of the available opportunities.

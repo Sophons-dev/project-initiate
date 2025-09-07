@@ -14,13 +14,7 @@ export const ProfessionalSection = () => {
       <div className='container max-w-7xl mx-auto'>
         {/* Reverse grid */}
         <div className='flex flex-col-reverse md:flex-row gap-6 lg:gap-12 items-center'>
-          <motion.div
-            className='relative md:w-1/2'
-            initial={{ opacity: 0, x: 60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
+          <motion.div className='relative md:w-1/2'>
             <motion.div
               whileHover={{ scale: 1.02, rotate: 1 }}
               transition={{ duration: 0.3 }}
@@ -33,13 +27,7 @@ export const ProfessionalSection = () => {
                 className='rounded-2xl'
               />
             </motion.div>
-            <motion.div
-              className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              viewport={{ once: true }}
-            >
+            <motion.div className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
               <motion.div
                 className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'
                 whileHover={{ scale: 1.05, y: -5 }}
@@ -81,13 +69,7 @@ export const ProfessionalSection = () => {
             </motion.div>
           </motion.div>
 
-          <motion.div
-            className='md:w-1/2'
-            initial={{ opacity: 0, x: -60 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            viewport={{ once: true }}
-          >
+          <div className='md:w-1/2'>
             <motion.div
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
@@ -116,13 +98,7 @@ export const ProfessionalSection = () => {
               your career forward.
             </p>
 
-            <motion.div
-              className='space-y-4 mb-8'
-              variants={staggerContainer}
-              initial='initial'
-              whileInView='animate'
-              viewport={{ once: true }}
-            >
+            <div className='space-y-4 mb-8'>
               {[
                 'Confidential job search with privacy controls',
                 'Salary insights and other important details',
@@ -146,14 +122,14 @@ export const ProfessionalSection = () => {
                   </span>
                 </motion.div>
               ))}
-            </motion.div>
+            </div>
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button asChild className='bg-orange-600 hover:bg-orange-600'>
                 <Link href='/signin'>Explore Professional Opportunities</Link>
               </Button>
             </motion.div>
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>

@@ -150,3 +150,7 @@ html body[data-scroll-locked] {
 #button {
   @apply cursor-pointer;
 }
+
+.react-tel-input .flag-dropdown.open .selected-flag {
+  @apply !bg-gray-100;
+}

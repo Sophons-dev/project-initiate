@@ -26,7 +26,7 @@ export default function Greeter({ children, action, message }: GreeterProps) {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          className='flex items-center justify-between'
+          className='flex flex-col gap-y-4 lg:gap-y-0 lg:flex-row items-center justify-between'
         >
           <div>
             <h1 className='text-2xl font-semibold text-gray-900 mb-1'>
@@ -34,9 +34,13 @@ export default function Greeter({ children, action, message }: GreeterProps) {
             </h1>
             <p className='text-gray-600'>{message ?? ''}</p>
           </div>
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className='w-full lg:w-auto'
+          >
             <Button
-              className='bg-cyan-500 hover:bg-cyan-600 text-white px-6 py-2 rounded-full'
+              className='bg-cyan-500 w-full lg:w-auto hover:bg-cyan-600 text-white px-6 py-2 rounded-full'
               onClick={() => router.push(action?.redirect ?? '')}
             >
               {action?.title}

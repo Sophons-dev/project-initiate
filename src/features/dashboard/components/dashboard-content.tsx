@@ -5,10 +5,10 @@ import { OpportunitiesList } from '@/features/opportunities/components';
 import { TabFilter, SearchInput } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
-import { useOpportunities } from '@/features/opportunities/hooks';
 import { opportunityFilters } from '@/lib/constants';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
+import { useOpportunities } from '@/features/opportunities/hooks/useOpportunities';
 
 export const DashboardContent = () => {
   // TODO: Refactor, uses hacky solution for context, uses onboardingData defined in completion step
@@ -45,7 +45,7 @@ export const DashboardContent = () => {
         animate={{ opacity: 1, y: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <div className='flex items-center justify-between mb-6'>
+        <div className='flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 items-center justify-between mb-6'>
           <div>
             <h2 className='text-xl font-semibold text-gray-900 mb-1'>
               Recommended Opportunities
@@ -56,7 +56,13 @@ export const DashboardContent = () => {
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
-            className='text-cyan-500 hover:text-cyan-600 font-medium'
+            className='text-cyan-500 hidden lg:block hover:text-cyan-600 font-medium'
+          >
+            View All →
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            className='lg:hidden bg-cyan-500 w-full hover:bg-cyan-600 text-white px-6 py-2 rounded-full'
           >
             View All →
           </motion.button>

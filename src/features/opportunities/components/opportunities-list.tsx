@@ -1,7 +1,8 @@
-import { Opportunity, OpportunityCard } from './opportunity-card';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
+import { OpportunityCard } from './opportunity-card';
 
 interface OpportunitiesListProps {
-  opportunities: Opportunity[];
+  opportunities: OpportunityDTO[] | OpportunityRecommendationDTO[];
   isLoading?: boolean;
   error?: Error;
 }
@@ -37,7 +38,7 @@ export const OpportunitiesList = ({
         ))
       ) : (
         <div className='col-span-full text-center py-10 text-gray-500'>
-          No opportunities found matching your criteria.
+          No opportunities found
         </div>
       )}
     </div>
