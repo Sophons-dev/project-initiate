@@ -39,16 +39,39 @@ async function getRecommendations({
 
     const opportunities: Opportunity[] = recommendations.recommendations.map(
       recommendation => ({
-        id: 'temp-' + Math.random().toString(36).substring(2, 9),
         type: recommendation.type,
-        typeColor: '#4CAF50',
-        date: recommendation.start_date,
         title: recommendation.title,
-        organization:
-          recommendation.organization?.name || 'Unknown Organization',
-        location: recommendation.location?.city || 'Remote',
         description: recommendation.description,
-        matchReason: 'Matches your interests',
+        tags: recommendation.tags,
+        organization: {
+          name: recommendation.organization?.name || 'Unknown Organization',
+          url: recommendation.organization?.url,
+        },
+        location:
+          recommendation.location?.city && recommendation.location?.country
+            ? `${recommendation.location.city}, ${recommendation.location.country}`
+            : recommendation.location?.city || 'Remote',
+        date: recommendation.start_date,
+        deliveryMode: recommendation.delivery_mode,
+        startDate: recommendation.start_date || null,
+        endDate: recommendation.end_date || null,
+        deadline: recommendation.deadline || null,
+        metadata: recommendation.metadata
+          ? {
+              salary: {
+                min: recommendation.metadata.salary?.min || 0,
+                max: recommendation.metadata.salary?.max || 0,
+                currency: recommendation.metadata.salary?.currency || 'USD',
+              },
+              experienceLevel: 'entry',
+              requiredSkills: [],
+              benefits: [],
+            }
+          : null,
+        createdBy: userId,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        matchReason: recommendation.matchReason || 'Matches your interests',
         dueDate: recommendation.deadline || 'No deadline',
       })
     );

@@ -38,14 +38,15 @@ const isOpportunityRecommendation = (
 
 // TODO: Move these type to separate file
 export const OpportunitySchema = z.object({
-  id: z.string(),
   type: z.string(),
   subtype: z.string().optional().nullable(),
   tags: z.array(z.string()).optional().nullable(),
-  typeColor: z.string(),
   date: z.string(),
   title: z.string(),
-  organization: z.string(),
+  organization: z.object({
+    name: z.string(),
+    url: z.string().optional(),
+  }),
   organizationId: z.string().optional().nullable(),
   startDate: z.string().optional().nullable(),
   endDate: z.string().optional().nullable(),
@@ -68,6 +69,7 @@ export const OpportunitySchema = z.object({
   dueDate: z.string(),
   deadline: z.string().optional().nullable(),
 });
+
 export type Opportunity = z.infer<typeof OpportunitySchema>;
 
 export const OpportunityCard = ({
