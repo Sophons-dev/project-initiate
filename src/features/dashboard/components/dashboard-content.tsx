@@ -5,16 +5,23 @@ import { OpportunitiesList } from '@/features/opportunities/components';
 import { TabFilter, SearchInput } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
-import { useGetRecommendedOpportunities } from '@/features/opportunities/hooks';
 import { opportunityFilters } from '@/lib/constants';
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { useOpportunities } from '@/features/opportunities/hooks/useOpportunities';
 
 export const DashboardContent = () => {
-  const userId = 'user1'; // TODO: get user id from auth context once backend is ready
+  // TODO: Refactor, uses hacky solution for context, uses onboardingData defined in completion step
+  const [context, setContext] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId') ?? '';
+
   const {
     data: opportunityData,
     isLoading,
     error,
-  } = useGetRecommendedOpportunities(userId);
+  } = useOpportunities({ context: context ?? '', userId });
+
   const {
     activeFilter,
     setActiveFilter,
@@ -22,6 +29,13 @@ export const DashboardContent = () => {
     setSearchQuery,
     filteredData,
   } = useFilter(opportunityData ?? [], opportunityFilters);
+
+  useEffect(() => {
+    const context = window.localStorage.getItem('onboardingData');
+    if (context) {
+      setContext(context);
+    }
+  }, []);
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
