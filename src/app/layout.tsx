@@ -6,6 +6,7 @@ import '../styles/clerk.css';
 import { Toaster } from '@/components/ui/sonner';
 import { LoadingProgressProvider } from '@/providers/load-progress.provider';
 import { Providers as QueryClientProvider } from '@/providers/query-client.provider';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import 'react-phone-input-2/lib/style.css';
 
@@ -66,6 +67,7 @@ export default function RootLayout({
           </body>
         </html>
       </ClerkProvider>
+      <ReactQueryDevtools initialIsOpen={true} />
     </QueryClientProvider>
   );
 }

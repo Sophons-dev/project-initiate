@@ -18,6 +18,7 @@ export function CompletionStep() {
   const handleGoToDashboard = async () => {
     try {
       start();
+
       const res = await onboardUser(data);
 
       if (!res.success) {
@@ -30,7 +31,10 @@ export function CompletionStep() {
         throw new Error(res.error);
       }
 
-      router.push('/dashboard');
+      // TODO: use zustand for better state management, this is a temporary solution. Used in dashboard to generate stuff...
+      window.localStorage.setItem('onboardingData', JSON.stringify(data));
+
+      router.push('/dashboard?user_id=' + res.data.userId);
     } catch (error) {
       console.error('An unexpected error occurred during onboarding:', error);
 

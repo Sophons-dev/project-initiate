@@ -8,7 +8,6 @@ export async function getUser(params: GetUserParams): Promise<GetUserResult> {
       include: {
         careerInsight: true,
         careerInsightLogs: true,
-        opportunityRecommendations: true,
         userAnswers: true,
         userOpportunities: true,
       },

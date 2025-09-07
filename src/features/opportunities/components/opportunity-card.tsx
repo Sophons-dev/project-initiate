@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
 import { opportunityTypeColors } from '@/lib/constants';
@@ -11,6 +12,63 @@ const isOpportunityRecommendation = (
 ): opp is OpportunityRecommendationDTO => {
   return 'reasoning' in opp;
 };
+
+// id: '507f1f77bcf86cd799439021',
+// type: OpportunityType.job,
+// subtype: null,
+// title: 'Senior Software Engineer',
+// description:
+//   'Join our dynamic team to build scalable web applications using modern technologies. Experience with React, Node.js, and cloud platforms required.',
+// tags: ['react', 'nodejs', 'aws', 'typescript', 'agile'],
+// organizationId: '2',
+// location: 'San Francisco, CA',
+// deliveryMode: 'hybrid',
+// startDate: null,
+// endDate: null,
+// deadline: new Date('2024-09-15T23:59:59Z'),
+// metadata: {
+//   salary: { min: 120000, max: 180000, currency: 'USD' },
+//   experienceLevel: 'senior',
+//   requiredSkills: ['React', 'Node.js', 'TypeScript', 'AWS'],
+//   benefits: ['health insurance', '401k', 'flexible PTO'],
+// },
+// createdBy: '507f1f77bcf86cd799439011',
+// createdAt: new Date('2024-08-01T10:00:00Z'),
+// updatedAt: new Date('2024-08-20T15:30:00Z'),
+
+// TODO: Move these type to separate file
+export const OpportunitySchema = z.object({
+  id: z.string(),
+  type: z.string(),
+  subtype: z.string().optional().nullable(),
+  tags: z.array(z.string()).optional().nullable(),
+  typeColor: z.string(),
+  date: z.string(),
+  title: z.string(),
+  organization: z.string(),
+  organizationId: z.string().optional().nullable(),
+  startDate: z.string().optional().nullable(),
+  endDate: z.string().optional().nullable(),
+  metadata: z
+    .object({
+      salary: z.object({
+        min: z.number(),
+        max: z.number(),
+        currency: z.string(),
+      }),
+      experienceLevel: z.string(),
+      requiredSkills: z.array(z.string()),
+      benefits: z.array(z.string()),
+    })
+    .optional()
+    .nullable(),
+  location: z.string(),
+  description: z.string(),
+  matchReason: z.string(),
+  dueDate: z.string(),
+  deadline: z.string().optional().nullable(),
+});
+export type Opportunity = z.infer<typeof OpportunitySchema>;
 
 export const OpportunityCard = ({
   opportunity,

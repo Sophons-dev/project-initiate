@@ -1,29 +1,31 @@
 import { z } from 'zod';
 
 export const RecommendationSchema = z.object({
-  type: z.enum(['job', 'course', 'scholarship', 'event']),
+  type: z.enum(['JOB', 'COURSE', 'SCHOLARSHIP', 'EVENT']),
+
   title: z.string(),
   description: z.string(),
   tags: z.array(z.string()),
+  matchReason: z.string(),
 
   organization: z.object({
     name: z.string(),
-    url: z.url(),
+    url: z.string(),
   }),
 
   location: z.object({
     type: z.enum(['remote', 'onsite', 'hybrid']),
-    city: z.string().nullable(),
-    country: z.string().nullable(),
+    city: z.string().optional().nullable(),
+    country: z.string().optional().nullable(),
   }),
 
   delivery_mode: z.enum(['online', 'in-person', 'hybrid']),
 
-  url: z.url(),
+  url: z.string(),
 
-  start_date: z.date(),
-  end_date: z.date(),
-  deadline: z.date(),
+  start_date: z.string(),
+  end_date: z.string(),
+  deadline: z.string(),
 
   metadata: z.object({
     stipend: z
@@ -31,11 +33,15 @@ export const RecommendationSchema = z.object({
         currency: z.string(),
         amount: z.number(),
       })
-      .optional(),
-    duration: z.string().optional(),
-    commitment: z.string().optional(),
+      .optional()
+      .nullable(),
+    duration: z.string().optional().nullable(),
+    commitment: z.string().optional().nullable(),
   }),
 });
-export const RecommendationsSchema = z.array(RecommendationSchema);
+
+export const RecommendationsSchema = z.object({
+  recommendations: z.array(RecommendationSchema),
+});
 
 export type Recommendation = z.infer<typeof RecommendationSchema>;
