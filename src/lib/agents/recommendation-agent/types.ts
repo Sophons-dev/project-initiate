@@ -1,7 +1,8 @@
 import { z } from 'zod';
 
 export const RecommendationSchema = z.object({
-  type: z.enum(['job', 'course', 'scholarship', 'event']),
+  type: z.enum(['JOB', 'COURSE', 'SCHOLARSHIP', 'EVENT']),
+
   title: z.string(),
   description: z.string(),
   tags: z.array(z.string()),

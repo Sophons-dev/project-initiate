@@ -2,20 +2,22 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
+import { z } from 'zod';
 
-// TODO: Move this type to separate file
-export interface Opportunity {
-  id: string | number;
-  type: string;
-  typeColor: string;
-  date: string;
-  title: string;
-  organization: string;
-  location: string;
-  description: string;
-  matchReason: string;
-  dueDate: string;
-}
+// TODO: Move these type to separate file
+export const OpportunitySchema = z.object({
+  id: z.string(),
+  type: z.string().min(2).max(50),
+  typeColor: z.string().min(2).max(50),
+  date: z.string().min(2).max(50),
+  title: z.string().min(2).max(100),
+  organization: z.string().min(2).max(100),
+  location: z.string().min(2).max(100),
+  description: z.string().min(2).max(500),
+  matchReason: z.string().min(2).max(100),
+  dueDate: z.string().min(2).max(50),
+});
+export type Opportunity = z.infer<typeof OpportunitySchema>;
 
 export const OpportunityCard = ({
   opportunity,

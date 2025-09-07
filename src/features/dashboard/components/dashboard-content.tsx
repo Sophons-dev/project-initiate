@@ -8,16 +8,20 @@ import { filterColors } from '@/lib/constants';
 import { useOpportunities } from '@/features/opportunities/hooks';
 import { opportunityFilters } from '@/lib/constants';
 import { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 
 export const DashboardContent = () => {
   // TODO: Refactor, uses hacky solution for context, uses onboardingData defined in completion step
   const [context, setContext] = useState<string | null>(null);
+  const searchParams = useSearchParams();
+  const userId = searchParams.get('userId') ?? '';
 
   const {
     data: opportunityData,
     isLoading,
     error,
-  } = useOpportunities({ context: context ?? '' });
+  } = useOpportunities({ context: context ?? '', userId });
+
   const {
     activeFilter,
     setActiveFilter,
