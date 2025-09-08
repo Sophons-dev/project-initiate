@@ -1,9 +1,9 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { OpportunityDto, OpportunityRecommendationDTO } from '@/features/opportunities/types';
+import { OpportunityDto, OpportunityRecommendationDto } from '@/features/opportunities/dtos';
 
-export async function getRecommendationsByUserId(userId: string): Promise<OpportunityRecommendationDTO[]> {
+export async function getRecommendationsByUserId(userId: string): Promise<OpportunityRecommendationDto[]> {
   const recs = await db.opportunityRecommendation.findMany({
     where: { userId },
     orderBy: [{ rank: 'asc' }, { createdAt: 'desc' }],
@@ -46,6 +46,6 @@ export async function getRecommendationsByUserId(userId: string): Promise<Opport
       modelVersion: r.modelVersion ?? null,
       createdAt: r.createdAt ?? null,
       opportunity: oppDto,
-    } as OpportunityRecommendationDTO;
+    } as OpportunityRecommendationDto;
   });
 }

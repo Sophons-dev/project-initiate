@@ -1,4 +1,4 @@
-import { OpportunityDTO } from '@/features/opportunities/types';
+import { OpportunityDTO } from '@/features/opportunities/dtos';
 import { OrganizationDTO } from '@/features/organizations/types';
 
 export type UserOpportunityDTO = {

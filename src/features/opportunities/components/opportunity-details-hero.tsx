@@ -2,7 +2,7 @@
 
 import Greeter from '@/components/layout/greeter';
 import { useOpportunityDetailsContext } from './opportunity-details.provider';
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '../dtos';
 import { motion } from 'framer-motion';
 
 const isOpportunityRecommendation = (
