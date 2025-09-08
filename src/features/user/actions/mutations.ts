@@ -34,6 +34,18 @@ export async function createUser(userData: CreateUserParams): Promise<CreateUser
   }
 }
 
+export async function deleteUser(clerkId: string): Promise<{ success: boolean; error?: string }> {
+  try {
+    await db.user.delete({
+      where: { clerkId },
+    });
+    return { success: true };
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    return { success: false, error: 'Failed to delete user' };
+  }
+}
+
 const gradeLevelMap: Record<string, EducationLevel> = {
   primary: EducationLevel.primary,
   secondary: EducationLevel.secondary,
