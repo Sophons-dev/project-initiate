@@ -10,6 +10,7 @@ export const RecommendationSchema = z.object({
 
   organization: z.object({
     name: z.string(),
+    type: z.enum(['company', 'university', 'bootcamp', 'online_platform', 'government', 'ngo', 'other']),
     url: z.string(),
   }),
 

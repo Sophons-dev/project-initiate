@@ -1,4 +1,4 @@
-import { OrganizationDTO } from '@/features/organizations/types';
+import { OrganizationDto } from '@/features/organizations/dto/organization.dto';
 
 export type OpportunityDto = {
   id: string;
@@ -17,7 +17,7 @@ export type OpportunityDto = {
   createdBy: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
-  organization?: OrganizationDTO;
+  organization?: OrganizationDto | null;
 };
 
 export type CreateOpportunityDto = Omit<OpportunityDto, 'id' | 'createdAt' | 'updatedAt'>;

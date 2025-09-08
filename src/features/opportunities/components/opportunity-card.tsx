@@ -2,142 +2,92 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
-import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
+import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 import { opportunityTypeColors } from '@/lib/constants';
 
-const isOpportunityRecommendation = (
-  opp: OpportunityDTO | OpportunityRecommendationDTO
-): opp is OpportunityRecommendationDTO => {
-  return 'reasoning' in opp;
+type OpportunityCardProps = {
+  opportunity: OpportunityDto | OpportunityRecommendationDto;
+  showReasoning?: boolean;
 };
 
-// id: '507f1f77bcf86cd799439021',
-// type: OpportunityType.job,
-// subtype: null,
-// title: 'Senior Software Engineer',
-// description:
-//   'Join our dynamic team to build scalable web applications using modern technologies. Experience with React, Node.js, and cloud platforms required.',
-// tags: ['react', 'nodejs', 'aws', 'typescript', 'agile'],
-// organizationId: '2',
-// location: 'San Francisco, CA',
-// deliveryMode: 'hybrid',
-// startDate: null,
-// endDate: null,
-// deadline: new Date('2024-09-15T23:59:59Z'),
-// metadata: {
-//   salary: { min: 120000, max: 180000, currency: 'USD' },
-//   experienceLevel: 'senior',
-//   requiredSkills: ['React', 'Node.js', 'TypeScript', 'AWS'],
-//   benefits: ['health insurance', '401k', 'flexible PTO'],
-// },
-// createdBy: '507f1f77bcf86cd799439011',
-// createdAt: new Date('2024-08-01T10:00:00Z'),
-// updatedAt: new Date('2024-08-20T15:30:00Z'),
+// Type guard to check if the object is an OpportunityRecommendationDto
+const isOpportunityRecommendation = (
+  item: OpportunityDto | OpportunityRecommendationDto
+): item is OpportunityRecommendationDto => {
+  return 'opportunity' in item && item.opportunity !== undefined;
+};
 
-// TODO: Move these type to separate file
-export const OpportunitySchema = z.object({
-  type: z.string(),
-  subtype: z.string().optional().nullable(),
-  tags: z.array(z.string()).optional().nullable(),
-  date: z.string(),
-  title: z.string(),
-  organization: z.object({
-    name: z.string(),
-    url: z.string().optional(),
-  }),
-  organizationId: z.string().optional().nullable(),
-  startDate: z.string().optional().nullable(),
-  endDate: z.string().optional().nullable(),
-  metadata: z
-    .object({
-      salary: z.object({
-        min: z.number(),
-        max: z.number(),
-        currency: z.string(),
-      }),
-      experienceLevel: z.string(),
-      requiredSkills: z.array(z.string()),
-      benefits: z.array(z.string()),
-    })
-    .optional()
-    .nullable(),
-  location: z.string(),
-  description: z.string(),
-  matchReason: z.string(),
-  dueDate: z.string(),
-  deadline: z.string().optional().nullable(),
-});
-
-export type Opportunity = z.infer<typeof OpportunitySchema>;
-
-export const OpportunityCard = ({ opportunity }: { opportunity: OpportunityDTO | OpportunityRecommendationDTO }) => {
+export const OpportunityCard = ({ opportunity, showReasoning = true }: OpportunityCardProps) => {
   const router = useRouter();
 
-  const displayOpportunity: OpportunityDTO = isOpportunityRecommendation(opportunity)
-    ? (opportunity.opportunity ?? ({} as OpportunityDTO))
-    : opportunity;
+  // Normalize the data structure
+  const opportunityData = isOpportunityRecommendation(opportunity) ? opportunity.opportunity : opportunity;
+  const reasoning = isOpportunityRecommendation(opportunity) ? opportunity.reasoning : null;
+
+  if (!opportunityData) return null;
 
   return (
-    <>
-      <motion.div
-        key={displayOpportunity.id}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        whileHover={{ scale: 1.02, y: -5 }}
-        className='cursor-pointer'
-        onClick={() => router.push(`/opportunities/${displayOpportunity.id}`)}
-      >
-        <Card className='h-full rounded border hover:shadow transition-all duration-300'>
-          <CardContent className=''>
+    <motion.div
+      key={opportunityData.id}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.1 }}
+      whileHover={{ scale: 1.02, y: -5 }}
+      className='cursor-pointer'
+      onClick={() => router.push(`/opportunities/${opportunityData.id}`)}
+    >
+      <Card className='h-full rounded border hover:shadow transition-all duration-300 flex flex-col'>
+        <CardContent className='flex-1 flex flex-col'>
+          <div className='flex-1'>
             {/* Header */}
             <div className='flex items-center justify-between mb-4'>
               <span
-                className={`px-3 py-1 rounded text-xs font-medium ${opportunityTypeColors[displayOpportunity.type as keyof typeof opportunityTypeColors]}`}
+                className={`px-3 py-1 rounded text-xs font-medium ${opportunityTypeColors[opportunityData.type as keyof typeof opportunityTypeColors]}`}
               >
-                {displayOpportunity.type}
+                {opportunityData.type}
               </span>
-              <span className='text-sm text-gray-500'>{displayOpportunity.createdAt?.toLocaleDateString()}</span>
+              <span className='text-sm text-gray-500'>{opportunityData.createdAt?.toLocaleDateString()}</span>
             </div>
 
             {/* Title */}
-            <h3 className='text-lg font-semibold text-gray-900 mb-3'>{displayOpportunity.title}</h3>
+            <h2 className='text-base font-semibold text-gray-900 mb-3'>{opportunityData.title}</h2>
 
             {/* Organization & Location */}
             <div className='space-y-2 mb-4'>
-              <div className='flex items-center text-sm text-gray-600'>
-                <Building2 className='w-4 h-4 mr-2' />
-                {displayOpportunity.organization?.name}
+              <div className='flex items-center text-sm text-gray-600 min-w-0'>
+                <Building2 className='w-4 h-4 mr-2 flex-shrink-0' />
+                <span className='truncate'>{opportunityData.organization?.name}</span>
               </div>
-              <div className='flex items-center text-sm text-gray-600'>
-                <MapPin className='w-4 h-4 mr-2' />
-                {displayOpportunity.location}
+              <div className='flex items-center text-sm text-gray-600 min-w-0'>
+                <MapPin className='w-4 h-4 mr-2 flex-shrink-0' />
+                <span className='truncate'>{opportunityData.location}</span>
               </div>
             </div>
 
             {/* Description */}
-            <p className='text-sm text-gray-600 mb-4 line-clamp-3'>{displayOpportunity.description}</p>
+            <p className='text-sm text-gray-600 mb-4 line-clamp-2'>{opportunityData.description}</p>
 
-            {/* Match Reason */}
-            {isOpportunityRecommendation(opportunity) && (
+            {/* Match Reason - Only show for recommendations and if showReasoning is true */}
+            {showReasoning && reasoning && (
               <div className='bg-yellow-50 border-l-3 rounded-l-none border-l-yellow-500 rounded-lg p-3 mb-4'>
                 <div className='flex items-start'>
                   <Sparkles className='w-4 h-4 text-yellow-600 mr-2 mt-0.5 flex-shrink-0' />
                   <div>
                     <p className='text-xs font-medium text-yellow-800 mb-1'>Why this matches you:</p>
-                    <p className='text-xs text-yellow-700 leading-relaxed'>{opportunity.reasoning}</p>
+                    <p className='text-xs text-yellow-700 leading-normal'>{reasoning}</p>
                   </div>
                 </div>
               </div>
             )}
+          </div>
 
-            {/* Footer */}
+          {/* Footer */}
+          <div className='mt-auto pt-4 border-t border-gray-100'>
             <div className='flex items-center justify-between'>
               <div className='flex items-center text-xs text-gray-500'>
                 <Calendar className='w-3 h-3 mr-1' />
-                {displayOpportunity.deadline?.toLocaleDateString()}
+                {opportunityData.deadline?.toLocaleDateString()}
               </div>
               <div className='flex items-center space-x-2'>
                 <motion.button
@@ -155,9 +105,9 @@ export const OpportunityCard = ({ opportunity }: { opportunity: OpportunityDTO |
                 </motion.div>
               </div>
             </div>
-          </CardContent>
-        </Card>
-      </motion.div>
-    </>
+          </div>
+        </CardContent>
+      </Card>
+    </motion.div>
   );
 };
