@@ -8,7 +8,11 @@ export async function getRecommendationsByUserId(userId: string): Promise<Opport
     where: { userId },
     orderBy: [{ rank: 'asc' }, { createdAt: 'desc' }],
     include: {
-      opportunity: true,
+      opportunity: {
+        include: {
+          organization: true,
+        },
+      },
     },
   });
 
@@ -32,6 +36,7 @@ export async function getRecommendationsByUserId(userId: string): Promise<Opport
           createdBy: opp.createdBy,
           createdAt: opp.createdAt ?? null,
           updatedAt: opp.updatedAt ?? null,
+          organization: opp.organization,
         }
       : undefined;
 

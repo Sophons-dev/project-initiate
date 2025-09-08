@@ -20,6 +20,7 @@ model Opportunity {
   updatedAt         DateTime?
   recommendations   OpportunityRecommendation[]
   userOpportunities UserOpportunity[]
+  organization     Organization     @relation(fields: [organizationId], references: [id])
 
   @@index([organizationId])
   @@index([createdBy])

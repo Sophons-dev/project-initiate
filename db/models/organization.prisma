@@ -12,4 +12,5 @@ model Organization {
   organizationUrl String?
   createdAt   DateTime?
   updatedAt   DateTime?
+  opportunities Opportunity[]
 }
