@@ -20,14 +20,13 @@ export async function POST(req: NextRequest) {
       }
 
       case 'user.updated': {
-        const user = mapClerkUser(data);
         const result = await updateUser(
           { key: 'clerkId', value: data.id },
           {
-            email: user.email as string,
+            email: data.email_addresses?.[0]?.email_address,
             profile: {
-              name: user.name,
-              image: user.image ?? null,
+              name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+              image: data.image_url ?? null,
             },
           }
         );
@@ -60,8 +59,10 @@ export async function POST(req: NextRequest) {
 function mapClerkUser(data: any) {
   return {
     clerkId: data.id,
-    name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
     email: data.email_addresses?.[0]?.email_address,
-    image: data.image_url,
+    profile: {
+      name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+      image: data.image_url,
+    },
   };
 }

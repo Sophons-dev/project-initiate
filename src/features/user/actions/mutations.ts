@@ -4,17 +4,17 @@ import { db } from '@/lib/db';
 import { auth } from '@clerk/nextjs/server';
 import { UserType, EducationLevel, Gender } from '@prisma/client';
 
-import { CreateUserParams } from '../types';
 import { OnboardingUserParams } from '@/features/onboarding/types/onboarding';
 import { ResponseDto } from '@/lib/dto/response.dto';
 import { UserDto } from '../dto/user.dto';
 import { UpdateUserDto } from '../dto/update-user.dto';
+import { CreateUserDto } from '../dto/create-user.dto';
 
 /**
  * Create user
  */
-export async function createUser(userData: CreateUserParams): Promise<ResponseDto<UserDto>> {
-  if (!userData.email || !userData.name || !userData.clerkId) {
+export async function createUser(userData: CreateUserDto): Promise<ResponseDto<UserDto>> {
+  if (!userData.email || !userData.clerkId || !userData.profile?.name) {
     return new ResponseDto({ success: false, error: 'Missing required fields' });
   }
 
@@ -26,8 +26,8 @@ export async function createUser(userData: CreateUserParams): Promise<ResponseDt
         onboardingCompleted: false,
         profile: {
           set: {
-            name: userData.name,
-            image: userData.image,
+            name: userData.profile?.name ?? '',
+            image: userData.profile?.image,
           },
         },
       },

@@ -30,13 +30,20 @@ export function CompletionStep() {
         throw new Error(res.error);
       }
 
-      // TODO: use zustand for better state management, this is a temporary solution. Used in dashboard to generate stuff...
-      window.localStorage.setItem('onboardingData', JSON.stringify(data));
+      // Ensure userId is present in the response
+      if (!res.data?.userId) {
+        console.error('Onboarding response missing userId:', res);
+
+        toast.error('An unexpected error occurred. Please try again or contact support if the issue persists.');
+
+        throw new Error('Onboarding response missing userId');
+      }
 
       // Show a loading state while generating personalized opportunities
       const loadingId = toast.loading('Generating your personalized opportunities...');
       try {
-        await generateAndSaveOpportunities(JSON.stringify(data), res.data?.userId || '');
+        await generateAndSaveOpportunities(JSON.stringify(data), res.data.userId);
+
         toast.success('Opportunities ready!');
       } catch (e) {
         console.error('Failed generating opportunities:', e);
@@ -45,7 +52,7 @@ export function CompletionStep() {
         toast.dismiss(loadingId);
       }
 
-      router.push('/dashboard?user_id=' + res.data?.userId);
+      router.push('/dashboard');
     } catch (error) {
       console.error('An unexpected error occurred during onboarding:', error);
 
