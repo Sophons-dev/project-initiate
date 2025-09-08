@@ -2,11 +2,7 @@ import type React from 'react';
 import Image from 'next/image';
 import { OnboardingProvider } from '@/features/onboarding/contexts';
 
-export default function OnboardingLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function OnboardingLayout({ children }: { children: React.ReactNode }) {
   // TODO: add propver validation if user is already onboarded
   // TODO: onboarding should not be accessible if user is already onboarded
 
@@ -25,12 +21,9 @@ export default function OnboardingLayout({
         </div>
         <div className='mb-8'>
           <h1 className='text-4xl font-semibold text-gray-900 mb-6 leading-tight'>
-            A few clicks away from finding the opportunities that are right for
-            you.
+            A few clicks away from finding the opportunities that are right for you.
           </h1>
-          <p className='text-lg text-gray-600'>
-            Help us personalize your experience with a few questions
-          </p>
+          <p className='text-lg text-gray-600'>Help us personalize your experience with a few questions</p>
         </div>
       </div>
 
@@ -39,13 +32,7 @@ export default function OnboardingLayout({
         <div className='w-full max-w-md'>
           {/* Mobile Logo */}
           <div className='lg:hidden mb-8 text-center'>
-            <Image
-              src='/project-initiate-logo.png'
-              alt='Initiate Logo'
-              width={80}
-              height={80}
-              className='mx-auto'
-            />
+            <Image src='/project-initiate-logo.png' alt='Initiate Logo' width={80} height={80} className='mx-auto' />
           </div>
 
           <OnboardingProvider>{children}</OnboardingProvider>

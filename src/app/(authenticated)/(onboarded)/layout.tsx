@@ -3,11 +3,7 @@ import { MainNavbar } from '@/components/layout/main-navbar';
 import { requireOnboarded } from '@/lib/auth/require-onboarded';
 // import { requireOnboarded } from '@/lib/auth/require-onboarded';
 
-export default async function OnboardedLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default async function OnboardedLayout({ children }: { children: React.ReactNode }) {
   // TODO: uncomment this when onboarding in backend is ready
   await requireOnboarded();
 

@@ -16,8 +16,7 @@ export function useFilter<T>(data: T[], filters: FilterOption<T>[]) {
       const matchesFilter = filter ? filter.predicate(item) : true;
 
       const matchesSearch =
-        searchQuery === '' ||
-        JSON.stringify(item).toLowerCase().includes(searchQuery.toLowerCase());
+        searchQuery === '' || JSON.stringify(item).toLowerCase().includes(searchQuery.toLowerCase());
 
       return matchesFilter && matchesSearch;
     });

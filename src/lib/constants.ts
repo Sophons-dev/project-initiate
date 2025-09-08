@@ -1,7 +1,4 @@
-import {
-  OpportunityDTO,
-  OpportunityRecommendationDTO,
-} from '@/features/opportunities/types';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '@/features/opportunities/types';
 import { OrganizationDTO } from '@/features/organizations/types';
 
 export const filterColors = {
@@ -20,15 +17,13 @@ export const opportunityFilters = [
     label: 'Jobs',
     value: 'job',
     predicate: (op: OpportunityDTO | OpportunityRecommendationDTO) =>
-      (op as OpportunityDTO).type === 'job' ||
-      (op as OpportunityRecommendationDTO).opportunity?.type === 'job',
+      (op as OpportunityDTO).type === 'job' || (op as OpportunityRecommendationDTO).opportunity?.type === 'job',
   },
   {
     label: 'Courses',
     value: 'course',
     predicate: (op: OpportunityDTO | OpportunityRecommendationDTO) =>
-      (op as OpportunityDTO).type === 'course' ||
-      (op as OpportunityRecommendationDTO).opportunity?.type === 'course',
+      (op as OpportunityDTO).type === 'course' || (op as OpportunityRecommendationDTO).opportunity?.type === 'course',
   },
 ];
 

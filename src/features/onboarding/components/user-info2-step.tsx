@@ -8,21 +8,13 @@ import { SchoolSelect } from './school-search-input';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UserInfoStep2FormData, userInfoStep2Schema } from '../validations';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { LocationSelect } from './location-search-input';
 import { InterestTagInput } from './interest-tag-input';
 import PhoneInput from 'react-phone-input-2';
 
 export function UserInfo2Step() {
-  const { data, updateData, setCurrentStep, currentStep, totalSteps } =
-    useOnboarding();
+  const { data, updateData, setCurrentStep, currentStep, totalSteps } = useOnboarding();
 
   const form = useForm<UserInfoStep2FormData>({
     resolver: zodResolver(userInfoStep2Schema),
@@ -45,15 +37,9 @@ export function UserInfo2Step() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
       <div className='mb-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>
-          User Information
-        </h2>
+        <h2 className='text-2xl font-bold text-gray-900 mb-2'>User Information</h2>
         <p className='text-gray-600 text-sm'>Please fill up the fields below</p>
       </div>
 
@@ -73,10 +59,7 @@ export function UserInfo2Step() {
       </div>
 
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleNext)}
-          className='space-y-6 mb-8'
-        >
+        <form onSubmit={form.handleSubmit(handleNext)} className='space-y-6 mb-8'>
           {/* Contact Info */}
           <FormField
             control={form.control}
@@ -154,16 +137,9 @@ export function UserInfo2Step() {
               name='school'
               render={({ field }) => (
                 <FormItem className='relative w-full'>
-                  <FormLabel>
-                    {data.userType === 'student'
-                      ? 'School'
-                      : 'Company/Organization'}
-                  </FormLabel>
+                  <FormLabel>{data.userType === 'student' ? 'School' : 'Company/Organization'}</FormLabel>
                   <FormControl>
-                    <SchoolSelect
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
+                    <SchoolSelect value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -177,10 +153,7 @@ export function UserInfo2Step() {
                 <FormItem>
                   <FormLabel>Location</FormLabel>
                   <FormControl>
-                    <LocationSelect
-                      value={field.value}
-                      onChange={field.onChange}
-                    />
+                    <LocationSelect value={field.value} onChange={field.onChange} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

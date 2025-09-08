@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  OrganizationsContent,
-  OrganizationsHero,
-} from '@/features/organizations/components';
+import { OrganizationsContent, OrganizationsHero } from '@/features/organizations/components';
 
 export default function OrganizationsPage() {
   return (

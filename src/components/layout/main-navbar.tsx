@@ -38,17 +38,11 @@ export const MainNavbar = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={cn(
-        'fixed w-full top-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md shadow h-16'
-      )}
+      className={cn('fixed w-full top-0 z-50 transition-all duration-300 bg-white/80 backdrop-blur-md shadow h-16')}
     >
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
-        <motion.div
-          className='flex items-center space-x-2'
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div className='flex items-center space-x-2' whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link href='/'>
             <Image
               src='/project-initiate-logo.png'
@@ -81,9 +75,7 @@ export const MainNavbar = () => {
                 }}
                 className={cn(
                   'relative group text-sm px-4 py-1.5 rounded-full font-medium transition-colors duration-200',
-                  pathname === item.href
-                    ? 'text-yellow-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                  pathname === item.href ? 'text-yellow-600' : 'text-gray-600 hover:text-gray-900'
                 )}
               >
                 {/* Active animated pill (desktop) */}
@@ -109,19 +101,11 @@ export const MainNavbar = () => {
         {/* Breadcrumbs and User profile dropdown */}
         <DropdownMenu>
           <DropdownMenuTrigger className='border border-red-500' asChild>
-            <Button
-              variant='ghost'
-              className='relative h-8 w-8 p-0 rounded-full'
-            >
+            <Button variant='ghost' className='relative h-8 w-8 p-0 rounded-full'>
               <span className='sr-only'>Open main menu</span>
               <Avatar className='h-9 w-9'>
-                <AvatarImage
-                  src={user?.imageUrl}
-                  alt={user?.firstName ?? 'User'}
-                />
-                <AvatarFallback>
-                  {(user?.fullName ?? 'U').slice(0, 2).toUpperCase()}
-                </AvatarFallback>
+                <AvatarImage src={user?.imageUrl} alt={user?.firstName ?? 'User'} />
+                <AvatarFallback>{(user?.fullName ?? 'U').slice(0, 2).toUpperCase()}</AvatarFallback>
               </Avatar>
             </Button>
           </DropdownMenuTrigger>
@@ -129,9 +113,7 @@ export const MainNavbar = () => {
             <DropdownMenuLabel>
               <div className='flex flex-col'>
                 <span className='font-medium truncate'>{user?.firstName}</span>
-                <span className='text-xs text-muted-foreground truncate'>
-                  {user?.emailAddresses[0].emailAddress}
-                </span>
+                <span className='text-xs text-muted-foreground truncate'>{user?.emailAddresses[0].emailAddress}</span>
               </div>
             </DropdownMenuLabel>
             <DropdownMenuSeparator />

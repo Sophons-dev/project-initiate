@@ -2,10 +2,7 @@
 
 import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
 import { createContext, useContext } from 'react';
-import {
-  useGetOpportunityById,
-  useGetRecommendedOpportunityById,
-} from '@/features/opportunities/hooks/queries';
+import { useGetOpportunityById, useGetRecommendedOpportunityById } from '@/features/opportunities/hooks/queries';
 
 interface OpportunityDetailsContextType {
   opportunity: OpportunityDTO | OpportunityRecommendationDTO | undefined;
@@ -13,9 +10,7 @@ interface OpportunityDetailsContextType {
   error: Error | null;
 }
 
-const OpportunityDetailsContext = createContext<
-  OpportunityDetailsContextType | undefined
->(undefined);
+const OpportunityDetailsContext = createContext<OpportunityDetailsContextType | undefined>(undefined);
 
 export const OpportunityDetailsProvider = ({
   children,
@@ -44,9 +39,7 @@ export const OpportunityDetailsProvider = ({
       value={{
         opportunity: recommendedOpportunity ?? opportunity ?? undefined,
         isLoading: isLoadingOpportunity || isLoadingRecommendedOpportunity,
-        error: recommendedOpportunity
-          ? errorRecommendedOpportunity
-          : errorOpportunity,
+        error: recommendedOpportunity ? errorRecommendedOpportunity : errorOpportunity,
       }}
     >
       {children}
@@ -57,9 +50,7 @@ export const OpportunityDetailsProvider = ({
 export const useOpportunityDetailsContext = () => {
   const context = useContext(OpportunityDetailsContext);
   if (context === undefined) {
-    throw new Error(
-      'useOpportunityDetailsContext must be used within a OpportunityDetailsProvider'
-    );
+    throw new Error('useOpportunityDetailsContext must be used within a OpportunityDetailsProvider');
   }
   return context;
 };

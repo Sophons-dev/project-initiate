@@ -6,14 +6,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export function DynamicQuestionStep() {
-  const {
-    data,
-    updateData,
-    currentStep,
-    setCurrentStep,
-    questions,
-    totalSteps,
-  } = useOnboarding();
+  const { data, updateData, currentStep, setCurrentStep, questions, totalSteps } = useOnboarding();
 
   const DYNAMIC_QUESTION_START_INDEX = 3;
 
@@ -42,11 +35,7 @@ export function DynamicQuestionStep() {
   const isAnswered = Array.isArray(answer) ? answer.length > 0 : !!answer;
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
       <div className='mb-8'>
         <div className='flex justify-between items-center mb-2'>
           <span className='text-sm text-gray-500'>
@@ -62,19 +51,11 @@ export function DynamicQuestionStep() {
       </div>
 
       {question.type === 'single_choice' && (
-        <SingleChoiceQuestion
-          question={question}
-          value={answer || ''}
-          onChange={handleAnswerChange}
-        />
+        <SingleChoiceQuestion question={question} value={answer || ''} onChange={handleAnswerChange} />
       )}
 
       {question.type === 'multi_choice' && (
-        <MultiChoiceQuestion
-          question={question}
-          value={answer || []}
-          onChange={handleAnswerChange}
-        />
+        <MultiChoiceQuestion question={question} value={answer || []} onChange={handleAnswerChange} />
       )}
 
       {/* Add other question types here */}

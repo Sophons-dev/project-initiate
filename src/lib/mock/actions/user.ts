@@ -1,21 +1,10 @@
-import {
-  OpportunityDTO,
-  OpportunityRecommendationDTO,
-} from '@/features/opportunities/types';
-import {
-  UserOpportunityDTO,
-  UserOrganizationDTO,
-} from '@/features/user/actions';
-import {
-  mockOpportunities,
-  mockOpportunityRecommendations,
-} from '../data/opportunities';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '@/features/opportunities/types';
+import { UserOpportunityDTO, UserOrganizationDTO } from '@/features/user/actions';
+import { mockOpportunities, mockOpportunityRecommendations } from '../data/opportunities';
 import { mockUserOpportunities, mockUserOrganizations } from '../data/user';
 import { mockOrganizations } from '../data/organizations';
 
-export async function getUserRecommendations(
-  userId: string
-): Promise<OpportunityRecommendationDTO[]> {
+export async function getUserRecommendations(userId: string): Promise<OpportunityRecommendationDTO[]> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(
@@ -25,8 +14,10 @@ export async function getUserRecommendations(
             ...rec,
             opportunity: {
               ...mockOpportunities.find(o => o.id === rec.opportunityId),
-              metadata: mockOpportunities.find(o => o.id === rec.opportunityId)
-                ?.metadata as Record<string, unknown> | null | undefined,
+              metadata: mockOpportunities.find(o => o.id === rec.opportunityId)?.metadata as
+                | Record<string, unknown>
+                | null
+                | undefined,
             } as OpportunityDTO,
           }))
       );
@@ -45,9 +36,7 @@ export async function getUserRecommendationById(
       );
 
       if (recommendation) {
-        const opportunity = mockOpportunities.find(
-          opp => opp.id === recommendation.opportunityId
-        );
+        const opportunity = mockOpportunities.find(opp => opp.id === recommendation.opportunityId);
 
         if (opportunity) {
           const opportunityDTO: OpportunityDTO = {
@@ -80,9 +69,7 @@ export async function getUserRecommendationById(
 }
 
 // --- Saved Opportunities ---
-export async function getUserOpportunities(
-  userId: string
-): Promise<UserOpportunityDTO[]> {
+export async function getUserOpportunities(userId: string): Promise<UserOpportunityDTO[]> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(
@@ -92,8 +79,10 @@ export async function getUserOpportunities(
             ...uo,
             opportunity: {
               ...mockOpportunities.find(o => o.id === uo.opportunityId),
-              metadata: mockOpportunities.find(o => o.id === uo.opportunityId)
-                ?.metadata as Record<string, unknown> | null | undefined,
+              metadata: mockOpportunities.find(o => o.id === uo.opportunityId)?.metadata as
+                | Record<string, unknown>
+                | null
+                | undefined,
             } as OpportunityDTO,
           }))
       );
@@ -102,9 +91,7 @@ export async function getUserOpportunities(
 }
 
 // --- Saved Organizations ---
-export async function getUserOrganizations(
-  userId: string
-): Promise<UserOrganizationDTO[]> {
+export async function getUserOrganizations(userId: string): Promise<UserOrganizationDTO[]> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(
@@ -112,9 +99,7 @@ export async function getUserOrganizations(
           .filter(uo => uo.userId === userId)
           .map(uo => ({
             ...uo,
-            organization: mockOrganizations.find(
-              org => org.id === uo.organizationId
-            ),
+            organization: mockOrganizations.find(org => org.id === uo.organizationId),
           }))
       );
     }, 1000);

@@ -1,10 +1,4 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 
 interface DropdownFilterProps {
   filters: { label: string; value: string }[];
@@ -12,11 +6,7 @@ interface DropdownFilterProps {
   setActiveFilter: (filter: string) => void;
 }
 
-export const DropdownFilter = ({
-  filters,
-  activeFilter,
-  setActiveFilter,
-}: DropdownFilterProps) => {
+export const DropdownFilter = ({ filters, activeFilter, setActiveFilter }: DropdownFilterProps) => {
   return (
     <Select onValueChange={setActiveFilter} value={activeFilter}>
       <SelectTrigger className='w-[180px] bg-white'>

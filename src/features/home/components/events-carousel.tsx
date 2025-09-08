@@ -4,13 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import {
-  Calendar,
-  ChevronLeft,
-  ChevronRight,
-  MapPin,
-  Target,
-} from 'lucide-react';
+import { Calendar, ChevronLeft, ChevronRight, MapPin, Target } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';
@@ -118,12 +112,8 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                           <Calendar className='w-5 h-5 text-orange-500' />
                         </div>
                         <span className='flex flex-col'>
-                          <div className='text-xs text-muted-foreground'>
-                            Event Date
-                          </div>
-                          <div className='text-xs font-medium line-clamp-1'>
-                            {item.date}
-                          </div>
+                          <div className='text-xs text-muted-foreground'>Event Date</div>
+                          <div className='text-xs font-medium line-clamp-1'>{item.date}</div>
                         </span>
                       </div>
 
@@ -133,12 +123,8 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                           <MapPin className='w-5 h-5 text-blue-500' />
                         </div>
                         <span className='flex flex-col'>
-                          <div className='text-xs text-muted-foreground'>
-                            Venue
-                          </div>
-                          <div className='text-xs font-medium line-clamp-1'>
-                            {item.location}
-                          </div>
+                          <div className='text-xs text-muted-foreground'>Venue</div>
+                          <div className='text-xs font-medium line-clamp-1'>{item.location}</div>
                         </span>
                       </div>
 
@@ -148,12 +134,8 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                           <Target className='w-5 h-5 text-red-500' />
                         </div>
                         <span className='flex flex-col'>
-                          <div className='text-xs text-muted-foreground'>
-                            Focus
-                          </div>
-                          <div className='text-xs font-medium line-clamp-1'>
-                            {item.focus}
-                          </div>
+                          <div className='text-xs text-muted-foreground'>Focus</div>
+                          <div className='text-xs font-medium line-clamp-1'>{item.focus}</div>
                         </span>
                       </div>
                     </div>
@@ -163,12 +145,9 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                     <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
                       <div className='flex flex-col md:flex-row gap-3 items-center justify-center w-full'>
                         <div className='text-xs text-center md:text-left w-full md:w-2/3'>
-                          <p className='font-medium'>
-                            Ready to shape your future?
-                          </p>
+                          <p className='font-medium'>Ready to shape your future?</p>
                           <p className='text-muted-foreground'>
-                            Register now and be part of this transformative
-                            experience.
+                            Register now and be part of this transformative experience.
                           </p>
                         </div>
 

@@ -7,12 +7,7 @@ interface TabFilterProps {
   filterColors?: Record<string, string>;
 }
 
-export const TabFilter = ({
-  filters,
-  activeFilter,
-  setActiveFilter,
-  filterColors = {},
-}: TabFilterProps) => (
+export const TabFilter = ({ filters, activeFilter, setActiveFilter, filterColors = {} }: TabFilterProps) => (
   <div className='relative rounded-lg h-fit p-1.5 bg-slate-50'>
     <div className='flex space-x-1'>
       {filters.map(filter => (
@@ -27,11 +22,7 @@ export const TabFilter = ({
               : 'border-transparent text-gray-600 hover:bg-white/50 hover:border-gray-200'
           }`}
         >
-          {filter.value in filterColors && (
-            <div
-              className={`h-2 w-2 rounded-full ${filterColors[filter.value]}`}
-            />
-          )}
+          {filter.value in filterColors && <div className={`h-2 w-2 rounded-full ${filterColors[filter.value]}`} />}
           {filter.label}
         </motion.button>
       ))}

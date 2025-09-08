@@ -67,8 +67,7 @@ export const Footer = () => {
         >
           <div>Stay updated with new opportunities</div>
           <div className='text-sm text-muted-foreground my-3'>
-            Get notified about the latest courses, jobs, and events that match
-            your profile
+            Get notified about the latest courses, jobs, and events that match your profile
           </div>
           <div className='mt-3 flex items-center gap-2'>
             <Input
@@ -78,13 +77,9 @@ export const Footer = () => {
               onChange={e => setEmail(e.target.value)}
               className='h-9 border border-neutral-600'
             />
-            <Button className='h-9 rounded-md bg-teal-600 text-white hover:bg-teal-700'>
-              Subscribe
-            </Button>
+            <Button className='h-9 rounded-md bg-teal-600 text-white hover:bg-teal-700'>Subscribe</Button>
           </div>
-          <p className='mt-2 text-[11px] text-muted-foreground'>
-            We respect your inbox. Unsubscribe anytime.
-          </p>
+          <p className='mt-2 text-[11px] text-muted-foreground'>We respect your inbox. Unsubscribe anytime.</p>
         </motion.div>
 
         <Separator className='my-8' />
@@ -98,16 +93,10 @@ export const Footer = () => {
             viewport={{ once: true }}
           >
             <div className='flex items-center gap-2'>
-              <Image
-                src='/project-initiate-logo.png'
-                alt='Logo'
-                width={90}
-                height={90}
-              />
+              <Image src='/project-initiate-logo.png' alt='Logo' width={90} height={90} />
             </div>
             <p className='text-sm text-muted-foreground'>
-              Connecting ambitious individuals with life-changing opportunities
-              through AI-powered matching.
+              Connecting ambitious individuals with life-changing opportunities through AI-powered matching.
             </p>
           </motion.div>
 
@@ -139,11 +128,7 @@ export const Footer = () => {
           <p>© {new Date().getFullYear()} Initiate. All rights reserved.</p>
           <div className='flex items-center gap-4'>
             {Socials.map((link, index) => (
-              <Link
-                key={index}
-                href={link.href}
-                className='hover:text-yellow-600'
-              >
+              <Link key={index} href={link.href} className='hover:text-yellow-600'>
                 {link.icon}
               </Link>
             ))}

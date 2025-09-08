@@ -2,11 +2,7 @@ import { OpportunityDetailsContent } from '@/features/opportunities/components/o
 import { OpportunityDetailsHero } from '@/features/opportunities/components/opportunity-details-hero';
 import { OpportunityDetailsProvider } from '@/features/opportunities/components/opportunity-details.provider';
 
-export default async function OpportunitiesDetailsPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+export default async function OpportunitiesDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id: opportunityId } = await params;
 
   return (

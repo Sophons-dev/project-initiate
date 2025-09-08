@@ -63,8 +63,7 @@ export const Navbar = () => {
     const target = document.querySelector(hash) as HTMLElement | null;
     if (!target) return;
     const headerHeight = headerRef.current?.offsetHeight ?? 0;
-    const top =
-      target.getBoundingClientRect().top + window.scrollY - headerHeight - 8; // small spacer
+    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8; // small spacer
     window.scrollTo({ top, behavior: 'smooth' });
   };
 
@@ -76,19 +75,13 @@ export const Navbar = () => {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={cn(
         'fixed w-full top-0 z-50 transition-all duration-300',
-        isScrolled || isMenuOpen
-          ? 'bg-white/80 backdrop-blur-md shadow h-16'
-          : 'h-24',
+        isScrolled || isMenuOpen ? 'bg-white/80 backdrop-blur-md shadow h-16' : 'h-24',
         pathname === '/' ? '' : 'h-15 border-b shadow'
       )}
     >
       <div className='relative container max-w-7xl mx-auto flex items-center justify-between px-4 h-full'>
         {/* Logo */}
-        <motion.div
-          className='flex items-center space-x-2'
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
+        <motion.div className='flex items-center space-x-2' whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
           <Link href='/'>
             <Image
               src='/project-initiate-logo.png'
@@ -122,9 +115,7 @@ export const Navbar = () => {
                 }}
                 className={cn(
                   'relative group text-sm px-4 py-1.5 rounded-full font-medium transition-colors duration-200',
-                  activeSection === item.href.replace('#', '')
-                    ? 'text-yellow-600'
-                    : 'text-gray-600 hover:text-gray-900'
+                  activeSection === item.href.replace('#', '') ? 'text-yellow-600' : 'text-gray-600 hover:text-gray-900'
                 )}
               >
                 {/* Active animated pill (desktop) */}
@@ -159,22 +150,15 @@ export const Navbar = () => {
               <DropdownMenuTrigger asChild>
                 <button className='hidden cursor-pointer lg:flex items-center gap-2 rounded-full outline-none focus:ring-2 focus:ring-cyan-500'>
                   <Avatar className='h-9 w-9'>
-                    <AvatarImage
-                      src={user.imageUrl}
-                      alt={user.firstName ?? 'User'}
-                    />
-                    <AvatarFallback>
-                      {(user.firstName ?? 'U').slice(0, 2).toUpperCase()}
-                    </AvatarFallback>
+                    <AvatarImage src={user.imageUrl} alt={user.firstName ?? 'User'} />
+                    <AvatarFallback>{(user.firstName ?? 'U').slice(0, 2).toUpperCase()}</AvatarFallback>
                   </Avatar>
                 </button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align='end' className='w-56'>
                 <DropdownMenuLabel>
                   <div className='flex flex-col'>
-                    <span className='font-medium truncate'>
-                      {user.firstName}
-                    </span>
+                    <span className='font-medium truncate'>{user.firstName}</span>
                     <span className='text-xs text-muted-foreground truncate'>
                       {user.emailAddresses[0].emailAddress}
                     </span>
@@ -197,23 +181,13 @@ export const Navbar = () => {
             </DropdownMenu>
           ) : (
             <span className={cn('items-center space-x-4 hidden lg:flex')}>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                <Button
-                  asChild
-                  variant='ghost'
-                  className='hidden md:inline-flex hover:bg-transparent'
-                >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button asChild variant='ghost' className='hidden md:inline-flex hover:bg-transparent'>
                   <Link href='/sign-in'>Sign In</Link>
                   {/* <SignInButton /> */}
                 </Button>
               </motion.div>
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                 <Button
                   asChild
                   className='bg-yellow-400 hover:bg-yellow-400 relative rounded-full overflow-hidden group'

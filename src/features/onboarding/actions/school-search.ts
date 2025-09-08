@@ -2,16 +2,12 @@ import { University, Suggestion } from '../types/school-search';
 
 const VALID_TYPES = ['school', 'university', 'college', 'kindergarten'];
 
-export async function fetchSchoolSuggestions(
-  search: string
-): Promise<Suggestion[]> {
+export async function fetchSchoolSuggestions(search: string): Promise<Suggestion[]> {
   if (!search.trim()) return [];
 
   try {
     const res = await fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(
-        search
-      )}&limit=20&extratags=1`,
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(search)}&limit=20&extratags=1`,
       {
         headers: {
           Accept: 'application/json',

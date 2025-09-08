@@ -9,11 +9,7 @@ interface SingleChoiceQuestionProps {
   onChange: (value: string) => void;
 }
 
-export function SingleChoiceQuestion({
-  question,
-  value,
-  onChange,
-}: SingleChoiceQuestionProps) {
+export function SingleChoiceQuestion({ question, value, onChange }: SingleChoiceQuestionProps) {
   return (
     <div>
       <h3 className='font-semibold text-lg mb-4'>{question.text}</h3>
@@ -27,9 +23,7 @@ export function SingleChoiceQuestion({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`flex items-center p-4 border rounded-xl cursor-pointer transition-colors ${
-                isSelected
-                  ? 'bg-cyan-50 border-cyan-500'
-                  : 'bg-white border-gray-200 hover:bg-gray-50'
+                isSelected ? 'bg-cyan-50 border-cyan-500' : 'bg-white border-gray-200 hover:bg-gray-50'
               }`}
               onClick={() => onChange(option)}
             >

@@ -1,26 +1,18 @@
 'use server';
 
-import {
-  OpportunityType,
-  CourseSubtype,
-  OrganizationType,
-  Prisma,
-} from '@prisma/client';
+import { OpportunityType, CourseSubtype, OrganizationType, Prisma } from '@prisma/client';
 import { CreateOpportunityDto, OpportunityDto } from '../types';
 import { db } from '@/lib/db';
 import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';
 import { randomBytes } from 'crypto';
 
-export async function createOpportunity(
-  input: CreateOpportunityDto
-): Promise<OpportunityDto> {
+export async function createOpportunity(input: CreateOpportunityDto): Promise<OpportunityDto> {
   console.log('Creating opportunity with data:', input);
 
   try {
     const normalizedType = (input.type || '').toString().toLowerCase();
-    const typeEnum =
-      normalizedType === 'job' ? OpportunityType.job : OpportunityType.course;
+    const typeEnum = normalizedType === 'job' ? OpportunityType.job : OpportunityType.course;
 
     const created = await db.opportunity.create({
       data: {
@@ -55,8 +47,7 @@ export async function createOpportunity(
       startDate: created.startDate ?? null,
       endDate: created.endDate ?? null,
       deadline: created.deadline ?? null,
-      metadata:
-        (created.metadata as unknown as Record<string, unknown>) ?? null,
+      metadata: (created.metadata as unknown as Record<string, unknown>) ?? null,
       createdBy: created.createdBy,
       createdAt: created.createdAt ?? null,
       updatedAt: created.updatedAt ?? null,
@@ -69,10 +60,7 @@ export async function createOpportunity(
   }
 }
 
-export async function generateAndSaveOpportunities(
-  context: string,
-  userId: string
-): Promise<OpportunityDto[]> {
+export async function generateAndSaveOpportunities(context: string, userId: string): Promise<OpportunityDto[]> {
   const dummyOrganizationId = '000000000000000000000000';
 
   const insights = await generateInsight({ context });
@@ -80,9 +68,7 @@ export async function generateAndSaveOpportunities(
     context: JSON.stringify(insights),
   });
 
-  const recs = Array.isArray(recommendations?.recommendations)
-    ? (recommendations.recommendations as any[])
-    : [];
+  const recs = Array.isArray(recommendations?.recommendations) ? (recommendations.recommendations as any[]) : [];
 
   const payloads: CreateOpportunityDto[] = recs.map((r: any) => ({
     type: r.type,

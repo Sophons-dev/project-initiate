@@ -1,11 +1,4 @@
-import {
-  jest,
-  describe,
-  it,
-  expect,
-  beforeEach,
-  afterEach,
-} from '@jest/globals';
+import { jest, describe, it, expect, beforeEach, afterEach } from '@jest/globals';
 import {
   mockDb,
   mockUser,
@@ -493,10 +486,7 @@ describe('User Actions', () => {
       };
       mockDb.user.update.mockResolvedValue(updatedUser);
 
-      const result = await updateUserPreferences(
-        mockUser.id,
-        mockPreferencesData
-      );
+      const result = await updateUserPreferences(mockUser.id, mockPreferencesData);
 
       expect(result.success).toBe(true);
       expect(result.data).toEqual(updatedUser);
@@ -515,10 +505,7 @@ describe('User Actions', () => {
       const error = new Error('Update failed');
       mockDb.user.update.mockRejectedValue(error);
 
-      const result = await updateUserPreferences(
-        mockUser.id,
-        mockPreferencesData
-      );
+      const result = await updateUserPreferences(mockUser.id, mockPreferencesData);
 
       expect(result.success).toBe(false);
       expect(result.error).toBe('Failed to update user preferences');

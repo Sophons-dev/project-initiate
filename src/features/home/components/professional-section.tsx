@@ -15,10 +15,7 @@ export const ProfessionalSection = () => {
         {/* Reverse grid */}
         <div className='flex flex-col-reverse md:flex-row gap-6 lg:gap-12 items-center'>
           <motion.div className='relative md:w-1/2'>
-            <motion.div
-              whileHover={{ scale: 1.02, rotate: 1 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.div whileHover={{ scale: 1.02, rotate: 1 }} transition={{ duration: 0.3 }}>
               <Image
                 src='/landing-page/for-professionals.png'
                 alt='Students collaborating'
@@ -41,12 +38,8 @@ export const ProfessionalSection = () => {
                     <BookOpen className='w-5 h-5 md:w-6 md:h-6 text-orange-500' />
                   </motion.div>
                   <div>
-                    <p className='font-medium text-sm text-black'>
-                      Job Opportunities
-                    </p>
-                    <p className='text-xs text-gray-500'>
-                      Discover exclusive job openings
-                    </p>
+                    <p className='font-medium text-sm text-black'>Job Opportunities</p>
+                    <p className='text-xs text-gray-500'>Discover exclusive job openings</p>
                   </div>
                 </div>
                 <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3 rounded-xl shadow-lg'>
@@ -57,12 +50,8 @@ export const ProfessionalSection = () => {
                     <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-orange-500' />
                   </motion.div>
                   <div>
-                    <p className='font-medium text-sm text-black'>
-                      Industry Events
-                    </p>
-                    <p className='text-xs text-gray-500'>
-                      Connect with industry leaders
-                    </p>
+                    <p className='font-medium text-sm text-black'>Industry Events</p>
+                    <p className='text-xs text-gray-500'>Connect with industry leaders</p>
                   </div>
                 </div>
               </motion.div>
@@ -70,10 +59,7 @@ export const ProfessionalSection = () => {
           </motion.div>
 
           <div className='md:w-1/2'>
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
               <TextPill
                 className='mx-0 mb-8 mt-0 !text-xs text-orange-500 b'
                 icon={<GraduationCap className='w-4 h-4' />}
@@ -82,20 +68,15 @@ export const ProfessionalSection = () => {
             </motion.div>
             <h2 className='text-3xl lg:text-4xl md:max-w-md text-black mb-6'>
               Accelerate your{' '}
-              <motion.span
-                className='text-orange-500'
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
+              <motion.span className='text-orange-500' whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
                 Career Growth
               </motion.span>{' '}
               with AI
             </h2>
 
             <p className='mb-6 text-sm md:text-base'>
-              Whether you&apos;re looking for your next role, seeking to
-              upskill, our platform connects you with opportunities that propel
-              your career forward.
+              Whether you&apos;re looking for your next role, seeking to upskill, our platform connects you with
+              opportunities that propel your career forward.
             </p>
 
             <div className='space-y-4 mb-8'>
@@ -117,9 +98,7 @@ export const ProfessionalSection = () => {
                     <Check className='w-4 h-4 text-white' />
                   </motion.div>
 
-                  <span className='group-hover:text-orange-600 transition-colors text-sm md:text-base'>
-                    {item}
-                  </span>
+                  <span className='group-hover:text-orange-600 transition-colors text-sm md:text-base'>{item}</span>
                 </motion.div>
               ))}
             </div>

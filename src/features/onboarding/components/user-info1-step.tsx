@@ -8,20 +8,12 @@ import { Button } from '@/components/ui/button';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { UserInfoStep1FormData, userInfoStep1Schema } from '../validations';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { useUser } from '@clerk/nextjs';
 
 export function UserInfo1Step() {
   const { user } = useUser();
-  const { data, updateData, setCurrentStep, currentStep, totalSteps } =
-    useOnboarding();
+  const { data, updateData, setCurrentStep, currentStep, totalSteps } = useOnboarding();
 
   const form = useForm<UserInfoStep1FormData>({
     resolver: zodResolver(userInfoStep1Schema),
@@ -43,15 +35,9 @@ export function UserInfo1Step() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ duration: 0.5 }}
-    >
+    <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
       <div className='mb-8'>
-        <h2 className='text-2xl font-bold text-gray-900 mb-2'>
-          User Information
-        </h2>
+        <h2 className='text-2xl font-bold text-gray-900 mb-2'>User Information</h2>
         <p className='text-gray-600 text-sm'>Please fill up the fields below</p>
       </div>
 
@@ -71,10 +57,7 @@ export function UserInfo1Step() {
       </div>
 
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(handleNext)}
-          className='space-y-6 mb-8'
-        >
+        <form onSubmit={form.handleSubmit(handleNext)} className='space-y-6 mb-8'>
           <FormField
             control={form.control}
             name='fullName'

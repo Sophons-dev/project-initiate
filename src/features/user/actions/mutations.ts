@@ -2,16 +2,10 @@
 import { db } from '@/lib/db';
 import { EducationLevel, Gender } from '@prisma/client';
 import { auth } from '@clerk/nextjs/server';
-import {
-  CreateUserParams,
-  CreateUserResult,
-  OnboardUserResult,
-} from '../types';
+import { CreateUserParams, CreateUserResult, OnboardUserResult } from '../types';
 import { OnboardingUserParams } from '@/features/onboarding/types/onboarding';
 
-export async function createUser(
-  userData: CreateUserParams
-): Promise<CreateUserResult> {
+export async function createUser(userData: CreateUserParams): Promise<CreateUserResult> {
   console.log('Creating user with data:', userData);
 
   if (!userData.email || !userData.name || !userData.clerkId) {
@@ -58,9 +52,7 @@ const genderMap: Record<string, Gender> = {
   'prefer-not-to-say': Gender.prefer_not_to_say,
 };
 
-export async function onboardUser(
-  onboardingData: OnboardingUserParams
-): Promise<OnboardUserResult> {
+export async function onboardUser(onboardingData: OnboardingUserParams): Promise<OnboardUserResult> {
   console.log('Onboarding user with data:', onboardingData);
 
   try {
@@ -84,9 +76,7 @@ export async function onboardUser(
             location: onboardingData.location,
             education: {
               school: onboardingData.school,
-              level:
-                gradeLevelMap[onboardingData.gradeLevel] ||
-                EducationLevel.other,
+              level: gradeLevelMap[onboardingData.gradeLevel] || EducationLevel.other,
             },
           },
         },
@@ -96,29 +86,25 @@ export async function onboardUser(
 
     // Create user answers for each question
     const userAnswers = await Promise.all(
-      Object.entries(onboardingData.answers).map(
-        async ([questionId, answer]) => {
-          const answerValue = Array.isArray(answer)
-            ? answer.join(', ')
-            : answer;
+      Object.entries(onboardingData.answers).map(async ([questionId, answer]) => {
+        const answerValue = Array.isArray(answer) ? answer.join(', ') : answer;
 
-          const user = await db.user.findFirst({
-            where: { clerkId: userId },
-          });
-          if (!user) {
-            throw new Error('User not found');
-          }
-
-          return await db.userAnswer.create({
-            data: {
-              userId: user.id,
-              questionId: questionId,
-              value: answerValue,
-              answeredAt: new Date(),
-            },
-          });
+        const user = await db.user.findFirst({
+          where: { clerkId: userId },
+        });
+        if (!user) {
+          throw new Error('User not found');
         }
-      )
+
+        return await db.userAnswer.create({
+          data: {
+            userId: user.id,
+            questionId: questionId,
+            value: answerValue,
+            answeredAt: new Date(),
+          },
+        });
+      })
     );
 
     console.log(`Onboarding completed for user ${userId}`);

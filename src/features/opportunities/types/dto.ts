@@ -20,10 +20,7 @@ export type OpportunityDto = {
   organization?: OrganizationDTO;
 };
 
-export type CreateOpportunityDto = Omit<
-  OpportunityDto,
-  'id' | 'createdAt' | 'updatedAt'
->;
+export type CreateOpportunityDto = Omit<OpportunityDto, 'id' | 'createdAt' | 'updatedAt'>;
 
 export type UpdateOpportunityDto = Partial<CreateOpportunityDto>;
 

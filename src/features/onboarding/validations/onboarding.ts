@@ -10,11 +10,7 @@ export const OnboardingUserSchema = z.object({
   school: z.string().min(1, 'School is required'),
   location: z.string().min(1, 'Location is required'),
   answers: z.record(z.string(), z.string()),
-  interests: z
-    .array(
-      z.string().min(2, 'At least 2 characters').max(20, 'Max 20 characters')
-    )
-    .optional(),
+  interests: z.array(z.string().min(2, 'At least 2 characters').max(20, 'Max 20 characters')).optional(),
 });
 
 export const userInfoStep1Schema = OnboardingUserSchema.pick({

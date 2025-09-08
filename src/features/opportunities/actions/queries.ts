@@ -35,8 +35,6 @@ export async function getRecommendationsByUserId(userId: string): Promise<Opport
         }
       : undefined;
 
-    console.log('Mapping recommendation:', r, 'to DTO with opportunity:', oppDto);
-
     return {
       id: r.id,
       userId: r.userId,

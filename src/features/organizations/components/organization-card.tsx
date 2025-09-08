@@ -42,9 +42,7 @@ export function OrganizationCard({
                 </div>
               </div>
               <div className='min-w-0 flex-1'>
-                <h3 className='font-medium text-gray-900 leading-tight mb-1 truncate'>
-                  {title}
-                </h3>
+                <h3 className='font-medium text-gray-900 leading-tight mb-1 truncate'>{title}</h3>
                 <p className='text-xs text-gray-500'>{location}</p>
               </div>
             </div>
@@ -56,9 +54,7 @@ export function OrganizationCard({
           </div>
 
           {/* Description */}
-          <p className='text-sm text-gray-600 mb-3 leading-relaxed line-clamp-4'>
-            {description}
-          </p>
+          <p className='text-sm text-gray-600 mb-3 leading-relaxed line-clamp-4'>{description}</p>
 
           {/* Tags */}
           <div className='flex gap-1.5'>

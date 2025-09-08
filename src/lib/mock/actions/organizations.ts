@@ -9,9 +9,7 @@ export async function getOrganizations(): Promise<OrganizationDTO[]> {
   });
 }
 
-export async function getOrganizationById(
-  id: string
-): Promise<OrganizationDTO | null> {
+export async function getOrganizationById(id: string): Promise<OrganizationDTO | null> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(mockOrganizations.find(o => o.id === id) ?? null);

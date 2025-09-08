@@ -2,29 +2,12 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronsUpDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from '@/components/ui/command';
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Suggestion } from '../types/school-search';
 import { fetchLocationSuggestions } from '../actions/location-search';
 
-export function LocationSelect({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (val: string) => void;
-}) {
+export function LocationSelect({ value, onChange }: { value: string; onChange: (val: string) => void }) {
   const [open, setOpen] = useState(false);
   const [suggestions, setSuggestions] = useState<Suggestion[]>([]);
   const [loading, setLoading] = useState(false);
@@ -73,15 +56,9 @@ export function LocationSelect({
       </PopoverTrigger>
       <PopoverContent className='w-[var(--radix-popover-trigger-width)] max-w-[90vw] p-0  '>
         <Command shouldFilter={false} className='w-full'>
-          <CommandInput
-            placeholder='Search school...'
-            onValueChange={val => setQuery(val)}
-            className='w-full'
-          />
+          <CommandInput placeholder='Search school...' onValueChange={val => setQuery(val)} className='w-full' />
           <CommandList>
-            <CommandEmpty>
-              {loading ? 'Loading...' : 'No results found'}
-            </CommandEmpty>
+            <CommandEmpty>{loading ? 'Loading...' : 'No results found'}</CommandEmpty>
             <CommandGroup>
               {/* Always show custom input first */}
               {query.trim() && (

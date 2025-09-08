@@ -220,12 +220,8 @@ export async function seedQuestions() {
     console.log(`✅ Created ${createdQuestions.length} questions`);
 
     // Log summary by user type
-    const studentQuestions = createdQuestions.filter(q =>
-      q.userTypes.includes('student')
-    );
-    const professionalQuestions = createdQuestions.filter(q =>
-      q.userTypes.includes('professional')
-    );
+    const studentQuestions = createdQuestions.filter(q => q.userTypes.includes('student'));
+    const professionalQuestions = createdQuestions.filter(q => q.userTypes.includes('professional'));
 
     console.log(`📚 Student questions: ${studentQuestions.length}`);
     console.log(`💼 Professional questions: ${professionalQuestions.length}`);

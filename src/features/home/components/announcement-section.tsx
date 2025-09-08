@@ -24,9 +24,8 @@ export const AnnouncementSection = () => {
           />
           <h3 className='mt-3 text-xl text-black'>Upcoming Events</h3>
           <p className='mx-auto mt-1 max-w-2xl text-sm text-muted-foreground'>
-            Explore our latest events, workshops, and webinars designed to
-            inspire, inform, and bring our community together. Be the first to
-            know what’s happening next.
+            Explore our latest events, workshops, and webinars designed to inspire, inform, and bring our community
+            together. Be the first to know what’s happening next.
           </p>
         </motion.div>
 
