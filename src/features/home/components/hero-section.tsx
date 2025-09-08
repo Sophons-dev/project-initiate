@@ -4,15 +4,7 @@ import { TextPill } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView } from 'framer-motion';
-import {
-  ArrowRight,
-  Blend,
-  ChevronDown,
-  CircleCheck,
-  CircleUserRound,
-  Sparkles,
-  TrendingUp,
-} from 'lucide-react';
+import { ArrowRight, Blend, ChevronDown, CircleCheck, CircleUserRound, Sparkles, TrendingUp } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
 
@@ -55,10 +47,7 @@ export const HeroSection = () => {
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <TextPill
-            icon={<Sparkles className='w-4 h-4' />}
-            text='AI-Powered Opportunity Matching'
-          />
+          <TextPill icon={<Sparkles className='w-4 h-4' />} text='AI-Powered Opportunity Matching' />
           <motion.h1
             className='mb-6 text-4xl font-medium text-black lg:text-6xl'
             initial={{ opacity: 0, y: 50 }}
@@ -90,9 +79,8 @@ export const HeroSection = () => {
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          Whether you&apos;re a student seeking courses or a professional
-          hunting for your next career move, our AI matches you with
-          opportunities that align perfectly with your goals and profile.{' '}
+          Whether you&apos;re a student seeking courses or a professional hunting for your next career move, our AI
+          matches you with opportunities that align perfectly with your goals and profile.{' '}
         </motion.p>
 
         <motion.div
@@ -109,10 +97,7 @@ export const HeroSection = () => {
           >
             <Link href='/auth/login'>
               Start Journey
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ repeat: Infinity, duration: 1.5 }}
-              >
+              <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
                 <ArrowRight className='w-4 h-4' />
               </motion.div>
             </Link>
@@ -166,9 +151,7 @@ export const HeroSection = () => {
                         <Icon className='w-5 h-5' />
                       </motion.div>
                       <div className='flex flex-col items-start justify-center text-start'>
-                        <p
-                          className={`font-medium text-md ${textColor[filter.color as keyof typeof textColor]}`}
-                        >
+                        <p className={`font-medium text-md ${textColor[filter.color as keyof typeof textColor]}`}>
                           {filter.value}
                         </p>
                         <p className='text-xs md:text-sm'>{filter.label}</p>
@@ -188,9 +171,7 @@ export const HeroSection = () => {
                 <div className='p-4 pb-0 bg-white'>
                   <div className='flex items-start mb-2 space-x-2 md:mb-4'>
                     <Sparkles className='w-4 h-4 text-black md:w-5 md:h-5' />
-                    <span className='text-sm font-medium text-black md:text-normal'>
-                      AI Career Insights
-                    </span>
+                    <span className='text-sm font-medium text-black md:text-normal'>AI Career Insights</span>
                   </div>
                   <motion.p
                     className='text-sm md:text-normal text-start line-clamp-6'
@@ -198,15 +179,11 @@ export const HeroSection = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.4 }}
                   >
-                    Based on your profile, you appear to be a well-rounded
-                    individual with strong interests in arts & design and
-                    excellent analytical thinking abilities. Your goal to
-                    explore career options shows you&apos;re proactive about
-                    your career development. Consider focusing on opportunities
-                    that combine your technical interests with your
-                    interpersonal skills. I recommend starting with
-                    skill-building courses in your areas of interest while
-                    networking with professionals in your target industries.
+                    Based on your profile, you appear to be a well-rounded individual with strong interests in arts &
+                    design and excellent analytical thinking abilities. Your goal to explore career options shows
+                    you&apos;re proactive about your career development. Consider focusing on opportunities that combine
+                    your technical interests with your interpersonal skills. I recommend starting with skill-building
+                    courses in your areas of interest while networking with professionals in your target industries.
                   </motion.p>
                 </div>
               </motion.div>

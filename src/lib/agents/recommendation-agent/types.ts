@@ -27,17 +27,19 @@ export const RecommendationSchema = z.object({
   end_date: z.string(),
   deadline: z.string(),
 
-  metadata: z.object({
-    stipend: z
-      .object({
+  metadata: z
+    .object({
+      salary: z.object({
+        min: z.number(),
+        max: z.number(),
         currency: z.string(),
-        amount: z.number(),
-      })
-      .optional()
-      .nullable(),
-    duration: z.string().optional().nullable(),
-    commitment: z.string().optional().nullable(),
-  }),
+      }),
+      experienceLevel: z.string(),
+      requiredSkills: z.array(z.string()),
+      benefits: z.array(z.string()),
+    })
+    .optional()
+    .nullable(),
 });
 
 export const RecommendationsSchema = z.object({

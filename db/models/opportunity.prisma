@@ -2,7 +2,7 @@
 // This file contains all opportunity-related models
 
 model Opportunity {
-  id                String                      @id @map("_id") @db.ObjectId
+  id                String                      @id @default(auto()) @map("_id") @db.ObjectId
   type              OpportunityType
   subtype           CourseSubtype?
   title             String

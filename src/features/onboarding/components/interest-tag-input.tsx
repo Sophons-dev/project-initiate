@@ -10,11 +10,7 @@ interface InterestTagInputProps {
   placeholder?: string;
 }
 
-export function InterestTagInput({
-  value,
-  onChange,
-  placeholder,
-}: InterestTagInputProps) {
+export function InterestTagInput({ value, onChange, placeholder }: InterestTagInputProps) {
   const [inputValue, setInputValue] = useState('');
   const [error, setError] = useState('');
 
@@ -38,11 +34,7 @@ export function InterestTagInput({
         return;
       }
 
-      if (
-        newTag.length >= 2 &&
-        newTag.length <= 20 &&
-        !value.includes(newTag)
-      ) {
+      if (newTag.length >= 2 && newTag.length <= 20 && !value.includes(newTag)) {
         onChange([...value, newTag]);
       }
 
@@ -76,11 +68,7 @@ export function InterestTagInput({
               className='flex items-center gap-1 bg-cyan-100 text-cyan-800 px-2 py-1 rounded-md text-sm border border-cyan-500'
             >
               {tag}
-              <button
-                type='button'
-                onClick={() => removeTag(tag)}
-                className='text-cyan-600 hover:text-cyan-800'
-              >
+              <button type='button' onClick={() => removeTag(tag)} className='text-cyan-600 hover:text-cyan-800'>
                 <X size={14} />
               </button>
             </motion.span>
@@ -97,11 +85,7 @@ export function InterestTagInput({
         />
 
         {value.length > 0 && (
-          <button
-            type='button'
-            onClick={clearAll}
-            className='ml-auto text-xs text-red-500 hover:text-red-700'
-          >
+          <button type='button' onClick={clearAll} className='ml-auto text-xs text-red-500 hover:text-red-700'>
             Clear all
           </button>
         )}
@@ -110,8 +94,7 @@ export function InterestTagInput({
       {error && <p className='mt-1.5 text-xs text-red-500'>{error}</p>}
 
       <p className='mt-1.5 text-xs text-gray-500'>
-        💡 Interests can be separated by pressing{' '}
-        <kbd className='px-1 py-0.5 bg-gray-200 rounded'>Enter</kbd> or{' '}
+        💡 Interests can be separated by pressing <kbd className='px-1 py-0.5 bg-gray-200 rounded'>Enter</kbd> or{' '}
         <kbd className='px-1 py-0.5 bg-gray-200 rounded'>,</kbd>
       </p>
     </div>

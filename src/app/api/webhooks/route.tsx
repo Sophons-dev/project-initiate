@@ -1,39 +1,68 @@
-import { createUser } from '@/features/user/actions';
+import { createUser, updateUser, deleteUser } from '@/features/user/actions';
 import { verifyWebhook } from '@clerk/nextjs/webhooks';
 import { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
   try {
-    // Verify the webhook request with proper type
     const evt = await verifyWebhook(req);
+    const { type, data } = evt;
 
-    const eventType = evt.type;
-
-    // Type guard to ensure we have user data
-    if (evt.type !== 'user.created' || !('id' in evt.data)) {
-      return new Response('Invalid event type', { status: 400 });
+    if (!data?.id) {
+      return new Response('Invalid event payload', { status: 400 });
     }
 
-    const userData = evt.data;
-
-    if (eventType === 'user.created') {
-      const result = await createUser({
-        clerkId: userData.id,
-        name: `${userData.first_name || ''} ${userData.last_name || ''}`.trim(),
-        email: userData.email_addresses?.[0]?.email_address,
-        image: userData.image_url,
-      });
-
-      if (result.success) {
-        console.log('User synced to DB:', result.data.userId);
-      } else {
-        console.error('Error syncing user to DB:', result.error);
+    switch (type) {
+      case 'user.created': {
+        const result = await createUser(mapClerkUser(data));
+        if (!result.success) throw new Error(result.error);
+        console.log('✅ User created in DB:', result.data?.id);
+        break;
       }
+
+      case 'user.updated': {
+        const result = await updateUser(
+          { key: 'clerkId', value: data.id },
+          {
+            email: data.email_addresses?.[0]?.email_address,
+            profile: {
+              name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+              image: data.image_url ?? null,
+            },
+          }
+        );
+        if (!result.success) throw new Error(result.error);
+        console.log('✅ User updated in DB:', result.data?.id);
+        break;
+      }
+
+      case 'user.deleted': {
+        const result = await deleteUser(data.id);
+        if (!result.success) throw new Error(result.error);
+        console.log('🗑️ User deleted from DB:', data.id);
+        break;
+      }
+
+      default:
+        console.log(`ℹ️ Ignored event: ${type}`);
     }
 
-    return new Response('Webhook received', { status: 200 });
+    return new Response('Webhook processed', { status: 200 });
   } catch (err) {
-    console.error('Webhook error:', err);
+    console.error('❌ Webhook error:', err);
     return new Response('Webhook error', { status: 400 });
   }
+}
+
+/**
+ * Map Clerk user object → minimal DTO for our DB
+ */
+function mapClerkUser(data: any) {
+  return {
+    clerkId: data.id,
+    email: data.email_addresses?.[0]?.email_address,
+    profile: {
+      name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
+      image: data.image_url,
+    },
+  };
 }

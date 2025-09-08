@@ -4,13 +4,7 @@ import { TextPill } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView } from 'framer-motion';
-import {
-  ArrowRight,
-  GraduationCap,
-  Sparkles,
-  Target,
-  UserPlus,
-} from 'lucide-react';
+import { ArrowRight, GraduationCap, Sparkles, Target, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
 
@@ -23,11 +17,7 @@ export const HowItWorksSection = () => {
   });
 
   return (
-    <section
-      id='how-it-works'
-      ref={howItWorksRef}
-      className='py-16 mb-16 how-it-works-bg'
-    >
+    <section id='how-it-works' ref={howItWorksRef} className='py-16 mb-16 how-it-works-bg'>
       <div className='container max-w-7xl mx-auto px-4'>
         <motion.div
           className='text-center mb-12'
@@ -37,8 +27,7 @@ export const HowItWorksSection = () => {
         >
           <h2 className='text-3xl lg:text-4xl text-black mb-4'>How It Works</h2>
           <p className='text-gray-600 max-w-2xl mx-auto'>
-            Getting started is simple. Follow these four steps to unlock your
-            perfect opportunities
+            Getting started is simple. Follow these four steps to unlock your perfect opportunities
           </p>
         </motion.div>
 
@@ -74,8 +63,7 @@ export const HowItWorksSection = () => {
               icon: <GraduationCap className='w-4 h-4' />,
               step: '#4 TAKE ACTION',
               title: 'Succeed',
-              description:
-                "Enroll or apply to the matched opportunities. We'll notify you of updates and new matches.",
+              description: "Enroll or apply to the matched opportunities. We'll notify you of updates and new matches.",
             },
           ].map((item, index) => (
             <motion.div
@@ -84,22 +72,13 @@ export const HowItWorksSection = () => {
               className='text-start group bg-[#E9E9E9]/40 p-5 rounded-lg'
               whileHover={{ y: -10 }}
             >
-              <TextPill
-                className='mx-0 mb-8 mt-0 !text-xs'
-                icon={item.icon}
-                text={item.step}
-              />
+              <TextPill className='mx-0 mb-8 mt-0 !text-xs' icon={item.icon} text={item.step} />
 
               <div className='flex flex-col'>
-                <motion.h3
-                  className='text-black mb-2'
-                  whileHover={{ color: '#06b6d4' }}
-                >
+                <motion.h3 className='text-black mb-2' whileHover={{ color: '#06b6d4' }}>
                   {item.title}
                 </motion.h3>
-                <p className='text-gray-600 text-sm group-hover:text-gray-800 transition-colors'>
-                  {item.description}
-                </p>
+                <p className='text-gray-600 text-sm group-hover:text-gray-800 transition-colors'>{item.description}</p>
               </div>
             </motion.div>
           ))}
@@ -123,10 +102,7 @@ export const HowItWorksSection = () => {
             <Link href='/auth/login'>
               <span className='relative z-10 flex items-center gap-2'>
                 Start Journey
-                <motion.div
-                  animate={{ x: [0, 5, 0] }}
-                  transition={{ repeat: Infinity, duration: 1.5 }}
-                >
+                <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
                   <ArrowRight className='w-4 h-4' />
                 </motion.div>
               </span>

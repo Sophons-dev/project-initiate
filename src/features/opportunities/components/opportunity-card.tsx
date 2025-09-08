@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
 import { opportunityTypeColors } from '@/lib/constants';
 
 const isOpportunityRecommendation = (
@@ -38,14 +38,15 @@ const isOpportunityRecommendation = (
 
 // TODO: Move these type to separate file
 export const OpportunitySchema = z.object({
-  id: z.string(),
   type: z.string(),
   subtype: z.string().optional().nullable(),
   tags: z.array(z.string()).optional().nullable(),
-  typeColor: z.string(),
   date: z.string(),
   title: z.string(),
-  organization: z.string(),
+  organization: z.object({
+    name: z.string(),
+    url: z.string().optional(),
+  }),
   organizationId: z.string().optional().nullable(),
   startDate: z.string().optional().nullable(),
   endDate: z.string().optional().nullable(),
@@ -68,18 +69,13 @@ export const OpportunitySchema = z.object({
   dueDate: z.string(),
   deadline: z.string().optional().nullable(),
 });
+
 export type Opportunity = z.infer<typeof OpportunitySchema>;
 
-export const OpportunityCard = ({
-  opportunity,
-}: {
-  opportunity: OpportunityDTO | OpportunityRecommendationDTO;
-}) => {
+export const OpportunityCard = ({ opportunity }: { opportunity: OpportunityDTO | OpportunityRecommendationDTO }) => {
   const router = useRouter();
 
-  const displayOpportunity: OpportunityDTO = isOpportunityRecommendation(
-    opportunity
-  )
+  const displayOpportunity: OpportunityDTO = isOpportunityRecommendation(opportunity)
     ? (opportunity.opportunity ?? ({} as OpportunityDTO))
     : opportunity;
 
@@ -103,15 +99,11 @@ export const OpportunityCard = ({
               >
                 {displayOpportunity.type}
               </span>
-              <span className='text-sm text-gray-500'>
-                {displayOpportunity.createdAt?.toLocaleDateString()}
-              </span>
+              <span className='text-sm text-gray-500'>{displayOpportunity.createdAt?.toLocaleDateString()}</span>
             </div>
 
             {/* Title */}
-            <h3 className='text-lg font-semibold text-gray-900 mb-3'>
-              {displayOpportunity.title}
-            </h3>
+            <h3 className='text-lg font-semibold text-gray-900 mb-3'>{displayOpportunity.title}</h3>
 
             {/* Organization & Location */}
             <div className='space-y-2 mb-4'>
@@ -126,9 +118,7 @@ export const OpportunityCard = ({
             </div>
 
             {/* Description */}
-            <p className='text-sm text-gray-600 mb-4 line-clamp-3'>
-              {displayOpportunity.description}
-            </p>
+            <p className='text-sm text-gray-600 mb-4 line-clamp-3'>{displayOpportunity.description}</p>
 
             {/* Match Reason */}
             {isOpportunityRecommendation(opportunity) && (
@@ -136,12 +126,8 @@ export const OpportunityCard = ({
                 <div className='flex items-start'>
                   <Sparkles className='w-4 h-4 text-yellow-600 mr-2 mt-0.5 flex-shrink-0' />
                   <div>
-                    <p className='text-xs font-medium text-yellow-800 mb-1'>
-                      Why this matches you:
-                    </p>
-                    <p className='text-xs text-yellow-700 leading-relaxed'>
-                      {opportunity.reasoning}
-                    </p>
+                    <p className='text-xs font-medium text-yellow-800 mb-1'>Why this matches you:</p>
+                    <p className='text-xs text-yellow-700 leading-relaxed'>{opportunity.reasoning}</p>
                   </div>
                 </div>
               </div>
@@ -162,14 +148,8 @@ export const OpportunityCard = ({
                   <Bookmark className='w-4 h-4 text-gray-400' />
                 </motion.button>
 
-                <motion.div
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Button
-                    size='sm'
-                    className='bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-4 py-1 rounded'
-                  >
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button size='sm' className='bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-4 py-1 rounded'>
                     Learn More
                   </Button>
                 </motion.div>

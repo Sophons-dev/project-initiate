@@ -30,8 +30,7 @@ export const mockOrganizations: Organization[] = [
     id: '3',
     name: 'Dole Food Company',
     type: OrganizationType.company,
-    description:
-      "One of the world's largest producers and marketers of fresh fruit and vegetables.",
+    description: "One of the world's largest producers and marketers of fresh fruit and vegetables.",
     website: 'https://www.dole.com/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Charlotte, North Carolina, USA',
@@ -54,8 +53,7 @@ export const mockOrganizations: Organization[] = [
     id: '5',
     name: 'Stanford University',
     type: OrganizationType.university,
-    description:
-      "One of the world's leading research and teaching institutions, located in Stanford, California.",
+    description: "One of the world's leading research and teaching institutions, located in Stanford, California.",
     website: 'https://www.stanford.edu/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Stanford, California, USA',
@@ -66,8 +64,7 @@ export const mockOrganizations: Organization[] = [
     id: '6',
     name: 'Meta Platforms',
     type: OrganizationType.company,
-    description:
-      'An American multinational technology conglomerate based in Menlo Park, California.',
+    description: 'An American multinational technology conglomerate based in Menlo Park, California.',
     website: 'https://about.meta.com/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Menlo Park, California, USA',
@@ -78,8 +75,7 @@ export const mockOrganizations: Organization[] = [
     id: '7',
     name: 'Harvard University',
     type: OrganizationType.university,
-    description:
-      'A private Ivy League research university in Cambridge, Massachusetts.',
+    description: 'A private Ivy League research university in Cambridge, Massachusetts.',
     website: 'https://www.harvard.edu/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Cambridge, Massachusetts, USA',
@@ -114,8 +110,7 @@ export const mockOrganizations: Organization[] = [
     id: '10',
     name: 'Apple Inc.',
     type: OrganizationType.company,
-    description:
-      'An American multinational technology company headquartered in Cupertino, California.',
+    description: 'An American multinational technology company headquartered in Cupertino, California.',
     website: 'https://www.apple.com/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Cupertino, California, USA',
@@ -126,8 +121,7 @@ export const mockOrganizations: Organization[] = [
     id: '11',
     name: 'University of Cambridge',
     type: OrganizationType.university,
-    description:
-      'A collegiate research university in Cambridge, United Kingdom.',
+    description: 'A collegiate research university in Cambridge, United Kingdom.',
     website: 'https://www.cam.ac.uk/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Cambridge, United Kingdom',
@@ -138,8 +132,7 @@ export const mockOrganizations: Organization[] = [
     id: '12',
     name: 'Netflix',
     type: OrganizationType.company,
-    description:
-      'An American subscription streaming service and production company.',
+    description: 'An American subscription streaming service and production company.',
     website: 'https://www.netflix.com/',
     logoUrl: 'https://picsum.photos/200',
     location: 'Los Gatos, California, USA',

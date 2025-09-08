@@ -8,11 +8,7 @@ interface SearchInputProps {
   placeholder?: string;
 }
 
-export const SearchInput = ({
-  value,
-  onChange,
-  placeholder,
-}: SearchInputProps) => {
+export const SearchInput = ({ value, onChange, placeholder }: SearchInputProps) => {
   return (
     <motion.div
       className='flex-1 relative w-full md:max-w-md'

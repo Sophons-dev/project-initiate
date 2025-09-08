@@ -9,9 +9,7 @@ interface OrganizationDetailsProps {
   organization: OrganizationDTO;
 }
 
-export const OrganizationDetails = ({
-  organization,
-}: OrganizationDetailsProps) => {
+export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) => {
   const {
     data: opportunities,
     isLoading: opportunitiesLoading,
@@ -37,9 +35,7 @@ export const OrganizationDetails = ({
                 <AboutSection organization={organization} />
                 <ContactsSection organization={organization} />
                 <div className='flex justify-between items-center'>
-                  <h2 className='text-lg font-medium text-gray-900'>
-                    Opportunities Offered
-                  </h2>
+                  <h2 className='text-lg font-medium text-gray-900'>Opportunities Offered</h2>
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     className='text-cyan-500 hover:text-cyan-600 font-medium cursor-pointer'
@@ -72,13 +68,8 @@ function ProfileHeader({ organization }: { organization: OrganizationDTO }) {
       {/* Info */}
       <div className='flex-1'>
         <div className='flex items-center gap-3 mb-1'>
-          <h1 className='text-2xl font-semibold text-gray-900'>
-            {organization.name}
-          </h1>
-          <Badge
-            variant='secondary'
-            className='bg-pink-100 text-pink-700 hover:bg-pink-100'
-          >
+          <h1 className='text-2xl font-semibold text-gray-900'>{organization.name}</h1>
+          <Badge variant='secondary' className='bg-pink-100 text-pink-700 hover:bg-pink-100'>
             PARTNER
           </Badge>
         </div>
@@ -92,18 +83,12 @@ function AboutSection({ organization }: { organization: OrganizationDTO }) {
   return (
     <div>
       <h2 className='text-lg font-medium text-gray-900 mb-4'>About</h2>
-      <p className='text-gray-600 leading-relaxed text-sm'>
-        {organization.description}
-      </p>
+      <p className='text-gray-600 leading-relaxed text-sm'>{organization.description}</p>
     </div>
   );
 }
 
-export function ContactsSection({
-  organization,
-}: {
-  organization: OrganizationDTO;
-}) {
+export function ContactsSection({ organization }: { organization: OrganizationDTO }) {
   return (
     <div>
       <h2 className='text-lg font-medium text-gray-900 mb-4'>Contacts</h2>
@@ -114,9 +99,7 @@ export function ContactsSection({
             <Phone className='w-5 h-5 text-orange-600' />
           </div>
           <div>
-            <p className='text-sm text-gray-500 uppercase tracking-wide'>
-              PHONE
-            </p>
+            <p className='text-sm text-gray-500 uppercase tracking-wide'>PHONE</p>
             <p className='font-medium text-gray-900'>+639123456789</p>
           </div>
         </div>
@@ -127,9 +110,7 @@ export function ContactsSection({
             <Mail className='w-5 h-5 text-blue-600' />
           </div>
           <div>
-            <p className='text-sm text-gray-500 uppercase tracking-wide'>
-              EMAIL
-            </p>
+            <p className='text-sm text-gray-500 uppercase tracking-wide'>EMAIL</p>
             <p className='font-medium text-gray-900'>university@gmail.com</p>
           </div>
         </div>

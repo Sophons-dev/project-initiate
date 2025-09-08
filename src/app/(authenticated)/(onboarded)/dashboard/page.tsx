@@ -1,7 +1,4 @@
-import {
-  DashboardContent,
-  DashboardHero,
-} from '@/features/dashboard/components';
+import { DashboardContent, DashboardHero } from '@/features/dashboard/components';
 
 export default function Dashboard() {
   return (

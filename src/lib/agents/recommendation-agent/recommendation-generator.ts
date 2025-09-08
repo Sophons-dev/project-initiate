@@ -4,6 +4,7 @@
 import { RecommendationsSchema } from './types';
 import { zodTextFormat } from 'openai/helpers/zod';
 import OpenAI from 'openai';
+import { SYSTEM_PROMPT } from './contants';
 
 const openai = new OpenAI();
 
@@ -23,7 +24,7 @@ export async function generateRecommendations({
       input: [
         {
           role: 'system',
-          //content: SYSTEM_PROMPT,
+          // content: SYSTEM_PROMPT,
           content: `Search for jobs based on user profile: ${context}`,
         },
         {

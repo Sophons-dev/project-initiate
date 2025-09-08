@@ -1,8 +1,5 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import {
-  getOrganizationById,
-  getOrganizations,
-} from '@/lib/mock/actions/organizations';
+import { getOrganizationById, getOrganizations } from '@/lib/mock/actions/organizations';
 import { OrganizationDTO } from '../types';
 
 export const useGetAllOrganizations = (): UseQueryResult<OrganizationDTO[]> => {
@@ -12,9 +9,7 @@ export const useGetAllOrganizations = (): UseQueryResult<OrganizationDTO[]> => {
   });
 };
 
-export const useGetOrganizationById = (
-  organizationId: string
-): UseQueryResult<OrganizationDTO | null> => {
+export const useGetOrganizationById = (organizationId: string): UseQueryResult<OrganizationDTO | null> => {
   return useQuery<OrganizationDTO | null>({
     queryKey: ['organizations', organizationId],
     queryFn: () => getOrganizationById(organizationId),

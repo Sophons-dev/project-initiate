@@ -1,62 +1,74 @@
 'use client';
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import {
-  Opportunity,
-  OpportunitySchema,
-} from '@/features/opportunities/components/opportunity-card';
-import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
-import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';
+import { Opportunity, OpportunitySchema } from '@/features/opportunities/components/opportunity-card';
+import { generateAndSaveOpportunities, getRecommendationsByUserId } from '@/features/opportunities/actions';
+import { useEffect, useState } from 'react';
+import { useProgress } from '@bprogress/next';
+import { OpportunityDto } from '../dto';
 
-// TODO: Implement DB Fetch and Upload logic
-// [ ] Check DB for existing opportunities, if none, generate new ones
-// [ ] Use Scraped Data for opportunity recommendation
-// PS: I got lost in the code, didn't know how relationships work in prisma, so I decided to use the generated recommendations as a starting point. Thanks and sorry 🙏
+export const useGetUserOpportunities = (userId: string) => {
+  const { start, stop } = useProgress();
 
-async function getRecommendations({
-  context,
-  userId,
-}: {
-  context: string;
-  userId: string;
-}): Promise<Opportunity[]> {
+  const query = useQuery<OpportunityDto[]>({
+    queryKey: ['user-opportunities', userId],
+    queryFn: async () => {
+      if (!userId) return [];
+      const recs = await getRecommendationsByUserId(userId);
+      const opps = (recs || []).map(r => r.opportunity).filter(Boolean) as OpportunityDto[];
+      return opps;
+    },
+    enabled: !!userId,
+    staleTime: 1000 * 60 * 5,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (query.isFetching) start();
+    else stop();
+  }, [query.isFetching, start, stop]);
+
+  return {
+    opportunities: query.data ?? [],
+    isLoading: query.isLoading,
+    error: query.error ?? null,
+    refetch: query.refetch,
+  };
+};
+
+async function getRecommendations({ context, userId }: { context: string; userId: string }): Promise<Opportunity[]> {
   console.log(userId);
   try {
-    // If no existing opportunities, generate new ones
-    console.log('Started generation');
-    const insights = await generateInsight({ context });
-    console.log('insights generated', insights);
+    const saved = await generateAndSaveOpportunities(context, userId);
 
-    console.log('started recommendation generation');
-    const recommendations = await generateRecommendations({
-      context: JSON.stringify(insights),
-    });
-    console.log('recommendations generated', recommendations);
+    // Map saved DTOs to the UI card shape
+    const mapped: Opportunity[] = saved.map(o => ({
+      type: o.type,
+      title: o.title,
+      description: o.description || '',
+      tags: o.tags,
+      organization: {
+        name: o.organization?.name || 'AI Generated Organization',
+        url: o.organization?.website || undefined,
+      },
+      location: o.location || 'Remote',
+      date: o.startDate ? new Date(o.startDate).toISOString() : new Date().toISOString(),
+      deliveryMode: o.deliveryMode || undefined,
+      startDate: o.startDate ? new Date(o.startDate).toISOString() : null,
+      endDate: o.endDate ? new Date(o.endDate).toISOString() : null,
+      deadline: o.deadline ? new Date(o.deadline).toISOString() : null,
+      metadata: (o.metadata as any) || null,
+      createdBy: o.createdBy,
+      createdAt: o.createdAt?.toISOString?.() || new Date().toISOString(),
+      updatedAt: o.updatedAt?.toISOString?.() || new Date().toISOString(),
+      matchReason: 'Matches your interests',
+      dueDate: o.deadline ? new Date(o.deadline).toISOString() : 'No deadline',
+    }));
 
-    if (!recommendations?.recommendations) {
-      return [];
-    }
-
-    const opportunities: Opportunity[] = recommendations.recommendations.map(
-      recommendation => ({
-        id: 'temp-' + Math.random().toString(36).substring(2, 9),
-        type: recommendation.type,
-        typeColor: '#4CAF50',
-        date: recommendation.start_date,
-        title: recommendation.title,
-        organization:
-          recommendation.organization?.name || 'Unknown Organization',
-        location: recommendation.location?.city || 'Remote',
-        description: recommendation.description,
-        matchReason: 'Matches your interests',
-        dueDate: recommendation.deadline || 'No deadline',
-      })
-    );
-
-    // Parse and validate the created opportunities
-    const parsedOpportunities = OpportunitySchema.array().parse(opportunities);
-
-    return parsedOpportunities;
+    // Validate the UI shape before returning
+    return OpportunitySchema.array().parse(mapped);
   } catch (error) {
     console.error('Error fetching opportunities:', error);
     return [];

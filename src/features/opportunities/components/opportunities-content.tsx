@@ -8,40 +8,25 @@ import { useGetAllOpportunities } from '@/features/opportunities/hooks';
 
 export const OpportunitiesContent = () => {
   const { data: opportunityData, isLoading, error } = useGetAllOpportunities();
-  const {
-    activeFilter,
-    setActiveFilter,
-    searchQuery,
-    setSearchQuery,
-    filteredData,
-  } = useFilter(opportunityData ?? [], opportunityFilters);
+  const { activeFilter, setActiveFilter, searchQuery, setSearchQuery, filteredData } = useFilter(
+    opportunityData ?? [],
+    opportunityFilters
+  );
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
       {/* Recommended Opportunities */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
         <div className='flex items-center justify-between mb-6'>
           <div>
-            <h2 className='text-xl font-semibold text-gray-900 mb-1'>
-              All Opportunities
-            </h2>
-            <p className='text-gray-600'>
-              Here is the list all of the available opportunities.
-            </p>
+            <h2 className='text-xl font-semibold text-gray-900 mb-1'>All Opportunities</h2>
+            <p className='text-gray-600'>Here is the list all of the available opportunities.</p>
           </div>
         </div>
 
         <div className='flex flex-col md:flex-row gap-3 items-center justify-between mb-6'>
           {/* Search */}
-          <SearchInput
-            value={searchQuery}
-            onChange={setSearchQuery}
-            placeholder='Search opportunities'
-          />
+          <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder='Search opportunities' />
 
           {/* Filter Tabs */}
           <TabFilter
@@ -57,11 +42,7 @@ export const OpportunitiesContent = () => {
           />
         </div>
 
-        <OpportunitiesList
-          opportunities={filteredData}
-          isLoading={isLoading}
-          error={error ?? undefined}
-        />
+        <OpportunitiesList opportunities={filteredData} isLoading={isLoading} error={error ?? undefined} />
       </motion.div>
     </div>
   );

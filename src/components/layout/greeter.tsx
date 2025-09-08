@@ -29,16 +29,10 @@ export default function Greeter({ children, action, message }: GreeterProps) {
           className='flex flex-col gap-y-4 lg:gap-y-0 lg:flex-row items-center justify-between'
         >
           <div>
-            <h1 className='text-2xl font-semibold text-gray-900 mb-1'>
-              Welcome, {user?.firstName}!
-            </h1>
+            <h1 className='text-2xl font-semibold text-gray-900 mb-1'>Welcome, {user?.firstName}!</h1>
             <p className='text-gray-600'>{message ?? ''}</p>
           </div>
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className='w-full lg:w-auto'
-          >
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} className='w-full lg:w-auto'>
             <Button
               className='bg-cyan-500 w-full lg:w-auto hover:bg-cyan-600 text-white px-6 py-2 rounded-full'
               onClick={() => router.push(action?.redirect ?? '')}

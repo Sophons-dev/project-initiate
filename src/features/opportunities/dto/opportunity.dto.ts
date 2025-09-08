@@ -1,6 +1,6 @@
 import { OrganizationDTO } from '@/features/organizations/types';
 
-export type OpportunityDTO = {
+export type OpportunityDto = {
   id: string;
   type: string;
   subtype?: string | null;
@@ -20,15 +20,6 @@ export type OpportunityDTO = {
   organization?: OrganizationDTO;
 };
 
-export type OpportunityRecommendationDTO = {
-  id: string;
-  userId: string;
-  opportunityId: string;
-  score?: number | null;
-  rank?: number | null;
-  reasoning?: string | null;
-  tagsMatched: string[];
-  modelVersion?: string | null;
-  createdAt?: Date | null;
-  opportunity?: OpportunityDTO;
-};
+export type CreateOpportunityDto = Omit<OpportunityDto, 'id' | 'createdAt' | 'updatedAt'>;
+
+export type UpdateOpportunityDto = Partial<CreateOpportunityDto>;

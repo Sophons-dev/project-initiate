@@ -10,11 +10,7 @@ interface MultiChoiceQuestionProps {
   onChange: (value: string[]) => void;
 }
 
-export function MultiChoiceQuestion({
-  question,
-  value,
-  onChange,
-}: MultiChoiceQuestionProps) {
+export function MultiChoiceQuestion({ question, value, onChange }: MultiChoiceQuestionProps) {
   const handleCheckboxChange = (option: string) => {
     const newValue = [...value];
     const index = newValue.indexOf(option);
@@ -41,9 +37,7 @@ export function MultiChoiceQuestion({
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
               className={`flex items-center p-4 border rounded-xl cursor-pointer transition-colors ${
-                isChecked
-                  ? 'bg-cyan-50 border-cyan-500'
-                  : 'bg-white border-gray-200 hover:bg-gray-50'
+                isChecked ? 'bg-cyan-50 border-cyan-500' : 'bg-white border-gray-200 hover:bg-gray-50'
               }`}
               onClick={() => handleCheckboxChange(option)}
             >
@@ -53,11 +47,7 @@ export function MultiChoiceQuestion({
                 }`}
               >
                 {isChecked && (
-                  <motion.span
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    exit={{ scale: 0 }}
-                  >
+                  <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} exit={{ scale: 0 }}>
                     <Check className='w-4 h-4 text-white' />
                   </motion.span>
                 )}

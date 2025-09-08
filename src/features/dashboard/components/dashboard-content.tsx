@@ -7,28 +7,21 @@ import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { opportunityFilters } from '@/lib/constants';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { useOpportunities } from '@/features/opportunities/hooks/useOpportunities';
+import { useGetUserOpportunities } from '@/features/opportunities/hooks/useOpportunities';
+import { useAuth } from '@clerk/nextjs';
+import { useUserByClerkId } from '@/hooks/useUser';
 
 export const DashboardContent = () => {
-  // TODO: Refactor, uses hacky solution for context, uses onboardingData defined in completion step
+  const { userId } = useAuth();
+  const { data: user } = useUserByClerkId(userId || undefined);
+  const { opportunities, isLoading, error, refetch } = useGetUserOpportunities(user?.id || '');
+
   const [context, setContext] = useState<string | null>(null);
-  const searchParams = useSearchParams();
-  const userId = searchParams.get('userId') ?? '';
 
-  const {
-    data: opportunityData,
-    isLoading,
-    error,
-  } = useOpportunities({ context: context ?? '', userId });
-
-  const {
-    activeFilter,
-    setActiveFilter,
-    searchQuery,
-    setSearchQuery,
-    filteredData,
-  } = useFilter(opportunityData ?? [], opportunityFilters);
+  const { activeFilter, setActiveFilter, searchQuery, setSearchQuery, filteredData } = useFilter(
+    opportunities ?? [],
+    opportunityFilters
+  );
 
   useEffect(() => {
     const context = window.localStorage.getItem('onboardingData');
@@ -40,19 +33,11 @@ export const DashboardContent = () => {
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
       {/* Recommended Opportunities */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 1 }}
-        transition={{ delay: 0.3 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 1 }} transition={{ delay: 0.3 }}>
         <div className='flex flex-col lg:flex-row gap-y-4 lg:gap-y-0 items-center justify-between mb-6'>
           <div>
-            <h2 className='text-xl font-semibold text-gray-900 mb-1'>
-              Recommended Opportunities
-            </h2>
-            <p className='text-gray-600'>
-              Here are your AI-powered personalized recommendations.
-            </p>
+            <h2 className='text-xl font-semibold text-gray-900 mb-1'>Recommended Opportunities</h2>
+            <p className='text-gray-600'>Here are your AI-powered personalized recommendations.</p>
           </div>
           <motion.button
             whileHover={{ scale: 1.05 }}
@@ -70,11 +55,7 @@ export const DashboardContent = () => {
 
         <div className='flex flex-col md:flex-row gap-3 items-center justify-between mb-6'>
           {/* Search */}
-          <SearchInput
-            value={searchQuery}
-            onChange={setSearchQuery}
-            placeholder='Search opportunities'
-          />
+          <SearchInput value={searchQuery} onChange={setSearchQuery} placeholder='Search opportunities' />
 
           {/* Filter Tabs */}
           <TabFilter
@@ -90,11 +71,7 @@ export const DashboardContent = () => {
           />
         </div>
 
-        <OpportunitiesList
-          opportunities={filteredData}
-          isLoading={isLoading}
-          error={error ?? undefined}
-        />
+        <OpportunitiesList opportunities={filteredData} isLoading={isLoading} error={error ?? undefined} />
       </motion.div>
     </div>
   );

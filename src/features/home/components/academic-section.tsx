@@ -19,10 +19,7 @@ export const AcademicSection = () => {
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           >
-            <motion.div
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
               <TextPill
                 className='mx-0 mb-8 mt-0 !text-xs'
                 icon={<GraduationCap className='w-4 h-4' />}
@@ -31,19 +28,14 @@ export const AcademicSection = () => {
             </motion.div>
             <h2 className='text-3xl lg:text-4xl text-black mb-6'>
               Launch Your Academic Journey with{' '}
-              <motion.span
-                className='text-cyan-500'
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.3 }}
-              >
+              <motion.span className='text-cyan-500' whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
                 Confidence
               </motion.span>
             </h2>
 
             <p className='mb-6 text-sm md:text-base'>
-              From finding the perfect courses to building your network, we help
-              students discover opportunities that accelerate their learning and
-              career prospects.
+              From finding the perfect courses to building your network, we help students discover opportunities that
+              accelerate their learning and career prospects.
             </p>
 
             <motion.div
@@ -71,9 +63,7 @@ export const AcademicSection = () => {
                     <Check className='w-4 h-4 text-white' />
                   </motion.div>
 
-                  <span className='group-hover:text-cyan-600 transition-colors text-sm md:text-base'>
-                    {item}
-                  </span>
+                  <span className='group-hover:text-cyan-600 transition-colors text-sm md:text-base'>{item}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -86,10 +76,7 @@ export const AcademicSection = () => {
           </motion.div>
 
           <div className='relative'>
-            <motion.div
-              whileHover={{ scale: 1.02, rotate: 1 }}
-              transition={{ duration: 0.3 }}
-            >
+            <motion.div whileHover={{ scale: 1.02, rotate: 1 }} transition={{ duration: 0.3 }}>
               <Image
                 src='/landing-page/for-students.png'
                 alt='Students collaborating'
@@ -112,12 +99,8 @@ export const AcademicSection = () => {
                     <BookOpen className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
                   </motion.div>
                   <div>
-                    <p className='font-medium text-sm text-black'>
-                      Course Discovery
-                    </p>
-                    <p className='text-xs text-gray-500'>
-                      Find courses from top universities
-                    </p>
+                    <p className='font-medium text-sm text-black'>Course Discovery</p>
+                    <p className='text-xs text-gray-500'>Find courses from top universities</p>
                   </div>
                 </div>
                 <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3 rounded-xl shadow-lg'>
@@ -128,12 +111,8 @@ export const AcademicSection = () => {
                     <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
                   </motion.div>
                   <div>
-                    <p className='font-medium text-sm text-black'>
-                      Career Guidance
-                    </p>
-                    <p className='text-xs text-gray-500'>
-                      Get personalized career advice
-                    </p>
+                    <p className='font-medium text-sm text-black'>Career Guidance</p>
+                    <p className='text-xs text-gray-500'>Get personalized career advice</p>
                   </div>
                 </div>
               </motion.div>

@@ -26,17 +26,12 @@ export const MetadataRenderer = ({ data, inline }: MetadataRendererProps) => {
     return (
       <div className='ml-4 space-y-1'>
         {Object.entries(data as Record<string, unknown>).map(([k, v]) => {
-          const isPrimitive =
-            v === null || ['string', 'number', 'boolean'].includes(typeof v);
+          const isPrimitive = v === null || ['string', 'number', 'boolean'].includes(typeof v);
 
           return (
             <div key={k} className='flex flex-wrap'>
               <span className='capitalize font-medium'>{formatKey(k)}:</span>
-              {isPrimitive ? (
-                <span className='ml-1'>{String(v)}</span>
-              ) : (
-                <MetadataRenderer data={v} />
-              )}
+              {isPrimitive ? <span className='ml-1'>{String(v)}</span> : <MetadataRenderer data={v} />}
             </div>
           );
         })}

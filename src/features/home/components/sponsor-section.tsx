@@ -30,8 +30,7 @@ export const SponsorSection = () => {
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
         >
-          We&apos;re grateful for the support of our sponsors who help make our
-          mission possible.
+          We&apos;re grateful for the support of our sponsors who help make our mission possible.
         </motion.p>
         <motion.div
           className='flex items-center gap-5 max-w-3xl mx-auto pb-4 overflow-x-auto md:flex-wrap md:justify-between md:overflow-visible'

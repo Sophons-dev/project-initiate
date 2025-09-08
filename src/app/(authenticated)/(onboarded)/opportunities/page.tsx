@@ -1,9 +1,6 @@
 'use client';
 
-import {
-  OpportunitiesContent,
-  OpportunitiesHero,
-} from '@/features/opportunities/components';
+import { OpportunitiesContent, OpportunitiesHero } from '@/features/opportunities/components';
 
 export default function OpportunitiesPage() {
   return (

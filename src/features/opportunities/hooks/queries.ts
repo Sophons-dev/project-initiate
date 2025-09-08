@@ -1,46 +1,34 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import {
-  getOpportunitiesByOrganizationId,
-  getOpportunityById,
-} from '@/lib/mock/actions/opportunities';
+import { getOpportunitiesByOrganizationId, getOpportunityById } from '@/lib/mock/actions/opportunities';
 import { getOpportunities } from '@/lib/mock/actions/opportunities';
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../types';
-import {
-  getUserRecommendationById,
-  getUserRecommendations,
-} from '@/lib/mock/actions/user';
+import { getUserRecommendationById, getUserRecommendations } from '@/lib/mock/actions/user';
 import { getRelatedOpportunities } from '@/lib/mock/actions/opportunities';
+import { OpportunityDto, OpportunityRecommendationDTO } from '../dto';
 
-export const useGetAllOpportunities = (): UseQueryResult<OpportunityDTO[]> => {
-  return useQuery<OpportunityDTO[]>({
+export const useGetAllOpportunities = (): UseQueryResult<OpportunityDto[]> => {
+  return useQuery<OpportunityDto[]>({
     queryKey: ['opportunities'],
     queryFn: () => getOpportunities(),
   });
 };
 
-export const useGetOpportunityById = (
-  opportunityId: string
-): UseQueryResult<OpportunityDTO | null> => {
-  return useQuery<OpportunityDTO | null>({
+export const useGetOpportunityById = (opportunityId: string): UseQueryResult<OpportunityDto | null> => {
+  return useQuery<OpportunityDto | null>({
     queryKey: ['opportunity', opportunityId],
     queryFn: () => getOpportunityById(opportunityId),
     enabled: !!opportunityId,
   });
 };
 
-export const useGetOpportunitiesByOrganizationId = (
-  organizationId: string
-): UseQueryResult<OpportunityDTO[]> => {
-  return useQuery<OpportunityDTO[]>({
+export const useGetOpportunitiesByOrganizationId = (organizationId: string): UseQueryResult<OpportunityDto[]> => {
+  return useQuery<OpportunityDto[]>({
     queryKey: ['opportunities', organizationId],
     queryFn: () => getOpportunitiesByOrganizationId(organizationId),
     enabled: !!organizationId,
   });
 };
 
-export const useGetRecommendedOpportunities = (
-  userId: string
-): UseQueryResult<OpportunityRecommendationDTO[]> => {
+export const useGetRecommendedOpportunities = (userId: string): UseQueryResult<OpportunityRecommendationDTO[]> => {
   return useQuery<OpportunityRecommendationDTO[]>({
     queryKey: ['recommended-opportunities', userId],
     queryFn: () => getUserRecommendations(userId),
@@ -62,8 +50,8 @@ export const useGetRecommendedOpportunityById = (
 export const useGetRecommendedOpportunitiesByTags = (
   opportunityId: string,
   tags: string[]
-): UseQueryResult<OpportunityDTO[]> => {
-  return useQuery<OpportunityDTO[]>({
+): UseQueryResult<OpportunityDto[]> => {
+  return useQuery<OpportunityDto[]>({
     queryKey: ['recommended-opportunities-by-tags', opportunityId, tags],
     queryFn: () => getRelatedOpportunities(opportunityId, tags),
     enabled: !!opportunityId && tags.length > 0,
