@@ -6,29 +6,24 @@ import { TabFilter, SearchInput } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { opportunityFilters } from '@/lib/constants';
-import { useEffect, useState } from 'react';
-import { useGetUserOpportunities } from '@/features/opportunities/hooks/useOpportunities';
 import { useAuth } from '@clerk/nextjs';
 import { useUserByClerkId } from '@/hooks/useUser';
+import { useGetUserOpportunities } from '@/features/opportunities/hooks';
 
 export const DashboardContent = () => {
   const { userId } = useAuth();
   const { data: user } = useUserByClerkId(userId || undefined);
-  const { opportunities, isLoading, error, refetch } = useGetUserOpportunities(user?.id || '');
+  const { opportunities, isLoading, error } = useGetUserOpportunities(user?.id || '');
+  console.log(opportunities);
 
-  const [context, setContext] = useState<string | null>(null);
-
-  const { activeFilter, setActiveFilter, searchQuery, setSearchQuery, filteredData } = useFilter(
-    opportunities ?? [],
-    opportunityFilters
-  );
-
-  useEffect(() => {
-    const context = window.localStorage.getItem('onboardingData');
-    if (context) {
-      setContext(context);
-    }
-  }, []);
+  // Apply search + tab filtering to the merged list
+  const {
+    activeFilter,
+    setActiveFilter,
+    searchQuery,
+    setSearchQuery,
+    filteredData: filteredOpportunities,
+  } = useFilter(opportunities, opportunityFilters);
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
@@ -71,7 +66,7 @@ export const DashboardContent = () => {
           />
         </div>
 
-        <OpportunitiesList opportunities={filteredData} isLoading={isLoading} error={error ?? undefined} />
+        <OpportunitiesList opportunities={filteredOpportunities} isLoading={isLoading} error={error ?? undefined} />
       </motion.div>
     </div>
   );

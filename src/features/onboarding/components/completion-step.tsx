@@ -9,11 +9,13 @@ import { onboardUser } from '@/features/user/actions';
 import { useProgress } from '@bprogress/next';
 import { toast } from 'sonner';
 import { generateAndSaveOpportunities } from '@/features/opportunities/actions';
+import { useSaveOpportunities } from '@/features/opportunities/hooks';
 
 export function CompletionStep() {
   const { start, stop } = useProgress();
   const { data } = useOnboarding();
   const router = useRouter();
+  const saveOpps = useSaveOpportunities();
 
   // Handle onboarding process and navigate to dashboard
   const handleGoToDashboard = async () => {
@@ -42,7 +44,7 @@ export function CompletionStep() {
       // Show a loading state while generating personalized opportunities
       const loadingId = toast.loading('Generating your personalized opportunities...');
       try {
-        await generateAndSaveOpportunities(JSON.stringify(data), res.data.userId);
+        await saveOpps.mutateAsync({ context: JSON.stringify(data), userId: res.data.userId });
 
         toast.success('Opportunities ready!');
       } catch (e) {

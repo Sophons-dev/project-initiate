@@ -1,8 +1,8 @@
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
+import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 import { OpportunityCard } from './opportunity-card';
 
 interface OpportunitiesListProps {
-  opportunities: OpportunityDTO[] | OpportunityRecommendationDTO[];
+  opportunities: OpportunityRecommendationDto[];
   isLoading?: boolean;
   error?: Error;
 }

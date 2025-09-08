@@ -6,6 +6,7 @@ import { db } from '@/lib/db';
 import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';
 import { randomBytes } from 'crypto';
+import { Recommendation } from '@/lib/agents/recommendation-agent/types';
 
 export async function createOpportunity(input: CreateOpportunityDto): Promise<OpportunityDto> {
   console.log('Creating opportunity with data:', input);
@@ -68,7 +69,11 @@ export async function generateAndSaveOpportunities(context: string, userId: stri
     context: JSON.stringify(insights),
   });
 
-  const recs = Array.isArray(recommendations?.recommendations) ? (recommendations.recommendations as any[]) : [];
+  console.log('RECOMMENDATIONS', recommendations);
+
+  const recs = Array.isArray(recommendations?.recommendations)
+    ? (recommendations.recommendations as Recommendation[])
+    : [];
 
   const payloads: CreateOpportunityDto[] = recs.map((r: any) => ({
     type: r.type,
@@ -96,12 +101,11 @@ export async function generateAndSaveOpportunities(context: string, userId: stri
         try {
           await db.opportunityRecommendation.create({
             data: {
-              id: randomBytes(12).toString('hex'),
               userId,
               opportunityId: opp.id,
-              score: 50, // baseline score; adjust when model scoring is available
+              score: 0,
               rank: index + 1,
-              reasoning: 'Matches your interests',
+              reasoning: recs[index]?.matchReason || 'Matches your interests',
               tagsMatched: opp.tags ?? [],
               modelVersion: 'v1',
               createdAt: new Date(),
