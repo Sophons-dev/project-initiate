@@ -2,7 +2,7 @@
 // This file contains all opportunity-related models
 
 model Opportunity {
-  id                String                      @id @map("_id") @db.ObjectId
+  id                String                      @id @default(auto()) @map("_id") @db.ObjectId
   type              OpportunityType
   subtype           CourseSubtype?
   title             String
@@ -18,35 +18,26 @@ model Opportunity {
   createdBy         String                      @db.ObjectId
   createdAt         DateTime?
   updatedAt         DateTime?
-
-  // Recommendation fields
-  score             Float?
-  rank              Int?
-  reasoning         String?
-  tagsMatched       String[]
-  modelVersion      String?
-  recommendedFor    String?                     @db.ObjectId // userId this was recommended for
-
+  recommendations   OpportunityRecommendation[]
   userOpportunities UserOpportunity[]
 
   @@index([organizationId])
   @@index([createdBy])
-  @@index([recommendedFor])
 }
 
-// model OpportunityRecommendation {
-//   id            String      @id @map("_id") @db.ObjectId
-//   userId        String      @db.ObjectId
-//   opportunityId String      @db.ObjectId
-//   score         Float?
-//   rank          Int?
-//   reasoning     String?
-//   tagsMatched   String[]
-//   modelVersion  String?
-//   createdAt     DateTime?
-//   user          User        @relation(fields: [userId], references: [id])
-//   opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
+model OpportunityRecommendation {
+  id            String      @id @map("_id") @db.ObjectId
+  userId        String      @db.ObjectId
+  opportunityId String      @db.ObjectId
+  score         Float?
+  rank          Int?
+  reasoning     String?
+  tagsMatched   String[]
+  modelVersion  String?
+  createdAt     DateTime?
+  user          User        @relation(fields: [userId], references: [id])
+  opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
 
-//   @@index([userId])
-//   @@index([opportunityId])
-// }
+  @@index([userId])
+  @@index([opportunityId])
+}

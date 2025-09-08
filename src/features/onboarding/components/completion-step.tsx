@@ -8,6 +8,7 @@ import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
 import { useProgress } from '@bprogress/next';
 import { toast } from 'sonner';
+import { generateAndSaveOpportunities } from '@/features/opportunities/actions';
 
 export function CompletionStep() {
   const { start, stop } = useProgress();
@@ -33,6 +34,25 @@ export function CompletionStep() {
 
       // TODO: use zustand for better state management, this is a temporary solution. Used in dashboard to generate stuff...
       window.localStorage.setItem('onboardingData', JSON.stringify(data));
+
+      // Show a loading state while generating personalized opportunities
+      const loadingId = toast.loading(
+        'Generating your personalized opportunities...'
+      );
+      try {
+        await generateAndSaveOpportunities(
+          JSON.stringify(data),
+          res.data.userId
+        );
+        toast.success('Opportunities ready!');
+      } catch (e) {
+        console.error('Failed generating opportunities:', e);
+        toast.error(
+          'Could not generate opportunities. You can retry from the dashboard.'
+        );
+      } finally {
+        toast.dismiss(loadingId);
+      }
 
       router.push('/dashboard?user_id=' + res.data.userId);
     } catch (error) {

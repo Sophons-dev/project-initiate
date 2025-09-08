@@ -1,3 +1,5 @@
+'use server';
+
 import { db } from '@/lib/db';
 import { GetUserParams, GetUserResult, User } from '../types';
 
