@@ -1,6 +1,6 @@
 'use client';
 
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../dtos';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
 import { createContext, useContext } from 'react';
 import { useGetOpportunityById, useGetRecommendedOpportunityById } from '@/features/opportunities/hooks/queries';
 

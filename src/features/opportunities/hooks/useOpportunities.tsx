@@ -5,7 +5,7 @@ import { Opportunity, OpportunitySchema } from '@/features/opportunities/compone
 import { generateAndSaveOpportunities, getRecommendationsByUserId } from '@/features/opportunities/actions';
 import { useEffect, useState } from 'react';
 import { useProgress } from '@bprogress/next';
-import { OpportunityDto } from '../dtos';
+import { OpportunityDto } from '../dto';
 
 export const useGetUserOpportunities = (userId: string) => {
   const { start, stop } = useProgress();

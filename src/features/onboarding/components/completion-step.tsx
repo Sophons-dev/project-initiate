@@ -36,7 +36,7 @@ export function CompletionStep() {
       // Show a loading state while generating personalized opportunities
       const loadingId = toast.loading('Generating your personalized opportunities...');
       try {
-        await generateAndSaveOpportunities(JSON.stringify(data), res.data.userId);
+        await generateAndSaveOpportunities(JSON.stringify(data), res.data?.userId || '');
         toast.success('Opportunities ready!');
       } catch (e) {
         console.error('Failed generating opportunities:', e);
@@ -45,7 +45,7 @@ export function CompletionStep() {
         toast.dismiss(loadingId);
       }
 
-      router.push('/dashboard?user_id=' + res.data.userId);
+      router.push('/dashboard?user_id=' + res.data?.userId);
     } catch (error) {
       console.error('An unexpected error occurred during onboarding:', error);
 

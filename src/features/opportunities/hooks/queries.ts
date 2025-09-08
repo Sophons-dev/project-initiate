@@ -3,7 +3,7 @@ import { getOpportunitiesByOrganizationId, getOpportunityById } from '@/lib/mock
 import { getOpportunities } from '@/lib/mock/actions/opportunities';
 import { getUserRecommendationById, getUserRecommendations } from '@/lib/mock/actions/user';
 import { getRelatedOpportunities } from '@/lib/mock/actions/opportunities';
-import { OpportunityDto, OpportunityRecommendationDTO } from '../dtos';
+import { OpportunityDto, OpportunityRecommendationDTO } from '../dto';
 
 export const useGetAllOpportunities = (): UseQueryResult<OpportunityDto[]> => {
   return useQuery<OpportunityDto[]>({

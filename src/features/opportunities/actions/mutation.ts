@@ -1,7 +1,7 @@
 'use server';
 
 import { OpportunityType, CourseSubtype, Prisma } from '@prisma/client';
-import { CreateOpportunityDto, OpportunityDto } from '../dtos';
+import { CreateOpportunityDto, OpportunityDto } from '../dto';
 import { db } from '@/lib/db';
 import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';

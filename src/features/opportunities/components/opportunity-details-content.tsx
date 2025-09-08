@@ -5,7 +5,7 @@ import { useOpportunityDetailsContext } from './opportunity-details.provider';
 import { MetadataRenderer } from './opportunity-details-metadata';
 import { formatKey } from '@/lib/utils';
 import { OpportunitiesList } from './opportunities-list';
-import { OpportunityDto, OpportunityRecommendationDTO } from '../dtos';
+import { OpportunityDto, OpportunityRecommendationDTO } from '../dto';
 import { useGetRecommendedOpportunitiesByTags } from '../hooks/queries';
 
 const isOpportunityRecommendation = (

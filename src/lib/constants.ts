@@ -1,4 +1,4 @@
-import { OpportunityDTO, OpportunityRecommendationDTO } from '@/features/opportunities/dtos';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '@/features/opportunities/dto';
 import { OrganizationDTO } from '@/features/organizations/types';
 
 export const filterColors = {

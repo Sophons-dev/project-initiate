@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../dtos';
+import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
 import { opportunityTypeColors } from '@/lib/constants';
 
 const isOpportunityRecommendation = (

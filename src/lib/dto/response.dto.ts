@@ -1,10 +1,10 @@
 export class ResponseDto<T> {
-  readonly body: T;
+  readonly success!: boolean;
+  readonly data?: T;
+  readonly error?: string;
 
-  statusCode!: number;
-
-  constructor(statusCode: number, body: T) {
-    this.statusCode = statusCode;
-    this.body = body;
+  // Return a plain object so RSC can serialize it
+  constructor(args: { success: boolean; data?: T; error?: string; statusCode?: number }) {
+    return { success: args.success, data: args.data, error: args.error } as any;
   }
 }

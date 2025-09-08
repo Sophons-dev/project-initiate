@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/lib/db';
-import { OpportunityDto, OpportunityRecommendationDto } from '@/features/opportunities/dtos';
+import { OpportunityDto, OpportunityRecommendationDto } from '@/features/opportunities/dto';
 
 export async function getRecommendationsByUserId(userId: string): Promise<OpportunityRecommendationDto[]> {
   const recs = await db.opportunityRecommendation.findMany({
