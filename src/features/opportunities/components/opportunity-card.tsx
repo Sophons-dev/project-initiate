@@ -2,50 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { Bookmark, Building2, Calendar, MapPin, Sparkles } from 'lucide-react';
-import { z } from 'zod';
 import { useRouter } from 'next/navigation';
-import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
+import { OpportunityRecommendationDto } from '../dto';
 import { opportunityTypeColors } from '@/lib/constants';
-
-// const isOpportunityRecommendation = (
-//   opp: OpportunityDto | OpportunityRecommendationDto
-// ): opp is OpportunityRecommendationDto => {
-//   return 'reasoning' in opp;
-// };
-// export const OpportunitySchema = z.object({
-//   type: z.string(),
-//   subtype: z.string().optional().nullable(),
-//   tags: z.array(z.string()).optional().nullable(),
-//   date: z.string(),
-//   title: z.string(),
-//   organization: z.object({
-//     name: z.string(),
-//     url: z.string().optional(),
-//   }),
-//   organizationId: z.string().optional().nullable(),
-//   startDate: z.string().optional().nullable(),
-//   endDate: z.string().optional().nullable(),
-//   metadata: z
-//     .object({
-//       salary: z.object({
-//         min: z.number(),
-//         max: z.number(),
-//         currency: z.string(),
-//       }),
-//       experienceLevel: z.string(),
-//       requiredSkills: z.array(z.string()),
-//       benefits: z.array(z.string()),
-//     })
-//     .optional()
-//     .nullable(),
-//   location: z.string(),
-//   description: z.string(),
-//   matchReason: z.string(),
-//   dueDate: z.string(),
-//   deadline: z.string().optional().nullable(),
-// });
-
-// export type Opportunity = z.infer<typeof OpportunitySchema>;
 
 export const OpportunityCard = ({ recommendation }: { recommendation: OpportunityRecommendationDto }) => {
   const router = useRouter();

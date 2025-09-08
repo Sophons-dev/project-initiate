@@ -14,7 +14,6 @@ export const DashboardContent = () => {
   const { userId } = useAuth();
   const { data: user } = useUserByClerkId(userId || undefined);
   const { opportunities, isLoading, error } = useGetUserOpportunities(user?.id || '');
-  console.log(opportunities);
 
   // Apply search + tab filtering to the merged list
   const {

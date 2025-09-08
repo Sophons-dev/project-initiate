@@ -6,61 +6,54 @@ import { useOnboarding } from '../contexts/onboarding-context';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
-import { useProgress } from '@bprogress/next';
-import { toast } from 'sonner';
 import { useSaveOpportunities } from '@/features/opportunities/hooks';
+import { MultiStepLoader } from '@/components/ui/multi-step-loader';
+import { useState } from 'react';
+import { loadingStates } from '../lib/constants';
 
 export function CompletionStep() {
-  const { start, stop } = useProgress();
   const { data } = useOnboarding();
   const router = useRouter();
   const saveOpps = useSaveOpportunities();
+  const [currentStep, setCurrentStep] = useState(0);
+  const [loading, setLoading] = useState(false);
+
+  const wait = (ms: number) => new Promise(res => setTimeout(res, ms));
 
   // Handle onboarding process and navigate to dashboard
   const handleGoToDashboard = async () => {
+    setLoading(true);
+    setCurrentStep(0); // Start loader at step 0
+
     try {
-      start();
-
+      // STEP 0 — onboardUser (while loader shows "Packing your details...")
       const res = await onboardUser(data);
-
-      if (!res.success) {
-        console.error('Onboarding failed:', res.error);
-
-        toast.error('Failed to save your information. Please try again or contact support if the issue persists.');
-
-        throw new Error(res.error);
+      if (!res.success || !res.data?.userId) {
+        throw new Error(res.error || 'Onboarding failed');
       }
 
-      // Ensure userId is present in the response
-      if (!res.data?.userId) {
-        console.error('Onboarding response missing userId:', res);
-
-        toast.error('An unexpected error occurred. Please try again or contact support if the issue persists.');
-
-        throw new Error('Onboarding response missing userId');
+      // STEP 1..N-2 — mock delays
+      for (let i = 1; i < loadingStates.length - 1; i++) {
+        setCurrentStep(i);
+        await wait(loadingStates[i].duration || 1500);
       }
 
-      // Show a loading state while generating personalized opportunities
-      const loadingId = toast.loading('Generating your personalized opportunities...');
+      // STEP N — real opportunity generation
+      setCurrentStep(loadingStates.length - 1);
       try {
-        await saveOpps.mutateAsync({ context: JSON.stringify(data), userId: res.data.userId });
-
-        toast.success('Opportunities ready!');
+        await saveOpps.mutateAsync({
+          context: JSON.stringify(data),
+          userId: res.data.userId,
+        });
       } catch (e) {
         console.error('Failed generating opportunities:', e);
-        toast.error('Could not generate opportunities. You can retry from the dashboard.');
-      } finally {
-        toast.dismiss(loadingId);
       }
 
+      // Redirect immediately after last step
       router.push('/dashboard');
-    } catch (error) {
-      console.error('An unexpected error occurred during onboarding:', error);
-
-      throw error;
-    } finally {
-      toast.success('Profile updated successfully! Taking you to your dashboard...');
-      stop();
+    } catch (err) {
+      console.error('Onboarding error:', err);
+      setLoading(false); // stop loader if failure
     }
   };
 
@@ -71,6 +64,8 @@ export function CompletionStep() {
       transition={{ duration: 0.5 }}
       className='text-center xl:w-[500px]'
     >
+      <MultiStepLoader loadingStates={loadingStates} loading={loading} value={currentStep} />
+
       {/* Success Icon */}
       <motion.div
         initial={{ scale: 0 }}
