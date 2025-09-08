@@ -8,7 +8,6 @@ import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
 import { useProgress } from '@bprogress/next';
 import { toast } from 'sonner';
-import { generateAndSaveOpportunities } from '@/features/opportunities/actions';
 import { useSaveOpportunities } from '@/features/opportunities/hooks';
 
 export function CompletionStep() {

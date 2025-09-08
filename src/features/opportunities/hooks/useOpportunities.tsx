@@ -1,10 +1,11 @@
 'use client';
 
-import { useMutation, useQuery, UseMutationResult, UseQueryResult } from '@tanstack/react-query';
-import { generateAndSaveOpportunities, getRecommendationsByUserId } from '@/features/opportunities/actions';
+import { useMutation, useQuery, UseMutationResult } from '@tanstack/react-query';
+import { getRecommendationsByUserId } from '@/features/opportunities/actions';
 import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
+import { generateAndSaveOpportunities } from '../actions/mutations';
 
 export const useGetUserOpportunities = (userId: string) => {
   const { start, stop } = useProgress();
