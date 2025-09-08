@@ -3,7 +3,7 @@ import { getOpportunitiesByOrganizationId, getOpportunityById } from '@/lib/mock
 import { getOpportunities } from '@/lib/mock/actions/opportunities';
 import { getUserRecommendationById, getUserRecommendations } from '@/lib/mock/actions/user';
 import { getRelatedOpportunities } from '@/lib/mock/actions/opportunities';
-import { OpportunityDto, OpportunityRecommendationDTO } from '../dto';
+import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 
 export const useGetAllOpportunities = (): UseQueryResult<OpportunityDto[]> => {
   return useQuery<OpportunityDto[]>({
@@ -28,8 +28,8 @@ export const useGetOpportunitiesByOrganizationId = (organizationId: string): Use
   });
 };
 
-export const useGetRecommendedOpportunities = (userId: string): UseQueryResult<OpportunityRecommendationDTO[]> => {
-  return useQuery<OpportunityRecommendationDTO[]>({
+export const useGetRecommendedOpportunities = (userId: string): UseQueryResult<OpportunityRecommendationDto[]> => {
+  return useQuery<OpportunityRecommendationDto[]>({
     queryKey: ['recommended-opportunities', userId],
     queryFn: () => getUserRecommendations(userId),
     enabled: !!userId,
@@ -39,8 +39,8 @@ export const useGetRecommendedOpportunities = (userId: string): UseQueryResult<O
 export const useGetRecommendedOpportunityById = (
   opportunityId: string,
   userId: string
-): UseQueryResult<OpportunityRecommendationDTO | null> => {
-  return useQuery<OpportunityRecommendationDTO | null>({
+): UseQueryResult<OpportunityRecommendationDto | null> => {
+  return useQuery<OpportunityRecommendationDto | null>({
     queryKey: ['recommended-opportunity', opportunityId, userId],
     queryFn: () => getUserRecommendationById(opportunityId, userId),
     enabled: !!opportunityId,
