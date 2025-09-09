@@ -4,10 +4,11 @@ import { SYSTEM_PROMPT } from './contants';
 import { InsightSchema } from './types';
 import { zodTextFormat } from 'openai/helpers/zod';
 import OpenAI from 'openai';
+import z from 'zod';
 
 const openai = new OpenAI();
 
-export async function generateInsight({ context }: { context: string }) {
+export async function generateInsight({ context }: { context: string }): Promise<z.infer<typeof InsightSchema>> {
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 45000); // 30 second timeout
@@ -35,6 +36,11 @@ export async function generateInsight({ context }: { context: string }) {
     });
 
     clearTimeout(timeoutId);
+
+    if (!response.output_parsed) {
+      throw new Error('Failed to generate insight: No output received');
+    }
+
     return response.output_parsed;
   } catch (error) {
     console.error('Error generating insight:', error);
