@@ -1,8 +1,6 @@
-import {
-  OpportunityDto as OpportunityDTO,
-  OpportunityRecommendationDto as OpportunityRecommendationDTO,
-} from '@/features/opportunities/types';
-import { OrganizationDTO } from '@/features/organizations/types';
+import { OpportunityDto as OpportunityDTO } from '@/features/opportunities/types';
+import { OpportunityRecommendationDto as OpportunityRecommendationDTO } from '@/features/opportunities/dto/opportunity-recommendation.dto';
+import { OrganizationDto as OrganizationDTO } from '@/features/organizations/dto/organization.dto';
 
 export const filterColors = {
   job: 'bg-blue-500',

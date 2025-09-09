@@ -2,6 +2,7 @@
 
 import Greeter from '@/components/layout/greeter';
 import { Card, CardContent } from '@/components/ui/card';
+import { useCareerInsight } from '@/features/career-insight/hooks/useCareerInsight';
 import { motion } from 'framer-motion';
 import { Blend, CircleCheck, Sparkles, TrendingUp, UserCircle } from 'lucide-react';
 
