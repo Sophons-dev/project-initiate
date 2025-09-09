@@ -9,6 +9,9 @@ const openai = new OpenAI();
 
 export async function generateInsight({ context }: { context: string }) {
   try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 45000); // 30 second timeout
+
     const response = await openai.responses.parse({
       model: 'gpt-5-nano',
       input: [
@@ -28,8 +31,10 @@ export async function generateInsight({ context }: { context: string }) {
       text: {
         format: zodTextFormat(InsightSchema, 'careerInsight'),
       },
+      signal: controller.signal,
     });
 
+    clearTimeout(timeoutId);
     return response.output_parsed;
   } catch (error) {
     console.error('Error generating insight:', error);
