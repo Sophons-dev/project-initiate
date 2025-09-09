@@ -15,7 +15,7 @@ export function toOpportunityDto(opportunity: Opportunity): OpportunityDto {
     startDate: opportunity.startDate ?? null,
     endDate: opportunity.endDate ?? null,
     deadline: opportunity.deadline ?? null,
-    metadata: (opportunity.metadata as unknown as Record<string, unknown>) ?? null,
+    metadata: (opportunity.metadata as any) ?? null,
     createdBy: opportunity.createdBy,
     createdAt: opportunity.createdAt ?? null,
     updatedAt: opportunity.updatedAt ?? null,
