@@ -4,15 +4,12 @@ import { SYSTEM_PROMPT } from './contants';
 import { InsightSchema } from './types';
 import { zodTextFormat } from 'openai/helpers/zod';
 import OpenAI from 'openai';
-import z from 'zod';
+import { z } from 'zod';
 
 const openai = new OpenAI();
 
 export async function generateInsight({ context }: { context: string }): Promise<z.infer<typeof InsightSchema>> {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 45000); // 30 second timeout
-
     const response = await openai.responses.parse({
       model: 'gpt-5-nano',
       input: [
@@ -32,10 +29,7 @@ export async function generateInsight({ context }: { context: string }): Promise
       text: {
         format: zodTextFormat(InsightSchema, 'careerInsight'),
       },
-      signal: controller.signal,
     });
-
-    clearTimeout(timeoutId);
 
     if (!response.output_parsed) {
       throw new Error('Failed to generate insight: No output received');

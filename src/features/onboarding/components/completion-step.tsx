@@ -45,12 +45,15 @@ export function CompletionStep() {
           context: JSON.stringify(data),
           userId: res.data.userId,
         });
+        // Only redirect if opportunity generation succeeds
+        router.push('/dashboard');
       } catch (e) {
         console.error('Failed generating opportunities:', e);
+        // Don't redirect on error - let user retry or handle the error
+        setLoading(false);
+        // You could show an error message to the user here
+        throw new Error('Failed to generate opportunities. Please try again.');
       }
-
-      // Redirect immediately after last step
-      router.push('/dashboard');
     } catch (err) {
       console.error('Onboarding error:', err);
       setLoading(false); // stop loader if failure

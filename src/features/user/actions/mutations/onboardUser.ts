@@ -38,6 +38,12 @@ export async function onboardUser(
       return { success: false, error: 'User not authenticated' };
     }
 
+    const existing = await db.user.findUnique({ where: { clerkId: userId } });
+
+    if (!existing) {
+      return { success: false, error: 'User not found' };
+    }
+
     const updated = await db.user.update({
       where: { clerkId: userId },
       data: {
@@ -62,22 +68,25 @@ export async function onboardUser(
 
     // Save answers (idempotent)
     const entries = Object.entries(onboardingData.answers);
-    await db.$transaction([
-      // Remove existing answers for this user and these questions
-      db.userAnswer.deleteMany({
-        where: {
-          userId: updated.id,
-          questionId: { in: entries.map(([q]) => q) },
-        },
-      }),
-      db.userAnswer.createMany({
-        data: entries.map(([questionId, answer]) => ({
-          userId: updated.id,
-          questionId,
-          value: Array.isArray(answer) ? answer.join(', ') : answer,
-        })),
-      }),
-    ]);
+
+    if (entries.length > 0) {
+      await db.$transaction([
+        // Remove existing answers for this user and these questions
+        db.userAnswer.deleteMany({
+          where: {
+            userId: updated.id,
+            questionId: { in: entries.map(([q]) => q) },
+          },
+        }),
+        db.userAnswer.createMany({
+          data: entries.map(([questionId, answer]) => ({
+            userId: updated.id,
+            questionId,
+            value: Array.isArray(answer) ? answer.join(', ') : answer,
+          })),
+        }),
+      ]);
+    }
 
     return { success: true, data: { userId: updated.id, onboardingCompleted: true } };
   } catch (err) {
