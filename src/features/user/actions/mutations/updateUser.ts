@@ -8,6 +8,7 @@ import { mapUserToDto } from '../../mappers/user.mapper';
 
 /**
  * Update user (id or clerkId)
+ * TODO: Use user.service.ts to orchestrate business logic instead of putting it all here
  */
 export async function updateUser(
   identifier: { key: 'id' | 'clerkId'; value: string },

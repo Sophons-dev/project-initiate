@@ -26,6 +26,7 @@ const genderMap: Record<string, Gender> = {
 
 /**
  * Onboard user
+ * TODO: Use user.service.ts to orchestrate business logic instead of putting it all here
  */
 export async function onboardUser(
   onboardingData: OnboardingUserParams

@@ -5,11 +5,25 @@ import { ResponseDto } from '@/lib/dto/response.dto';
 import { CreateUserDto } from '../../dto/createUser.dto';
 import { UserDto } from '../../dto/user.dto';
 import { mapUserToDto } from '../../mappers/user.mapper';
+import { auth } from '@clerk/nextjs/server';
 
 /**
  * Create user
+ * TODO: Use user.service.ts to orchestrate business logic instead of putting it all here
  */
 export async function createUser(userData: CreateUserDto): Promise<ResponseDto<UserDto>> {
+  const { userId: sessionClerkId } = await auth();
+
+  if (!sessionClerkId) {
+    return { success: false, error: 'User not authenticated' };
+  }
+
+  if (sessionClerkId !== userData.clerkId) {
+    return { success: false, error: 'Clerk ID mismatch' };
+  }
+
+  const clerkId = sessionClerkId;
+
   try {
     if (!userData.email || !userData.clerkId || !userData.profile?.name) {
       return { success: false, error: 'Missing required fields' };
@@ -18,7 +32,7 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
     // Check if user already exists (idempotent)
     const existingUser = await db.user.findFirst({
       where: {
-        OR: [{ clerkId: userData.clerkId }, { email: userData.email }],
+        OR: [{ clerkId: clerkId }, { email: userData.email }],
       },
     });
 
@@ -29,7 +43,7 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
 
     const user = await db.user.create({
       data: {
-        clerkId: userData.clerkId,
+        clerkId: clerkId,
         email: userData.email,
         onboardingCompleted: false,
         profile: {

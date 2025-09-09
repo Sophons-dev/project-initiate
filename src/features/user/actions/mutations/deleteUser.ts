@@ -5,6 +5,7 @@ import { ResponseDto } from '@/lib/dto/response.dto';
 
 /**
  * Delete user
+ * TODO: Use user.service.ts to orchestrate business logic instead of putting it all here
  */
 export async function deleteUser(clerkId: string): Promise<ResponseDto<void>> {
   try {
