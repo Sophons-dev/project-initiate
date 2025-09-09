@@ -1,162 +1,127 @@
-import { db } from '@/lib/db';
-import { EducationLevel, Gender } from '@prisma/client';
 import { OnboardingUserParams } from '@/features/onboarding/types/onboarding';
 import { CreateUserDto } from '../dto/createUser.dto';
 import { UpdateUserDto } from '../dto/updateUser.dto';
 import { UserDto } from '../dto/user.dto';
-import { mapUserToDto } from '../mappers/user.mapper';
-
-const gradeLevelMap: Record<string, EducationLevel> = {
-  primary: EducationLevel.primary,
-  secondary: EducationLevel.secondary,
-  bachelor: EducationLevel.bachelor,
-  master: EducationLevel.master,
-  doctorate: EducationLevel.doctorate,
-  diploma: EducationLevel.diploma,
-  certificate: EducationLevel.certificate,
-  other: EducationLevel.other,
-};
-
-const genderMap: Record<string, Gender> = {
-  male: Gender.male,
-  female: Gender.female,
-  'non-binary': Gender.binary,
-  'prefer-not-to-say': Gender.prefer_not_to_say,
-};
+import { createUser } from '../actions/mutations/createUser';
+import { updateUser } from '../actions/mutations/updateUser';
+import { onboardUser } from '../actions/mutations/onboardUser';
+import { deleteUser } from '../actions/mutations/deleteUser';
 
 export class UserService {
   /**
    * Create a new user
+   * Business logic: Validates input and orchestrates user creation
    */
   static async createUser(userData: CreateUserDto): Promise<UserDto> {
+    // Business logic validation
     if (!userData.email || !userData.clerkId || !userData.profile?.name) {
       throw new Error('Missing required fields');
     }
 
-    // Check if user already exists (idempotent)
-    const existingUser = await db.user.findFirst({
-      where: {
-        OR: [{ clerkId: userData.clerkId }, { email: userData.email }],
-      },
-    });
-
-    if (existingUser) {
-      return mapUserToDto(existingUser);
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(userData.email)) {
+      throw new Error('Invalid email format');
     }
 
-    const user = await db.user.create({
-      data: {
-        clerkId: userData.clerkId,
-        email: userData.email,
-        onboardingCompleted: false,
-        profile: {
-          set: {
-            name: userData.profile?.name ?? '',
-            image: userData.profile?.image,
-          },
-        },
-      },
-    });
+    // Orchestrate the creation through action
+    const result = await createUser(userData);
 
-    return mapUserToDto(user);
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to create user');
+    }
+
+    return result.data!;
   }
 
   /**
    * Update user
+   * Business logic: Validates input and orchestrates user updates
    */
   static async updateUser(
     identifier: { key: 'id' | 'clerkId'; value: string },
     updates: UpdateUserDto
   ): Promise<UserDto> {
-    const existing = await db.user.findFirst({ where: { [identifier.key]: identifier.value } as any });
-    if (!existing) {
-      throw new Error('User not found');
+    // Business logic validation
+    if (!identifier.value || !identifier.key) {
+      throw new Error('Invalid identifier provided');
     }
 
-    const nextProfile = updates.profile
-      ? {
-          name: updates.profile.name ?? existing.profile?.name ?? '',
-          image: updates.profile.image ?? existing.profile?.image ?? null,
-          gender: (updates.profile as any).gender ?? (existing.profile as any)?.gender ?? null,
-          dateOfBirth: updates.profile.dateOfBirth ?? existing.profile?.dateOfBirth ?? null,
-          phoneNumber: updates.profile.phoneNumber ?? existing.profile?.phoneNumber ?? null,
-          location: updates.profile.location ?? existing.profile?.location ?? null,
-          interests: (updates.profile as any).interests ?? existing.profile?.interests ?? [],
-          education: updates.profile.education ?? existing.profile?.education ?? undefined,
-        }
-      : undefined;
+    // Validate email format if email is being updated
+    if (updates.email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(updates.email)) {
+        throw new Error('Invalid email format');
+      }
+    }
 
-    const user = await db.user.update({
-      where: { [identifier.key]: identifier.value } as any,
-      data: {
-        userType: updates.userType,
-        onboardingCompleted: updates.onboardingCompleted,
-        profile: nextProfile ? { set: nextProfile } : undefined,
-      },
-    });
+    // Orchestrate the update through action
+    const result = await updateUser(identifier, updates);
 
-    return mapUserToDto(user);
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to update user');
+    }
+
+    return result.data!;
   }
 
   /**
    * Onboard user
+   * Business logic: Validates onboarding data and orchestrates the onboarding process
    */
   static async onboardUser(
     clerkId: string,
     onboardingData: OnboardingUserParams
   ): Promise<{ userId: string; onboardingCompleted: boolean }> {
-    const updated = await db.user.update({
-      where: { clerkId },
-      data: {
-        userType: onboardingData.userType,
-        onboardingCompleted: true,
-        profile: {
-          set: {
-            name: onboardingData.fullName,
-            gender: genderMap[onboardingData.gender],
-            dateOfBirth: new Date(onboardingData.dateOfBirth),
-            phoneNumber: onboardingData.contactInfo,
-            interests: onboardingData.interests,
-            location: onboardingData.location,
-            education: {
-              school: onboardingData.school,
-              level: gradeLevelMap[onboardingData.gradeLevel] || EducationLevel.other,
-            },
-          },
-        },
-      },
-    });
+    // Business logic validation
+    if (!clerkId) {
+      throw new Error('Clerk ID is required for onboarding');
+    }
 
-    // Save answers
-    await Promise.all(
-      Object.entries(onboardingData.answers).map(([questionId, answer]) =>
-        db.userAnswer.create({
-          data: {
-            userId: updated.id,
-            questionId,
-            value: Array.isArray(answer) ? answer.join(', ') : answer,
-          },
-        })
-      )
-    );
+    if (!onboardingData.fullName || !onboardingData.userType) {
+      throw new Error('Full name and user type are required for onboarding');
+    }
 
-    return { userId: updated.id, onboardingCompleted: true };
+    // Validate date of birth
+    const dateOfBirth = new Date(onboardingData.dateOfBirth);
+    if (isNaN(dateOfBirth.getTime())) {
+      throw new Error('Invalid date of birth provided');
+    }
+
+    // Validate that user is not already onboarded (business rule)
+    // This could be enhanced with a check to see if user is already onboarded
+
+    // Orchestrate the onboarding through action
+    const result = await onboardUser(onboardingData);
+
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to complete onboarding');
+    }
+
+    return result.data!;
   }
 
   /**
    * Delete user
+   * Business logic: Validates deletion request and orchestrates user deletion
    */
   static async deleteUser(clerkId: string): Promise<void> {
-    const user = await db.user.findUnique({ where: { clerkId } });
+    // Business logic validation
+    if (!clerkId) {
+      throw new Error('Clerk ID is required for user deletion');
+    }
 
-    if (!user) return;
+    // Business rule: Could add additional checks here like:
+    // - Check if user has active subscriptions
+    // - Check if user has pending transactions
+    // - Require admin approval for certain user types
+    // - Add audit logging
 
-    await db.$transaction([
-      db.opportunityRecommendation.deleteMany({ where: { userId: user.id } }),
-      db.userAnswer.deleteMany({ where: { userId: user.id } }),
-      db.userOpportunity.deleteMany({ where: { userId: user.id } }),
-      db.careerInsight.deleteMany({ where: { userId: user.id } }),
-      db.user.delete({ where: { id: user.id } }),
-    ]);
+    // Orchestrate the deletion through action
+    const result = await deleteUser(clerkId);
+
+    if (!result.success) {
+      throw new Error(result.error || 'Failed to delete user');
+    }
   }
 }

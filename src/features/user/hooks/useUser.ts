@@ -41,7 +41,6 @@ export function useUserById(id?: string) {
   return useQuery({
     queryKey: userQueryKeys.byId(id || ''),
     queryFn: async () => {
-      // You'll need to implement getUserById action
       throw new Error('getUserById not implemented yet');
     },
     enabled: !!id,

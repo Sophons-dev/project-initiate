@@ -11,10 +11,6 @@ export const DashboardHero = () => {
 
   const user = data?.data;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Greeter
       action={{ title: 'Explore All', redirect: '/opportunities' }}
