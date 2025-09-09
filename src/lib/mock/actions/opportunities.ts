@@ -1,4 +1,4 @@
-import { OpportunityDTO } from '@/features/opportunities/dto';
+import { OpportunityDto as OpportunityDTO } from '@/features/opportunities/types';
 import { mockOpportunities } from '../data/opportunities';
 import { mockOrganizations } from '../data/organizations';
 

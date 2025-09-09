@@ -2,21 +2,29 @@
 // This file contains all career-related models
 
 model CareerInsight {
-  id               String    @id @map("_id") @db.ObjectId
+  id               String    @id @default(auto()) @map("_id") @db.ObjectId
   userId           String    @unique @db.ObjectId
-  summary          String
-  recommendedPaths Json?
-  skillsGap        Json?
-  createdAt        DateTime?
-  updatedAt        DateTime?
-  user             User      @relation(fields: [userId], references: [id])
+
+  summary          String                      // plain language summary
+  recommendedPaths Json?                       // e.g., ["Data Scientist", "Frontend Developer"]
+  skillsGap        Json?                       // { "missing": ["Python", "SQL"], "priority": "high" }
+
+  strengths        Json?                       // top skills or traits from profile { "tech": [...], "soft": [...] }
+  interests        Json?                       // domain preferences { "industries": ["AI", "HealthTech"], "roles": ["research", "product"] }
+  experienceLevel  String?                     // e.g., "entry", "mid", "senior"
+  preferredRoles   Json?                       // specific roles user is aiming for
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user             User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model CareerInsightLog {
-  id          String    @id @map("_id") @db.ObjectId
-  userId      String    @unique @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String    @db.ObjectId
   triggeredBy String?
   triggerId   String?
   createdAt   DateTime?
-  user        User      @relation(fields: [userId], references: [id])
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

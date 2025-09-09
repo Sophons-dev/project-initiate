@@ -1,7 +1,8 @@
 import { redirect } from 'next/navigation';
 import { auth } from '@clerk/nextjs/server';
-import { getUser } from '@/features/user/actions';
-import { GetUserResult } from '@/features/user/types';
+import { UserDto } from '@/features/user/dto/user.dto';
+import { ResponseDto } from '../dto/response.dto';
+import { getUserByClerkId } from '@/features/user/actions';
 
 export async function requireOnboarded() {
   // Get current session user from Clerk
@@ -12,10 +13,7 @@ export async function requireOnboarded() {
   }
 
   // Fetch user from DB
-  const result: GetUserResult = await getUser({
-    key: 'clerkId',
-    value: userId,
-  });
+  const result: ResponseDto<UserDto | null> = await getUserByClerkId(userId);
 
   // 🚨 Redirect to onboarding if no record yet
   if (!result.success || !result.data) {

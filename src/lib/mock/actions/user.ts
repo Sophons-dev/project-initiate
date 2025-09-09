@@ -1,5 +1,8 @@
-import { OpportunityDTO, OpportunityRecommendationDTO } from '@/features/opportunities/dto';
-import { UserOpportunityDTO, UserOrganizationDTO } from '@/features/user/actions';
+import {
+  OpportunityDto as OpportunityDTO,
+  OpportunityRecommendationDto as OpportunityRecommendationDTO,
+} from '@/features/opportunities/types';
+import { UserOpportunityDto, UserOrganizationDto } from '@/features/user/dto';
 import { mockOpportunities, mockOpportunityRecommendations } from '../data/opportunities';
 import { mockUserOpportunities, mockUserOrganizations } from '../data/user';
 import { mockOrganizations } from '../data/organizations';
@@ -69,7 +72,7 @@ export async function getUserRecommendationById(
 }
 
 // --- Saved Opportunities ---
-export async function getUserOpportunities(userId: string): Promise<UserOpportunityDTO[]> {
+export async function getUserOpportunities(userId: string): Promise<UserOpportunityDto[]> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(
@@ -91,7 +94,7 @@ export async function getUserOpportunities(userId: string): Promise<UserOpportun
 }
 
 // --- Saved Organizations ---
-export async function getUserOrganizations(userId: string): Promise<UserOrganizationDTO[]> {
+export async function getUserOrganizations(userId: string): Promise<UserOrganizationDto[]> {
   return new Promise(resolve => {
     setTimeout(() => {
       resolve(

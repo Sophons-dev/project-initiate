@@ -22,7 +22,7 @@ model UserAnswer {
   version    Int       @default(1)
   value      String
   answeredAt DateTime  @default(now())
-  user       User      @relation(fields: [userId], references: [id])
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   question   Question  @relation(fields: [questionId], references: [id])
 
   @@index([userId])
@@ -36,7 +36,7 @@ model UserOpportunity {
   status        UserOpportunityStatus @default(saved)
   createdAt     DateTime?
   updatedAt     DateTime?
-  user          User                  @relation(fields: [userId], references: [id])
+  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
   opportunity   Opportunity           @relation(fields: [opportunityId], references: [id])
 
   @@index([userId])

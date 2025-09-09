@@ -5,7 +5,9 @@ import { getRecommendationsByUserId } from '@/features/opportunities/actions';
 import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
-import { generateAndSaveOpportunities } from '../actions/mutations';
+import { generateAndSaveOpportunities } from '../services/opportunity.service';
+import { generateInsightsForUser } from '../../career-insight/services/insight.service';
+import { upsertCareerInsight } from '@/features/career-insight/actions/mutations/upsertCareerInsight';
 
 export const useGetUserOpportunities = (userId: string) => {
   const { start, stop } = useProgress();
@@ -36,7 +38,7 @@ export const useGetUserOpportunities = (userId: string) => {
   };
 };
 
-export const useSaveOpportunities = (): UseMutationResult<
+export const useGenerateAndSaveOpportunities = (): UseMutationResult<
   OpportunityDto[],
   unknown,
   { context: string; userId: string }
@@ -44,7 +46,22 @@ export const useSaveOpportunities = (): UseMutationResult<
   return useMutation<OpportunityDto[], unknown, { context: string; userId: string }>({
     mutationKey: ['save-opportunities'],
     mutationFn: async ({ context, userId }) => {
-      return await generateAndSaveOpportunities(context, userId);
+      const insights = await generateInsightsForUser(context);
+
+      if (!insights) return [];
+
+      await upsertCareerInsight(userId, {
+        userId,
+        summary: insights.summary,
+        recommendedPaths: insights.recommendedPaths ?? null,
+        skillsGap: (insights.skillsGap as unknown as Record<string, unknown>) ?? null,
+        strengths: (insights.strengths as unknown as Record<string, unknown>) ?? null,
+        interests: (insights.interests as unknown as Record<string, unknown>) ?? null,
+        experienceLevel: insights.experienceLevel ?? null,
+        preferredRoles: insights.preferredRoles ?? null,
+      });
+
+      return await generateAndSaveOpportunities(insights, userId);
     },
   });
 };
