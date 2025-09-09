@@ -2,11 +2,19 @@
 
 import Greeter from '@/components/layout/greeter';
 import { Card, CardContent } from '@/components/ui/card';
-import { useCareerInsight } from '@/features/career-insight/hooks/useCareerInsight';
+import { useCurrentUser } from '@/features/user/hooks';
 import { motion } from 'framer-motion';
 import { Blend, CircleCheck, Sparkles, TrendingUp, UserCircle } from 'lucide-react';
 
 export const DashboardHero = () => {
+  const { data, isLoading } = useCurrentUser();
+
+  const user = data?.data;
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <Greeter
       action={{ title: 'Explore All', redirect: '/opportunities' }}
@@ -57,13 +65,7 @@ export const DashboardHero = () => {
             <Sparkles className='w-5 h-5 text-cyan-500 mr-2' />
             <h2 className='text-lg font-semibold text-gray-900'>AI Career Insights</h2>
           </div>
-          <p className='text-gray-600 leading-relaxed'>
-            Based on your profile, you appear to be a well-rounded individual with strong interests in arts & design and
-            excellent analytical thinking abilities. Your goal to explore career options shows you&apos;re proactive
-            about your career development. Consider focusing on opportunities that combine your technical interests with
-            your interpersonal skills. I recommend starting with skill-building courses in your areas of interest while
-            networking with professionals in your target industries.
-          </p>
+          <p className='text-gray-600 leading-relaxed'>{user?.careerInsight?.summary}</p>
         </div>
       </motion.div>
     </Greeter>

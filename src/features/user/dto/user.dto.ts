@@ -1,4 +1,8 @@
 import { EducationLevel, UserType } from '@prisma/client';
+import { CareerInsightDto } from '@/features/career-insight/dto/insight.dto';
+import { UserAnswerDto } from './userAnswer.dto';
+import { CareerInsightLogDto } from './careerInsightLog.dto';
+import { UserOpportunityDto } from './userOpportunity.dto';
 
 export type UserDto = {
   id: string;
@@ -18,4 +22,8 @@ export type UserDto = {
       level: EducationLevel;
     };
   };
+  careerInsight?: CareerInsightDto | null;
+  careerInsightLogs?: CareerInsightLogDto[];
+  userAnswers?: UserAnswerDto[];
+  userOpportunities?: UserOpportunityDto[];
 };

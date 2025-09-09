@@ -9,7 +9,7 @@ import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 import type { Insight } from '@/lib/agents/insight-agent/types';
 import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 
-export const useGetGeneratedInsights = (context: string): UseQueryResult<Insight | null> => {
+export const useGenerateUserInsights = (context: string): UseQueryResult<Insight | null> => {
   return useQuery<Insight | null>({
     queryKey: ['generated-insights', context],
     queryFn: async (): Promise<Insight | null> => {

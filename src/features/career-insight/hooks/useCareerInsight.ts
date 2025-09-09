@@ -1,14 +1,14 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { getCareerInsightByUserId } from '@/features/career-insight/actions';
+import { getCareerInsightByClerkId } from '@/features/career-insight/actions';
 import { CareerInsightDto } from '../dto/insight.dto';
 import { CreateCareerInsightDto } from '../dto/createInsight.dto';
 import { UpdateCareerInsightDto } from '../dto/updateInsight.dto';
 import { upsertCareerInsight } from '../actions/mutations/upsertCareerInsight';
 
-export function useCareerInsight(userId: string | undefined) {
+export function useGetUserInsight(userId: string) {
   return useQuery<CareerInsightDto | null>({
     queryKey: ['user-career-insight', userId],
-    queryFn: () => (userId ? getCareerInsightByUserId(userId) : Promise.resolve(null)),
+    queryFn: () => getCareerInsightByClerkId(userId),
     enabled: Boolean(userId),
   });
 }
