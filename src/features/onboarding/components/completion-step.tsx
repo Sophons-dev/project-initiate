@@ -6,15 +6,15 @@ import { useOnboarding } from '../contexts/onboarding-context';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
-import { useSaveOpportunities } from '@/features/opportunities/hooks';
 import { MultiStepLoader } from '@/components/ui/multi-step-loader';
 import { useState } from 'react';
 import { loadingStates } from '../lib/constants';
+import { useGenerateAndSaveOpportunities } from '@/features/opportunities/hooks';
 
 export function CompletionStep() {
   const { data } = useOnboarding();
   const router = useRouter();
-  const saveOpps = useSaveOpportunities();
+  const saveOpps = useGenerateAndSaveOpportunities();
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
 
@@ -32,25 +32,29 @@ export function CompletionStep() {
         throw new Error(res.error || 'Onboarding failed');
       }
 
-      // STEP 1..N-2 — mock delays
-      for (let i = 1; i < loadingStates.length - 1; i++) {
-        setCurrentStep(i);
-        await wait(loadingStates[i].duration || 1500);
-      }
-
       // STEP N — real opportunity generation
-      setCurrentStep(loadingStates.length - 1);
+      setCurrentStep(1);
       try {
         await saveOpps.mutateAsync({
           context: JSON.stringify(data),
           userId: res.data.userId,
         });
+
+        // STEP 2..N-2 — mock delays
+        for (let i = 2; i < loadingStates.length - 1; i++) {
+          setCurrentStep(i);
+          await wait(loadingStates[i].duration || 1500);
+        }
+
+        // Only redirect if opportunity generation succeeds
+        router.push('/dashboard');
       } catch (e) {
         console.error('Failed generating opportunities:', e);
+        // Don't redirect on error - let user retry or handle the error
+        setLoading(false);
+        // You could show an error message to the user here
+        throw new Error('Failed to generate opportunities. Please try again.');
       }
-
-      // Redirect immediately after last step
-      router.push('/dashboard');
     } catch (err) {
       console.error('Onboarding error:', err);
       setLoading(false); // stop loader if failure
@@ -158,6 +162,8 @@ export function CompletionStep() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
         <Button
           onClick={handleGoToDashboard}
+          disabled={loading}
+          aria-busy={loading}
           className='bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 rounded-full'
         >
           Continue to Dashboard

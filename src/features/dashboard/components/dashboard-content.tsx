@@ -7,12 +7,14 @@ import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { opportunityFilters } from '@/lib/constants';
 import { useAuth } from '@clerk/nextjs';
-import { useUserByClerkId } from '@/hooks/useUser';
 import { useGetUserOpportunities } from '@/features/opportunities/hooks';
+import { useGetUserByClerkId } from '@/features/user/hooks/useUser';
 
 export const DashboardContent = () => {
   const { userId } = useAuth();
-  const { data: user } = useUserByClerkId(userId || undefined);
+  const { data } = useGetUserByClerkId(userId || '');
+  const user = data?.data;
+
   const { opportunities, isLoading, error } = useGetUserOpportunities(user?.id || '');
 
   // Apply search + tab filtering to the merged list

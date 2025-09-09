@@ -6,14 +6,14 @@ export const mockUserOpportunities = [
     id: 'uo1',
     userId: 'user1',
     opportunityId: mockOpportunities[0].id,
-    type: 'SAVED' as const,
+    status: 'saved' as const,
     createdAt: new Date(),
   },
   {
     id: 'uo2',
     userId: 'user1',
     opportunityId: mockOpportunities[2].id,
-    type: 'APPLIED' as const,
+    status: 'applied' as const,
     createdAt: new Date(),
   },
 ];

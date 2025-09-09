@@ -20,7 +20,7 @@ model Opportunity {
   updatedAt         DateTime?
   recommendations   OpportunityRecommendation[]
   userOpportunities UserOpportunity[]
-  organization     Organization     @relation(fields: [organizationId], references: [id])
+  organization     Organization     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 
   @@index([organizationId])
   @@index([createdBy])
@@ -36,7 +36,7 @@ model OpportunityRecommendation {
   tagsMatched   String[]
   modelVersion  String?
   createdAt     DateTime?
-  user          User        @relation(fields: [userId], references: [id])
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   opportunity   Opportunity @relation(fields: [opportunityId], references: [id])
 
   @@index([userId])
