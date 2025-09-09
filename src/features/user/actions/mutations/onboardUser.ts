@@ -32,6 +32,7 @@ export async function onboardUser(
 ): Promise<ResponseDto<{ userId: string; onboardingCompleted: boolean }>> {
   try {
     const { userId } = await auth();
+
     if (!userId) {
       return { success: false, error: 'User not authenticated' };
     }
