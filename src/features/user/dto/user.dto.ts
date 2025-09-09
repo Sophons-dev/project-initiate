@@ -14,7 +14,7 @@ export type UserDto = {
     name: string;
     image: string | null;
     gender: string;
-    dateOfBirth: Date;
+    dateOfBirth: Date | null;
     phoneNumber: string;
     location: string;
     education?: {

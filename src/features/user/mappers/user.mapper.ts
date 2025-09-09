@@ -78,7 +78,7 @@ export function mapUserToDto(user: User | UserWithRelations): UserDto {
           name: user.profile.name,
           image: user.profile.image ?? null,
           gender: user.profile.gender ?? 'unknown',
-          dateOfBirth: user.profile.dateOfBirth ?? new Date(),
+          dateOfBirth: user.profile.dateOfBirth ?? null,
           phoneNumber: user.profile.phoneNumber ?? '',
           location: user.profile.location ?? '',
           education: user.profile.education
