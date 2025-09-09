@@ -14,7 +14,16 @@ export const userQueryKeys = {
   byEmail: (email: string) => ['user', 'email', email] as const,
 } as const;
 
-// Get user by Clerk ID (most common use case)
+/**
+ * React Query hook to fetch a user by their Clerk ID.
+ *
+ * The query is enabled only when `clerkId` is provided. Cached data is considered
+ * fresh for 5 minutes and kept in the cache for 10 minutes. Uses `getUserByClerkId`
+ * as the fetcher and a stable cache key from `userQueryKeys.byClerkId`.
+ *
+ * @param clerkId - The Clerk user ID to fetch; when falsy the query remains disabled.
+ * @returns A React Query result for the user fetch.
+ */
 export function useUserByClerkId(clerkId?: string) {
   return useQuery({
     queryKey: userQueryKeys.byClerkId(clerkId || ''),
@@ -25,18 +34,44 @@ export function useUserByClerkId(clerkId?: string) {
   });
 }
 
-// Get current user (using Clerk auth) - this is the most commonly used hook
+/**
+ * Returns the authenticated user's query result by delegating to `useUserByClerkId`.
+ *
+ * Uses Clerk's `useAuth()` to obtain the current `userId` and fetches that user's
+ * data. The underlying query is disabled when there is no authenticated user.
+ *
+ * @returns The React Query result returned by `useUserByClerkId` for the current user.
+ */
 export function useCurrentUser() {
   const { userId } = useAuth();
   return useUserByClerkId(userId || undefined);
 }
 
-// Legacy hook for backward compatibility
+/**
+ * Legacy alias for useUserByClerkId kept for backward compatibility.
+ *
+ * Delegates to `useUserByClerkId` and returns the same React Query result.
+ *
+ * @param clerkId - Clerk user identifier
+ * @returns The query result returned by `useUserByClerkId`
+ */
 export function useGetUserByClerkId(clerkId: string) {
   return useUserByClerkId(clerkId);
 }
 
-// Get user by ID (less common, but useful for admin operations)
+/**
+ * React Query hook to fetch a user by internal ID (admin use).
+ *
+ * The query is enabled only when `id` is provided. Cached data is considered
+ * fresh for 5 minutes and retained for 10 minutes before garbage collection.
+ *
+ * Note: the query function is a placeholder and currently throws
+ * `"getUserById not implemented yet"` when executed — implement `getUserById`
+ * before relying on this hook to fetch real data.
+ *
+ * @param id - The internal user ID to fetch. If omitted or falsy, the query is disabled.
+ * @returns The React Query result for the user fetch (data, status, error, etc.).
+ */
 export function useUserById(id?: string) {
   return useQuery({
     queryKey: userQueryKeys.byId(id || ''),
@@ -50,7 +85,17 @@ export function useUserById(id?: string) {
   });
 }
 
-// Create user mutation
+/**
+ * React Query mutation hook to create a new user.
+ *
+ * On success (when the action response has `success` and `data`), the hook updates cache entries
+ * for the created user's Clerk ID and internal ID, then invalidates the top-level user query key
+ * to ensure consistency.
+ *
+ * Uses CreateUserDto as the mutation input.
+ *
+ * @returns A React Query mutation object for creating a user.
+ */
 export function useCreateUser() {
   const queryClient = useQueryClient();
 
@@ -69,7 +114,20 @@ export function useCreateUser() {
   });
 }
 
-// Update user mutation
+/**
+ * Hook returning a mutation to update a user and keep related React Query caches in sync.
+ *
+ * Performs an update via the `updateUser` action. On successful response (when `data.success` and
+ * `data.data` are present) the hook writes the returned user payload into the cache for both the
+ * Clerk ID and internal ID keys, and also updates the cache entry that corresponds to the original
+ * identifier used for the mutation.
+ *
+ * The mutation function expects an object with:
+ * - `identifier`: which identifies the target user and must have shape `{ key: 'id' | 'clerkId'; value: string }`
+ * - `updates`: partial user fields matching `UpdateUserDto`
+ *
+ * @returns The React Query mutation object for the update operation.
+ */
 export function useUpdateUser() {
   const queryClient = useQueryClient();
 
@@ -101,7 +159,15 @@ export function useUpdateUser() {
   });
 }
 
-// Delete user mutation
+/**
+ * Provides a mutation hook to delete a user by their Clerk ID.
+ *
+ * Invokes the backend `deleteUser` action with a Clerk ID. On success it removes any cached entry for that Clerk ID and invalidates the top-level user queries so related lists and views refresh.
+ *
+ * The mutation function expects a single argument: the user's Clerk ID (string).
+ *
+ * @returns A React Query mutation object for performing the delete operation.
+ */
 export function useDeleteUser() {
   const queryClient = useQueryClient();
 
@@ -115,7 +181,13 @@ export function useDeleteUser() {
   });
 }
 
-// Onboard user mutation
+/**
+ * Creates a mutation hook to onboard a user and refresh user-related cache on success.
+ *
+ * When the onboarding action returns a successful response containing data, the hook invalidates the top-level user query key so related user queries will refetch.
+ *
+ * @returns A React Query mutation object for onboarding a user. Call `mutate` or `mutateAsync` with `OnboardingUserParams`.
+ */
 export function useOnboardUser() {
   const queryClient = useQueryClient();
 
@@ -130,7 +202,16 @@ export function useOnboardUser() {
   });
 }
 
-// Utility hook to prefetch user data
+/**
+ * Returns helpers to prefetch user data into the React Query cache.
+ *
+ * prefetchByClerkId(clerkId) — Prefetches the user identified by a Clerk ID and caches it with a 5-minute stale window.
+ * prefetchById(id) — Placeholder prefetch for internal user ID; currently throws "getUserById not implemented yet".
+ *
+ * @returns An object with two functions:
+ * - prefetchByClerkId(clerkId: string): Promise<void>
+ * - prefetchById(id: string): Promise<void>
+ */
 export function usePrefetchUser() {
   const queryClient = useQueryClient();
 

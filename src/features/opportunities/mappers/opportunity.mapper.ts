@@ -1,6 +1,18 @@
 import { Opportunity } from '@prisma/client';
 import { OpportunityDto } from '@/features/opportunities/types';
 
+/**
+ * Convert a Prisma Opportunity record into an OpportunityDto.
+ *
+ * Coerces database values where necessary and supplies defaults for optional fields:
+ * - string-like DB fields are cast to string for the DTO
+ * - nullable scalars become `null` when absent
+ * - `tags` defaults to an empty array when absent
+ * - `metadata` is cast to `Record<string, unknown>` or `null`
+ *
+ * @param opportunity - Prisma Opportunity record to convert
+ * @returns The mapped OpportunityDto
+ */
 export function toOpportunityDto(opportunity: Opportunity): OpportunityDto {
   return {
     id: opportunity.id,

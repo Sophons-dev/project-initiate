@@ -28,6 +28,20 @@ export async function getUserRecommendations(userId: string): Promise<Opportunit
   });
 }
 
+/**
+ * Retrieve a specific opportunity recommendation for a given user.
+ *
+ * Searches the mock recommendations for one matching `opportunityId` and `userId`. If found and the
+ * referenced opportunity exists in the mock opportunities dataset, the recommendation is returned
+ * with an embedded `OpportunityDTO` under the `opportunity` property. If the recommendation exists
+ * but the opportunity is missing, the original recommendation is returned unchanged. If no
+ * recommendation is found, resolves to `null`.
+ *
+ * @param opportunityId - The ID of the opportunity to look up
+ * @param userId - The ID of the user who received the recommendation
+ * @returns A promise resolving to the matched `OpportunityRecommendationDTO` (possibly augmented
+ * with an `opportunity` object) or `null` if no recommendation exists
+ */
 export async function getUserRecommendationById(
   opportunityId: string,
   userId: string
@@ -71,7 +85,16 @@ export async function getUserRecommendationById(
   });
 }
 
-// --- Saved Opportunities ---
+/**
+ * Retrieve saved opportunities for a user from the mock dataset.
+ *
+ * Filters the mock user-opportunities by `userId` and returns an array of UserOpportunityDto
+ * where each entry includes the corresponding opportunity object (built from mockOpportunities,
+ * including its metadata). The function simulates an async API call and resolves after ~1 second.
+ *
+ * @param userId - ID of the user whose saved opportunities should be returned
+ * @returns A promise that resolves to an array of UserOpportunityDto (may be empty)
+ */
 export async function getUserOpportunities(userId: string): Promise<UserOpportunityDto[]> {
   return new Promise(resolve => {
     setTimeout(() => {
@@ -93,7 +116,16 @@ export async function getUserOpportunities(userId: string): Promise<UserOpportun
   });
 }
 
-// --- Saved Organizations ---
+/**
+ * Retrieve all organizations saved by a user (mocked).
+ *
+ * Returns the list of user-organization records for `userId`, each augmented with an
+ * `organization` object looked up from the in-memory mockOrganizations dataset.
+ * This function simulates an asynchronous API call and resolves after ~1 second.
+ *
+ * @param userId - The id of the user whose saved organizations to retrieve.
+ * @returns A promise that resolves to an array of UserOrganizationDto objects.
+ */
 export async function getUserOrganizations(userId: string): Promise<UserOrganizationDto[]> {
   return new Promise(resolve => {
     setTimeout(() => {

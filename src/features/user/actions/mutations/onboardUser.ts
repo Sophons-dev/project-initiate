@@ -6,7 +6,14 @@ import { ResponseDto } from '@/lib/dto/response.dto';
 import { UserService } from '../../services/user.service';
 
 /**
- * Onboard user
+ * Performs onboarding for the currently authenticated user.
+ *
+ * Expects an authenticated session (obtained via Clerk). If no user is authenticated, or onboarding fails,
+ * the function returns a failed ResponseDto rather than throwing.
+ *
+ * @param onboardingData - The onboarding input for the user (see OnboardingUserParams for fields).
+ * @returns A ResponseDto whose `data` (on success) contains `{ userId: string; onboardingCompleted: boolean }`.
+ *          On failure `success` is false and `error` contains a generic message.
  */
 export async function onboardUser(
   onboardingData: OnboardingUserParams

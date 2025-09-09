@@ -2,8 +2,13 @@ import { useRouter } from 'next/navigation';
 import { usePrefetchUser } from './useUser';
 
 /**
- * Hook to prefetch user data when navigating to pages that need it
- * This helps avoid loading states when users navigate between pages
+ * Prefetches a user's data before navigating to reduce or eliminate loading states.
+ *
+ * Returns:
+ * - `navigateWithUserPrefetch(href, clerkId?)`: navigates to `href`; if `clerkId` is provided, calls `prefetchByClerkId(clerkId)` before navigation.
+ * - `prefetchByClerkId`: function to prefetch a user by their Clerk ID.
+ *
+ * @returns An object containing `navigateWithUserPrefetch` and `prefetchByClerkId`.
  */
 export function useUserPrefetch() {
   const { prefetchByClerkId } = usePrefetchUser();

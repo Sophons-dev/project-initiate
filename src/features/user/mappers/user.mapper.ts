@@ -14,7 +14,10 @@ type UserWithRelations = User & {
 };
 
 /**
- * Maps Prisma UserAnswer model to UserAnswerDto
+ * Convert a Prisma UserAnswer record into a UserAnswerDto.
+ *
+ * @param userAnswer - The Prisma `UserAnswer` to map.
+ * @returns A `UserAnswerDto` containing `id`, `userId`, `questionId`, `version`, `value`, and `answeredAt`.
  */
 export function mapUserAnswerToDto(userAnswer: UserAnswer): UserAnswerDto {
   return {
@@ -28,7 +31,9 @@ export function mapUserAnswerToDto(userAnswer: UserAnswer): UserAnswerDto {
 }
 
 /**
- * Maps Prisma CareerInsightLog model to CareerInsightLogDto
+ * Convert a Prisma CareerInsightLog model into a CareerInsightLogDto.
+ *
+ * @returns A DTO containing the log's id, userId, triggeredBy, triggerId, and createdAt.
  */
 export function mapCareerInsightLogToDto(careerInsightLog: CareerInsightLog): CareerInsightLogDto {
   return {
@@ -41,7 +46,13 @@ export function mapCareerInsightLogToDto(careerInsightLog: CareerInsightLog): Ca
 }
 
 /**
- * Maps Prisma UserOpportunity model to UserOpportunityDto
+ * Maps a Prisma UserOpportunity record into a UserOpportunityDto.
+ *
+ * The returned DTO contains the model's scalar fields. If the related
+ * opportunity was not included on the input (not eager-loaded), the
+ * `opportunity` property will be undefined.
+ *
+ * @returns The mapped UserOpportunityDto
  */
 export function mapUserOpportunityToDto(userOpportunity: UserOpportunity): UserOpportunityDto {
   return {
@@ -64,6 +75,20 @@ export function mapUserToDto(user: User): UserDto;
  * Maps Prisma user model to UserDto (with relations)
  */
 export function mapUserToDto(user: UserWithRelations): UserDto;
+/**
+ * Maps a Prisma `User` (optionally with related records) to a `UserDto`.
+ *
+ * Converts core user fields and, when present, maps nested relations into DTO form:
+ * - `userType` defaults to `UserType.student` if missing.
+ * - `profile` is mapped with sensible defaults for `image` (null), `gender` ('unknown'),
+ *   `dateOfBirth` (current date), `phoneNumber` (empty string), and `location` (empty string);
+ *   nested `education` is included only if present.
+ * - When provided on the input (via `UserWithRelations`), `careerInsight` is mapped with `toCareerInsightDto`,
+ *   and arrays `careerInsightLogs`, `userAnswers`, and `userOpportunities` are mapped to their respective DTOs.
+ *
+ * @param user - A `User` or a `User` augmented with optional related records; absent relations are safely handled.
+ * @returns A `UserDto` representing the mapped user and any included relations.
+ */
 export function mapUserToDto(user: User | UserWithRelations): UserDto {
   const userWithRelations = user as UserWithRelations;
 

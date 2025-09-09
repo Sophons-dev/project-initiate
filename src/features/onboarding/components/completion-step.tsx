@@ -11,6 +11,19 @@ import { useState } from 'react';
 import { loadingStates } from '../lib/constants';
 import { useGenerateAndSaveOpportunities } from '@/features/opportunities/hooks';
 
+/**
+ * Final onboarding UI that shows a multi-step success loader, summarizes the user's profile,
+ * and performs the final onboarding actions (create user, generate/save opportunities) before
+ * navigating to the dashboard.
+ *
+ * The component reads onboarding data from context, runs an async workflow when the primary
+ * CTA is clicked: it calls the onboarding API, advances a visual multi-step loader with
+ * configurable delays, attempts to generate/save opportunities (errors are logged but do not
+ * stop navigation), then redirects to "/dashboard". Loading state and the current loader step
+ * are managed internally.
+ *
+ * @returns A React element rendering the completion screen and CTA.
+ */
 export function CompletionStep() {
   const { data } = useOnboarding();
   const router = useRouter();
