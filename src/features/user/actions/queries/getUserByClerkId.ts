@@ -6,8 +6,6 @@ import { UserDto } from '../../dto/user.dto';
 import { mapUserToDto } from '../../mappers/user.mapper';
 
 export async function getUserByClerkId(clerkId: string): Promise<ResponseDto<UserDto | null>> {
-  console.log('Fetching user with clerk id:', clerkId);
-
   try {
     const user = await db.user.findFirst({
       where: { clerkId: clerkId },
