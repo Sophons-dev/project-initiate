@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 import { generateAndSaveOpportunities } from '../services/opportunity.service';
+import { generateInsightsForUser } from '../../career-insight/services/insight.service';
 
 export const useGetUserOpportunities = (userId: string) => {
   const { start, stop } = useProgress();
@@ -44,7 +45,8 @@ export const useGenerateAndSaveOpportunities = (): UseMutationResult<
   return useMutation<OpportunityDto[], unknown, { context: string; userId: string }>({
     mutationKey: ['save-opportunities'],
     mutationFn: async ({ context, userId }) => {
-      return await generateAndSaveOpportunities(context, userId);
+      const insights = await generateInsightsForUser(context);
+      return await generateAndSaveOpportunities(JSON.stringify(context), userId);
     },
   });
 };
