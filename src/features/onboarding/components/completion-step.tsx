@@ -32,19 +32,20 @@ export function CompletionStep() {
         throw new Error(res.error || 'Onboarding failed');
       }
 
-      // STEP 1..N-2 — mock delays
-      for (let i = 1; i < loadingStates.length - 1; i++) {
-        setCurrentStep(i);
-        await wait(loadingStates[i].duration || 1500);
-      }
-
       // STEP N — real opportunity generation
-      setCurrentStep(loadingStates.length - 1);
+      setCurrentStep(1);
       try {
         await saveOpps.mutateAsync({
           context: JSON.stringify(data),
           userId: res.data.userId,
         });
+
+        // STEP 2..N-2 — mock delays
+        for (let i = 2; i < loadingStates.length - 1; i++) {
+          setCurrentStep(i);
+          await wait(loadingStates[i].duration || 1500);
+        }
+
         // Only redirect if opportunity generation succeeds
         router.push('/dashboard');
       } catch (e) {
