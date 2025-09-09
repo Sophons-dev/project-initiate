@@ -8,11 +8,12 @@ import { createOpportunity } from '@/features/opportunities/actions/mutations/cr
 import { createOrganization, findOrganizationByName } from '@/features/organizations/actions';
 import { createOpportunityRecommendation } from '../actions/mutations/createOpportunityRecommendation';
 
-export async function generateAndSaveOpportunities(context: string, userId: string): Promise<OpportunityDto[]> {
-  const generatedInsights = await generateInsight({ context });
-
+export async function generateAndSaveOpportunities(
+  generatedInsight: unknown,
+  userId: string
+): Promise<OpportunityDto[]> {
   const generatedRecommendations = await generateRecommendations({
-    context: JSON.stringify(generatedInsights),
+    context: JSON.stringify(generatedInsight),
   });
 
   const recommendations = Array.isArray(generatedRecommendations?.recommendations)

@@ -19,6 +19,17 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
   }
 
   try {
+    // Check if user already exists (idempotent)
+    const existingUser = await db.user.findFirst({
+      where: {
+        OR: [{ clerkId: userData.clerkId }, { email: userData.email }],
+      },
+    });
+
+    if (existingUser) {
+      return new ResponseDto({ success: true, data: convertToDto(existingUser) });
+    }
+
     const user = await db.user.create({
       data: {
         clerkId: userData.clerkId,

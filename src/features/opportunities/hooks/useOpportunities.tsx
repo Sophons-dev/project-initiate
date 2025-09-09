@@ -7,6 +7,7 @@ import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 import { generateAndSaveOpportunities } from '../services/opportunity.service';
 import { generateInsightsForUser } from '../../career-insight/services/insight.service';
+import { upsertCareerInsight } from '@/features/career-insight/actions/mutations/upsertCareerInsight';
 
 export const useGetUserOpportunities = (userId: string) => {
   const { start, stop } = useProgress();
@@ -46,7 +47,21 @@ export const useGenerateAndSaveOpportunities = (): UseMutationResult<
     mutationKey: ['save-opportunities'],
     mutationFn: async ({ context, userId }) => {
       const insights = await generateInsightsForUser(context);
-      return await generateAndSaveOpportunities(JSON.stringify(context), userId);
+
+      if (!insights) return [];
+
+      await upsertCareerInsight(userId, {
+        userId,
+        summary: insights.summary,
+        recommendedPaths: insights.recommendedPaths ?? null,
+        skillsGap: (insights.skillsGap as unknown as Record<string, unknown>) ?? null,
+        strengths: (insights.strengths as unknown as Record<string, unknown>) ?? null,
+        interests: (insights.interests as unknown as Record<string, unknown>) ?? null,
+        experienceLevel: insights.experienceLevel ?? null,
+        preferredRoles: insights.preferredRoles ?? null,
+      });
+
+      return await generateAndSaveOpportunities(insights, userId);
     },
   });
 };
