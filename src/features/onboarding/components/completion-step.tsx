@@ -158,6 +158,8 @@ export function CompletionStep() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
         <Button
           onClick={handleGoToDashboard}
+          disabled={loading}
+          aria-busy={loading}
           className='bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 rounded-full'
         >
           Continue to Dashboard

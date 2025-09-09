@@ -58,18 +58,24 @@ export async function onboardUser(
       },
     });
 
-    // Save answers
-    await Promise.all(
-      Object.entries(onboardingData.answers).map(([questionId, answer]) =>
-        db.userAnswer.create({
-          data: {
-            userId: updated.id,
-            questionId,
-            value: Array.isArray(answer) ? answer.join(', ') : answer,
-          },
-        })
-      )
-    );
+    // Save answers (idempotent)
+    const entries = Object.entries(onboardingData.answers);
+    await db.$transaction([
+      // Remove existing answers for this user and these questions
+      db.userAnswer.deleteMany({
+        where: {
+          userId: updated.id,
+          questionId: { in: entries.map(([q]) => q) },
+        },
+      }),
+      db.userAnswer.createMany({
+        data: entries.map(([questionId, answer]) => ({
+          userId: updated.id,
+          questionId,
+          value: Array.isArray(answer) ? answer.join(', ') : answer,
+        })),
+      }),
+    ]);
 
     return { success: true, data: { userId: updated.id, onboardingCompleted: true } };
   } catch (err) {
