@@ -1,4 +1,7 @@
-import { OpportunityDTO, OpportunityRecommendationDTO } from '@/features/opportunities/dto';
+import {
+  OpportunityDto as OpportunityDTO,
+  OpportunityRecommendationDto as OpportunityRecommendationDTO,
+} from '@/features/opportunities/types';
 import { UserOpportunityDTO, UserOrganizationDTO } from '@/features/user/actions';
 import { mockOpportunities, mockOpportunityRecommendations } from '../data/opportunities';
 import { mockUserOpportunities, mockUserOrganizations } from '../data/user';

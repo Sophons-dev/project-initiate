@@ -6,15 +6,15 @@ import { useOnboarding } from '../contexts/onboarding-context';
 import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
 import { onboardUser } from '@/features/user/actions';
-import { useSaveOpportunities } from '@/features/opportunities/hooks';
 import { MultiStepLoader } from '@/components/ui/multi-step-loader';
 import { useState } from 'react';
 import { loadingStates } from '../lib/constants';
+import { useGenerateAndSaveOpportunities } from '@/features/opportunities/hooks';
 
 export function CompletionStep() {
   const { data } = useOnboarding();
   const router = useRouter();
-  const saveOpps = useSaveOpportunities();
+  const saveOpps = useGenerateAndSaveOpportunities();
   const [currentStep, setCurrentStep] = useState(0);
   const [loading, setLoading] = useState(false);
 

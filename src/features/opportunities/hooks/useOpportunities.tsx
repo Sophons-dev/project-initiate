@@ -5,7 +5,7 @@ import { getRecommendationsByUserId } from '@/features/opportunities/actions';
 import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
-import { generateAndSaveOpportunities } from '../actions/mutations';
+import { generateAndSaveOpportunities } from '../services/opportunity.service';
 
 export const useGetUserOpportunities = (userId: string) => {
   const { start, stop } = useProgress();
@@ -36,7 +36,7 @@ export const useGetUserOpportunities = (userId: string) => {
   };
 };
 
-export const useSaveOpportunities = (): UseMutationResult<
+export const useGenerateAndSaveOpportunities = (): UseMutationResult<
   OpportunityDto[],
   unknown,
   { context: string; userId: string }

@@ -1,9 +1,23 @@
+// TODO: Remove this file when we have a real backend to fetch data from
+
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
 import { getOpportunitiesByOrganizationId, getOpportunityById } from '@/lib/mock/actions/opportunities';
 import { getOpportunities } from '@/lib/mock/actions/opportunities';
 import { getUserRecommendationById, getUserRecommendations } from '@/lib/mock/actions/user';
 import { getRelatedOpportunities } from '@/lib/mock/actions/opportunities';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
+import type { Insight } from '@/lib/agents/insight-agent/types';
+import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
+
+export const useGetGeneratedInsights = (context: string): UseQueryResult<Insight | null> => {
+  return useQuery<Insight | null>({
+    queryKey: ['generated-insights', context],
+    queryFn: async (): Promise<Insight | null> => {
+      return await generateInsight({ context });
+    },
+    enabled: !!context,
+  });
+};
 
 export const useGetAllOpportunities = (): UseQueryResult<OpportunityDto[]> => {
   return useQuery<OpportunityDto[]>({
