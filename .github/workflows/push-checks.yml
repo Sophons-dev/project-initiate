@@ -1,9 +1,9 @@
-name: Feature Branch Push Checks
+name: Push Checks
 
 on:
   push:
     branches:
-      - 'ini-**'
+      - '**'
 
 jobs:
   install-deps:
