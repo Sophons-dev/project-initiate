@@ -50,7 +50,7 @@ export async function generateRecommendations({
       throw new Error('No recommendations generated');
     }
 
-    return response.output_parsed;
+    return RecommendationsSchema.parse(response.output_parsed);
   } catch (error) {
     console.error('Error generating insight:', error);
     throw error;
