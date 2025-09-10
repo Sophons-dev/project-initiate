@@ -34,7 +34,6 @@ COPY --from=build /app/next.config.js* ./
 COPY --from=build /app/public ./public
 COPY --from=build /app/.next ./.next
 COPY --from=build /app/db ./db
-COPY .env .env
 
 EXPOSE 3000
 CMD ["bun", "run", "start"]
