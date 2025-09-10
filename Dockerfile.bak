@@ -11,16 +11,6 @@ RUN bun install --frozen-lockfile
 FROM base AS build
 WORKDIR /app
 
-# Add ARG instructions to accept variables from Railway's build process
-ARG NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-ARG NEXT_PUBLIC_CLERK_SIGN_IN_URL
-ARG NEXT_PUBLIC_CLERK_SIGN_UP_URL
-
-# Set ENV variables to make them available during the build
-ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=$NEXT_PUBLIC_CLERK_SIGN_IN_URL
-ENV NEXT_PUBLIC_CLERK_SIGN_UP_URL=$NEXT_PUBLIC_CLERK_SIGN_UP_URL
-
 # Install OpenSSL for Prisma
 RUN apt-get update -y && apt-get install -y openssl
 
@@ -35,12 +25,6 @@ WORKDIR /app
 
 # Install OpenSSL for Prisma at runtime
 RUN apt-get update -y && apt-get install -y openssl
-
-# Set the ENV variables again for the final image.
-# This ensures they are available at runtime if needed.
-ENV NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=$NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
-ENV NEXT_PUBLIC_CLERK_SIGN_IN_URL=$NEXT_PUBLIC_CLERK_SIGN_IN_URL
-ENV NEXT_PUBLIC_CLERK_SIGN_UP_URL=$NEXT_PUBLIC_CLERK_SIGN_UP_URL
 
 # Copy only required files
 COPY package.json bun.lock ./
