@@ -5,7 +5,6 @@ WORKDIR /app
 # ---- Dependencies Stage ----
 FROM base AS deps
 COPY package.json bun.lock ./
-COPY .env .env
 RUN bun install --frozen-lockfile
 
 # ---- Build Stage ----
@@ -16,7 +15,6 @@ WORKDIR /app
 RUN apt-get update -y && apt-get install -y openssl
 
 COPY --from=deps /app/node_modules ./node_modules
-COPY .env .env
 COPY . .
 RUN bunx prisma generate
 RUN bun run build
