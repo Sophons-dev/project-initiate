@@ -3,10 +3,10 @@
 import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';
 import { Recommendation } from '@/lib/agents/recommendation-agent/types';
-import { CreateOpportunityDto, OpportunityDto } from '@/features/opportunities/types';
 import { createOpportunity } from '@/features/opportunities/actions/mutations/createOpportunity';
 import { createOrganization, findOrganizationByName } from '@/features/organizations/actions';
 import { createOpportunityRecommendation } from '../actions/mutations/createOpportunityRecommendation';
+import { CreateOpportunityDto, OpportunityDto } from '../dto';
 
 export async function generateAndSaveOpportunities(
   generatedInsight: unknown,

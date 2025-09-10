@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Blend, CircleCheck, Sparkles, TrendingUp, UserCircle } from 'lucide-react';
 
 export const DashboardHero = () => {
-  const { data, isLoading } = useCurrentUser();
+  const { data } = useCurrentUser();
 
   const user = data?.data;
 

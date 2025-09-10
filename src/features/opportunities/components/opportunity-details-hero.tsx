@@ -2,13 +2,13 @@
 
 import Greeter from '@/components/layout/greeter';
 import { useOpportunityDetailsContext } from './opportunity-details.provider';
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
 import { motion } from 'framer-motion';
+import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 
 const isOpportunityRecommendation = (
-  opportunity: OpportunityDTO | OpportunityRecommendationDTO
-): opportunity is OpportunityRecommendationDTO => {
-  return (opportunity as OpportunityRecommendationDTO).userId !== undefined;
+  opportunity: OpportunityDto | OpportunityRecommendationDto
+): opportunity is OpportunityRecommendationDto => {
+  return (opportunity as OpportunityRecommendationDto).userId !== undefined;
 };
 
 export const OpportunityDetailsHero = () => {
@@ -44,9 +44,9 @@ export const OpportunityDetailsHero = () => {
     );
   }
 
-  const baseOpportunity: OpportunityDTO = isOpportunityRecommendation(opportunity)
-    ? ((opportunity as OpportunityRecommendationDTO).opportunity as OpportunityDTO)
-    : (opportunity as OpportunityDTO);
+  const baseOpportunity: OpportunityDto = isOpportunityRecommendation(opportunity)
+    ? ((opportunity as OpportunityRecommendationDto).opportunity as OpportunityDto)
+    : (opportunity as OpportunityDto);
 
   return (
     <Greeter

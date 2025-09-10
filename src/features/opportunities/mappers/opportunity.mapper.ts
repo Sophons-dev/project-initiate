@@ -1,5 +1,5 @@
 import { CourseSubtype, Opportunity, OpportunityType } from '@prisma/client';
-import { OpportunityDto } from '@/features/opportunities/types';
+import { OpportunityDto } from '../dto';
 
 export function toOpportunityDto(opportunity: Opportunity): OpportunityDto {
   return {

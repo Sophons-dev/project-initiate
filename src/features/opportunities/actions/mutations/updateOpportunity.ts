@@ -2,8 +2,8 @@
 
 import { OpportunityType, CourseSubtype, Prisma } from '@prisma/client';
 import { db } from '@/lib/db';
-import { OpportunityDto, UpdateOpportunityDto } from '@/features/opportunities/types';
 import { toOpportunityDto } from '@/features/opportunities/mappers/opportunity.mapper';
+import { OpportunityDto, UpdateOpportunityDto } from '../../dto';
 
 export async function updateOpportunity(id: string, input: UpdateOpportunityDto): Promise<OpportunityDto> {
   const normalizedType = input.type ? input.type.toString().toLowerCase() : undefined;
