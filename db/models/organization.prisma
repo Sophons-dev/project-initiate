@@ -10,7 +10,19 @@ model Organization {
   logoUrl     String?
   location    String?
   organizationUrl String?
+
+  // Enhanced organization details for AI recommendations
+  aboutTheCompany String?
+  industry        String?
+  employmentSize  String?
+  companyRating   Float?
+  reviewCount     Int?
+
   createdAt   DateTime?
   updatedAt   DateTime?
   opportunities Opportunity[]
+
+  @@index([type])
+  @@index([industry])
+  @@index([companyRating])
 }

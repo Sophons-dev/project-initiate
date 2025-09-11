@@ -7,6 +7,14 @@ export type OrganizationDto = {
   logoUrl?: string | null;
   location?: string | null;
   organizationUrl?: string | null;
+
+  // Enhanced organization details for AI recommendations
+  aboutTheCompany?: string | null;
+  industry?: string | null;
+  employmentSize?: string | null;
+  companyRating?: number | null;
+  reviewCount?: number | null;
+
   createdAt?: Date | null;
   updatedAt?: Date | null;
 };

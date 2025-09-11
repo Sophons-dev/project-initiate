@@ -2,22 +2,69 @@ import { OrganizationDto } from '@/features/organizations/dto/organization.dto';
 
 export type OpportunityDto = {
   id: string;
-  type: string;
-  subtype?: string | null;
+  type: 'JOB' | 'COURSE' | 'SCHOLARSHIP' | 'EVENT';
   title: string;
-  description?: string | null;
-  tags: string[];
+  description: string;
+  matchReason: string;
+
+  // Core job details
+  jobDescription: string;
+  responsibilities: string[];
+  requirements: string[];
+  benefits: string[];
+
+  location: {
+    type: 'remote' | 'onsite' | 'hybrid';
+    city: string;
+    country: string;
+    workLocation: string;
+  };
+
+  url: string;
+
+  // Important dates
+  postedDate: string;
+  applicationDeadline: string;
+  daysAgoPosted: string;
+
+  // Core metadata for AI matching
+  metadata: {
+    salary: {
+      min: number;
+      max: number;
+      currency: string;
+      isSpecified: boolean;
+      range: string;
+    };
+    requiredSkills: string[];
+    yearsOfExperience: string;
+    educationLevel: string;
+    employmentType: 'full-time' | 'part-time' | 'contract' | 'internship' | 'freelance' | 'temporary';
+    jobCategory: string;
+    jobSubCategory: string;
+    matchScore: {
+      skillsMatched: number;
+      skillsList: string[];
+    };
+    employerQuestions: string[];
+  };
+
+  // Company benefits
+  companyBenefits: {
+    flexibility: string[];
+    wellBeing: string[];
+    careerDevelopment: string[];
+    perks: string[];
+  };
+
+  // Organization reference
   organizationId: string;
-  location?: string | null;
-  deliveryMode?: string | null;
-  startDate?: Date | null;
-  endDate?: Date | null;
-  deadline?: Date | null;
-  metadata?: Record<string, unknown> | null;
+  organization?: OrganizationDto | null;
+
+  // System fields
   createdBy: string;
   createdAt?: Date | null;
   updatedAt?: Date | null;
-  organization?: OrganizationDto | null;
 };
 
 export type CreateOpportunityDto = Omit<OpportunityDto, 'id' | 'createdAt' | 'updatedAt'>;
