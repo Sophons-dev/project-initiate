@@ -35,12 +35,10 @@ export function CompletionStep() {
       // STEP N — real opportunity generation
       setCurrentStep(1);
       try {
-        console.log('🎯 Starting opportunity generation in completion step...');
         const opportunities = await saveOpps.mutateAsync({
           context: JSON.stringify(data),
           userId: res.data.userId,
         });
-        console.log('✅ Opportunities generated successfully:', opportunities.length);
 
         // STEP 2..N-2 — mock delays
         for (let i = 2; i < loadingStates.length - 1; i++) {
