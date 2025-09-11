@@ -1,11 +1,12 @@
 'use client';
 
-import { OpportunityDTO, OpportunityRecommendationDTO } from '../dto';
 import { createContext, useContext } from 'react';
-import { useGetOpportunityById, useGetRecommendedOpportunityById } from '@/features/opportunities/hooks/queries';
+import { useGetRecommendedOpportunityById } from '@/features/opportunities/hooks/queries';
+import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
+import { useGetOpportunityById } from '../hooks';
 
 interface OpportunityDetailsContextType {
-  opportunity: OpportunityDTO | OpportunityRecommendationDTO | undefined;
+  opportunity: OpportunityDto | OpportunityRecommendationDto | undefined;
   isLoading: boolean;
   error: Error | null;
 }
@@ -23,7 +24,7 @@ export const OpportunityDetailsProvider = ({
   const userId = 'user1';
 
   const {
-    data: opportunity,
+    opportunity,
     isLoading: isLoadingOpportunity,
     error: errorOpportunity,
   } = useGetOpportunityById(opportunityId);

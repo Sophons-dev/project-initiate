@@ -35,7 +35,7 @@ export async function generateInsight({ context }: { context: string }): Promise
       throw new Error('Failed to generate insight: No output received');
     }
 
-    return response.output_parsed;
+    return InsightSchema.parse(response.output_parsed);
   } catch (error) {
     console.error('Error generating insight:', error);
     throw error;

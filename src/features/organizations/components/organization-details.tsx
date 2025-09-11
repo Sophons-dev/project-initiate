@@ -2,11 +2,11 @@ import { Badge } from '@/components/ui/badge';
 import { OpportunitiesList } from '@/features/opportunities/components';
 import { Phone, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { OrganizationDTO } from '../types';
 import { useGetOpportunitiesByOrganizationId } from '@/features/opportunities/hooks';
+import { OrganizationDto } from '../dto/organization.dto';
 
 interface OrganizationDetailsProps {
-  organization: OrganizationDTO;
+  organization: OrganizationDto;
 }
 
 export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) => {
@@ -53,7 +53,7 @@ export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) 
   );
 };
 
-function ProfileHeader({ organization }: { organization: OrganizationDTO }) {
+function ProfileHeader({ organization }: { organization: OrganizationDto }) {
   return (
     <div className='flex items-center gap-4'>
       {/* Logo */}
@@ -79,7 +79,7 @@ function ProfileHeader({ organization }: { organization: OrganizationDTO }) {
   );
 }
 
-function AboutSection({ organization }: { organization: OrganizationDTO }) {
+function AboutSection({ organization }: { organization: OrganizationDto }) {
   return (
     <div>
       <h2 className='text-lg font-medium text-gray-900 mb-4'>About</h2>
@@ -88,7 +88,7 @@ function AboutSection({ organization }: { organization: OrganizationDTO }) {
   );
 }
 
-export function ContactsSection({ organization }: { organization: OrganizationDTO }) {
+export function ContactsSection({ organization }: { organization: OrganizationDto }) {
   return (
     <div>
       <h2 className='text-lg font-medium text-gray-900 mb-4'>Contacts</h2>
