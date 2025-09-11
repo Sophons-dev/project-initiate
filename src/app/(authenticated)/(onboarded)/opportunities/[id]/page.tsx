@@ -5,7 +5,7 @@ import { OpportunityDetailsHero } from '@/features/opportunities/components/oppo
 import { OpportunityDetailsProvider } from '@/features/opportunities/components/opportunity-details.provider';
 import { useGetOpportunityById } from '@/features/opportunities/hooks';
 import { useParams } from 'next/navigation';
-import Loading from './loading';
+import Loading from '../../../../loading';
 import NotFound from './not-found';
 
 export default function OpportunitiesDetailsPage() {
