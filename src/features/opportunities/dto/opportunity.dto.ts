@@ -11,6 +11,7 @@ export type OpportunityDto = {
 
   // Core job details
   jobDescription: string;
+  tags: string[];
   responsibilities: string[];
   requirements: string[];
   benefits: string[];

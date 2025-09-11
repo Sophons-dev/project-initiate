@@ -16,6 +16,7 @@ export async function createOpportunity(input: CreateOpportunityDto): Promise<Op
 
       // Core job details
       jobDescription: input.jobDescription,
+      tags: input.tags,
       responsibilities: input.responsibilities,
       requirements: input.requirements,
       benefits: input.benefits,

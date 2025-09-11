@@ -35,10 +35,12 @@ export function CompletionStep() {
       // STEP N — real opportunity generation
       setCurrentStep(1);
       try {
-        await saveOpps.mutateAsync({
+        console.log('🎯 Starting opportunity generation in completion step...');
+        const opportunities = await saveOpps.mutateAsync({
           context: JSON.stringify(data),
           userId: res.data.userId,
         });
+        console.log('✅ Opportunities generated successfully:', opportunities.length);
 
         // STEP 2..N-2 — mock delays
         for (let i = 2; i < loadingStates.length - 1; i++) {
@@ -49,7 +51,7 @@ export function CompletionStep() {
         // Only redirect if opportunity generation succeeds
         router.push('/dashboard');
       } catch (e) {
-        console.error('Failed generating opportunities:', e);
+        console.error('❌ Failed generating opportunities:', e);
         // Don't redirect on error - let user retry or handle the error
         setLoading(false);
         // You could show an error message to the user here

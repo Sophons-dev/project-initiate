@@ -11,6 +11,7 @@ model Opportunity {
 
   // Core job details
   jobDescription    String
+  tags String[]
   responsibilities  String[]
   requirements      String[]
   benefits          String[]

@@ -7,7 +7,7 @@ import { createOpportunity } from '@/features/opportunities/actions/mutations/cr
 import { createOrganization, getOrganizationByName } from '@/features/organizations/actions';
 import { createOpportunityRecommendation } from '../actions/mutations/createOpportunityRecommendation';
 import { CreateOpportunityDto, OpportunityDto } from '../dto';
-import { OpportunitySubtype } from '@prisma/client';
+import { OpportunitySubtype, OpportunityType } from '@prisma/client';
 
 /**
  * Maps recommendation agent subtype to our OpportunitySubtype enum
@@ -36,10 +36,10 @@ function mapSubtype(
         return 'full_time'; // Default to full-time for jobs
     }
   } else if (recommendationType === 'course') {
-    // For courses, use the subtype directly
+    // For courses, use the subtype directly or default based on context
     switch (recommendationSubtype) {
       case 'course':
-        return 'online_cert';
+        return 'online_cert'; // Default course type
       case 'online_cert':
         return 'online_cert';
       case 'online_degree':
@@ -48,12 +48,14 @@ function mapSubtype(
         return 'bootcamp';
       case 'workshop':
         return 'workshop';
+      case 'school_course':
+        return 'school_course';
       default:
-        return 'online_cert';
+        return 'online_cert'; // Default for courses
     }
   }
 
-  // Fallback
+  // Fallback - default to full_time for unknown types
   return 'full_time';
 }
 
@@ -61,18 +63,25 @@ export async function generateAndSaveOpportunities(
   generatedInsight: unknown,
   userId: string
 ): Promise<OpportunityDto[]> {
+  console.log('🚀 Starting opportunity generation for user:', userId);
+
   const generatedRecommendations = await generateRecommendations({
     context: JSON.stringify(generatedInsight),
   });
+
+  console.log('📋 Generated recommendations:', generatedRecommendations);
 
   const recommendations = Array.isArray(generatedRecommendations?.recommendations)
     ? (generatedRecommendations.recommendations as Recommendation[])
     : [];
 
+  console.log('📊 Processing', recommendations.length, 'recommendations');
+
   const created: OpportunityDto[] = [];
 
   for (const recommendation of recommendations) {
     try {
+      console.log('🔄 Processing recommendation:', recommendation.title);
       let organizationId: string | undefined;
 
       if (recommendation.organization?.name) {
@@ -101,15 +110,25 @@ export async function generateAndSaveOpportunities(
         }
       }
 
+      const mappedSubtype = mapSubtype(
+        recommendation.type,
+        recommendation.subtype,
+        recommendation.metadata?.employmentType
+      );
+      console.log(
+        `🔄 Mapping subtype: "${recommendation.subtype}" (type: "${recommendation.type}", employmentType: "${recommendation.metadata?.employmentType}") -> "${mappedSubtype}"`
+      );
+
       const payload: CreateOpportunityDto = {
-        type: recommendation.type as OpportunityDto['type'],
-        subtype: mapSubtype(recommendation.type, recommendation.subtype, recommendation.metadata.employmentType),
+        type: recommendation.type as OpportunityType,
+        subtype: mappedSubtype,
         title: recommendation.title,
         description: recommendation.description,
         matchReason: recommendation.matchReason,
 
         // Core job details
         jobDescription: recommendation.jobDescription,
+        tags: recommendation.metadata?.requiredSkills || [],
         responsibilities: recommendation.responsibilities,
         requirements: recommendation.requirements,
         benefits: recommendation.benefits,
@@ -140,8 +159,11 @@ export async function generateAndSaveOpportunities(
         createdBy: userId,
       };
 
+      console.log('💾 Creating opportunity with payload:', JSON.stringify(payload, null, 2));
       const opp = await createOpportunity(payload);
+      console.log('✅ Opportunity created successfully:', opp.id);
 
+      console.log('🔗 Creating opportunity recommendation...');
       await createOpportunityRecommendation({
         userId,
         opportunityId: opp.id,
@@ -151,12 +173,16 @@ export async function generateAndSaveOpportunities(
         tagsMatched: recommendation.metadata.requiredSkills,
         modelVersion: 'v1',
       });
+      console.log('✅ Recommendation created successfully');
 
       created.push(opp);
+      console.log('📈 Total opportunities created so far:', created.length);
     } catch (e) {
-      console.error('Failed to process opportunity', e);
+      console.error('❌ Failed to process opportunity:', e);
+      console.error('Recommendation data:', recommendation);
     }
   }
 
+  console.log('🎉 Opportunity generation completed. Total created:', created.length);
   return created;
 }

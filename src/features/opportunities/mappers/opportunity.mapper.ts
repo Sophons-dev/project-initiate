@@ -12,6 +12,7 @@ export function toOpportunityDto(opportunity: Opportunity & { organization?: any
     matchReason: opportunity.matchReason,
 
     // Core job details
+    tags: opportunity.tags || [],
     jobDescription: opportunity.jobDescription,
     responsibilities: opportunity.responsibilities,
     requirements: opportunity.requirements,
