@@ -36,7 +36,7 @@ export default function NotFound() {
               <li>• You don&apos;t have permission to view this opportunity</li>
             </ul>
             <div className='flex flex-col sm:flex-row gap-3 pt-4'>
-              <Button asChild className='flex-1'>
+              <Button asChild className='flex-1 bg-cyan-500 hover:bg-cyan-600'>
                 <Link href='/opportunities'>Browse Opportunities</Link>
               </Button>
               <Button variant='outline' asChild className='flex-1'>
