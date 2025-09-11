@@ -61,7 +61,9 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
               </div>
               <div className='flex items-center text-sm text-gray-600 min-w-0'>
                 <MapPin className='w-4 h-4 mr-2 flex-shrink-0' />
-                <span className='truncate'>{opportunityData.location}</span>
+                <span className='truncate'>
+                  {opportunityData.location.city}, {opportunityData.location.country}
+                </span>
               </div>
             </div>
 
@@ -87,7 +89,7 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
             <div className='flex items-center justify-between'>
               <div className='flex items-center text-xs text-gray-500'>
                 <Calendar className='w-3 h-3 mr-1' />
-                {opportunityData.deadline?.toLocaleDateString()}
+                {opportunityData.applicationDeadline || opportunityData.postedDate}
               </div>
               <div className='flex items-center space-x-2'>
                 <motion.button

@@ -69,16 +69,18 @@ export const OpportunityDetailsContent = () => {
           <div className='flex flex-col gap-2 flex-3'>
             <h2 className='text-lg font-medium text-gray-900'>About</h2>
             <p>{baseOpportunity.description}</p>
-            <p>{baseOpportunity.location}</p>
-            <p>{baseOpportunity.deadline?.toLocaleDateString()}</p>
+            <p>
+              {baseOpportunity.location.city}, {baseOpportunity.location.country}
+            </p>
+            <p>{baseOpportunity.applicationDeadline || baseOpportunity.postedDate}</p>
             <p>{baseOpportunity.organization?.name}</p>
             <p>{baseOpportunity.createdAt?.toLocaleDateString()}</p>
             <p>{baseOpportunity.updatedAt?.toLocaleDateString()}</p>
             <p>{baseOpportunity.type}</p>
             <p>{baseOpportunity.subtype}</p>
-            <p>{baseOpportunity.deliveryMode}</p>
-            <p>{baseOpportunity.startDate?.toLocaleDateString()}</p>
-            <p>{baseOpportunity.endDate?.toLocaleDateString()}</p>
+            <p>{baseOpportunity.location.type}</p>
+            <p>Posted: {baseOpportunity.postedDate}</p>
+            <p>Days ago: {baseOpportunity.daysAgoPosted}</p>
           </div>
 
           {/* Metadata Section */}
