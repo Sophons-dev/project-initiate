@@ -26,14 +26,6 @@ export const useGetAllOpportunities = (): UseQueryResult<OpportunityDto[]> => {
   });
 };
 
-export const useGetOpportunityById = (opportunityId: string): UseQueryResult<OpportunityDto | null> => {
-  return useQuery<OpportunityDto | null>({
-    queryKey: ['opportunity', opportunityId],
-    queryFn: () => getOpportunityById(opportunityId),
-    enabled: !!opportunityId,
-  });
-};
-
 export const useGetOpportunitiesByOrganizationId = (organizationId: string): UseQueryResult<OpportunityDto[]> => {
   return useQuery<OpportunityDto[]>({
     queryKey: ['opportunities', organizationId],

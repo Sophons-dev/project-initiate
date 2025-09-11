@@ -1,7 +1,7 @@
 'use client';
 
 import { useMutation, useQuery, UseMutationResult } from '@tanstack/react-query';
-import { getRecommendationsByUserId } from '@/features/opportunities/actions';
+import { getRecommendationsByUserId, getOpportunityById } from '@/features/opportunities/actions';
 import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
@@ -64,4 +64,34 @@ export const useGenerateAndSaveOpportunities = (): UseMutationResult<
       return await generateAndSaveOpportunities(insights, userId);
     },
   });
+};
+
+export const useGetOpportunityById = (id: string) => {
+  const { start, stop } = useProgress();
+
+  const query = useQuery<OpportunityDto | null>({
+    queryKey: ['opportunity', id],
+    queryFn: async () => {
+      if (!id) return null;
+      return await getOpportunityById(id);
+    },
+    enabled: !!id,
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+
+  useEffect(() => {
+    if (query.isFetching) start();
+    else stop();
+  }, [query.isFetching, start, stop]);
+
+  return {
+    opportunity: query.data,
+    isLoading: query.isLoading,
+    isError: query.isError,
+    error: query.error,
+    refetch: query.refetch,
+  };
 };

@@ -5,20 +5,21 @@ import { useOpportunityDetailsContext } from './opportunity-details.provider';
 import { MetadataRenderer } from './opportunity-details-metadata';
 import { formatKey } from '@/lib/utils';
 import { OpportunitiesList } from './opportunities-list';
-import { OpportunityDto, OpportunityRecommendationDTO } from '../dto';
 import { useGetRecommendedOpportunitiesByTags } from '../hooks/queries';
+import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 
 const isOpportunityRecommendation = (
-  opportunity: OpportunityDto | OpportunityRecommendationDTO | undefined
-): opportunity is OpportunityRecommendationDTO => {
-  return (opportunity as OpportunityRecommendationDTO)?.userId !== undefined;
+  opportunity: OpportunityDto | OpportunityRecommendationDto | undefined
+): opportunity is OpportunityRecommendationDto => {
+  return (opportunity as OpportunityRecommendationDto)?.userId !== undefined;
 };
 
 export const OpportunityDetailsContent = () => {
   const { opportunity, isLoading, error } = useOpportunityDetailsContext();
+  console.log('opportunity', opportunity);
 
   const baseOpportunity: OpportunityDto = isOpportunityRecommendation(opportunity)
-    ? ((opportunity as OpportunityRecommendationDTO).opportunity as OpportunityDto)
+    ? ((opportunity as OpportunityRecommendationDto).opportunity as OpportunityDto)
     : (opportunity as OpportunityDto);
 
   const {
@@ -64,10 +65,10 @@ export const OpportunityDetailsContent = () => {
     tagsMatched: string[];
   } | null = isOpportunityRecommendation(opportunity)
     ? {
-        score: (opportunity as OpportunityRecommendationDTO).score,
-        rank: (opportunity as OpportunityRecommendationDTO).rank,
-        reasoning: (opportunity as OpportunityRecommendationDTO).reasoning,
-        tagsMatched: (opportunity as OpportunityRecommendationDTO).tagsMatched,
+        score: (opportunity as OpportunityRecommendationDto).score,
+        rank: (opportunity as OpportunityRecommendationDto).rank,
+        reasoning: (opportunity as OpportunityRecommendationDto).reasoning,
+        tagsMatched: (opportunity as OpportunityRecommendationDto).tagsMatched,
       }
     : null;
 
