@@ -8,56 +8,7 @@ import { createOrganization, getOrganizationByName } from '@/features/organizati
 import { createOpportunityRecommendation } from '../actions/mutations/createOpportunityRecommendation';
 import { CreateOpportunityDto, OpportunityDto } from '../dto';
 import { OpportunitySubtype, OpportunityType } from '@prisma/client';
-
-/**
- * Maps recommendation agent subtype to our OpportunitySubtype enum
- */
-function mapSubtype(
-  recommendationType: string,
-  recommendationSubtype: string,
-  employmentType?: string
-): OpportunitySubtype {
-  if (recommendationType === 'job') {
-    // For jobs, use employment type to determine subtype
-    switch (employmentType) {
-      case 'full-time':
-        return 'full_time';
-      case 'part-time':
-        return 'part_time';
-      case 'contract':
-        return 'contract';
-      case 'internship':
-        return 'internship';
-      case 'freelance':
-        return 'freelance';
-      case 'temporary':
-        return 'temporary';
-      default:
-        return 'full_time'; // Default to full-time for jobs
-    }
-  } else if (recommendationType === 'course') {
-    // For courses, use the subtype directly or default based on context
-    switch (recommendationSubtype) {
-      case 'course':
-        return 'online_cert'; // Default course type
-      case 'online_cert':
-        return 'online_cert';
-      case 'online_degree':
-        return 'online_degree';
-      case 'bootcamp':
-        return 'bootcamp';
-      case 'workshop':
-        return 'workshop';
-      case 'school_course':
-        return 'school_course';
-      default:
-        return 'online_cert'; // Default for courses
-    }
-  }
-
-  // Fallback - default to full_time for unknown types
-  return 'full_time';
-}
+import { mapSubtype } from '../mappers/opportunity.mapper';
 
 export async function generateAndSaveOpportunities(
   generatedInsight: unknown,
