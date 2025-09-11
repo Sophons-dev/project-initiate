@@ -1,6 +1,6 @@
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { getOrganizationById, getAllOrganizations, getOrganizationsByIndustry } from '../actions/queries';
 import { OrganizationDto } from '../dto/organization.dto';
+import { getAllOrganizations, getOrganizationById, getOrganizationsByIndustry } from '../actions';
 
 export const useGetOrganizationById = (id: string): UseQueryResult<OrganizationDto | null> => {
   return useQuery<OrganizationDto | null>({
