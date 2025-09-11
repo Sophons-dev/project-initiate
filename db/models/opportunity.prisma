@@ -4,6 +4,7 @@
 model Opportunity {
   id                String                      @id @default(auto()) @map("_id") @db.ObjectId
   type              OpportunityType
+  subtype           OpportunitySubtype
   title             String
   description       String
   matchReason       String

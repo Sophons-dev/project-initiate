@@ -1,29 +1,51 @@
 'use server';
 
-import { OpportunityType, CourseSubtype, Prisma } from '@prisma/client';
+import { OpportunityType, Prisma } from '@prisma/client';
 import { db } from '@/lib/db';
 import { toOpportunityDto } from '@/features/opportunities/mappers/opportunity.mapper';
 import { OpportunityDto, UpdateOpportunityDto } from '../../dto';
 
 export async function updateOpportunity(id: string, input: UpdateOpportunityDto): Promise<OpportunityDto> {
-  const normalizedType = input.type ? input.type.toString().toLowerCase() : undefined;
-
   const updated = await db.opportunity.update({
     where: { id },
     data: {
-      type: normalizedType ? (normalizedType === 'job' ? OpportunityType.job : OpportunityType.course) : undefined,
-      subtype: input.subtype ? (input.subtype as CourseSubtype) : undefined,
+      type: input.type,
+      subtype: input.subtype,
       title: input.title,
-      description: input.description ?? undefined,
-      tags: input.tags ?? undefined,
+      description: input.description,
+      matchReason: input.matchReason,
+
+      // Core job details
+      jobDescription: input.jobDescription,
+      responsibilities: input.responsibilities,
+      requirements: input.requirements,
+      benefits: input.benefits,
+
+      // Location details
+      locationType: input.location?.type,
+      city: input.location?.city,
+      country: input.location?.country,
+      workLocation: input.location?.workLocation,
+
+      url: input.url,
+
+      // Important dates
+      postedDate: input.postedDate,
+      applicationDeadline: input.applicationDeadline,
+      daysAgoPosted: input.daysAgoPosted,
+
+      // Core metadata for AI matching
+      metadata: input.metadata as Prisma.InputJsonValue,
+
+      // Company benefits
+      companyBenefits: input.companyBenefits as Prisma.InputJsonValue,
+
+      // Organization reference
       organizationId: input.organizationId,
-      location: input.location ?? undefined,
-      deliveryMode: input.deliveryMode ?? undefined,
-      startDate: input.startDate ?? undefined,
-      endDate: input.endDate ?? undefined,
-      deadline: input.deadline ?? undefined,
-      metadata: (input.metadata as unknown as Prisma.JsonValue) ?? undefined,
       updatedAt: new Date(),
+    },
+    include: {
+      organization: true,
     },
   });
 

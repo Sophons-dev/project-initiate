@@ -1,8 +1,10 @@
 import { OrganizationDto } from '@/features/organizations/dto/organization.dto';
+import { OpportunitySubtype, OpportunityType } from '@prisma/client';
 
 export type OpportunityDto = {
   id: string;
-  type: 'JOB' | 'COURSE' | 'SCHOLARSHIP' | 'EVENT';
+  type: OpportunityType;
+  subtype: OpportunitySubtype;
   title: string;
   description: string;
   matchReason: string;

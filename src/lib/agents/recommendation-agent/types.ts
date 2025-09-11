@@ -1,8 +1,8 @@
 import { z } from 'zod';
 
 export const RecommendationSchema = z.object({
-  type: z.enum(['JOB', 'COURSE', 'SCHOLARSHIP', 'EVENT']).describe('The type of opportunity being recommended'),
-
+  type: z.enum(['job', 'course', 'scholarship', 'event']).describe('The type of opportunity being recommended'),
+  subtype: z.enum(['job', 'course']).describe('The subtype of the opportunity'),
   title: z.string().describe('The job title or opportunity name'),
   description: z.string().describe('Brief summary of the opportunity'),
   matchReason: z.string().describe('Explanation of why this opportunity matches the user'),
@@ -19,6 +19,10 @@ export const RecommendationSchema = z.object({
       .enum(['company', 'university', 'bootcamp', 'online_platform', 'government', 'ngo', 'other'])
       .describe('Type of organization'),
     aboutTheCompany: z.string().describe('Company description and background'),
+    website: z.string().describe('Company website URL'),
+    logoUrl: z.string().describe('URL to the company logo image'),
+    location: z.string().describe('Headquarters or main location of the organization'),
+    organizationUrl: z.string().describe('Link to the organization profile or page'),
     industry: z.string().describe('Industry sector the company operates in'),
     employmentSize: z
       .enum(['1-10', '11-50', '51-200', '201-500', '501-1000', '1001-5000', '5000+'])

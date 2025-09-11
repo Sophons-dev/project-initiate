@@ -1,9 +1,10 @@
 'use server';
 
 import { ResponseDto } from '@/lib/dto/response.dto';
-import { CreateOrganizationDto, OrganizationDto } from '../dto/organization.dto';
-import { db } from '@/lib/db';
+import { toOrganizationDto } from '../../mappers/organization.mapper';
+import { CreateOrganizationDto, OrganizationDto } from '../../dto/organization.dto';
 import { Organization } from '@prisma/client';
+import { db } from '@/lib/db';
 
 export async function createOrganization(data: CreateOrganizationDto): Promise<ResponseDto<OrganizationDto>> {
   console.log('Creating organization with data:', data);
@@ -18,29 +19,22 @@ export async function createOrganization(data: CreateOrganizationDto): Promise<R
         logoUrl: data.logoUrl ?? null,
         location: data.location ?? null,
         organizationUrl: data.organizationUrl ?? null,
+
+        // Enhanced organization details for AI recommendations
+        aboutTheCompany: data.aboutTheCompany ?? null,
+        industry: data.industry ?? null,
+        employmentSize: data.employmentSize ?? null,
+        companyRating: data.companyRating ?? null,
+        reviewCount: data.reviewCount ?? null,
+
         createdAt: new Date(),
         updatedAt: new Date(),
       },
     });
 
-    return new ResponseDto({ success: true, data: convertToDto(created) });
+    return new ResponseDto({ success: true, data: toOrganizationDto(created) });
   } catch (error) {
     console.error('Error creating organization:', error);
     return new ResponseDto({ success: false, error: 'Failed to create organization' });
   }
-}
-
-function convertToDto(created: Organization): OrganizationDto {
-  return {
-    id: created.id,
-    name: created.name,
-    type: created.type as unknown as string,
-    description: created.description ?? null,
-    website: created.website ?? null,
-    logoUrl: created.logoUrl ?? null,
-    location: created.location ?? null,
-    organizationUrl: created.organizationUrl ?? null,
-    createdAt: created.createdAt ?? null,
-    updatedAt: created.updatedAt ?? null,
-  };
 }

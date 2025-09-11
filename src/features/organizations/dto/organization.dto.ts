@@ -2,14 +2,13 @@ export type OrganizationDto = {
   id: string;
   name: string;
   type: string;
-  description?: string | null;
+  aboutTheCompany?: string | null;
   website?: string | null;
   logoUrl?: string | null;
   location?: string | null;
   organizationUrl?: string | null;
 
   // Enhanced organization details for AI recommendations
-  aboutTheCompany?: string | null;
   industry?: string | null;
   employmentSize?: string | null;
   companyRating?: number | null;
