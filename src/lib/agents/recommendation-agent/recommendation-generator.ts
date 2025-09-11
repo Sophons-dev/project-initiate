@@ -47,12 +47,16 @@ export async function generateRecommendations({
     });
 
     if (!response.output_parsed) {
+      console.error('❌ No recommendations generated from OpenAI response');
       throw new Error('No recommendations generated');
     }
 
-    return RecommendationsSchema.parse(response.output_parsed);
+    console.log('✅ OpenAI response received:', JSON.stringify(response.output_parsed, null, 2));
+    const parsed = RecommendationsSchema.parse(response.output_parsed);
+    console.log('✅ Parsed recommendations:', parsed.recommendations.length);
+    return parsed;
   } catch (error) {
-    console.error('Error generating insight:', error);
+    console.error('❌ Error generating recommendations:', error);
     throw error;
   }
 }

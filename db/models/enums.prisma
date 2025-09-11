@@ -52,10 +52,20 @@ enum OpportunityType {
   course
 }
 
-enum CourseSubtype {
+enum OpportunitySubtype {
+  // Job subtypes
+  full_time
+  part_time
+  contract
+  internship
+  freelance
+  temporary
+
+  // Course subtypes
   school_course
   online_cert
   online_degree
+  workshop
   bootcamp
 }
 

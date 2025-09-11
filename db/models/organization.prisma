@@ -3,14 +3,25 @@
 
 model Organization {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
+  name        String          @unique
   type        OrganizationType
-  description String?
+  aboutTheCompany String?
   website     String?
   logoUrl     String?
   location    String?
   organizationUrl String?
+
+  // Enhanced organization details for AI recommendations
+  industry        String?
+  employmentSize  String?
+  companyRating   Float?
+  reviewCount     Int?
+
   createdAt   DateTime?
   updatedAt   DateTime?
   opportunities Opportunity[]
+
+  @@index([type])
+  @@index([industry])
+  @@index([companyRating])
 }

@@ -4,17 +4,39 @@
 model Opportunity {
   id                String                      @id @default(auto()) @map("_id") @db.ObjectId
   type              OpportunityType
-  subtype           CourseSubtype?
+  subtype           OpportunitySubtype
   title             String
-  description       String?
-  tags              String[]
+  description       String
+  matchReason       String
+
+  // Core job details
+  jobDescription    String
+  tags String[]
+  responsibilities  String[]
+  requirements      String[]
+  benefits          String[]
+
+  // Location details (embedded)
+  locationType      String
+  city              String
+  country           String
+  workLocation      String
+
+  url               String
+
+  // Important dates
+  postedDate        String
+  applicationDeadline String
+  daysAgoPosted     String
+
+  // Core metadata for AI matching (JSON)
+  metadata          Json
+
+  // Company benefits (JSON)
+  companyBenefits   Json
+
+  // Organization reference
   organizationId    String                      @db.ObjectId
-  location          String?
-  deliveryMode      String?
-  startDate         DateTime?
-  endDate           DateTime?
-  deadline          DateTime?
-  metadata          Json?
   createdBy         String                      @db.ObjectId
   createdAt         DateTime?
   updatedAt         DateTime?
@@ -24,6 +46,8 @@ model Opportunity {
 
   @@index([organizationId])
   @@index([createdBy])
+  @@index([type])
+  @@index([city])
 }
 
 model OpportunityRecommendation {
