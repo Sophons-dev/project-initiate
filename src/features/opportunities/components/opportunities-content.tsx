@@ -1,17 +1,28 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { OpportunitiesList } from '@/features/opportunities/components';
-import { TabFilter, SearchInput } from '@/components/shared';
+import { TabFilter, SearchInput, Pagination } from '@/components/shared';
 import { opportunityFilters } from '@/lib/constants';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { useGetAllOpportunities } from '@/features/opportunities/hooks';
+import { PaginationParams } from '@/features/opportunities/types/pagination';
 
 export const OpportunitiesContent = () => {
-  const { data: opportunityData, isLoading, error } = useGetAllOpportunities();
+  const [paginationParams, setPaginationParams] = useState<PaginationParams>({
+    page: 1,
+    limit: 10,
+  });
+
+  const { data: opportunityResponse, isLoading, error } = useGetAllOpportunities(paginationParams);
   const { activeFilter, setActiveFilter, searchQuery, setSearchQuery, filteredData } = useFilter(
-    opportunityData ?? [],
+    opportunityResponse?.data ?? [],
     opportunityFilters
   );
+
+  const handlePageChange = (page: number) => {
+    setPaginationParams(prev => ({ ...prev, page }));
+  };
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
@@ -43,6 +54,13 @@ export const OpportunitiesContent = () => {
         </div>
 
         <OpportunitiesList opportunities={filteredData} isLoading={isLoading} error={error ?? undefined} />
+
+        {/* Pagination */}
+        {opportunityResponse?.meta && (
+          <div className='mt-8'>
+            <Pagination meta={opportunityResponse.meta} onPageChange={handlePageChange} />
+          </div>
+        )}
       </motion.div>
     </div>
   );
