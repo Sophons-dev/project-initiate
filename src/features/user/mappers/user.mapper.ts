@@ -77,13 +77,15 @@ export function mapUserToDto(user: User | UserWithRelations): UserDto {
       ? {
           name: user.profile.name,
           image: user.profile.image ?? null,
-          gender: user.profile.gender ?? 'unknown',
+          gender: user.profile.gender ?? null,
           dateOfBirth: user.profile.dateOfBirth ?? null,
-          phoneNumber: user.profile.phoneNumber ?? '',
-          location: user.profile.location ?? '',
+          phoneNumber: user.profile.phoneNumber ?? null,
+          location: user.profile.location ?? null,
+          interests: user.profile.interests ?? [],
           education: user.profile.education
             ? {
-                school: user.profile.education.school ?? '',
+                school: user.profile.education.school ?? null,
+                degree: user.profile.education.degree ?? null,
                 level: user.profile.education.level,
               }
             : undefined,

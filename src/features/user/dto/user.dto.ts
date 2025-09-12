@@ -1,4 +1,4 @@
-import { EducationLevel, UserType } from '@prisma/client';
+import { EducationLevel, UserType, Gender } from '@prisma/client';
 import { CareerInsightDto } from '@/features/career-insight/dto/insight.dto';
 import { UserAnswerDto } from './userAnswer.dto';
 import { CareerInsightLogDto } from './careerInsightLog.dto';
@@ -13,12 +13,14 @@ export type UserDto = {
   profile?: {
     name: string;
     image: string | null;
-    gender: string;
+    gender: Gender | null;
     dateOfBirth: Date | null;
-    phoneNumber: string;
-    location: string;
+    phoneNumber: string | null;
+    location: string | null;
+    interests: string[];
     education?: {
-      school: string;
+      school: string | null;
+      degree: string | null;
       level: EducationLevel;
     };
   };

@@ -6,10 +6,10 @@ model Opportunity {
   type              OpportunityType
   subtype           OpportunitySubtype
   title             String
-  description       String
+  shortDescription       String
+  longDescription        String
 
   // Generic content fields (work for all types)
-  content           String                      // Main content/description
   tags              String[]
   highlights        String[]                    // Key points/features
   prerequisites     String[]                    // Requirements/prerequisites

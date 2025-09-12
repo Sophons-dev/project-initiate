@@ -66,8 +66,18 @@ enum OpportunitySubtype {
   school_course
   online_cert
   online_degree
-  workshop
   bootcamp
+
+// Event subtypes
+  workshop
+  conference
+  seminar
+  webinar
+  meetup
+  hackathon
+  networking
+
+  other
 }
 
 enum UserOpportunityStatus {

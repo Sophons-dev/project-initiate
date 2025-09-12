@@ -5,18 +5,21 @@ import { ResponseDto } from '@/lib/dto/response.dto';
 import { UpdateUserDto } from '../../dto/updateUser.dto';
 import { UserDto } from '../../dto/user.dto';
 import { mapUserToDto } from '../../mappers/user.mapper';
+import { Prisma } from '@prisma/client';
+
+type UserIdentifier = { key: 'id'; value: string } | { key: 'clerkId'; value: string };
 
 /**
  * Update user (id or clerkId)
  * TODO: Use user.service.ts to orchestrate business logic instead of putting it all here
  */
-export async function updateUser(
-  identifier: { key: 'id' | 'clerkId'; value: string },
-  updates: UpdateUserDto
-): Promise<ResponseDto<UserDto>> {
+export async function updateUser(identifier: UserIdentifier, updates: UpdateUserDto): Promise<ResponseDto<UserDto>> {
   try {
-    const existing = await db.user.findFirst({
-      where: { [identifier.key]: identifier.value } as any,
+    const whereClause: Prisma.UserWhereUniqueInput =
+      identifier.key === 'id' ? { id: identifier.value } : { clerkId: identifier.value };
+
+    const existing = await db.user.findUnique({
+      where: whereClause,
     });
 
     if (!existing) {
@@ -27,17 +30,17 @@ export async function updateUser(
       ? {
           name: updates.profile.name ?? existing.profile?.name ?? '',
           image: updates.profile.image ?? existing.profile?.image ?? null,
-          gender: (updates.profile as any).gender ?? (existing.profile as any)?.gender ?? null,
+          gender: updates.profile.gender ?? existing.profile?.gender ?? null,
           dateOfBirth: updates.profile.dateOfBirth ?? existing.profile?.dateOfBirth ?? null,
           phoneNumber: updates.profile.phoneNumber ?? existing.profile?.phoneNumber ?? null,
           location: updates.profile.location ?? existing.profile?.location ?? null,
-          interests: (updates.profile as any).interests ?? existing.profile?.interests ?? [],
+          interests: updates.profile.interests ?? existing.profile?.interests ?? [],
           education: updates.profile.education ?? existing.profile?.education ?? undefined,
         }
       : undefined;
 
     const user = await db.user.update({
-      where: { [identifier.key]: identifier.value } as any,
+      where: whereClause,
       data: {
         userType: updates.userType,
         onboardingCompleted: updates.onboardingCompleted,

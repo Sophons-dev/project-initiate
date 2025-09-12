@@ -26,6 +26,9 @@ export const OpportunitySchema = z.object({
       'meetup',
       'hackathon',
       'networking',
+
+      // Common subtype
+      'other',
     ])
     .describe('The subtype of the opportunity'),
   title: z.string().describe('The opportunity title or name'),
@@ -35,9 +38,9 @@ export const OpportunitySchema = z.object({
     .describe(
       'Long description of the opportunity. Description that can help give more context about the opportunity.'
     ),
+  matchReason: z.string().describe('Reason why this opportunity is a good match'),
 
   // Generic content fields (work for all types)
-  content: z.string().describe('Main content/description of the opportunity'),
   tags: z.array(z.string()).describe('Relevant tags and keywords'),
   highlights: z.array(z.string()).describe('Key points, features, or agenda items'),
   prerequisites: z.array(z.string()).describe('Requirements or prerequisites'),
