@@ -2,6 +2,7 @@ export type OrganizationDto = {
   id: string;
   name: string;
   type: string;
+  isPartner: boolean;
   aboutTheCompany?: string | null;
   website?: string | null;
   logoUrl?: string | null;

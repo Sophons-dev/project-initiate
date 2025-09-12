@@ -36,6 +36,7 @@ export async function generateAndSaveOpportunities(
           const orgResponse = await createOrganization({
             name: recommendation.organization.name,
             type: recommendation.organization.type || 'other',
+            isPartner: false,
             aboutTheCompany: recommendation.organization.aboutTheCompany,
             website: recommendation.organization.website,
             logoUrl: recommendation.organization.logoUrl,

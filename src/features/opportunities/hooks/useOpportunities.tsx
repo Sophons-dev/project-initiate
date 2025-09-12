@@ -46,17 +46,12 @@ export const useGenerateAndSaveOpportunities = (): UseMutationResult<
   return useMutation<OpportunityDto[], unknown, { context: string; userId: string }>({
     mutationKey: ['save-opportunities'],
     mutationFn: async ({ context, userId }) => {
-      console.log('🎯 Starting opportunity generation mutation for user:', userId);
-
       const insights = await generateInsightsForUser(context);
-      console.log('🧠 Generated insights:', insights);
 
       if (!insights) {
-        console.log('⚠️ No insights generated, returning empty array');
         return [];
       }
 
-      console.log('💾 Upserting career insight...');
       await upsertCareerInsight(userId, {
         userId,
         summary: insights.summary,
@@ -67,11 +62,8 @@ export const useGenerateAndSaveOpportunities = (): UseMutationResult<
         experienceLevel: insights.experienceLevel ?? null,
         preferredRoles: insights.preferredRoles ?? null,
       });
-      console.log('✅ Career insight upserted successfully');
 
-      console.log('🚀 Calling generateAndSaveOpportunities...');
       const result = await generateAndSaveOpportunities(insights, userId);
-      console.log('🎉 generateAndSaveOpportunities completed, returning:', result.length, 'opportunities');
 
       return result;
     },
