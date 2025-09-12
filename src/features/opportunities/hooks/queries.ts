@@ -1,7 +1,7 @@
 // TODO: Remove this file when we have a real backend to fetch data from
 
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
-import { getOpportunitiesByOrganizationId, getOpportunityById } from '@/lib/mock/actions/opportunities';
+import { getOpportunitiesByOrganizationId } from '@/lib/mock/actions/opportunities';
 import { getOpportunities } from '@/lib/mock/actions/opportunities';
 import { getUserRecommendationById, getUserRecommendations } from '@/lib/mock/actions/user';
 import { getRelatedOpportunities } from '@/lib/mock/actions/opportunities';

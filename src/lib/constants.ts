@@ -1,4 +1,4 @@
-import { OpportunityDto as OpportunityDTO } from '@/features/opportunities/types';
+import { OpportunityDto as OpportunityDTO } from '@/features/opportunities/dto';
 import { OpportunityRecommendationDto as OpportunityRecommendationDTO } from '@/features/opportunities/dto/opportunity-recommendation.dto';
 import { OrganizationDto as OrganizationDTO } from '@/features/organizations/dto/organization.dto';
 
@@ -10,6 +10,7 @@ export const filterColors = {
 export const opportunityTypeColors = {
   job: 'bg-blue-100 text-blue-800',
   course: 'bg-yellow-100 text-yellow-800',
+  event: 'bg-green-100 text-green-800',
 } as const;
 
 export const opportunityFilters = [
@@ -25,6 +26,12 @@ export const opportunityFilters = [
     value: 'course',
     predicate: (op: OpportunityDTO | OpportunityRecommendationDTO) =>
       (op as OpportunityDTO).type === 'course' || (op as OpportunityRecommendationDTO).opportunity?.type === 'course',
+  },
+  {
+    label: 'Events',
+    value: 'event',
+    predicate: (op: OpportunityDTO | OpportunityRecommendationDTO) =>
+      (op as OpportunityDTO).type === 'event' || (op as OpportunityRecommendationDTO).opportunity?.type === 'event',
   },
 ];
 

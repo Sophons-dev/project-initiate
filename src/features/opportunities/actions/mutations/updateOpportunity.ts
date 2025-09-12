@@ -1,6 +1,6 @@
 'use server';
 
-import { OpportunityType, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { db } from '@/lib/db';
 import { toOpportunityDto } from '@/features/opportunities/mappers/opportunity.mapper';
 import { OpportunityDto, UpdateOpportunityDto } from '../../dto';
@@ -12,14 +12,14 @@ export async function updateOpportunity(id: string, input: UpdateOpportunityDto)
       type: input.type,
       subtype: input.subtype,
       title: input.title,
-      description: input.description,
-      matchReason: input.matchReason,
+      shortDescription: input.shortDescription,
+      longDescription: input.longDescription,
 
-      // Core job details
-      jobDescription: input.jobDescription,
-      responsibilities: input.responsibilities,
-      requirements: input.requirements,
-      benefits: input.benefits,
+      // Generic content fields
+      tags: input.tags,
+      highlights: input.highlights,
+      prerequisites: input.prerequisites,
+      outcomes: input.outcomes,
 
       // Location details
       locationType: input.location?.type,
@@ -27,18 +27,22 @@ export async function updateOpportunity(id: string, input: UpdateOpportunityDto)
       country: input.location?.country,
       workLocation: input.location?.workLocation,
 
+      // Contact and application
       url: input.url,
+      contactEmail: input.contactEmail,
+      contactPhone: input.contactPhone,
 
       // Important dates
       postedDate: input.postedDate,
       applicationDeadline: input.applicationDeadline,
-      daysAgoPosted: input.daysAgoPosted,
+      startDate: input.startDate,
+      endDate: input.endDate,
 
-      // Core metadata for AI matching
+      // Type-specific metadata
       metadata: input.metadata as Prisma.InputJsonValue,
 
-      // Company benefits
-      companyBenefits: input.companyBenefits as Prisma.InputJsonValue,
+      // Organization benefits
+      organizationBenefits: input.organizationBenefits as Prisma.InputJsonValue,
 
       // Organization reference
       organizationId: input.organizationId,

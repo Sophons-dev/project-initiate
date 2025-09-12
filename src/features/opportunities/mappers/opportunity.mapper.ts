@@ -1,22 +1,23 @@
-import { Opportunity, OpportunitySubtype, OpportunityType } from '@prisma/client';
-import { OpportunityDto } from '../dto';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Opportunity, OpportunitySubtype, Organization } from '@prisma/client';
+import { OpportunityDto, CreateOpportunityDto } from '../dto';
 import { OrganizationDto } from '@/features/organizations/dto/organization.dto';
 
-export function toOpportunityDto(opportunity: Opportunity & { organization?: any }): OpportunityDto {
+export function toOpportunityDto(opportunity: Opportunity & { organization?: Organization }): OpportunityDto {
   return {
     id: opportunity.id,
     type: opportunity.type,
     subtype: opportunity.subtype,
     title: opportunity.title,
-    description: opportunity.description,
-    matchReason: opportunity.matchReason,
+    shortDescription: opportunity.shortDescription,
+    longDescription: opportunity.longDescription,
 
-    // Core job details
+    // Generic content fields
     tags: opportunity.tags || [],
-    jobDescription: opportunity.jobDescription,
-    responsibilities: opportunity.responsibilities,
-    requirements: opportunity.requirements,
-    benefits: opportunity.benefits,
+    highlights: opportunity.highlights || [],
+    prerequisites: opportunity.prerequisites || [],
+    outcomes: opportunity.outcomes || [],
 
     // Location details
     location: {
@@ -26,18 +27,22 @@ export function toOpportunityDto(opportunity: Opportunity & { organization?: any
       workLocation: opportunity.workLocation,
     },
 
+    // Contact and application
     url: opportunity.url,
+    contactEmail: opportunity.contactEmail ?? undefined,
+    contactPhone: opportunity.contactPhone ?? undefined,
 
     // Important dates
     postedDate: opportunity.postedDate,
     applicationDeadline: opportunity.applicationDeadline,
-    daysAgoPosted: opportunity.daysAgoPosted,
+    startDate: opportunity.startDate ?? undefined,
+    endDate: opportunity.endDate ?? undefined,
 
-    // Core metadata for AI matching
+    // Type-specific metadata
     metadata: opportunity.metadata as any,
 
-    // Company benefits
-    companyBenefits: opportunity.companyBenefits as any,
+    // Organization benefits
+    organizationBenefits: opportunity.organizationBenefits as any,
 
     // Organization reference
     organizationId: opportunity.organizationId,
@@ -46,12 +51,11 @@ export function toOpportunityDto(opportunity: Opportunity & { organization?: any
           id: opportunity.organization.id,
           name: opportunity.organization.name,
           type: opportunity.organization.type,
-          description: opportunity.organization.description,
+          aboutTheCompany: opportunity.organization.aboutTheCompany,
           website: opportunity.organization.website,
           logoUrl: opportunity.organization.logoUrl,
           location: opportunity.organization.location,
           organizationUrl: opportunity.organization.organizationUrl,
-          aboutTheCompany: opportunity.organization.aboutTheCompany,
           industry: opportunity.organization.industry,
           employmentSize: opportunity.organization.employmentSize,
           companyRating: opportunity.organization.companyRating,
@@ -92,7 +96,7 @@ export function mapSubtype(
       case 'temporary':
         return 'temporary';
       default:
-        return 'full_time'; // Default to full-time for jobs
+        return 'other'; // Default to full-time for jobs
     }
   } else if (recommendationType === 'course') {
     // For courses, use the subtype directly or default based on context
@@ -110,10 +114,64 @@ export function mapSubtype(
       case 'school_course':
         return 'school_course';
       default:
-        return 'online_cert'; // Default for courses
+        return 'other'; // Default for courses
+    }
+  } else if (recommendationType === 'event') {
+    // For events, map to event subtypes
+    switch (recommendationSubtype) {
+      case 'conference':
+        return 'conference';
+      case 'seminar':
+        return 'seminar';
+      case 'webinar':
+        return 'webinar';
+      case 'workshop':
+        return 'workshop';
+      case 'meetup':
+        return 'meetup';
+      case 'hackathon':
+        return 'hackathon';
+      case 'networking':
+        return 'networking';
+      default:
+        return 'other'; // Default for events
     }
   }
 
   // Fallback - default to full_time for unknown types
-  return 'full_time';
+  return 'other';
+}
+
+/**
+ * Maps recommendation data to CreateOpportunityDto
+ */
+export function mapRecommendationToCreateDto(recommendation: any): CreateOpportunityDto {
+  return {
+    type: recommendation.type,
+    subtype: mapSubtype(recommendation.type, recommendation.subtype, recommendation.metadata?.employmentType),
+    title: recommendation.title,
+    shortDescription: recommendation.shortDescription,
+    longDescription: recommendation.longDescription,
+    tags: recommendation.tags || [],
+    highlights: recommendation.highlights || [],
+    prerequisites: recommendation.prerequisites || [],
+    outcomes: recommendation.outcomes || [],
+    location: {
+      type: recommendation.location.type,
+      city: recommendation.location.city,
+      country: recommendation.location.country,
+      workLocation: recommendation.location.workLocation,
+    },
+    url: recommendation.url,
+    contactEmail: recommendation.contactEmail,
+    contactPhone: recommendation.contactPhone,
+    postedDate: recommendation.postedDate,
+    applicationDeadline: recommendation.applicationDeadline,
+    startDate: recommendation.startDate,
+    endDate: recommendation.endDate,
+    metadata: recommendation.metadata,
+    organizationBenefits: recommendation.organizationBenefits,
+    organizationId: recommendation.organization?.id || '',
+    createdBy: '', // This should be set by the service
+  };
 }

@@ -25,7 +25,19 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
   const opportunityData = isOpportunityRecommendation(opportunity) ? opportunity.opportunity : opportunity;
   const reasoning = isOpportunityRecommendation(opportunity) ? opportunity.reasoning : null;
 
+  // Early return if no opportunity data
   if (!opportunityData) return null;
+
+  // Get safe values with fallbacks
+  const type = opportunityData.type || 'other';
+  const locationType = opportunityData.location?.type || 'remote';
+  const city = opportunityData.location?.city || undefined;
+  const country = opportunityData.location?.country || 'Unknown';
+  const organizationName = opportunityData.organization?.name || 'Unknown Organization';
+  const title = opportunityData.title || 'Untitled Opportunity';
+  const shortDescription = opportunityData.shortDescription || 'No description available';
+  const postedDate = opportunityData.postedDate || opportunityData.createdAt?.toLocaleDateString() || 'Unknown date';
+  const applicationDeadline = opportunityData.applicationDeadline || 'No deadline specified';
 
   return (
     <motion.div
@@ -42,34 +54,38 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
           <div className='flex-1'>
             {/* Header */}
             <div className='flex items-center justify-between mb-4'>
-              <span
-                className={`px-3 py-1 rounded text-xs font-medium ${opportunityTypeColors[opportunityData.type as keyof typeof opportunityTypeColors]}`}
-              >
-                {opportunityData.type}
-              </span>
-              <span className='text-sm text-gray-500'>{opportunityData.createdAt?.toLocaleDateString()}</span>
+              <div className='flex gap-2'>
+                <span
+                  className={`px-3 py-1 rounded text-xs font-medium ${opportunityTypeColors[type as keyof typeof opportunityTypeColors] || 'bg-gray-100 text-gray-800'}`}
+                >
+                  {type}
+                </span>
+                <span className={`px-3 py-1 rounded text-xs font-medium bg-cyan-100 text-cyan-700`}>
+                  {locationType}
+                </span>
+              </div>
+              <span className='text-sm text-gray-500'>{postedDate}</span>
             </div>
 
             {/* Title */}
-            <h2 className='text-base font-semibold text-gray-900 mb-3'>{opportunityData.title}</h2>
+            <h2 className='text-base font-semibold text-gray-900 mb-3'>{title}</h2>
 
             {/* Organization & Location */}
             <div className='space-y-2 mb-4'>
               <div className='flex items-center text-sm text-gray-600 min-w-0'>
                 <Building2 className='w-4 h-4 mr-2 flex-shrink-0' />
-                <span className='truncate'>{opportunityData.organization?.name}</span>
+                <span className='truncate'>{organizationName}</span>
               </div>
               <div className='flex items-center text-sm text-gray-600 min-w-0'>
                 <MapPin className='w-4 h-4 mr-2 flex-shrink-0' />
                 <span className='truncate'>
-                  {opportunityData.location.city}, {opportunityData.location.country}
+                  {city ? `${city},` : ``} {country}
                 </span>
               </div>
             </div>
 
             {/* Description */}
-            <p className='text-sm text-gray-600 mb-4 line-clamp-2'>{opportunityData.description}</p>
-
+            <p className='text-sm text-gray-600 mb-4 line-clamp-2'>{shortDescription}</p>
             {/* Match Reason - Only show for recommendations and if showReasoning is true */}
             {showReasoning && reasoning && (
               <div className='bg-yellow-50 border-l-3 rounded-l-none border-l-yellow-500 rounded-lg p-3 mb-4'>
@@ -89,7 +105,7 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
             <div className='flex items-center justify-between'>
               <div className='flex items-center text-xs text-gray-500'>
                 <Calendar className='w-3 h-3 mr-1' />
-                {opportunityData.applicationDeadline || opportunityData.postedDate}
+                {applicationDeadline}
               </div>
               <div className='flex items-center space-x-2'>
                 <motion.button

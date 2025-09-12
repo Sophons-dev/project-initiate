@@ -4,7 +4,6 @@
 import { RecommendationsSchema } from './types';
 import { zodTextFormat } from 'openai/helpers/zod';
 import OpenAI from 'openai';
-import { SYSTEM_PROMPT } from './contants';
 
 const openai = new OpenAI();
 

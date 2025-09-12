@@ -1,13 +1,12 @@
 'use server';
 
-import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';
 import { Recommendation } from '@/lib/agents/recommendation-agent/types';
 import { createOpportunity } from '@/features/opportunities/actions/mutations/createOpportunity';
 import { createOrganization, getOrganizationByName } from '@/features/organizations/actions';
 import { createOpportunityRecommendation } from '../actions/mutations/createOpportunityRecommendation';
 import { CreateOpportunityDto, OpportunityDto } from '../dto';
-import { OpportunitySubtype, OpportunityType } from '@prisma/client';
+import { OpportunityType } from '@prisma/client';
 import { mapSubtype } from '../mappers/opportunity.mapper';
 
 export async function generateAndSaveOpportunities(
@@ -54,24 +53,25 @@ export async function generateAndSaveOpportunities(
         }
       }
 
+      // Map subtype to ensure it aligns with our enum
       const mappedSubtype = mapSubtype(
         recommendation.type,
         recommendation.subtype,
         recommendation.metadata?.employmentType
       );
+
       const payload: CreateOpportunityDto = {
         type: recommendation.type as OpportunityType,
         subtype: mappedSubtype,
         title: recommendation.title,
-        description: recommendation.description,
-        matchReason: recommendation.matchReason,
+        shortDescription: recommendation.shortDescription,
+        longDescription: recommendation.longDescription,
 
-        // Core job details
-        jobDescription: recommendation.jobDescription,
-        tags: recommendation.metadata?.requiredSkills || [],
-        responsibilities: recommendation.responsibilities,
-        requirements: recommendation.requirements,
-        benefits: recommendation.benefits,
+        // Generic content fields
+        tags: recommendation.tags || [],
+        highlights: recommendation.highlights || [],
+        prerequisites: recommendation.prerequisites || [],
+        outcomes: recommendation.outcomes || [],
 
         // Location details
         location: {
@@ -81,18 +81,22 @@ export async function generateAndSaveOpportunities(
           workLocation: recommendation.location.workLocation,
         },
 
+        // Contact and application
         url: recommendation.url,
+        contactEmail: recommendation.contactEmail,
+        contactPhone: recommendation.contactPhone,
 
         // Important dates
         postedDate: recommendation.postedDate,
         applicationDeadline: recommendation.applicationDeadline,
-        daysAgoPosted: recommendation.daysAgoPosted,
+        startDate: recommendation.startDate,
+        endDate: recommendation.endDate,
 
-        // Core metadata for AI matching
+        // Type-specific metadata
         metadata: recommendation.metadata,
 
-        // Company benefits
-        companyBenefits: recommendation.companyBenefits,
+        // Organization benefits
+        organizationBenefits: recommendation.organizationBenefits,
 
         // Organization reference
         organizationId: organizationId || '',
