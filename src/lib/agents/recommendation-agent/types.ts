@@ -56,14 +56,14 @@ export const OpportunitySchema = z.object({
 
   // Contact and application
   url: z.string().describe('URL to the opportunity posting or application page'),
-  contactEmail: z.string().optional().describe('Contact email for inquiries'),
-  contactPhone: z.string().optional().describe('Contact phone number'),
+  contactEmail: z.string().describe('Contact email for inquiries'),
+  contactPhone: z.string().describe('Contact phone number'),
 
   // Important dates
   postedDate: z.string().describe('When the opportunity was posted'),
   applicationDeadline: z.string().describe('Application deadline'),
-  startDate: z.string().optional().describe('Start date for courses and events'),
-  endDate: z.string().optional().describe('End date for courses and events'),
+  startDate: z.string().describe('Start date for courses and events'),
+  endDate: z.string().describe('End date for courses and events'),
 
   // Organization details
   organization: z.object({
@@ -87,56 +87,47 @@ export const OpportunitySchema = z.object({
   // Type-specific metadata (JSON)
   metadata: z.object({
     // Job-specific metadata
-    salary: z
-      .object({
-        min: z.number().describe('Minimum salary amount'),
-        max: z.number().describe('Maximum salary amount'),
-        currency: z.string().describe('Salary currency (e.g., "PHP", "USD")'),
-        isSpecified: z.boolean().describe('Whether salary information is provided'),
-        range: z.string().describe('Salary range description (e.g., "₱90,000 – ₱110,000 per month")'),
-      })
-      .optional(),
-
+    salary: z.object({
+      min: z.number().describe('Minimum salary amount'),
+      max: z.number().describe('Maximum salary amount'),
+      currency: z.string().describe('Salary currency (e.g., "PHP", "USD")'),
+      isSpecified: z.boolean().describe('Whether salary information is provided'),
+      range: z.string().describe('Salary range description (e.g., "₱90,000 – ₱110,000 per month")'),
+    }),
     employmentType: z
       .enum(['full-time', 'part-time', 'contract', 'internship', 'freelance', 'temporary'])
-      .optional()
+
       .describe('Type of employment for jobs'),
 
-    yearsOfExperience: z.string().optional().describe('Required years of experience (e.g., "5-6 years")'),
-    jobCategory: z.string().optional().describe('Job category (e.g., "Developers/Programmers")'),
-    jobSubCategory: z.string().optional().describe('Job subcategory (e.g., "Information & Communication Technology")'),
+    yearsOfExperience: z.string().describe('Required years of experience (e.g., "5-6 years")'),
+    jobCategory: z.string().describe('Job category (e.g., "Developers/Programmers")'),
+    jobSubCategory: z.string().describe('Job subcategory (e.g., "Information & Communication Technology")'),
 
     // Course-specific metadata
-    tuition: z
-      .object({
-        min: z.number().describe('Minimum tuition amount'),
-        max: z.number().describe('Maximum tuition amount'),
-        currency: z.string().describe('Tuition currency (e.g., "PHP", "USD")'),
-        isSpecified: z.boolean().describe('Whether tuition information is provided'),
-        range: z.string().describe('Tuition range description'),
-      })
-      .optional(),
-
-    difficultyLevel: z.enum(['beginner', 'intermediate', 'advanced']).optional().describe('Course difficulty level'),
-    duration: z.string().optional().describe('Course duration (e.g., "12 weeks", "6 months")'),
-    courseCategory: z.string().optional().describe('Course category (e.g., "Programming", "Design")'),
-    certification: z.boolean().optional().describe('Whether course provides certification'),
+    tuition: z.object({
+      min: z.number().describe('Minimum tuition amount'),
+      max: z.number().describe('Maximum tuition amount'),
+      currency: z.string().describe('Tuition currency (e.g., "PHP", "USD")'),
+      isSpecified: z.boolean().describe('Whether tuition information is provided'),
+      range: z.string().describe('Tuition range description'),
+    }),
+    difficultyLevel: z.enum(['beginner', 'intermediate', 'advanced']).describe('Course difficulty level'),
+    duration: z.string().describe('Course duration (e.g., "12 weeks", "6 months")'),
+    courseCategory: z.string().describe('Course category (e.g., "Programming", "Design")'),
+    certification: z.boolean().describe('Whether course provides certification'),
 
     // Event-specific metadata
-    ticketPrice: z
-      .object({
-        min: z.number().describe('Minimum ticket price'),
-        max: z.number().describe('Maximum ticket price'),
-        currency: z.string().describe('Price currency (e.g., "PHP", "USD")'),
-        isSpecified: z.boolean().describe('Whether ticket price information is provided'),
-        range: z.string().describe('Price range description'),
-      })
-      .optional(),
-
-    capacity: z.number().optional().describe('Maximum number of attendees'),
-    format: z.string().optional().describe('Event format (e.g., "In-person", "Virtual", "Hybrid")'),
-    speakers: z.array(z.string()).optional().describe('List of event speakers or instructors'),
-    eventCategory: z.string().optional().describe('Event category (e.g., "Technology", "Business")'),
+    ticketPrice: z.object({
+      min: z.number().describe('Minimum ticket price'),
+      max: z.number().describe('Maximum ticket price'),
+      currency: z.string().describe('Price currency (e.g., "PHP", "USD")'),
+      isSpecified: z.boolean().describe('Whether ticket price information is provided'),
+      range: z.string().describe('Price range description'),
+    }),
+    capacity: z.number().describe('Maximum number of attendees'),
+    format: z.string().describe('Event format (e.g., "In-person", "Virtual", "Hybrid")'),
+    speakers: z.array(z.string()).describe('List of event speakers or instructors'),
+    eventCategory: z.string().describe('Event category (e.g., "Technology", "Business")'),
 
     // Common metadata
     requiredSkills: z.array(z.string()).describe('Technical and soft skills required'),

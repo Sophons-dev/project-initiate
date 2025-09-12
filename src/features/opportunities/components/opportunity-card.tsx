@@ -42,11 +42,16 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
           <div className='flex-1'>
             {/* Header */}
             <div className='flex items-center justify-between mb-4'>
-              <span
-                className={`px-3 py-1 rounded text-xs font-medium ${opportunityTypeColors[opportunityData.type as keyof typeof opportunityTypeColors]}`}
-              >
-                {opportunityData.type}
-              </span>
+              <div className='flex gap-2'>
+                <span
+                  className={`px-3 py-1 rounded text-xs font-medium ${opportunityTypeColors[opportunityData.type as keyof typeof opportunityTypeColors]}`}
+                >
+                  {opportunityData.type}
+                </span>
+                <span className={`px-3 py-1 rounded text-xs font-medium bg-cyan-100 text-cyan-700`}>
+                  {opportunityData.location.type}
+                </span>
+              </div>
               <span className='text-sm text-gray-500'>{opportunityData.createdAt?.toLocaleDateString()}</span>
             </div>
 
@@ -62,14 +67,13 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
               <div className='flex items-center text-sm text-gray-600 min-w-0'>
                 <MapPin className='w-4 h-4 mr-2 flex-shrink-0' />
                 <span className='truncate'>
-                  {/* {opportunityData.location.city}, {opportunityData.location.country} */}
+                  {opportunityData.location.city}, {opportunityData.location.country}
                 </span>
               </div>
             </div>
 
             {/* Description */}
-            <p className='text-sm text-gray-600 mb-4 line-clamp-2'>{opportunityData.description}</p>
-
+            <p className='text-sm text-gray-600 mb-4 line-clamp-2'>{opportunityData.shortDescription} </p>
             {/* Match Reason - Only show for recommendations and if showReasoning is true */}
             {showReasoning && reasoning && (
               <div className='bg-yellow-50 border-l-3 rounded-l-none border-l-yellow-500 rounded-lg p-3 mb-4'>
