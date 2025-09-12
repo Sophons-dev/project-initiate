@@ -7,33 +7,36 @@ model Opportunity {
   subtype           OpportunitySubtype
   title             String
   description       String
-  matchReason       String
 
-  // Core job details
-  jobDescription    String
-  tags String[]
-  responsibilities  String[]
-  requirements      String[]
-  benefits          String[]
+  // Generic content fields (work for all types)
+  content           String                      // Main content/description
+  tags              String[]
+  highlights        String[]                    // Key points/features
+  prerequisites     String[]                    // Requirements/prerequisites
+  outcomes          String[]                    // Benefits/outcomes/agenda
 
-  // Location details (embedded)
-  locationType      String
+  // Location details
+  locationType      String                      // remote, onsite, hybrid
   city              String
   country           String
-  workLocation      String
+  workLocation      String                      // Specific venue/address
 
+  // Contact and application
   url               String
+  contactEmail      String?
+  contactPhone      String?
 
   // Important dates
   postedDate        String
   applicationDeadline String
-  daysAgoPosted     String
+  startDate         String?                     // For courses and events
+  endDate           String?                     // For courses and events
 
-  // Core metadata for AI matching (JSON)
+  // Type-specific metadata (JSON)
   metadata          Json
 
-  // Company benefits (JSON)
-  companyBenefits   Json
+  // Organization benefits/features (JSON)
+  organizationBenefits Json
 
   // Organization reference
   organizationId    String                      @db.ObjectId
@@ -48,6 +51,7 @@ model Opportunity {
   @@index([createdBy])
   @@index([type])
   @@index([city])
+  @@index([startDate])
 }
 
 model OpportunityRecommendation {

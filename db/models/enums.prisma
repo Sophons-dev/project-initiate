@@ -50,6 +50,7 @@ enum QuestionStage {
 enum OpportunityType {
   job
   course
+  event
 }
 
 enum OpportunitySubtype {

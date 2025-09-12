@@ -62,7 +62,7 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
               <div className='flex items-center text-sm text-gray-600 min-w-0'>
                 <MapPin className='w-4 h-4 mr-2 flex-shrink-0' />
                 <span className='truncate'>
-                  {opportunityData.location.city}, {opportunityData.location.country}
+                  {/* {opportunityData.location.city}, {opportunityData.location.country} */}
                 </span>
               </div>
             </div>
