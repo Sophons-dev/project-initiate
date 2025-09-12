@@ -5,6 +5,7 @@ model Organization {
   id          String           @id @default(auto()) @map("_id") @db.ObjectId
   name        String          @unique
   type        OrganizationType
+  isPartner   Boolean         @default(false)
   aboutTheCompany String?
   website     String?
   logoUrl     String?

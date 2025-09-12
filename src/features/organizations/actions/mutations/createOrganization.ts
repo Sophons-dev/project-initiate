@@ -14,6 +14,7 @@ export async function createOrganization(data: CreateOrganizationDto): Promise<R
       data: {
         name: data.name,
         type: data.type as Organization['type'],
+        isPartner: data.isPartner ?? false,
         website: data.website ?? null,
         logoUrl: data.logoUrl ?? null,
         location: data.location ?? null,

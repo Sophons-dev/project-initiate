@@ -1,11 +1,10 @@
-// TODO: Remove this file when we have a real backend to fetch data from
-
 import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { getOpportunities } from '@/features/opportunities/actions';
 import { getOpportunitiesByOrganizationId } from '@/lib/mock/actions/opportunities';
-import { getOpportunities } from '@/lib/mock/actions/opportunities';
 import { getUserRecommendationById, getUserRecommendations } from '@/lib/mock/actions/user';
 import { getRelatedOpportunities } from '@/lib/mock/actions/opportunities';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
+import { PaginationParams, PaginatedResponse } from '../types/pagination';
 import type { Insight } from '@/lib/agents/insight-agent/types';
 import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 
@@ -19,10 +18,12 @@ export const useGenerateUserInsights = (context: string): UseQueryResult<Insight
   });
 };
 
-export const useGetAllOpportunities = (): UseQueryResult<OpportunityDto[]> => {
-  return useQuery<OpportunityDto[]>({
-    queryKey: ['opportunities'],
-    queryFn: () => getOpportunities(),
+export const useGetAllOpportunities = (
+  paginationParams?: PaginationParams
+): UseQueryResult<PaginatedResponse<OpportunityDto>> => {
+  return useQuery<PaginatedResponse<OpportunityDto>>({
+    queryKey: ['opportunities', paginationParams],
+    queryFn: () => getOpportunities(paginationParams),
   });
 };
 
