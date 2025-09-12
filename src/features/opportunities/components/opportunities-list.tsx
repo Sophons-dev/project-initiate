@@ -1,7 +1,5 @@
-import { Suspense } from 'react';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 import { OpportunityCard } from './opportunity-card';
-import { Skeleton } from '@/components/ui/skeleton';
 import { OpportunitiesListSkeleton } from './skeletons';
 
 // Skeleton component for loading state
