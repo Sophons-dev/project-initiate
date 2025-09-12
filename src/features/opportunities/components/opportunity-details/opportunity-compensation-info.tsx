@@ -59,13 +59,8 @@ export const OpportunityCompensationInfo = ({ opportunity }: OpportunityCompensa
     }
 
     return (
-      <div className='text-center'>
-        <p className={`text-2xl font-bold ${formattedSalary.hasRange ? 'text-green-600' : 'text-gray-900'}`}>
-          {formattedSalary.display}
-        </p>
-        <p className='text-sm text-gray-600'>
-          {formattedSalary.hasRange ? 'Annual salary range' : 'Salary information'}
-        </p>
+      <div>
+        <p>{formattedSalary.display}</p>
       </div>
     );
   };
@@ -153,7 +148,7 @@ export const OpportunityCompensationInfo = ({ opportunity }: OpportunityCompensa
 
   return (
     <div className='bg-white p-6 rounded-lg border shadow-sm'>
-      <h3 className='text-lg font-semibold text-gray-900 mb-4'>{getTitle()}</h3>
+      <h3 className=' font-semibold text-gray-900 mb-4'>{getTitle()}</h3>
       <div className='space-y-3'>
         {isJob && renderJobSalary()}
         {isCourse && renderCourseTuition()}
