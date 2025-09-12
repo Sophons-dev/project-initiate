@@ -40,13 +40,17 @@ export function CompletionStep() {
           userId: res.data.userId,
         });
 
+        // Only redirect if opportunity generation succeeds
+        if (!opportunities || opportunities.length === 0) {
+          throw new Error('No opportunities generated');
+        }
+
         // STEP 2..N-2 — mock delays
         for (let i = 2; i < loadingStates.length - 1; i++) {
           setCurrentStep(i);
           await wait(loadingStates[i].duration || 1500);
         }
 
-        // Only redirect if opportunity generation succeeds
         router.push('/dashboard');
       } catch (e) {
         console.error('❌ Failed generating opportunities:', e);

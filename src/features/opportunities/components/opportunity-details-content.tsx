@@ -16,7 +16,6 @@ import {
   OpportunityCompensationInfo,
   OpportunityTypeSpecificActions,
 } from './opportunity-details';
-import Loading from '@/app/loading';
 import { OpportunityDetailsSkeleton } from './skeletons';
 
 const isOpportunityRecommendation = (
@@ -26,7 +25,7 @@ const isOpportunityRecommendation = (
 };
 
 export const OpportunityDetailsContent = () => {
-  const { opportunity, isLoading, error } = useOpportunityDetailsContext();
+  const { opportunity, isLoading } = useOpportunityDetailsContext();
 
   const baseOpportunity: OpportunityDto = isOpportunityRecommendation(opportunity)
     ? ((opportunity as OpportunityRecommendationDto).opportunity as OpportunityDto)

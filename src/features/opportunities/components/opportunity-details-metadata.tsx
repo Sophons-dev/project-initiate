@@ -5,7 +5,7 @@ interface MetadataRendererProps {
   inline?: boolean;
 }
 
-export const MetadataRenderer = ({ data, inline }: MetadataRendererProps) => {
+export const MetadataRenderer = ({ data }: MetadataRendererProps) => {
   if (data === null || data === undefined) {
     return <span>-</span>;
   }

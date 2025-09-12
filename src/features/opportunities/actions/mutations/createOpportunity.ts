@@ -1,6 +1,6 @@
 'use server';
 
-import { OpportunityType, OpportunitySubtype, Prisma } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { db } from '@/lib/db';
 import { toOpportunityDto } from '@/features/opportunities/mappers/opportunity.mapper';
 import { CreateOpportunityDto, OpportunityDto } from '../../dto';

@@ -1,12 +1,8 @@
 'use client';
 
 import { OpportunityDetailsContent } from '@/features/opportunities/components/opportunity-details-content';
-import { OpportunityDetailsHero } from '@/features/opportunities/components/opportunity-details-hero';
 import { OpportunityDetailsProvider } from '@/features/opportunities/components/opportunity-details.provider';
-import { useGetOpportunityById } from '@/features/opportunities/hooks';
 import { useParams } from 'next/navigation';
-import Loading from '../../../../loading';
-import NotFound from './not-found';
 
 export default function OpportunitiesDetailsPage() {
   const params = useParams();

@@ -1,4 +1,4 @@
-import { CareerInsight, CareerInsightLog } from '@prisma/client';
+import { CareerInsight } from '@prisma/client';
 import { CareerInsightDto } from '../dto/insight.dto';
 
 export function toCareerInsightDto(entity: CareerInsight): CareerInsightDto {
