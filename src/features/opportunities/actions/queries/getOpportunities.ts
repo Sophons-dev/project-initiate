@@ -8,14 +8,30 @@ import { PaginationParams, PaginatedResponse, PaginationMeta } from '../../types
 export async function getOpportunities(
   paginationParams?: PaginationParams
 ): Promise<PaginatedResponse<OpportunityDto>> {
-  const { page = 1, limit = 10 } = paginationParams || {};
+  const { page = 1, limit = 10, search } = paginationParams || {};
   const skip = (page - 1) * limit;
 
-  // Get total count for pagination metadata
-  const total = await db.opportunity.count();
+  // Build search conditions
+  const searchConditions = search
+    ? {
+        OR: [
+          { title: { contains: search, mode: 'insensitive' as const } },
+          { shortDescription: { contains: search, mode: 'insensitive' as const } },
+          { longDescription: { contains: search, mode: 'insensitive' as const } },
+          { tags: { has: search } },
+          { organization: { name: { contains: search, mode: 'insensitive' as const } } },
+        ],
+      }
+    : {};
 
-  // Get paginated opportunities
+  // Get total count for pagination metadata with search
+  const total = await db.opportunity.count({
+    where: searchConditions,
+  });
+
+  // Get paginated opportunities with search
   const opps = await db.opportunity.findMany({
+    where: searchConditions,
     orderBy: { createdAt: 'desc' },
     include: {
       organization: true,
