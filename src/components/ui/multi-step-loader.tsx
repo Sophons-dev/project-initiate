@@ -57,24 +57,37 @@ const LoaderCore = ({ loadingStates, value = 0 }: { loadingStates: LoadingState[
           animate={{ opacity: index <= value ? 1 : 0.4, y: -value * 40 }}
           transition={{ duration: 0.4 }}
         >
-          <div className='relative flex items-center justify-center w-6 h-6'>
+          <div className='relative flex items-center justify-center w-6 h-6 flex-shrink-0'>
             {isCompleted ? (
               <CheckFilled className='text-lime-500' />
             ) : isActive ? (
               <>
                 <CheckFilled className='text-lime-500' />
-                <div className='absolute top-0 right-0 w-3 h-3 flex items-center justify-center'>
-                  <Spinner className='text-lime-500' />
+                <div className='absolute inset-0 flex items-center justify-center'>
+                  <Spinner className='text-lime-500 w-7 h-7' />
                 </div>
               </>
             ) : (
               <CheckIcon className='text-gray-400' />
             )}
           </div>
-          <span className={cn(isActive && 'text-lime-500 font-semibold')}>{loadingState.text}</span>
+          <span className={cn('flex-1', isActive && 'text-lime-500 font-semibold')}>{loadingState.text}</span>
         </motion.div>
       );
     })}
+
+    <motion.div
+      className='mt-8 text-center'
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.5 }}
+    >
+      <p className='text-gray-500 text-sm mb-2'>Please wait while we process your request...</p>
+      <div className='flex items-center justify-center gap-2'>
+        <Spinner className='text-lime-500 w-4 h-4' />
+        <span className='text-xs text-gray-400'>This may take up to 30 seconds</span>
+      </div>
+    </motion.div>
   </div>
 );
 
