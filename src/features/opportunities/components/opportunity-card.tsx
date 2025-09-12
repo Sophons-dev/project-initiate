@@ -31,7 +31,7 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
   // Get safe values with fallbacks
   const type = opportunityData.type || 'other';
   const locationType = opportunityData.location?.type || 'remote';
-  const city = opportunityData.location?.city || 'Unknown';
+  const city = opportunityData.location?.city || undefined;
   const country = opportunityData.location?.country || 'Unknown';
   const organizationName = opportunityData.organization?.name || 'Unknown Organization';
   const title = opportunityData.title || 'Untitled Opportunity';
@@ -79,7 +79,7 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
               <div className='flex items-center text-sm text-gray-600 min-w-0'>
                 <MapPin className='w-4 h-4 mr-2 flex-shrink-0' />
                 <span className='truncate'>
-                  {city}, {country}
+                  {city ? `${city},` : ``} {country}
                 </span>
               </div>
             </div>
