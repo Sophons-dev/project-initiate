@@ -16,10 +16,19 @@ export const OpportunityCompanyInfo = ({ opportunity }: OpportunityCompanyInfoPr
 
       <Separator className='my-2' />
       <div className='space-y-3'>
-        {opportunity.organization.aboutTheCompany && (
+        {opportunity.organization.aboutTheCompany ? (
           <p className='text-gray-700 leading-relaxed'>{opportunity.organization.aboutTheCompany}</p>
+        ) : (
+          <p className='text-gray-500 '>No company description available.</p>
         )}
         <div className='flex flex-col gap-4 text-sm'>
+          {opportunity.organization.type && (
+            <div>
+              <span className='font-medium text-gray-900'>Type:</span>
+              <span className='ml-2 text-gray-700'>{opportunity.organization.type}</span>
+            </div>
+          )}
+
           {opportunity.organization.industry && (
             <>
               <div>

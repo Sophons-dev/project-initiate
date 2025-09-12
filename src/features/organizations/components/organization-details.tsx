@@ -83,7 +83,7 @@ function AboutSection({ organization }: { organization: OrganizationDto }) {
   return (
     <div>
       <h2 className='text-lg font-medium text-gray-900 mb-4'>About</h2>
-      <p className='text-gray-600 leading-relaxed text-sm'>{organization.description}</p>
+      <p className='text-gray-600 leading-relaxed text-sm'>{organization.aboutTheCompany}</p>
     </div>
   );
 }

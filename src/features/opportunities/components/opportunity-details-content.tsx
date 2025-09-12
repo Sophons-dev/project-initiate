@@ -97,7 +97,7 @@ export const OpportunityDetailsContent = () => {
 
             <OpportunityRequiredSkills opportunity={baseOpportunity} />
 
-            <OpportunityAdditionalMetadata opportunity={baseOpportunity} />
+            {/* <OpportunityAdditionalMetadata opportunity={baseOpportunity} /> */}
 
             <OpportunityTypeSpecificActions opportunity={baseOpportunity} />
           </div>

@@ -9,66 +9,60 @@ interface OpportunityTypeSpecificContentProps {
 export const OpportunityTypeSpecificContent = ({ opportunity }: OpportunityTypeSpecificContentProps) => {
   const isJob = opportunity.type === 'job';
   const isCourse = opportunity.type === 'course';
+  const isEvent = opportunity.type === 'event';
 
   return (
     <>
       {/* Job-specific content */}
       {isJob && (
         <>
-          {/* About  */}
-          {opportunity.description && (
-            <div>
-              <h2 className='text-base font-semibold text-gray-900 mb-2'>Job Description</h2>
-              <p className='text-gray-700 leading-relaxed'>{opportunity.description}</p>
-            </div>
-          )}
-
           {/* Job Description */}
-          {opportunity.jobDescription && (
+          {opportunity.longDescription && (
             <div>
-              <h2 className='text-base font-semibold text-gray-900 mb-2'>Job Description</h2>
-              <p className='text-gray-700 leading-relaxed'>{opportunity.jobDescription}</p>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Job Description</h2>
+              <p className='text-gray-700 leading-relaxed'>{opportunity.longDescription}</p>
             </div>
           )}
 
-          {/* Responsibilities */}
-          {opportunity.responsibilities && opportunity.responsibilities.length > 0 && (
+          {/* Key Highlights */}
+          {opportunity.highlights && opportunity.highlights.length > 0 && (
             <div>
-              <h2 className='text-xl font-semibold text-gray-900 mb-2'>Key Responsibilities</h2>
-              <ul className='space-y-2 list-disc list-inside'>
-                {opportunity.responsibilities.map((responsibility, index) => (
-                  <li key={index} className='text-gray-700'>
-                    {responsibility}
+              <h2 className=' font-semibold text-gray-900 mb-2'>Key Highlights</h2>
+              <ul className='space-y-2'>
+                {opportunity.highlights.map((highlight, index) => (
+                  <li key={index} className='flex items-start gap-2 text-gray-700'>
+                    <span className='text-blue-500'>★</span>
+                    <span>{highlight}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          {/* Requirements */}
-          {opportunity.requirements && opportunity.requirements.length > 0 && (
+          {/* Prerequisites */}
+          {opportunity.prerequisites && opportunity.prerequisites.length > 0 && (
             <div>
-              <h2 className='text-xl font-semibold text-gray-900 mb-2'>Requirements</h2>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Requirements</h2>
               <ul className='space-y-2'>
-                {opportunity.requirements.map((requirement, index) => (
+                {opportunity.prerequisites.map((prerequisite, index) => (
                   <li key={index} className='flex items-start gap-2 text-gray-700'>
                     <span className='text-green-500'>✓</span>
-                    <span>{requirement}</span>
+                    <span>{prerequisite}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          {/* Benefits */}
-          {opportunity.benefits && opportunity.benefits.length > 0 && (
+          {/* Expected Outcomes */}
+          {opportunity.outcomes && opportunity.outcomes.length > 0 && (
             <div>
-              <h2 className='text-xl font-semibold text-gray-900 mb-2'>Benefits</h2>
+              <h2 className=' font-semibold text-gray-900 mb-2'>What You&apos;ll Gain</h2>
               <ul className='space-y-2'>
-                {opportunity.benefits.map((benefit, index) => (
+                {opportunity.outcomes.map((outcome, index) => (
                   <li key={index} className='flex items-start gap-2 text-gray-700'>
-                    <span className='text-purple-500'>★</span>
-                    <span>{benefit}</span>
+                    <span className='text-purple-500'>🎯</span>
+                    <span>{outcome}</span>
                   </li>
                 ))}
               </ul>
@@ -80,37 +74,37 @@ export const OpportunityTypeSpecificContent = ({ opportunity }: OpportunityTypeS
       {/* Course-specific content */}
       {isCourse && (
         <>
-          {/* Course Description - using jobDescription field for now */}
-          {opportunity.jobDescription && (
-            <div className='bg-white p-6 rounded-lg border shadow-sm'>
-              <h2 className='text-xl font-semibold text-gray-900 mb-4'>Course Description</h2>
-              <p className='text-gray-700 leading-relaxed'>{opportunity.jobDescription}</p>
+          {/* Course Description */}
+          {opportunity.longDescription && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Course Description</h2>
+              <p className='text-gray-700 leading-relaxed'>{opportunity.longDescription}</p>
             </div>
           )}
 
-          {/* Curriculum - using responsibilities field */}
-          {opportunity.responsibilities && opportunity.responsibilities.length > 0 && (
-            <div className='bg-white p-6 rounded-lg border shadow-sm'>
-              <h2 className='text-xl font-semibold text-gray-900 mb-4'>Curriculum</h2>
+          {/* Curriculum */}
+          {opportunity.highlights && opportunity.highlights.length > 0 && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>What You&apos;ll Learn</h2>
               <ul className='space-y-2'>
-                {opportunity.responsibilities.map((curriculum, index) => (
+                {opportunity.highlights.map((highlight, index) => (
                   <li key={index} className='flex items-start gap-2 text-gray-700'>
-                    <span className='text-blue-500 mt-1'>📚</span>
-                    <span>{curriculum}</span>
+                    <span className='text-blue-500 '>📚</span>
+                    <span>{highlight}</span>
                   </li>
                 ))}
               </ul>
             </div>
           )}
 
-          {/* Prerequisites - using requirements field */}
-          {opportunity.requirements && opportunity.requirements.length > 0 && (
-            <div className='bg-white p-6 rounded-lg border shadow-sm'>
-              <h2 className='text-xl font-semibold text-gray-900 mb-4'>Prerequisites</h2>
+          {/* Prerequisites */}
+          {opportunity.prerequisites && opportunity.prerequisites.length > 0 && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Prerequisites</h2>
               <ul className='space-y-2'>
-                {opportunity.requirements.map((prerequisite, index) => (
+                {opportunity.prerequisites.map((prerequisite, index) => (
                   <li key={index} className='flex items-start gap-2 text-gray-700'>
-                    <span className='text-orange-500 mt-1'>📋</span>
+                    <span className='text-orange-500 '>📋</span>
                     <span>{prerequisite}</span>
                   </li>
                 ))}
@@ -118,14 +112,72 @@ export const OpportunityTypeSpecificContent = ({ opportunity }: OpportunityTypeS
             </div>
           )}
 
-          {/* Learning Outcomes - using benefits field */}
-          {opportunity.benefits && opportunity.benefits.length > 0 && (
-            <div className='bg-white p-6 rounded-lg border shadow-sm'>
-              <h2 className='text-xl font-semibold text-gray-900 mb-4'>Learning Outcomes</h2>
+          {/* Learning Outcomes */}
+          {opportunity.outcomes && opportunity.outcomes.length > 0 && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Learning Outcomes</h2>
               <ul className='space-y-2'>
-                {opportunity.benefits.map((outcome, index) => (
+                {opportunity.outcomes.map((outcome, index) => (
                   <li key={index} className='flex items-start gap-2 text-gray-700'>
-                    <span className='text-green-500 mt-1'>🎯</span>
+                    <span className='text-green-500 '>🎯</span>
+                    <span>{outcome}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </>
+      )}
+
+      {/* Event-specific content */}
+      {isEvent && (
+        <>
+          {/* Event Description */}
+          {opportunity.longDescription && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Event Description</h2>
+              <p className='text-gray-700 leading-relaxed'>{opportunity.longDescription}</p>
+            </div>
+          )}
+
+          {/* Event Highlights */}
+          {opportunity.highlights && opportunity.highlights.length > 0 && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Event Highlights</h2>
+              <ul className='space-y-2'>
+                {opportunity.highlights.map((highlight, index) => (
+                  <li key={index} className='flex items-start gap-2 text-gray-700'>
+                    <span className='text-green-500 '>⭐</span>
+                    <span>{highlight}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Prerequisites */}
+          {opportunity.prerequisites && opportunity.prerequisites.length > 0 && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>Requirements</h2>
+              <ul className='space-y-2'>
+                {opportunity.prerequisites.map((prerequisite, index) => (
+                  <li key={index} className='flex items-start gap-2 text-gray-700'>
+                    <span className='text-orange-500 '>📋</span>
+                    <span>{prerequisite}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          {/* Expected Outcomes */}
+          {opportunity.outcomes && opportunity.outcomes.length > 0 && (
+            <div>
+              <h2 className=' font-semibold text-gray-900 mb-2'>What You&apos;ll Gain</h2>
+              <ul className='space-y-2'>
+                {opportunity.outcomes.map((outcome, index) => (
+                  <li key={index} className='flex items-start gap-2 text-gray-700'>
+                    <span className='text-purple-500 '>🎯</span>
                     <span>{outcome}</span>
                   </li>
                 ))}

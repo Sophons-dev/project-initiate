@@ -1,4 +1,6 @@
-import { Opportunity, OpportunitySubtype, OpportunityType, Organization } from '@prisma/client';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import { Opportunity, OpportunitySubtype, Organization } from '@prisma/client';
 import { OpportunityDto, CreateOpportunityDto } from '../dto';
 import { OrganizationDto } from '@/features/organizations/dto/organization.dto';
 

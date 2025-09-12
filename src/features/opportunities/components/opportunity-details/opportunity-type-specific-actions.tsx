@@ -1,6 +1,9 @@
 'use client';
 
+import { Button } from '@/components/ui/button';
 import { OpportunityDto } from '../../dto';
+import Link from 'next/link';
+import { Bookmark } from 'lucide-react';
 
 interface OpportunityTypeSpecificActionsProps {
   opportunity: OpportunityDto;
@@ -27,25 +30,23 @@ export const OpportunityTypeSpecificActions = ({ opportunity }: OpportunityTypeS
       <h3 className='text-lg font-semibold text-gray-900 mb-4'>{getActionText()}</h3>
       <div className='space-y-3'>
         {opportunity.url ? (
-          <a
-            href={opportunity.url}
-            target='_blank'
-            rel='noopener noreferrer'
-            className='w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium text-center block hover:bg-blue-700 transition-colors'
-          >
-            {getActionDescription()}
-          </a>
+          <Button asChild className='w-full bg-cyan-500 hover:bg-cyan-600 transition-colors'>
+            <Link target='_blank' rel='noopener noreferrer' href={opportunity.url}>
+              {getActionDescription()}
+            </Link>
+          </Button>
         ) : (
-          <button
+          <Button
             disabled
             className='w-full bg-gray-300 text-gray-500 py-3 px-4 rounded-lg font-medium text-center cursor-not-allowed'
           >
             {isJob ? 'Application Link Not Available' : 'Enrollment Link Not Available'}
-          </button>
+          </Button>
         )}
-        <button className='w-full border border-gray-300 text-gray-700 py-3 px-4 rounded-lg font-medium hover:bg-gray-50 transition-colors'>
+        <Button className='w-full bg-white hover:bg-gray-100 border text-black transition-colors'>
+          <Bookmark />
           {isJob ? 'Save Job' : 'Save Course'}
-        </button>
+        </Button>
       </div>
     </div>
   );

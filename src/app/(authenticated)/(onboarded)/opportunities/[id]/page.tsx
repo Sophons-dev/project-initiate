@@ -16,7 +16,7 @@ export default function OpportunitiesDetailsPage() {
     <OpportunityDetailsProvider opportunityId={opportunityId}>
       <div className='min-h-screen'>
         <main>
-          <OpportunityDetailsHero />
+          {/* <OpportunityDetailsHero /> */}
           <OpportunityDetailsContent />
         </main>
       </div>

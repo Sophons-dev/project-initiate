@@ -1,13 +1,12 @@
 'use server';
 
-import { generateInsight } from '@/lib/agents/insight-agent/insight-generator';
 import { generateRecommendations } from '@/lib/agents/recommendation-agent/recommendation-generator';
 import { Recommendation } from '@/lib/agents/recommendation-agent/types';
 import { createOpportunity } from '@/features/opportunities/actions/mutations/createOpportunity';
 import { createOrganization, getOrganizationByName } from '@/features/organizations/actions';
 import { createOpportunityRecommendation } from '../actions/mutations/createOpportunityRecommendation';
 import { CreateOpportunityDto, OpportunityDto } from '../dto';
-import { OpportunitySubtype, OpportunityType } from '@prisma/client';
+import { OpportunityType } from '@prisma/client';
 import { mapSubtype } from '../mappers/opportunity.mapper';
 
 export async function generateAndSaveOpportunities(
