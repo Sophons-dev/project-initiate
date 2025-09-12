@@ -3,11 +3,11 @@
 import Greeter from '@/components/layout/greeter';
 import { Card, CardContent } from '@/components/ui/card';
 import { useCurrentUser } from '@/features/user/hooks';
-import { motion } from 'framer-motion';
 import { Blend, CircleCheck, Sparkles, TrendingUp, UserCircle } from 'lucide-react';
+import { CareerInsightsSkeleton } from './skeletons';
 
 export const DashboardHero = () => {
-  const { data } = useCurrentUser();
+  const { data, isLoading } = useCurrentUser();
 
   const user = data?.data;
 
@@ -17,22 +17,10 @@ export const DashboardHero = () => {
       message='Here are your AI-powered personalized recommendations.'
     >
       {/* Stats Cards */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-        className='p-3 bg-[#E9E9E9]/50 border border-white rounded-lg mb-6 mt-8'
-      >
+      <div className='p-3 bg-[#E9E9E9]/50 border border-white rounded-lg mb-6 mt-8'>
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3'>
           {statsData.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1 + index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -5 }}
-              className='cursor-pointer'
-            >
+            <div key={index} className='cursor-pointer'>
               <Card className='p-6 border rounded shadow-sm hover:shadow-md transition-shadow'>
                 <CardContent className='p-0 flex items-center space-x-4'>
                   <div className={`w-12 h-12 ${stat.bgColor} flex items-center justify-center rounded-md`}>
@@ -44,26 +32,27 @@ export const DashboardHero = () => {
                   </div>
                 </CardContent>
               </Card>
-            </motion.div>
+            </div>
           ))}
         </div>
-      </motion.div>
+      </div>
 
       {/* AI Career Insights */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-        className='p-3 bg-[#E9E9E9]/50 border border-white rounded-lg mb-6'
-      >
-        <div className='p-3 bg-white rounded shadow-sm'>
-          <div className='flex items-center mb-4'>
-            <Sparkles className='w-5 h-5 text-cyan-500 mr-2' />
-            <h2 className='text-lg font-semibold text-gray-900'>AI Career Insights</h2>
+      {isLoading ? (
+        <CareerInsightsSkeleton />
+      ) : (
+        <div className='p-3 bg-[#E9E9E9]/50 border border-white rounded-lg mb-6'>
+          <div className='p-3 bg-white rounded shadow-sm'>
+            <div className='flex items-center mb-4'>
+              <Sparkles className='w-5 h-5 text-cyan-500 mr-2' />
+              <h2 className='text-lg font-semibold text-gray-900'>AI Career Insights</h2>
+            </div>
+            <p className='text-gray-600 leading-relaxed'>
+              {user?.careerInsight?.summary || 'No career insights available yet.'}
+            </p>
           </div>
-          <p className='text-gray-600 leading-relaxed'>{user?.careerInsight?.summary}</p>
         </div>
-      </motion.div>
+      )}
     </Greeter>
   );
 };
