@@ -71,11 +71,6 @@ export const OpportunityTypeSpecificSidebar = ({ opportunity }: OpportunityTypeS
       value: getMetadataValue(opportunity.metadata, 'jobCategory'),
       show: isJob && !!getMetadataValue(opportunity.metadata, 'jobCategory'),
     },
-    {
-      label: 'Job Subcategory',
-      value: getMetadataValue(opportunity.metadata, 'jobSubCategory'),
-      show: isJob && !!getMetadataValue(opportunity.metadata, 'jobSubCategory'),
-    },
   ];
 
   // Course-specific fields

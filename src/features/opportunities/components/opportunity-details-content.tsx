@@ -27,8 +27,6 @@ const isOpportunityRecommendation = (
 export const OpportunityDetailsContent = () => {
   const { opportunity, isLoading, error } = useOpportunityDetailsContext();
 
-  console.log('opportunity', opportunity);
-
   const baseOpportunity: OpportunityDto = isOpportunityRecommendation(opportunity)
     ? ((opportunity as OpportunityRecommendationDto).opportunity as OpportunityDto)
     : (opportunity as OpportunityDto);
@@ -76,7 +74,7 @@ export const OpportunityDetailsContent = () => {
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}>
         {/* Main Content Sections */}
-        <div className='flex gap-5'>
+        <div className='flex flex-col lg:flex-row gap-5'>
           {/* Main Content */}
           <div className='flex flex-col gap-8 flex-2'>
             <OpportunityHeader opportunity={baseOpportunity} />
@@ -84,7 +82,7 @@ export const OpportunityDetailsContent = () => {
           </div>
 
           {/* Sidebar */}
-          <div className='flex flex-1 flex-col gap-6'>
+          <div className='flex flex-1 flex-col gap-3 lg:gap-6'>
             {recommendationDetails && (
               <OpportunityRecommendationDetails recommendationDetails={recommendationDetails} />
             )}
