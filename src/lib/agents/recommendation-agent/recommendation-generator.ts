@@ -24,11 +24,11 @@ export async function generateRecommendations({
         {
           role: 'system',
           // content: SYSTEM_PROMPT,
-          content: `Search for jobs based on user profile: ${context}`,
+          content: `Search for exactly ${recommendationCount} jobs based on user profile: ${context}. Do not exceed this number.`,
         },
         {
           role: 'user',
-          content: `Search for a list of at least ${recommendationCount} jobs, opportunities, recommendations, etc.`,
+          content: `Find exactly ${recommendationCount} job opportunities that match the user's profile. Return exactly ${recommendationCount} recommendations, no more, no less.`,
         },
       ],
       tools: [
