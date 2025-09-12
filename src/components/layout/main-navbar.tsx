@@ -23,7 +23,7 @@ import { useRouter } from 'next/navigation';
 const navLinks = [
   { label: 'Dashboard', href: '/dashboard' },
   { label: 'Opportunities', href: '/opportunities' },
-  { label: 'Organizations', href: '/organizations' },
+  // { label: 'Organizations', href: '/organizations' },
 ];
 
 export const MainNavbar = () => {
