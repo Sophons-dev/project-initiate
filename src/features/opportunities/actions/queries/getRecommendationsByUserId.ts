@@ -34,9 +34,14 @@ export async function getRecommendationsByUserId(
     : { userId };
 
   // Get total count for pagination metadata
+  console.log('getRecommendationsByUserId - userId:', userId);
+  console.log('getRecommendationsByUserId - searchConditions:', searchConditions);
+
   const total = await db.opportunityRecommendation.count({
     where: searchConditions,
   });
+
+  console.log('getRecommendationsByUserId - total count:', total);
 
   // Get paginated recommendations
   const recs = await db.opportunityRecommendation.findMany({

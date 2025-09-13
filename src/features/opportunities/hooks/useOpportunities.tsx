@@ -36,7 +36,7 @@ export const useGetUserOpportunitiesPaginated = (userId: string, paginationParam
   }, [query.isFetching, start, stop]);
 
   return {
-    opportunities: query.data?.data ?? [],
+    opportunities: query.data,
     meta: query.data?.meta,
     isLoading: query.isLoading,
     error: query.error ?? null,

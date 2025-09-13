@@ -2,15 +2,16 @@
 
 import { motion } from 'framer-motion';
 import { OpportunitiesList } from '@/features/opportunities/components';
-import { TabFilter, SearchInput } from '@/components/shared';
+import { TabFilter, SearchInput, Pagination } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { opportunityFilters } from '@/lib/constants';
 import { useAuth } from '@clerk/nextjs';
 import { useGetUserByClerkId } from '@/features/user/hooks/useUser';
-import { useUserOpportunitiesInfinite } from '@/features/opportunities/hooks/useUserOpportunitiesInfinite';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDebounce } from '@/hooks/useDebounce';
+import { useGetUserOpportunitiesPaginated } from '@/features/opportunities/hooks';
+import { PaginationParams } from '@/features/opportunities/types/pagination';
 
 export const DashboardContent = () => {
   const { userId } = useAuth();
@@ -18,23 +19,33 @@ export const DashboardContent = () => {
   const user = data?.data;
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [paginationParams, setPaginationParams] = useState<PaginationParams>({
+    page: 1,
+    limit: 9,
+  });
   const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  const {
-    data: opportunities,
-    isLoading,
-    error,
-    hasMore,
-    isLoadingMore,
-    loadMoreRef,
-  } = useUserOpportunitiesInfinite(user?.id || '', debouncedSearchQuery);
+  // Update pagination params when search changes
+  useEffect(() => {
+    setPaginationParams(prev => ({
+      ...prev,
+      page: 1, // Reset to first page when searching
+      search: debouncedSearchQuery || undefined,
+    }));
+  }, [debouncedSearchQuery]);
+
+  const { opportunities, isLoading, error } = useGetUserOpportunitiesPaginated(user?.id || '', paginationParams);
 
   // Apply tab filtering
   const {
     activeFilter,
     setActiveFilter,
     filteredData: filteredOpportunities,
-  } = useFilter(opportunities, opportunityFilters);
+  } = useFilter(opportunities?.data ?? [], opportunityFilters);
+
+  const handlePageChange = (page: number) => {
+    setPaginationParams(prev => ({ ...prev, page }));
+  };
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
@@ -79,24 +90,10 @@ export const DashboardContent = () => {
 
         <OpportunitiesList opportunities={filteredOpportunities} isLoading={isLoading} error={error ?? undefined} />
 
-        {/* Infinite scroll trigger */}
-        {hasMore && (
-          <div ref={loadMoreRef} className='flex justify-center py-8'>
-            {isLoadingMore ? (
-              <div className='flex items-center space-x-2'>
-                <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-500'></div>
-                <span className='text-gray-600'>Loading more opportunities...</span>
-              </div>
-            ) : (
-              <div className='text-gray-400 text-sm'>Scroll down to load more</div>
-            )}
-          </div>
-        )}
-
-        {/* End of results message */}
-        {!hasMore && opportunities.length > 0 && (
-          <div className='flex justify-center py-8'>
-            <div className='text-gray-400 text-sm'>You&apos;ve reached the end of your recommendations</div>
+        {/* Pagination */}
+        {opportunities?.meta && (
+          <div className='mt-8'>
+            <Pagination meta={opportunities.meta} onPageChange={handlePageChange} />
           </div>
         )}
       </motion.div>
