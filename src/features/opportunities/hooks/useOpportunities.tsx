@@ -5,7 +5,7 @@ import { getRecommendationsByUserId, getOpportunityById } from '@/features/oppor
 import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
-import { generateAndSaveOpportunities } from '../services/opportunity.service';
+import { generateAndSaveOpportunities } from '@/features/opportunities/actions';
 import { generateInsightsForUser } from '../../career-insight/services/insight.service';
 import { upsertCareerInsight } from '@/features/career-insight/actions/mutations/upsertCareerInsight';
 import { PaginationParams, PaginatedResponse } from '../types/pagination';

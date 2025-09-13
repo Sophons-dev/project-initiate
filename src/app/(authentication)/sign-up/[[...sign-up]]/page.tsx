@@ -4,7 +4,7 @@ import { SignUp } from '@clerk/nextjs';
 export default function SignUpPage() {
   return (
     <div className='flex justify-center items-center'>
-      <SignUp fallback={<SignInSkeleton />} routing='hash' />
+      <SignUp fallback={<SignInSkeleton />} routing='path' path='/sign-up' />
     </div>
   );
 }

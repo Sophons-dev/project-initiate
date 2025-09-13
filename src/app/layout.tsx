@@ -35,7 +35,7 @@ export default function RootLayout({
         signInUrl={`/sign-in`}
         signUpUrl={`/sign-up`}
         signInFallbackRedirectUrl={`/dashboard`}
-        signUpFallbackRedirectUrl={`/dashboard`}
+        signUpFallbackRedirectUrl={`/onboarding`}
         afterSignOutUrl={appUrl}
         appearance={{
           variables: {
