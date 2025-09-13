@@ -3,66 +3,15 @@
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useOnboarding } from '../contexts/onboarding-context';
-import { useRouter } from 'next/navigation';
 import { CheckCircle, Sparkles, Target, Users } from 'lucide-react';
-import { onboardUser } from '@/features/user/actions';
-import { MultiStepLoader } from '@/components/ui/multi-step-loader';
-import { useState } from 'react';
-import { loadingStates } from '../lib/constants';
-import { useGenerateAndSaveOpportunities } from '@/features/opportunities/hooks';
 
 export function CompletionStep() {
-  const { data } = useOnboarding();
-  const router = useRouter();
-  const saveOpps = useGenerateAndSaveOpportunities();
-  const [currentStep, setCurrentStep] = useState(0);
-  const [loading, setLoading] = useState(false);
-
-  const wait = (ms: number) => new Promise(res => setTimeout(res, ms));
+  const { data, setIsFinalizing } = useOnboarding();
 
   // Handle onboarding process and navigate to dashboard
   const handleGoToDashboard = async () => {
-    setLoading(true);
-    setCurrentStep(0); // Start loader at step 0
-
-    try {
-      // STEP 0 — onboardUser (while loader shows "Packing your details...")
-      const res = await onboardUser(data);
-      if (!res.success || !res.data?.userId) {
-        throw new Error(res.error || 'Onboarding failed');
-      }
-
-      // STEP N — real opportunity generation
-      setCurrentStep(1);
-      try {
-        const opportunities = await saveOpps.mutateAsync({
-          context: JSON.stringify(data),
-          userId: res.data.userId,
-        });
-
-        // Only redirect if opportunity generation succeeds
-        if (!opportunities || opportunities.length === 0) {
-          throw new Error('No opportunities generated');
-        }
-
-        // STEP 2..N-2 — mock delays
-        for (let i = 2; i < loadingStates.length - 1; i++) {
-          setCurrentStep(i);
-          await wait(loadingStates[i].duration || 1500);
-        }
-
-        router.push('/dashboard');
-      } catch (e) {
-        console.error('❌ Failed generating opportunities:', e);
-        // Don't redirect on error - let user retry or handle the error
-        setLoading(false);
-        // You could show an error message to the user here
-        throw new Error('Failed to generate opportunities. Please try again.');
-      }
-    } catch (err) {
-      console.error('Onboarding error:', err);
-      setLoading(false); // stop loader if failure
-    }
+    // Simply set the finalizing state - the FinalizingStep will handle the actual process
+    setIsFinalizing(true);
   };
 
   return (
@@ -72,8 +21,6 @@ export function CompletionStep() {
       transition={{ duration: 0.5 }}
       className='text-center xl:w-[500px]'
     >
-      <MultiStepLoader loadingStates={loadingStates} loading={loading} value={currentStep} />
-
       {/* Success Icon */}
       <motion.div
         initial={{ scale: 0 }}
@@ -166,8 +113,6 @@ export function CompletionStep() {
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.7 }}>
         <Button
           onClick={handleGoToDashboard}
-          disabled={loading}
-          aria-busy={loading}
           className='bg-gradient-to-r from-cyan-500 to-cyan-600 hover:from-cyan-600 hover:to-cyan-700 text-white px-8 py-3 rounded-full'
         >
           Continue to Dashboard

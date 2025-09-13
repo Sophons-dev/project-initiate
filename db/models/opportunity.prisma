@@ -69,4 +69,5 @@ model OpportunityRecommendation {
 
   @@index([userId])
   @@index([opportunityId])
+  @@unique([userId, opportunityId])
 }

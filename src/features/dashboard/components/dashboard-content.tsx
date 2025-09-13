@@ -2,29 +2,50 @@
 
 import { motion } from 'framer-motion';
 import { OpportunitiesList } from '@/features/opportunities/components';
-import { TabFilter, SearchInput } from '@/components/shared';
+import { TabFilter, SearchInput, Pagination } from '@/components/shared';
 import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { opportunityFilters } from '@/lib/constants';
 import { useAuth } from '@clerk/nextjs';
-import { useGetUserOpportunities } from '@/features/opportunities/hooks';
 import { useGetUserByClerkId } from '@/features/user/hooks/useUser';
+import { useEffect, useState } from 'react';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useGetUserOpportunitiesPaginated } from '@/features/opportunities/hooks';
+import { PaginationParams } from '@/features/opportunities/types/pagination';
 
 export const DashboardContent = () => {
   const { userId } = useAuth();
   const { data } = useGetUserByClerkId(userId || '');
   const user = data?.data;
 
-  const { opportunities, isLoading, error } = useGetUserOpportunities(user?.id || '');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [paginationParams, setPaginationParams] = useState<PaginationParams>({
+    page: 1,
+    limit: 9,
+  });
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Apply search + tab filtering to the merged list
+  // Update pagination params when search changes
+  useEffect(() => {
+    setPaginationParams(prev => ({
+      ...prev,
+      page: 1, // Reset to first page when searching
+      search: debouncedSearchQuery || undefined,
+    }));
+  }, [debouncedSearchQuery]);
+
+  const { opportunities, isLoading, error } = useGetUserOpportunitiesPaginated(user?.id || '', paginationParams);
+
+  // Apply tab filtering
   const {
     activeFilter,
     setActiveFilter,
-    searchQuery,
-    setSearchQuery,
     filteredData: filteredOpportunities,
-  } = useFilter(opportunities, opportunityFilters);
+  } = useFilter(opportunities?.data ?? [], opportunityFilters);
+
+  const handlePageChange = (page: number) => {
+    setPaginationParams(prev => ({ ...prev, page }));
+  };
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
@@ -68,6 +89,13 @@ export const DashboardContent = () => {
         </div>
 
         <OpportunitiesList opportunities={filteredOpportunities} isLoading={isLoading} error={error ?? undefined} />
+
+        {/* Pagination */}
+        {opportunities?.meta && (
+          <div className='mt-8'>
+            <Pagination meta={opportunities.meta} onPageChange={handlePageChange} />
+          </div>
+        )}
       </motion.div>
     </div>
   );

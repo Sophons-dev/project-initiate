@@ -5,18 +5,23 @@ import { getRecommendationsByUserId, getOpportunityById } from '@/features/oppor
 import { useEffect } from 'react';
 import { useProgress } from '@bprogress/next';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
-import { generateAndSaveOpportunities } from '../services/opportunity.service';
+import { generateAndSaveOpportunities } from '@/features/opportunities/actions';
 import { generateInsightsForUser } from '../../career-insight/services/insight.service';
 import { upsertCareerInsight } from '@/features/career-insight/actions/mutations/upsertCareerInsight';
+import { PaginationParams, PaginatedResponse } from '../types/pagination';
 
-export const useGetUserOpportunities = (userId: string) => {
+export const useGetUserOpportunitiesPaginated = (userId: string, paginationParams?: PaginationParams) => {
   const { start, stop } = useProgress();
 
-  const query = useQuery<OpportunityRecommendationDto[]>({
-    queryKey: ['user-opportunities', userId],
+  const query = useQuery<PaginatedResponse<OpportunityRecommendationDto>>({
+    queryKey: ['user-opportunities-paginated', userId, paginationParams],
     queryFn: async () => {
-      if (!userId) return [];
-      return await getRecommendationsByUserId(userId);
+      if (!userId)
+        return {
+          data: [],
+          meta: { page: 1, limit: 10, total: 0, totalPages: 0, hasNextPage: false, hasPreviousPage: false },
+        };
+      return await getRecommendationsByUserId(userId, paginationParams);
     },
     enabled: !!userId,
     staleTime: 1000 * 60 * 5,
@@ -31,7 +36,8 @@ export const useGetUserOpportunities = (userId: string) => {
   }, [query.isFetching, start, stop]);
 
   return {
-    opportunities: query.data ?? [],
+    opportunities: query.data,
+    meta: query.data?.meta,
     isLoading: query.isLoading,
     error: query.error ?? null,
     refetch: query.refetch,

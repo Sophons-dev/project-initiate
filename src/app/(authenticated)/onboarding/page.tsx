@@ -2,6 +2,7 @@
 
 import {
   CompletionStep,
+  FinalizingStep,
   TermsStep,
   UserTypeStep,
   DynamicQuestionStep,
@@ -11,7 +12,12 @@ import {
 import { useOnboarding } from '@/features/onboarding/contexts';
 
 export default function OnboardingPage() {
-  const { currentStep, questions } = useOnboarding();
+  const { currentStep, questions, isFinalizing } = useOnboarding();
+
+  // If we're in finalizing state, always show the finalizing step
+  if (isFinalizing) {
+    return <FinalizingStep />;
+  }
 
   const renderStep = () => {
     const questionSteps = questions.length;

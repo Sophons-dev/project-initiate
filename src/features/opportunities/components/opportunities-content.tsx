@@ -13,7 +13,7 @@ export const OpportunitiesContent = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [paginationParams, setPaginationParams] = useState<PaginationParams>({
     page: 1,
-    limit: 10,
+    limit: 9,
   });
 
   // Debounce search query to avoid too many API calls
