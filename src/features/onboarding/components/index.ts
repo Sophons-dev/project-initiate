@@ -1,5 +1,6 @@
 export * from './completion-step';
 export * from './dynamic-question-step';
+export * from './finalizing-step';
 export * from './term-step';
 export * from './user-info1-step';
 export * from './user-info2-step';

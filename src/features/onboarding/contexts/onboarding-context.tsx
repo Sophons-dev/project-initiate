@@ -17,12 +17,15 @@ interface OnboardingContextType {
   fetchQuestions: (userType: UserType) => void;
   clearOnboardingData: () => void;
   isClient: boolean;
+  isFinalizing: boolean;
+  setIsFinalizing: (finalizing: boolean) => void;
 }
 
 // LocalStorage keys
 const ONBOARDING_DATA_KEY = 'onboarding_data';
 const ONBOARDING_STEP_KEY = 'onboarding_current_step';
 const ONBOARDING_QUESTIONS_KEY = 'onboarding_questions';
+const ONBOARDING_FINALIZING_KEY = 'onboarding_finalizing';
 
 // Utility functions for localStorage
 const saveToLocalStorage = (key: string, data: any) => {
@@ -69,6 +72,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
   // Initialize with default values to match server-side rendering
   const [currentStep, setCurrentStep] = useState(1);
   const [questions, setQuestions] = useState<Question[]>([]);
+  const [isFinalizing, setIsFinalizing] = useState(false);
   const [data, setData] = useState<OnboardingUserParams>({
     userType: 'student',
     fullName: '',
@@ -91,6 +95,7 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     // Load saved data from localStorage
     const savedStep = loadFromLocalStorage(ONBOARDING_STEP_KEY, 1);
     const savedQuestions = loadFromLocalStorage(ONBOARDING_QUESTIONS_KEY, []);
+    const savedFinalizing = loadFromLocalStorage(ONBOARDING_FINALIZING_KEY, false);
     const savedData = loadFromLocalStorage(ONBOARDING_DATA_KEY, {
       userType: 'student',
       fullName: '',
@@ -112,6 +117,9 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     }
     if (savedQuestions.length > 0) {
       setQuestions(savedQuestions);
+    }
+    if (savedFinalizing) {
+      setIsFinalizing(savedFinalizing);
     }
     if (
       savedData.fullName ||
@@ -151,6 +159,13 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     }
   }, [questions, isClient]);
 
+  // Save to localStorage whenever finalizing state changes (only on client side)
+  useEffect(() => {
+    if (isClient) {
+      saveToLocalStorage(ONBOARDING_FINALIZING_KEY, isFinalizing);
+    }
+  }, [isFinalizing, isClient]);
+
   const fetchQuestions = async (userType: UserType) => {
     start();
 
@@ -181,8 +196,10 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
     clearLocalStorage(ONBOARDING_DATA_KEY);
     clearLocalStorage(ONBOARDING_STEP_KEY);
     clearLocalStorage(ONBOARDING_QUESTIONS_KEY);
+    clearLocalStorage(ONBOARDING_FINALIZING_KEY);
     setCurrentStep(1);
     setQuestions([]);
+    setIsFinalizing(false);
     setData({
       userType: 'student',
       fullName: '',
@@ -214,6 +231,8 @@ export function OnboardingProvider({ children }: { children: React.ReactNode }) 
         fetchQuestions,
         clearOnboardingData,
         isClient,
+        isFinalizing,
+        setIsFinalizing,
       }}
     >
       {children}
