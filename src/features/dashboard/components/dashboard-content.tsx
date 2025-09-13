@@ -7,22 +7,32 @@ import { useFilter } from '@/hooks/useFilter';
 import { filterColors } from '@/lib/constants';
 import { opportunityFilters } from '@/lib/constants';
 import { useAuth } from '@clerk/nextjs';
-import { useGetUserOpportunities } from '@/features/opportunities/hooks';
 import { useGetUserByClerkId } from '@/features/user/hooks/useUser';
+import { useUserOpportunitiesInfinite } from '@/features/opportunities/hooks/useUserOpportunitiesInfinite';
+import { useState } from 'react';
+import { useDebounce } from '@/hooks/useDebounce';
 
 export const DashboardContent = () => {
   const { userId } = useAuth();
   const { data } = useGetUserByClerkId(userId || '');
   const user = data?.data;
 
-  const { opportunities, isLoading, error } = useGetUserOpportunities(user?.id || '');
+  const [searchQuery, setSearchQuery] = useState('');
+  const debouncedSearchQuery = useDebounce(searchQuery, 300);
 
-  // Apply search + tab filtering to the merged list
+  const {
+    data: opportunities,
+    isLoading,
+    error,
+    hasMore,
+    isLoadingMore,
+    loadMoreRef,
+  } = useUserOpportunitiesInfinite(user?.id || '', debouncedSearchQuery);
+
+  // Apply tab filtering
   const {
     activeFilter,
     setActiveFilter,
-    searchQuery,
-    setSearchQuery,
     filteredData: filteredOpportunities,
   } = useFilter(opportunities, opportunityFilters);
 
@@ -68,6 +78,27 @@ export const DashboardContent = () => {
         </div>
 
         <OpportunitiesList opportunities={filteredOpportunities} isLoading={isLoading} error={error ?? undefined} />
+
+        {/* Infinite scroll trigger */}
+        {hasMore && (
+          <div ref={loadMoreRef} className='flex justify-center py-8'>
+            {isLoadingMore ? (
+              <div className='flex items-center space-x-2'>
+                <div className='animate-spin rounded-full h-6 w-6 border-b-2 border-cyan-500'></div>
+                <span className='text-gray-600'>Loading more opportunities...</span>
+              </div>
+            ) : (
+              <div className='text-gray-400 text-sm'>Scroll down to load more</div>
+            )}
+          </div>
+        )}
+
+        {/* End of results message */}
+        {!hasMore && opportunities.length > 0 && (
+          <div className='flex justify-center py-8'>
+            <div className='text-gray-400 text-sm'>You&apos;ve reached the end of your recommendations</div>
+          </div>
+        )}
       </motion.div>
     </div>
   );
