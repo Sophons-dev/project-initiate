@@ -12,7 +12,7 @@ import { loadingStates } from '../lib/constants';
 import { useGenerateAndSaveOpportunities } from '@/features/opportunities/hooks';
 
 export function CompletionStep() {
-  const { data } = useOnboarding();
+  const { data, clearOnboardingData } = useOnboarding();
   const router = useRouter();
   const saveOpps = useGenerateAndSaveOpportunities();
   const [currentStep, setCurrentStep] = useState(0);
@@ -51,6 +51,8 @@ export function CompletionStep() {
           await wait(loadingStates[i].duration || 1500);
         }
 
+        // Clear onboarding data from localStorage before redirecting
+        clearOnboardingData();
         router.push('/dashboard');
       } catch (e) {
         console.error('❌ Failed generating opportunities:', e);
