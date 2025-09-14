@@ -28,7 +28,7 @@ export async function getOrganizations(
 
   const organizations = await db.organization.findMany({
     where: searchConditions,
-    orderBy: { createdAt: 'desc' },
+    orderBy: { createdAt: 'asc' },
     skip,
     take: limit,
     include: {

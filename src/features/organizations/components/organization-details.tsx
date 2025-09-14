@@ -11,20 +11,6 @@ interface OrganizationDetailsProps {
 }
 
 export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) => {
-  const {
-    data: opportunities,
-    isLoading: opportunitiesLoading,
-    error: opportunitiesError,
-  } = useGetOpportunitiesByOrganizationId(organization.id);
-
-  if (opportunitiesLoading) {
-    return <OrganizationDetailsSkeleton />;
-  }
-
-  if (opportunitiesError) {
-    return <div>Error loading opportunities: {opportunitiesError.message}</div>;
-  }
-
   return (
     <div className='flex-1'>
       <div className='sticky top-20'>
@@ -44,7 +30,7 @@ export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) 
                     View All →
                   </motion.button>
                 </div>
-                <OpportunitiesList opportunities={opportunities ?? []} />
+                <OpportunitiesList opportunities={organization.opportunities ?? []} />
               </div>
             </div>
           </div>
