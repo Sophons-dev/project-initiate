@@ -36,7 +36,7 @@ export const HeroSection = () => {
   ];
   return (
     <section id='home' ref={heroRef} className='relative pt-10 md:pt-20 px-4 md:px-0 overflow-hidden mx-auto'>
-      <div className='z-50 w-screen h-[200px] absolute bottom-0 bg-gradient-to-t from-white via-white/60 to-transparent' />
+      <div className='z-10 w-screen h-[200px] absolute bottom-0 bg-gradient-to-t from-white via-white/60 to-transparent' />
       <motion.div className='mx-auto text-center'>
         {/* Hero Content */}
         <motion.div

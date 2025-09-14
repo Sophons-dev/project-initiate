@@ -43,7 +43,7 @@ export const FeatureSection = () => {
         >
           {features.map((feature, index) => (
             <motion.div key={index} variants={fadeInUp}>
-              <Card className='p-6 h-full hover:shadow-xl transition-all border duration-300 group cursor-pointer bg-[#F9F8FC]'>
+              <Card className='p-6 h-full hover:shadow-xl transition-all border duration-300 group bg-[#F9F8FC]'>
                 <CardContent className='p-0 flex flex-col gap-y-6'>
                   <motion.div
                     className='w-full rounded-lg mb-4 relative overflow-hidden'
