@@ -4,11 +4,11 @@ import Greeter from '@/components/layout/greeter';
 import { useOpportunityDetailsContext } from './opportunity-details.provider';
 import { OpportunityDto, OpportunityRecommendationDto } from '../dto';
 
-const isOpportunityRecommendation = (
-  opportunity: OpportunityDto | OpportunityRecommendationDto
-): opportunity is OpportunityRecommendationDto => {
-  return (opportunity as OpportunityRecommendationDto).userId !== undefined;
-};
+// const isOpportunityRecommendation = (
+//   opportunity: OpportunityDto | OpportunityRecommendationDto
+// ): opportunity is OpportunityRecommendationDto => {
+//   return (opportunity as OpportunityRecommendationDto).userId !== undefined;
+// };
 
 export const OpportunityDetailsHero = () => {
   const { opportunity } = useOpportunityDetailsContext();

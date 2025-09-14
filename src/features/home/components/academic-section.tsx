@@ -50,20 +50,12 @@ export const AcademicSection = () => {
                 'Personalized learning path recommendations',
                 'Early access to internship and job opportunities',
               ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  variants={slideInLeft}
-                  className='flex items-center space-x-3 group cursor-pointer'
-                  whileHover={{ x: 10 }}
-                >
-                  <motion.div
-                    className='w-6 h-6 bg-cyan-600 rounded-full flex items-center justify-center'
-                    whileHover={{ scale: 2 }}
-                  >
+                <motion.div key={index} variants={slideInLeft} className='flex items-center space-x-3'>
+                  <div className='w-6 h-6 bg-cyan-600 rounded-full flex items-center justify-center'>
                     <Check className='w-4 h-4 text-white' />
-                  </motion.div>
+                  </div>
 
-                  <span className='group-hover:text-cyan-600 transition-colors text-sm md:text-base'>{item}</span>
+                  <span className='text-sm md:text-base'>{item}</span>
                 </motion.div>
               ))}
             </motion.div>
@@ -86,36 +78,26 @@ export const AcademicSection = () => {
               />
             </motion.div>
             <div className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
-              <motion.div
-                className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'>
                 <div className='bg-white md:w-1/2 w-full flex flex-row md:items-center space-x-3 p-3 rounded-xl shadow-lg'>
-                  <motion.div
-                    className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'
-                    whileHover={{ scale: 1.1 }}
-                  >
+                  <div className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
                     <BookOpen className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
-                  </motion.div>
+                  </div>
                   <div>
                     <p className='font-medium text-sm text-black'>Course Discovery</p>
                     <p className='text-xs text-gray-500'>Find courses from top universities</p>
                   </div>
                 </div>
                 <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3 rounded-xl shadow-lg'>
-                  <motion.div
-                    className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'
-                    whileHover={{ scale: 1.1 }}
-                  >
+                  <div className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
                     <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
-                  </motion.div>
+                  </div>
                   <div>
                     <p className='font-medium text-sm text-black'>Career Guidance</p>
                     <p className='text-xs text-gray-500'>Get personalized career advice</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-import { OnboardingGuard } from '@/components/auth/onboarding-guard';
 import { Footer } from '@/components/layout/footer';
 import { MainNavbar } from '@/components/layout/main-navbar';
 import { requireOnboarded } from '@/lib/auth/require-onboarded';

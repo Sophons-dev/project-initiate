@@ -3,8 +3,15 @@
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export const SponsorSection = () => {
+  const sponsors = [
+    { name: 'ecop', url: 'www.ecop.org.ph' },
+    { name: 'create8', url: 'https://www.creat8stories.org/' },
+    { name: 'dole2', url: 'https://www.foi.gov.ph/agencies/dole/' },
+  ];
+
   return (
     <motion.section
       className='px-4 py-12 lg:px-4'
@@ -39,22 +46,18 @@ export const SponsorSection = () => {
           whileInView='animate'
           viewport={{ once: true }}
         >
-          {['ecop', 'create8', 'dole2'].map((sponsor, index) => (
-            <motion.span
+          {sponsors.map((sponsor, index) => (
+            <motion.div
               key={index}
               variants={fadeInUp}
               className='flex-shrink-0 text-2xl font-bold transition-opacity cursor-pointer opacity-60 hover:opacity-100'
               whileHover={{ scale: 1.1, y: -5 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Image
-                src={`/sponsors/${sponsor}.png`}
-                alt={sponsor}
-                width={160}
-                height={160}
-                className='lg:mix-blend-luminosity'
-              />
-            </motion.span>
+              <Link href={sponsor.url} target='_blank' rel='noopener noreferrer'>
+                <Image src={`/sponsors/${sponsor.name}.png`} alt={sponsor.name} width={160} height={160} className='' />
+              </Link>
+            </motion.div>
           ))}
         </motion.div>
       </div>
