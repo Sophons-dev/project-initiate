@@ -25,36 +25,26 @@ export const ProfessionalSection = () => {
               />
             </motion.div>
             <motion.div className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
-              <motion.div
-                className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'
-                whileHover={{ scale: 1.05, y: -5 }}
-                transition={{ duration: 0.3 }}
-              >
+              <div className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'>
                 <div className='bg-white md:w-1/2 w-full flex flex-row md:items-center space-x-3 p-3 rounded-xl shadow-lg'>
-                  <motion.div
-                    className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-orange-50 rounded md:rounded-xl'
-                    whileHover={{ scale: 1.1 }}
-                  >
+                  <div className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-orange-50 rounded md:rounded-xl'>
                     <BookOpen className='w-5 h-5 md:w-6 md:h-6 text-orange-500' />
-                  </motion.div>
+                  </div>
                   <div>
                     <p className='font-medium text-sm text-black'>Job Opportunities</p>
                     <p className='text-xs text-gray-500'>Discover exclusive job openings</p>
                   </div>
                 </div>
                 <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3 rounded-xl shadow-lg'>
-                  <motion.div
-                    className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-orange-50 rounded md:rounded-xl'
-                    whileHover={{ scale: 1.1 }}
-                  >
+                  <div className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-orange-50 rounded md:rounded-xl'>
                     <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-orange-500' />
-                  </motion.div>
+                  </div>
                   <div>
                     <p className='font-medium text-sm text-black'>Industry Events</p>
                     <p className='text-xs text-gray-500'>Connect with industry leaders</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           </motion.div>
 
@@ -85,21 +75,13 @@ export const ProfessionalSection = () => {
                 'Salary insights and other important details',
                 'Executive coaching and leadership development',
               ].map((item, index) => (
-                <motion.div
-                  key={index}
-                  variants={slideInLeft}
-                  className='flex items-center space-x-3 group cursor-pointer'
-                  whileHover={{ x: 10 }}
-                >
-                  <motion.div
-                    className='w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center'
-                    whileHover={{ scale: 2 }}
-                  >
+                <div key={index} className='flex items-center space-x-3 '>
+                  <div className='w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center'>
                     <Check className='w-4 h-4 text-white' />
-                  </motion.div>
+                  </div>
 
-                  <span className='group-hover:text-orange-600 transition-colors text-sm md:text-base'>{item}</span>
-                </motion.div>
+                  <span className=' text-sm md:text-base'>{item}</span>
+                </div>
               ))}
             </div>
 
