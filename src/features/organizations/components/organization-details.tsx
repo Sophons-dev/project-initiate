@@ -1,5 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 import { OpportunitiesList } from '@/features/opportunities/components';
+import { OrganizationDetailsSkeleton } from './skeletons';
 import { Phone, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useGetOpportunitiesByOrganizationId } from '@/features/opportunities/hooks';
@@ -10,20 +11,6 @@ interface OrganizationDetailsProps {
 }
 
 export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) => {
-  const {
-    data: opportunities,
-    isLoading: opportunitiesLoading,
-    error: opportunitiesError,
-  } = useGetOpportunitiesByOrganizationId(organization.id);
-
-  if (opportunitiesLoading) {
-    return <div>Loading opportunities...</div>;
-  }
-
-  if (opportunitiesError) {
-    return <div>Error loading opportunities: {opportunitiesError.message}</div>;
-  }
-
   return (
     <div className='flex-1'>
       <div className='sticky top-20'>
@@ -43,7 +30,7 @@ export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) 
                     View All →
                   </motion.button>
                 </div>
-                <OpportunitiesList opportunities={opportunities ?? []} />
+                <OpportunitiesList opportunities={organization.opportunities ?? []} />
               </div>
             </div>
           </div>
@@ -56,22 +43,15 @@ export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) 
 function ProfileHeader({ organization }: { organization: OrganizationDto }) {
   return (
     <div className='flex items-center gap-4'>
-      {/* Logo */}
-      <div className='w-16 h-16 bg-red-600 rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm'>
-        <div className='w-10 h-10 bg-yellow-400 rounded-full flex items-center justify-center'>
-          <div className='w-6 h-6 bg-red-600 rounded-full flex items-center justify-center'>
-            <div className='w-3 h-3 bg-yellow-400 rounded-full'></div>
-          </div>
-        </div>
-      </div>
-
       {/* Info */}
       <div className='flex-1'>
         <div className='flex items-center gap-3 mb-1'>
           <h1 className='text-2xl font-semibold text-gray-900'>{organization.name}</h1>
-          <Badge variant='secondary' className='bg-pink-100 text-pink-700 hover:bg-pink-100'>
-            PARTNER
-          </Badge>
+          {organization.isPartner && (
+            <Badge variant='secondary' className='bg-pink-100 text-pink-700 hover:bg-pink-100'>
+              PARTNER
+            </Badge>
+          )}
         </div>
         <p className='text-gray-500'>{organization.location}</p>
       </div>

@@ -10,13 +10,6 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 import 'react-phone-input-2/lib/style.css';
 
-const poppins = Poppins({
-  variable: '--font-poppins',
-  weight: ['400', '500', '600', '700'],
-  subsets: ['latin'],
-  display: 'swap',
-});
-
 export const metadata: Metadata = {
   title: 'Project Initiate',
   description: '',
@@ -59,7 +52,7 @@ export default function RootLayout({
         }}
       >
         <html lang='en'>
-          <body className={`${poppins.variable} font-sans antialiased`}>
+          <body className={`font-sans antialiased`}>
             <LoadingProgressProvider>
               <main>{children}</main>
             </LoadingProgressProvider>

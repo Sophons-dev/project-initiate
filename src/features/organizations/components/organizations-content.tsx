@@ -1,36 +1,47 @@
-import { SearchInput } from '@/components/shared';
-import { useGetAllOrganizations } from '../hooks';
+import { Pagination, SearchInput } from '@/components/shared';
 import { OrganizationDetails } from './organization-details';
 import { OrganizationsList } from './organizations-list';
+import { OrganizationDetailsSkeleton, OrganizationsListSkeleton } from './skeletons';
 import { motion } from 'framer-motion';
 import { useFilter } from '@/hooks/useFilter';
 import { DropdownFilter } from '@/components/shared/dropdown-filter';
 import { organizationFilters } from '@/lib/constants';
 import { useEffect, useState } from 'react';
-import { OrganizationDTO } from '../types';
+import { OrganizationDto } from '../dto/organization.dto';
+import { useDebounce } from '@/hooks/useDebounce';
+import { useGetOrganizations } from '../hooks/useOrganizations';
 
 export const OrganizationsContent = () => {
-  const [selectedOrganization, setSelectedOrganization] = useState<OrganizationDTO | null>(null);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedOrganization, setSelectedOrganization] = useState<OrganizationDto | null>(null);
+  const [paginationParams, setPaginationParams] = useState({
+    page: 1,
+    limit: 10,
+    search: searchQuery || undefined,
+  });
 
-  const { data: organizationData, isLoading, error } = useGetAllOrganizations();
-  const { activeFilter, setActiveFilter, searchQuery, setSearchQuery, filteredData } = useFilter(
-    organizationData ?? [],
-    organizationFilters
-  );
+  // Debounece search query to avoid too many API calls
+  const debouncedSearchQuery = useDebounce(searchQuery, 500);
+
+  // Update pagination params when search changes
+  useEffect(() => {
+    setPaginationParams(prev => ({
+      ...prev,
+      page: 1, // Reset to first page when searching
+      search: debouncedSearchQuery || undefined,
+    }));
+  }, [debouncedSearchQuery]);
+
+  const { organizations, isLoading, error } = useGetOrganizations(paginationParams);
+  const hasData = (organizations?.data?.length ?? 0) > 0;
+  const isInitialLoad = isLoading && !hasData;
+  const { activeFilter, setActiveFilter, filteredData } = useFilter(organizations?.data ?? [], organizationFilters);
 
   useEffect(() => {
     if (!selectedOrganization && filteredData.length > 0) {
       setSelectedOrganization(filteredData[0]);
     }
   }, [filteredData, selectedOrganization]);
-
-  if (isLoading) {
-    return (
-      <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
-        <div>Loading organizations...</div>
-      </div>
-    );
-  }
 
   if (error) {
     return (
@@ -40,15 +51,11 @@ export const OrganizationsContent = () => {
     );
   }
 
-  if (!organizationData || organizationData.length === 0) {
-    return (
-      <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
-        <div>No organizations found.</div>
-      </div>
-    );
-  }
-
   const currentSelectedOrganization = selectedOrganization || filteredData[0];
+
+  const handlePageChange = (page: number) => {
+    setPaginationParams(prev => ({ ...prev, page }));
+  };
 
   return (
     <div className='max-w-7xl mx-auto py-10 px-2 lg:px-0'>
@@ -81,13 +88,33 @@ export const OrganizationsContent = () => {
           </div>
         </div>
         <div className='flex gap-4'>
-          <OrganizationsList
-            organizations={filteredData}
-            selectedOrgId={currentSelectedOrganization?.id ?? ''}
-            onSelect={setSelectedOrganization}
-          />
-          {currentSelectedOrganization && <OrganizationDetails organization={currentSelectedOrganization} />}
+          <div className='flex-[0.55]'>
+            {isInitialLoad ? (
+              <div className='bg-slate-50 rounded p-4 mb-4'>
+                <OrganizationsListSkeleton />
+              </div>
+            ) : (
+              <OrganizationsList
+                organizations={filteredData}
+                selectedOrgId={currentSelectedOrganization?.id ?? ''}
+                isLoading={isLoading}
+                onSelect={setSelectedOrganization}
+              />
+            )}
+          </div>
+          {isInitialLoad ? (
+            <OrganizationDetailsSkeleton />
+          ) : (
+            currentSelectedOrganization && <OrganizationDetails organization={currentSelectedOrganization} />
+          )}
         </div>
+
+        {/* Pagination */}
+        {organizations?.meta && (
+          <div className='mt-8'>
+            <Pagination meta={organizations.meta} onPageChange={handlePageChange} />
+          </div>
+        )}
       </motion.div>
     </div>
   );
