@@ -1,12 +1,13 @@
-import { Organization } from '@prisma/client';
+import { Organization, Opportunity } from '@prisma/client';
 import { OrganizationDto } from '../dto/organization.dto';
+import { toOpportunityDto } from '@/features/opportunities/mappers/opportunity.mapper';
 
-export function toOrganizationDto(organization: Organization): OrganizationDto {
+export function toOrganizationDto(organization: Organization & { opportunities?: Opportunity[] }): OrganizationDto {
   return {
     id: organization.id,
     name: organization.name,
     type: organization.type as unknown as string,
-    description: organization.description ?? null,
+    isPartner: organization.isPartner,
     website: organization.website ?? null,
     logoUrl: organization.logoUrl ?? null,
     location: organization.location ?? null,
@@ -18,6 +19,11 @@ export function toOrganizationDto(organization: Organization): OrganizationDto {
     employmentSize: organization.employmentSize ?? null,
     companyRating: organization.companyRating ?? null,
     reviewCount: organization.reviewCount ?? null,
+
+    // Relations
+    opportunities: organization.opportunities
+      ? organization.opportunities.map(o => toOpportunityDto(o as Opportunity))
+      : undefined,
 
     createdAt: organization.createdAt ?? null,
     updatedAt: organization.updatedAt ?? null,

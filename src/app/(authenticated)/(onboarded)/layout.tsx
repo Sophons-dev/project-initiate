@@ -5,7 +5,7 @@ import { requireOnboarded } from '@/lib/auth/require-onboarded';
 export default async function OnboardedLayout({ children }: { children: React.ReactNode }) {
   await requireOnboarded();
   return (
-    <main className='flex flex-col min-h-screen'>
+    <main className='flex flex-col min-h-screen font-sans'>
       <MainNavbar />
 
       <div className='flex-1 mt-15'>{children}</div>

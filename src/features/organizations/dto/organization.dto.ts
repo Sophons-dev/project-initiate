@@ -1,3 +1,5 @@
+import { OpportunityDto } from '@/features/opportunities/dto';
+
 export type OrganizationDto = {
   id: string;
   name: string;
@@ -14,6 +16,8 @@ export type OrganizationDto = {
   employmentSize?: string | null;
   companyRating?: number | null;
   reviewCount?: number | null;
+
+  opportunities?: OpportunityDto[];
 
   createdAt?: Date | null;
   updatedAt?: Date | null;
