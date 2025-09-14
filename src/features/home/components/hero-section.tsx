@@ -1,11 +1,9 @@
 'use client';
 
 import { TextPill } from '@/components/shared';
-import { Button } from '@/components/ui/button';
 import { fadeInUp, staggerContainer } from '@/lib/animation-variants';
 import { motion, useInView } from 'framer-motion';
-import { ArrowRight, Blend, ChevronDown, CircleCheck, CircleUserRound, Sparkles, TrendingUp } from 'lucide-react';
-import Link from 'next/link';
+import { Blend, ChevronDown, CircleCheck, CircleUserRound, Sparkles, TrendingUp } from 'lucide-react';
 import { useRef } from 'react';
 
 export const HeroSection = () => {

@@ -2,7 +2,6 @@
 
 import { TextPill } from '@/components/shared';
 import { Button } from '@/components/ui/button';
-import { slideInLeft } from '@/lib/animation-variants';
 import { motion } from 'framer-motion';
 import { BookOpen, Check, GraduationCap } from 'lucide-react';
 import Image from 'next/image';
