@@ -35,11 +35,8 @@ export const HeroSection = () => {
     { icon: Blend, value: '95%', label: 'Match Score', color: 'purple' },
   ];
   return (
-    <section
-      id='home'
-      ref={heroRef}
-      className='relative pt-10 md:pt-20 hero-bg border border-neutral-100 rounded-4xl px-4 md:px-0 overflow-hidden md:max-w-[calc(100vw-10rem)] mx-auto'
-    >
+    <section id='home' ref={heroRef} className='relative pt-10 md:pt-20 px-4 md:px-0 overflow-hidden mx-auto'>
+      <div className='z-50 w-screen h-[200px] absolute bottom-0 bg-gradient-to-t from-white via-white/60 to-transparent' />
       <motion.div className='mx-auto text-center'>
         {/* Hero Content */}
         <motion.div
@@ -82,27 +79,6 @@ export const HeroSection = () => {
           Whether you&apos;re a student seeking courses or a professional hunting for your next career move, our AI
           matches you with opportunities that align perfectly with your goals and profile.{' '}
         </motion.p>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={heroInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.6 }}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          {/* Get Started Button */}
-          <Button
-            asChild
-            className='relative py-5 mb-12 overflow-hidden border-4 rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 border-neutral-100 hover:bg-cyan-600 group'
-          >
-            <Link href='/auth/login'>
-              Start Journey
-              <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
-                <ArrowRight className='w-4 h-4' />
-              </motion.div>
-            </Link>
-          </Button>
-        </motion.div>
 
         {/* Hero section feature display */}
         <div className='relative pb-0 mx-auto rounded-t-2xl md:p-15 md:pb-0'>
