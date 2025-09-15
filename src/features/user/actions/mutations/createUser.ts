@@ -14,7 +14,7 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
   const clerkId = userData.clerkId;
 
   try {
-    if (!userData.email || !userData.clerkId || !userData.profile?.name) {
+    if (!userData.email || !userData.clerkId) {
       return { success: false, error: 'Missing required fields' };
     }
 
@@ -37,7 +37,7 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
         onboardingCompleted: false,
         profile: {
           set: {
-            name: userData.profile?.name ?? '',
+            name: userData.profile?.name ?? userData.email.split('@')[0],
             image: userData.profile?.image,
           },
         },
