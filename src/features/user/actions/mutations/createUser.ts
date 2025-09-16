@@ -37,7 +37,7 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
         onboardingCompleted: false,
         profile: {
           set: {
-            name: userData.profile?.name ?? '',
+            name: userData.profile?.name ?? userData.email.split('@')[0],
             image: userData.profile?.image,
           },
         },
