@@ -6,20 +6,22 @@ import { createUser } from '../actions/mutations/createUser';
 import { updateUser } from '../actions/mutations/updateUser';
 import { onboardUser } from '../actions/mutations/onboardUser';
 import { deleteUser } from '../actions/mutations/deleteUser';
+import { ResponseDto } from '@/lib/dto/response.dto';
 
 /**
  * Create a new user
  * Business logic: Validates input and orchestrates user creation
  */
-export async function createUserService(userData: CreateUserDto): Promise<UserDto> {
+export async function createUserService(userData: CreateUserDto): Promise<ResponseDto<UserDto>> {
+  if (!userData.email || !userData.clerkId) {
+    return { success: false, error: 'Missing required fields' };
+  }
+
   // Orchestrate the creation through action
   const result = await createUser(userData);
 
-  if (!result.success) {
-    throw new Error(result.error || 'Failed to create user');
-  }
-
-  return result.data!;
+  // Do not throw here; propagate ResponseDto to callers (e.g., webhooks)
+  return result;
 }
 
 /**

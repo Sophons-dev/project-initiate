@@ -1,6 +1,7 @@
 import { createUser, updateUser, deleteUser } from '@/features/user/actions';
 import { mapClerkUser } from '@/features/user/mappers/clerk-user.mapper';
 import { verifyWebhook } from '@clerk/nextjs/webhooks';
+import { clerkClient } from '@clerk/nextjs/server';
 import { NextRequest } from 'next/server';
 
 export async function POST(req: NextRequest) {
@@ -15,7 +16,17 @@ export async function POST(req: NextRequest) {
     switch (type) {
       case 'user.created': {
         const result = await createUser(mapClerkUser(data));
-        if (!result.success) throw new Error(result.error);
+        if (!result.success) {
+          try {
+            const client = await clerkClient();
+
+            await client.users.deleteUser(data.id);
+            console.log('🗑️ Deleted Clerk user due to DB provision failure:', data.id);
+          } catch (deleteErr) {
+            console.error('Failed to delete Clerk user:', deleteErr);
+          }
+          throw new Error(result.error);
+        }
         console.log('✅ User created in DB:', result.data?.id);
         break;
       }

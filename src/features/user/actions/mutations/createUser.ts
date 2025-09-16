@@ -14,7 +14,7 @@ export async function createUser(userData: CreateUserDto): Promise<ResponseDto<U
   const clerkId = userData.clerkId;
 
   try {
-    if (!userData.email || !userData.clerkId) {
+    if (!userData.email || !userData.clerkId || !userData.profile?.name) {
       return { success: false, error: 'Missing required fields' };
     }
 

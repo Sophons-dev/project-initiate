@@ -16,13 +16,11 @@ export function mapClerkUser(data: ClerkUserData) {
     throw new Error('User email is required');
   }
 
-  const derivedName = `${data.first_name || ''} ${data.last_name || ''}`.trim() || email.split('@')[0];
-
   return {
     clerkId: data.id,
     email,
     profile: {
-      name: derivedName,
+      name: `${data.first_name || ''} ${data.last_name || ''}`.trim(),
       image: data.image_url ?? null,
     },
   };
