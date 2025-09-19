@@ -48,9 +48,9 @@ export const HowItWorksSection = () => {
             {
               icon: <Sparkles className='w-4 h-4' />,
               step: '#2 ANALYSIS',
-              title: 'AI Analysis',
+              title: 'Algorithmic Smart Analysis',
               description:
-                "Our AI analyzes your profile and preferences to understand exactly what you're looking for.",
+                'Our algorithm analyzes your profile and provides personalized recommendations for opportunities that fit your profile.',
             },
             {
               icon: <Target className='w-4 h-4' />,
@@ -63,7 +63,8 @@ export const HowItWorksSection = () => {
               icon: <GraduationCap className='w-4 h-4' />,
               step: '#4 TAKE ACTION',
               title: 'Succeed',
-              description: "Enroll or apply to the matched opportunities. We'll notify you of updates and new matches.",
+              description:
+                "Based on the generated recommendations, you'll be able to take action and pursue opportunities that align with your interests and goals.",
             },
           ].map((item, index) => (
             <motion.div
