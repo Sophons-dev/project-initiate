@@ -27,7 +27,7 @@ export const FeatureSection = () => {
           animate={featuresInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8 }}
         >
-          <TextPill icon={<Sparkles className='w-4 h-4' />} text='What we offer' />
+          <TextPill text='What we offer' />
           <h2 className='text-2xl lg:text-3xl text-black mb-4'>Powerful Features for Your Success</h2>
           <p className='max-w-2xl mx-auto'>
             Discover how our platform uses cutting-edge technology to connect you with the right opportunities at the
@@ -95,7 +95,7 @@ const features = [
   {
     title: 'AI-Powered Matching',
     description:
-      'Our advanced AI analyzes your profile, skills, and preferences to find the most relevant opportunities that are aligned with your interests.',
+      'We analyze your profile, skills, and preferences to find the most relevant opportunities that are aligned with your interests.',
     content: (
       <div className='w-full h-[280px] flex flex-col gap-y-10 items-center justify-center  relative'>
         <div className='z-20 relative'>
@@ -180,8 +180,7 @@ const features = [
   },
   {
     title: 'Verified Organizations',
-    description:
-      'Most of the opportunities come from partnered and verified, reputable organizations and institutions.',
+    description: 'Opportunities come from partnered and verified, reputable organizations and institutions.',
     content: (
       <div className='w-full h-[280px] flex flex-col gap-y-10 items-center justify-end relative'>
         {/* Top */}

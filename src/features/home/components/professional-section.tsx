@@ -47,7 +47,7 @@ export const ProfessionalSection = () => {
             </motion.div>
           </motion.div>
 
-          <div className='md:w-1/2'>
+          <div className='md:w-1/2 border border-red-500'>
             <motion.div whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
               <TextPill
                 className='mx-0 mb-8 mt-0 !text-xs text-orange-500 b'
@@ -55,6 +55,7 @@ export const ProfessionalSection = () => {
                 text='For Professionals'
               />
             </motion.div>
+
             <h2 className='text-3xl lg:text-4xl md:max-w-md text-black mb-6'>
               Accelerate your{' '}
               <motion.span className='text-orange-500' whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
@@ -62,11 +63,6 @@ export const ProfessionalSection = () => {
               </motion.span>{' '}
               with AI
             </h2>
-
-            <p className='mb-6 text-sm md:text-base'>
-              Whether you&apos;re looking for your next role, seeking to upskill, our platform connects you with
-              opportunities that propel your career forward.
-            </p>
 
             <div className='space-y-4 mb-8'>
               {[

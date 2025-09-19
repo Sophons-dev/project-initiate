@@ -33,11 +33,6 @@ export const AcademicSection = () => {
               </motion.span>
             </h2>
 
-            <p className='mb-6 text-sm md:text-base'>
-              From finding the perfect courses to building your network, we help students discover opportunities that
-              accelerate their learning and career prospects.
-            </p>
-
             <motion.div
               className='space-y-4 mb-8'
               variants={staggerContainer}
@@ -88,14 +83,18 @@ export const AcademicSection = () => {
                     <p className='text-xs text-gray-500'>Find courses from top universities</p>
                   </div>
                 </div>
-                <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3 rounded-xl shadow-lg'>
-                  <div className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
-                    <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
-                  </div>
-                  <div>
-                    <p className='font-medium text-sm text-black'>Career Guidance</p>
-                    <p className='text-xs text-gray-500'>Get personalized career advice</p>
-                  </div>
+                <div>
+                  <p className='font-medium text-sm text-black'>Course Discovery</p>
+                  <p className='text-xs text-gray-500'>Find courses from top universities</p>
+                </div>
+              </div>
+              <div className='bg-white w-full flex items-center space-x-3 p-2 rounded-xl shadow-lg'>
+                <div className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
+                  <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
+                </div>
+                <div>
+                  <p className='font-medium text-sm text-black'>Career Guidance</p>
+                  <p className='text-xs text-gray-500'>Get personalized career advice</p>
                 </div>
               </div>
             </div>

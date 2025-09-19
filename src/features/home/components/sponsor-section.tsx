@@ -10,6 +10,7 @@ export const SponsorSection = () => {
     { name: 'ecop', url: 'www.ecop.org.ph' },
     { name: 'create8', url: 'https://www.creat8stories.org/' },
     { name: 'dole2', url: 'https://www.foi.gov.ph/agencies/dole/' },
+    { name: 'educare', url: '#' },
   ];
 
   return (

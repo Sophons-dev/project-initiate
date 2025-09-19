@@ -42,7 +42,7 @@ export const HeroSection = () => {
           animate={heroInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, ease: 'easeOut' }}
         >
-          <TextPill icon={<Sparkles className='w-4 h-4' />} text='AI-Powered Opportunity Matching' />
+          <TextPill text='Initiate your journey' />
           <motion.h1
             className='mb-6 text-4xl font-medium text-black lg:text-6xl'
             initial={{ opacity: 0, y: 50 }}

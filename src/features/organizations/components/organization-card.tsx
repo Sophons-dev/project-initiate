@@ -1,4 +1,3 @@
-import { Bookmark } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { motion } from 'framer-motion';
 import { OrganizationDto } from '../dto/organization.dto';
