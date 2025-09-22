@@ -15,7 +15,7 @@ export const ProfessionalSection = () => {
           <motion.div className='relative md:w-1/2'>
             <Image
               src='/landing-page/for-professionals.png'
-              alt='Students collaborating'
+              alt='Professionals collborating'
               width={600}
               height={600}
               className='rounded-2xl'
@@ -46,7 +46,7 @@ export const ProfessionalSection = () => {
 
           <div className='md:w-1/2'>
             <TextPill
-              className='mx-0 mb-8 mt-0 !text-xs text-orange-500 b'
+              className='mx-0 mb-8 mt-0 !text-xs text-orange-500'
               icon={<GraduationCap className='w-4 h-4' />}
               text='For Professionals'
             />
