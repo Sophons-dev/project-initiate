@@ -92,11 +92,11 @@ export const OpportunityDetailsContent = () => {
 
         <hr className='my-10' />
 
-        <OpportunityRelatedOpportunities
+        {/*<OpportunityRelatedOpportunities
           recommendedOpportunities={recommendedOpportunities}
           isLoading={isLoadingRecommendedOpportunities}
           error={errorRecommendedOpportunities}
-        />
+        />*/}
       </motion.div>
     </div>
   );

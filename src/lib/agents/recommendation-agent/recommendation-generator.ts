@@ -35,7 +35,7 @@ export async function generateRecommendations({
         {
           type: 'web_search',
           filters: {
-            allowed_domains: ['philjobnet.gov.ph', 'ph.jobstreet.com'],
+            allowed_domains: ['philjobnet.gov.ph'],
           },
         },
       ],

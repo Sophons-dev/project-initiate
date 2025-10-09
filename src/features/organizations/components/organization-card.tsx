@@ -17,8 +17,8 @@ export function OrganizationCard({ organization, selected, ...props }: Organizat
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.1 }}
-      whileHover={{ scale: 1.02, y: -5 }}
+      transition={{ duration: 0.2 }}
+      whileHover={{ scale: 1.005 }}
       className='cursor-pointer'
       onClick={props.onClick}
     >

@@ -1,9 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { OpportunitiesList } from '@/features/opportunities/components';
-import { OrganizationDetailsSkeleton } from './skeletons';
 import { Phone, Mail } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { useGetOpportunitiesByOrganizationId } from '@/features/opportunities/hooks';
 import { OrganizationDto } from '../dto/organization.dto';
 
 interface OrganizationDetailsProps {
@@ -20,7 +18,6 @@ export const OrganizationDetails = ({ organization }: OrganizationDetailsProps) 
               <ProfileHeader organization={organization} />
               <div className='mt-8 space-y-8'>
                 <AboutSection organization={organization} />
-                <ContactsSection organization={organization} />
                 <div className='flex justify-between items-center'>
                   <h2 className='text-lg font-medium text-gray-900'>Opportunities Offered</h2>
                   <motion.button
