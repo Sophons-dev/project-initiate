@@ -20,7 +20,7 @@ export const AcademicSection = () => {
               height={600}
               className='rounded-2xl'
             />
-            <motion.div className='md:absolute md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
+            <motion.div className='md:absolute hidden lg:block md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
               <div className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'>
                 <div className='bg-white md:w-1/2 w-full flex flex-row md:items-center space-x-3 p-3 rounded-xl shadow-lg'>
                   <div className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
@@ -72,7 +72,7 @@ export const AcademicSection = () => {
 
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button asChild className='bg-cyan-600 hover:bg-cyan-500'>
-                <Link href='/signin'>Explore Student Opportunities</Link>
+                <Link href='/sign-in'>Explore Student Opportunities</Link>
               </Button>
             </motion.div>
           </div>
