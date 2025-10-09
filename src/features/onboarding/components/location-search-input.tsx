@@ -49,7 +49,7 @@ export function LocationSelect({ value, onChange }: { value: string; onChange: (
           className='relative  justify-between h-12 bg-gray-100 border-1 focus:bg-white focus:ring-2 focus:ring-cyan-500'
         >
           <p className='w-60 lg:w-85 font-normal text-[16px] text-left truncate'>
-            {value || 'Select or search school'}
+            {value || 'Select or search location'}
           </p>
           <ChevronsUpDown className='ml-2 h-4 w-4 shrink-0 opacity-50' />
         </Button>
