@@ -67,12 +67,7 @@ export const HowItWorksSection = () => {
                 "Based on the generated recommendations, you'll be able to take action and pursue opportunities that align with your interests and goals.",
             },
           ].map((item, index) => (
-            <motion.div
-              key={index}
-              variants={fadeInUp}
-              className='text-start group bg-[#E9E9E9]/40 p-5 rounded-lg'
-              whileHover={{ y: -10 }}
-            >
+            <motion.div key={index} variants={fadeInUp} className='text-start group bg-[#E9E9E9]/40 p-5 rounded-lg'>
               <TextPill className='mx-0 mb-8 mt-0 !text-xs' icon={item.icon} text={item.step} />
 
               <div className='flex flex-col'>
@@ -100,7 +95,7 @@ export const HowItWorksSection = () => {
             size={'lg'}
             className='relative py-5 mb-12 overflow-hidden border-4 rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 border-neutral-100 hover:bg-cyan-600 group'
           >
-            <Link href='/auth/login'>
+            <Link href='/sign-in'>
               <span className='relative z-10 flex items-center gap-2'>
                 Start Journey
                 <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>

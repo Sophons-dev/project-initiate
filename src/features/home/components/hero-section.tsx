@@ -112,10 +112,7 @@ export const HeroSection = () => {
                   return (
                     <motion.div
                       key={index}
-                      variants={fadeInUp}
                       className={`bg-white border md:border-none rounded p-4 flex items-start space-x-3 cursor-pointer transition-all duration-300`}
-                      whileHover={{ scale: 1.05, y: -5 }}
-                      whileTap={{ scale: 0.95 }}
                     >
                       <motion.div
                         className={`w-8 h-8 md:w-11 md:h-11 rounded-lg flex items-center my-auto justify-center ${iconColor[filter.color as keyof typeof iconColor]}`}

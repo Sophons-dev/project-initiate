@@ -152,7 +152,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                         </div>
 
                         <div className='flex flex-col md:flex-row gap-3 items-center justify-end md:w-1/2'>
-                          <Link className='text-xs' href={'/signin'}>
+                          <Link className='text-xs' href={'/sign-in'}>
                             Learn More
                           </Link>
                           <Button
@@ -160,7 +160,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                             size={'sm'}
                             className='text-xs bg-yellow-500 rounded-full hover:bg-yellow-600'
                           >
-                            <Link href='/signup'>Register Now</Link>
+                            <Link href='/sign-up'>Register Now</Link>
                           </Button>
                         </div>
                       </div>

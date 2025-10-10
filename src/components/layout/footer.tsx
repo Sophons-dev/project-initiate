@@ -58,7 +58,7 @@ export const Footer = () => {
   return (
     <footer className='border-t bg-[#1C1C1C] mt-10 px-4 lg:px-0'>
       <div className='container max-w-7xl mx-auto py-10 text-white'>
-        <motion.div
+        {/* <motion.div
           className='mx-auto max-w-xl text-center'
           variants={fadeInUp}
           initial='hidden'
@@ -80,11 +80,11 @@ export const Footer = () => {
             <Button className='h-9 rounded-md bg-teal-600 text-white hover:bg-teal-700'>Subscribe</Button>
           </div>
           <p className='mt-2 text-[11px] text-muted-foreground'>We respect your inbox. Unsubscribe anytime.</p>
-        </motion.div>
+        </motion.div> */}
 
         <Separator className='my-8' />
 
-        <div className='grid gap-8 text-sm md:grid-cols-6 border-t border-b border-neutral-600 py-10'>
+        <div className='grid gap-8 text-sm md:grid-cols-6  border-b border-neutral-600 py-10'>
           <motion.div
             className='space-y-2 col-span-2 max-w-[15rem]'
             variants={fadeInUp}
