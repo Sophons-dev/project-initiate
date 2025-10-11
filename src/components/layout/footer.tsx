@@ -3,50 +3,20 @@
 import { Separator } from '@radix-ui/react-separator';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { Input } from '../ui/input';
-import { Button } from '../ui/button';
 import { useState } from 'react';
 import { fadeInUp } from '@/lib/animation-variants';
 import Image from 'next/image';
 import { Linkedin, Twitter } from 'lucide-react';
 
 export const Footer = () => {
-  const [email, setEmail] = useState('');
   const footerSections = [
     {
-      title: 'Product',
+      title: 'Pages',
       links: [
-        { label: 'Features', href: '#' },
-        { label: 'How it Works', href: '#' },
-        { label: 'Pricing', href: '#' },
-        { label: 'API', href: '#' },
-      ],
-    },
-    {
-      title: 'For',
-      links: [
-        { label: 'Students', href: '#' },
-        { label: 'Professionals', href: '#' },
-        { label: 'Organizations', href: '#' },
-        { label: 'Partners', href: '#' },
-      ],
-    },
-    {
-      title: 'Company',
-      links: [
-        { label: 'About', href: '#' },
-        { label: 'Blog', href: '#' },
-        { label: 'Careers', href: '#' },
-        { label: 'Contact', href: '#' },
-      ],
-    },
-    {
-      title: 'Support',
-      links: [
-        { label: 'Help Center', href: '#' },
-        { label: 'Privacy Policy', href: '#' },
-        { label: 'Terms of Service', href: '#' },
-        { label: 'Status', href: '#' },
+        { label: 'Home', href: '#' },
+        { label: 'How It Works', href: '#' },
+        { label: 'For Students', href: '#' },
+        { label: 'For Professionals', href: '#' },
       ],
     },
   ] as const;
@@ -84,7 +54,7 @@ export const Footer = () => {
 
         <Separator className='my-8' />
 
-        <div className='grid gap-8 text-sm md:grid-cols-6  border-b border-neutral-600 py-10'>
+        <div className='flex justify-between gap-8 text-sm md:grid-cols-6  border-b border-neutral-600 py-10'>
           <motion.div
             className='space-y-2 col-span-2 max-w-[15rem]'
             variants={fadeInUp}
@@ -95,7 +65,7 @@ export const Footer = () => {
             <div className='flex items-center gap-2'>
               <Image src='/project-initiate-logo.png' alt='Logo' width={90} height={90} />
             </div>
-            <p className='text-sm text-muted-foreground'>
+            <p className='text-sm mt-10 text-muted-foreground'>
               Connecting ambitious individuals with life-changing opportunities through AI-powered matching.
             </p>
           </motion.div>
@@ -109,7 +79,7 @@ export const Footer = () => {
               viewport={{ once: true }}
             >
               <div className='mb-2 font-semibold'>{section.title}</div>
-              <ul className='space-y-1 text-sm text-muted-foreground'>
+              <ul className='space-y-1 mt-4 text-sm text-muted-foreground'>
                 {section.links.map(link => (
                   <li key={link.label}>
                     <Link href={link.href} className='hover:text-yellow-600'>
@@ -124,15 +94,15 @@ export const Footer = () => {
 
         <Separator className='my-8' />
 
-        <div className='flex flex-col items-center justify-between gap-4 pb-8 text-[11px] text-muted-foreground md:flex-row'>
+        <div className='flex flex-col items-center justify-center gap-4 pb-8 text-[11px] text-muted-foreground md:flex-row'>
           <p>© {new Date().getFullYear()} Initiate. All rights reserved.</p>
-          <div className='flex items-center gap-4'>
+          {/* <div className='flex items-center gap-4'>
             {Socials.map((link, index) => (
               <Link key={index} href={link.href} className='hover:text-yellow-600'>
                 {link.icon}
               </Link>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>
