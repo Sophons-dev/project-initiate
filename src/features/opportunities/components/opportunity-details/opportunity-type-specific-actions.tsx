@@ -43,10 +43,10 @@ export const OpportunityTypeSpecificActions = ({ opportunity }: OpportunityTypeS
             {isJob ? 'Application Link Not Available' : 'Enrollment Link Not Available'}
           </Button>
         )}
-        <Button className='w-full bg-white hover:bg-gray-100 border text-black transition-colors'>
+        {/* <Button className='w-full bg-white hover:bg-gray-100 border text-black transition-colors'>
           <Bookmark />
           {isJob ? 'Save Job' : 'Save Course'}
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
