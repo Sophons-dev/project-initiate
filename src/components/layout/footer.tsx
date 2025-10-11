@@ -7,19 +7,31 @@ import { useState } from 'react';
 import { fadeInUp } from '@/lib/animation-variants';
 import Image from 'next/image';
 import { Linkedin, Twitter } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 export const Footer = () => {
+  const pathname = usePathname();
+
   const footerSections = [
     {
-      title: 'Pages',
+      title: 'Links',
       links: [
-        { label: 'Home', href: '#' },
-        { label: 'How It Works', href: '#' },
-        { label: 'For Students', href: '#' },
-        { label: 'For Professionals', href: '#' },
+        { label: 'Home', href: '#home' },
+        { label: 'How It Works', href: '#how-it-works' },
+        { label: 'For Students', href: '#students' },
+        { label: 'For Professionals', href: '#professionals' },
       ],
     },
   ] as const;
+
+  const scrollToSection = (hash: string) => {
+    if (!hash.startsWith('#')) return;
+    const target = document.querySelector(hash) as HTMLElement | null;
+    if (!target) return;
+    const headerHeight = 100;
+    const top = target.getBoundingClientRect().top + window.scrollY - headerHeight - 8;
+    window.scrollTo({ top, behavior: 'smooth' });
+  };
 
   const Socials = [
     { icon: <Twitter />, href: '#' },
@@ -82,9 +94,21 @@ export const Footer = () => {
               <ul className='space-y-1 mt-4 text-sm text-muted-foreground'>
                 {section.links.map(link => (
                   <li key={link.label}>
-                    <Link href={link.href} className='hover:text-yellow-600'>
-                      {link.label}
-                    </Link>
+                    {pathname === '/' ? (
+                      <button
+                        onClick={e => {
+                          e.preventDefault();
+                          scrollToSection(link.href);
+                        }}
+                        className='hover:text-yellow-600 transition-colors duration-200 text-left'
+                      >
+                        {link.label}
+                      </button>
+                    ) : (
+                      <Link href={`/${link.href}`} className='hover:text-yellow-600'>
+                        {link.label}
+                      </Link>
+                    )}
                   </li>
                 ))}
               </ul>
