@@ -20,9 +20,9 @@ export const AcademicSection = () => {
               height={600}
               className='rounded-2xl'
             />
-            <motion.div className='md:absolute hidden lg:block md:left-1/2 md:-translate-x-1/2 md:-bottom-10 w-full mt-5 md:mt-0'>
-              <div className='flex flex-col md:flex-row justify-between mx-auto md:w-lg w-full md:gap-4 gap-2 rounded-xl'>
-                <div className='bg-white md:w-1/2 w-full flex flex-row md:items-center space-x-3 p-3 rounded-xl shadow-lg'>
+            <motion.div className=''>
+              <div className='flex flex-row justify-between mx-auto mt-4 w-full md:gap-4 gap-2 rounded-xl'>
+                <div className='bg-white md:w-1/2 w-full flex flex-row md:items-center space-x-3 p-3'>
                   <div className='w-10 md:w-12 h-10 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
                     <BookOpen className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
                   </div>
@@ -31,7 +31,7 @@ export const AcademicSection = () => {
                     <p className='text-xs text-gray-500'>Find courses from top universities</p>
                   </div>
                 </div>
-                <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3 rounded-xl shadow-lg'>
+                <div className='bg-white md:w-1/2 w-full flex items-center space-x-3 p-3'>
                   <div className='w-10 h-10 md:w-12 md:h-12 flex items-center justify-center bg-cyan-50 rounded md:rounded-xl'>
                     <GraduationCap className='w-5 h-5 md:w-6 md:h-6 text-cyan-500' />
                   </div>
@@ -70,11 +70,11 @@ export const AcademicSection = () => {
               ))}
             </div>
 
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            {/* <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button asChild className='bg-cyan-600 hover:bg-cyan-500'>
                 <Link href='/sign-in'>Explore Student Opportunities</Link>
               </Button>
-            </motion.div>
+            </motion.div> */}
           </div>
         </div>
       </div>

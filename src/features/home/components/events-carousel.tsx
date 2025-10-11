@@ -19,6 +19,10 @@ type EventItem = {
   image: string;
 };
 
+// This shuld be stored in the database in the future if we have more events
+const EVENTBRITE_URL =
+  'https://www.eventbrite.com/e/initiate-career-education-congress-2025-tickets-1650620944679?aff=oddtdtcreator';
+
 export default function EventsCarousel({ items }: { items: EventItem[] }) {
   const [index, setIndex] = useState(0);
   const [offset, setOffset] = useState(160);
@@ -58,8 +62,8 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
 
   return (
     <div className='relative mx-auto h-[850px] lg:h-[1000px] xl:h-[950px] max-w-7xl overflow-hidden'>
-      {/* Controls */}
-      <div className='pointer-events-none absolute inset-y-0 left-0 top-1/2 -translate-y-1/2 right-0 z-40 flex items-center justify-between px-2 md:px-4'>
+      {/* Controls - Disabled for now */}
+      {/* <div className='pointer-events-none absolute inset-y-0 left-0 top-1/2 -translate-y-1/2 right-0 z-40 flex items-center justify-between px-2 md:px-4'>
         <Button
           aria-label='Previous event'
           className='pointer-events-auto h-10 w-10 rounded-full bg-orange-500 text-white hover:bg-orange-600'
@@ -74,7 +78,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
         >
           <ChevronRight className='h-5 w-5' />
         </Button>
-      </div>
+      </div> */}
 
       {/* Stage */}
       <div className='absolute left-1/2 top-0 mt-10 z-10 h-full w-full -translate-x-1/2'>
@@ -152,15 +156,12 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
                         </div>
 
                         <div className='flex flex-col md:flex-row gap-3 items-center justify-end md:w-1/2'>
-                          <Link className='text-xs' href={'/sign-in'}>
-                            Learn More
-                          </Link>
                           <Button
                             asChild
                             size={'sm'}
                             className='text-xs bg-yellow-500 rounded-full hover:bg-yellow-600'
                           >
-                            <Link href='/sign-up'>Register Now</Link>
+                            <Link href={EVENTBRITE_URL}>Register Now</Link>
                           </Button>
                         </div>
                       </div>
@@ -173,8 +174,8 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
         </AnimatePresence>
       </div>
 
-      {/* Dots */}
-      <div className='absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 gap-2'>
+      {/* Dots - Disabled for now */}
+      {/* <div className='absolute bottom-0 left-1/2 z-50 flex -translate-x-1/2 gap-2'>
         {items.map((_, i) => {
           const active = i === current;
           return (
@@ -186,7 +187,7 @@ export default function EventsCarousel({ items }: { items: EventItem[] }) {
             />
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 }

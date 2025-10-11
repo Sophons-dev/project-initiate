@@ -107,14 +107,14 @@ export const OpportunityCard = ({ opportunity, showReasoning = true }: Opportuni
                 <Calendar className='w-3 h-3 mr-1' />
                 {applicationDeadline}
               </div>
-              <div className='flex items-center space-x-2'>
-                <motion.button
+              <div className='flex items-center'>
+                {/* <motion.button
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
                   className='p-1 hover:bg-gray-100 rounded'
                 >
                   <Bookmark className='w-4 h-4 text-gray-400' />
-                </motion.button>
+                </motion.button> */}
 
                 <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                   <Button size='sm' className='bg-cyan-500 hover:bg-cyan-600 text-white text-xs px-4 py-1 rounded'>

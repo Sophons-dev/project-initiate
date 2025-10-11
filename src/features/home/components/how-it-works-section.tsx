@@ -7,14 +7,20 @@ import { motion, useInView } from 'framer-motion';
 import { ArrowRight, GraduationCap, Sparkles, Target, UserPlus } from 'lucide-react';
 import Link from 'next/link';
 import { useRef } from 'react';
+import { useAuth, useUser } from '@clerk/nextjs';
 
 export const HowItWorksSection = () => {
   const howItWorksRef = useRef(null);
+  const { isLoaded, isSignedIn } = useAuth();
+  const { user } = useUser();
 
   const howItWorksInView = useInView(howItWorksRef, {
     once: true,
     margin: '-100px',
   });
+
+  // Determine if user is authenticated
+  const isAuthenticated = user && isLoaded && isSignedIn;
 
   return (
     <section id='how-it-works' ref={howItWorksRef} className='py-16 mb-16 how-it-works-bg'>
@@ -95,9 +101,9 @@ export const HowItWorksSection = () => {
             size={'lg'}
             className='relative py-5 mb-12 overflow-hidden border-4 rounded-full bg-gradient-to-b from-cyan-400 to-cyan-600 border-neutral-100 hover:bg-cyan-600 group'
           >
-            <Link href='/sign-in'>
+            <Link href={isAuthenticated ? '/dashboard' : '/sign-in'}>
               <span className='relative z-10 flex items-center gap-2'>
-                Start Journey
+                {isAuthenticated ? 'Go to Dashboard' : 'Start Journey'}
                 <motion.div animate={{ x: [0, 5, 0] }} transition={{ repeat: Infinity, duration: 1.5 }}>
                   <ArrowRight className='w-4 h-4' />
                 </motion.div>
