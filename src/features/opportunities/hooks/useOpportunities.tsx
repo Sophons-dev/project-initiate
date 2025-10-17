@@ -52,26 +52,35 @@ export const useGenerateAndSaveOpportunities = (): UseMutationResult<
   return useMutation<OpportunityDto[], unknown, { context: string; userId: string }>({
     mutationKey: ['save-opportunities'],
     mutationFn: async ({ context, userId }) => {
-      const insights = await generateInsightsForUser(context);
+      try {
+        const insights = await generateInsightsForUser(context);
 
-      if (!insights) {
-        return [];
+        if (!insights) {
+          throw new Error('Failed to generate career insights from user profile');
+        }
+
+        await upsertCareerInsight(userId, {
+          userId,
+          summary: insights.summary,
+          recommendedPaths: insights.recommendedPaths ?? null,
+          skillsGap: (insights.skillsGap as unknown as Record<string, unknown>) ?? null,
+          strengths: (insights.strengths as unknown as Record<string, unknown>) ?? null,
+          interests: (insights.interests as unknown as Record<string, unknown>) ?? null,
+          experienceLevel: insights.experienceLevel ?? null,
+          preferredRoles: insights.preferredRoles ?? null,
+        });
+
+        const result = await generateAndSaveOpportunities(insights, userId);
+
+        if (!result || result.length === 0) {
+          throw new Error('No opportunities were generated from the insights');
+        }
+
+        return result;
+      } catch (error) {
+        console.error('Error in useGenerateAndSaveOpportunities:', error);
+        throw error;
       }
-
-      await upsertCareerInsight(userId, {
-        userId,
-        summary: insights.summary,
-        recommendedPaths: insights.recommendedPaths ?? null,
-        skillsGap: (insights.skillsGap as unknown as Record<string, unknown>) ?? null,
-        strengths: (insights.strengths as unknown as Record<string, unknown>) ?? null,
-        interests: (insights.interests as unknown as Record<string, unknown>) ?? null,
-        experienceLevel: insights.experienceLevel ?? null,
-        preferredRoles: insights.preferredRoles ?? null,
-      });
-
-      const result = await generateAndSaveOpportunities(insights, userId);
-
-      return result;
     },
   });
 };

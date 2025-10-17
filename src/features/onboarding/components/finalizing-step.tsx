@@ -24,6 +24,10 @@ export function FinalizingStep() {
   const [isCompleted, setIsCompleted] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isCheckingStatus, setIsCheckingStatus] = useState(false);
+  const [showTimeoutWarning, setShowTimeoutWarning] = useState(false);
+  const [showRetryPrompt, setShowRetryPrompt] = useState(false);
+  const [warningTimeoutRef, setWarningTimeoutRef] = useState<NodeJS.Timeout | null>(null);
+  const [retryTimeoutRef, setRetryTimeoutRef] = useState<NodeJS.Timeout | null>(null);
 
   // Check localStorage for ongoing process
   const scopedId = userData?.data?.id || userId || 'pending';
@@ -82,6 +86,7 @@ export function FinalizingStep() {
       try {
         const opportunities = await getRecommendationsByUserId(userData.data!.id, { page: 1, limit: 1 });
         if (opportunities.data.length > 0) {
+          console.log('Found opportunities during polling, completing process');
           // Continue remaining steps
           for (let i = 2; i < loadingStates.length - 1; i++) {
             if (isCancelled) return;
@@ -100,6 +105,7 @@ export function FinalizingStep() {
           return true;
         }
       } catch (e) {
+        console.warn('Error polling for recommendations:', e);
         // swallow and retry
       }
       return false;
@@ -117,11 +123,14 @@ export function FinalizingStep() {
       // Failsafe: if nothing appears after 2min, clear the running flag and allow a fresh start
       timeoutId = window.setTimeout(() => {
         if (!isCancelled) {
+          console.warn('Polling timeout reached, clearing process state');
           localStorage.removeItem(processKey);
           localStorage.removeItem(stepKey);
           setHasStarted(false);
+          setError('The opportunity generation process timed out. Please try again.');
+          setLoading(false);
         }
-      }, 200000);
+      }, 120000); // Reduced to 2 minutes
     };
 
     startPolling();
@@ -180,18 +189,47 @@ export function FinalizingStep() {
           userId = res.data.userId;
         }
 
-        // STEP 1 — real opportunity generation
+        // STEP 1 — real opportunity generation with timeout and retry logic
         setCurrentStep(1);
         localStorage.setItem(stepKey, '1');
-        const opportunities = await saveOpps.mutateAsync({
+
+        // Add timeout to prevent infinite hanging
+        const generationPromise = saveOpps.mutateAsync({
           context: JSON.stringify(data),
           userId: userId,
         });
 
+        // Set up warning and retry prompts
+        const warningTimeout = setTimeout(() => {
+          setShowTimeoutWarning(true);
+        }, 60000); // 60 seconds
+        setWarningTimeoutRef(warningTimeout);
+
+        const retryTimeout = setTimeout(() => {
+          setShowRetryPrompt(true);
+        }, 360000); // 6 minutes
+        setRetryTimeoutRef(retryTimeout);
+
+        const timeoutPromise = new Promise<never>((_, reject) => {
+          setTimeout(() => reject(new Error('Opportunity generation timed out after 120 seconds')), 120000);
+        });
+
+        const opportunities = await Promise.race([generationPromise, timeoutPromise]);
+
+        // Clear timeouts if generation succeeds
+        clearTimeout(warningTimeout);
+        clearTimeout(retryTimeout);
+        setWarningTimeoutRef(null);
+        setRetryTimeoutRef(null);
+
         // Only proceed if opportunity generation succeeds
         if (!opportunities || opportunities.length === 0) {
-          throw new Error('No opportunities generated');
+          throw new Error(
+            'No opportunities generated - the AI was unable to find suitable opportunities for your profile'
+          );
         }
+
+        console.log(`Successfully generated ${opportunities.length} opportunities`);
 
         // STEP 2..N-2 — Additional processing steps (mock delays for UX)
         for (let i = 2; i < loadingStates.length - 1; i++) {
@@ -210,6 +248,16 @@ export function FinalizingStep() {
       } catch (error) {
         console.error('Error during AI generation process:', error);
 
+        // Clear any pending timeouts
+        if (warningTimeoutRef) {
+          clearTimeout(warningTimeoutRef);
+          setWarningTimeoutRef(null);
+        }
+        if (retryTimeoutRef) {
+          clearTimeout(retryTimeoutRef);
+          setRetryTimeoutRef(null);
+        }
+
         // Provide more specific error messages
         let errorMessage = 'An error occurred';
         if (error instanceof Error) {
@@ -219,6 +267,10 @@ export function FinalizingStep() {
             errorMessage = 'Authentication expired. Please sign in again.';
           } else if (error.message.includes('No opportunities generated')) {
             errorMessage = 'Failed to generate opportunities. Please try again.';
+          } else if (error.message.includes('timed out')) {
+            errorMessage = 'The opportunity generation is taking longer than expected. Please try again.';
+          } else if (error.message.includes('Unable to find suitable opportunities')) {
+            errorMessage = "We couldn't find opportunities matching your profile. Please try again or contact support.";
           } else {
             errorMessage = error.message;
           }
@@ -228,6 +280,8 @@ export function FinalizingStep() {
         setLoading(false);
         setIsFinalizing(false); // Reset finalizing state on error
         setHasStarted(false); // Allow retry
+        setShowTimeoutWarning(false); // Hide any warning popups
+        setShowRetryPrompt(false);
         localStorage.removeItem(processKey); // Clear localStorage on error
         localStorage.removeItem(stepKey);
       }
@@ -255,6 +309,19 @@ export function FinalizingStep() {
     setIsCompleted(false);
     setCurrentStep(0);
     setLoading(true);
+    setShowTimeoutWarning(false);
+    setShowRetryPrompt(false);
+
+    // Clear any pending timeouts
+    if (warningTimeoutRef) {
+      clearTimeout(warningTimeoutRef);
+      setWarningTimeoutRef(null);
+    }
+    if (retryTimeoutRef) {
+      clearTimeout(retryTimeoutRef);
+      setRetryTimeoutRef(null);
+    }
+
     localStorage.removeItem(processKey); // Clear localStorage for retry
   };
 
@@ -283,31 +350,103 @@ export function FinalizingStep() {
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className='text-center xl:w-[500px]'
-    >
-      <MultiStepLoader loadingStates={loadingStates} loading={loading} value={currentStep} />
+    <>
+      {/* Timeout Warning Popup */}
+      {showTimeoutWarning && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl'
+          >
+            <div className='text-center'>
+              <div className='text-yellow-500 text-4xl mb-4'>⏰</div>
+              <h3 className='text-xl font-bold text-gray-900 mb-2'>Taking Longer Than Expected</h3>
+              <p className='text-gray-600 mb-4'>
+                The opportunity generation is taking longer than usual. This can happen when our AI is searching for the
+                best matches for your profile.
+              </p>
+              <button
+                onClick={() => setShowTimeoutWarning(false)}
+                className='bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors'
+              >
+                Continue Waiting
+              </button>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
 
-      {/* Loading Message */}
+      {/* Retry Prompt Popup */}
+      {showRetryPrompt && (
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0, scale: 0.9 }}
+          className='fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50'
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className='bg-white rounded-lg p-6 max-w-md mx-4 shadow-xl'
+          >
+            <div className='text-center'>
+              <div className='text-red-500 text-4xl mb-4'>⚠️</div>
+              <h3 className='text-xl font-bold text-gray-900 mb-2'>Process Taking Too Long</h3>
+              <p className='text-gray-600 mb-4'>
+                The opportunity generation has been running for 6 minutes. This might indicate a temporary issue. Would
+                you like to try again?
+              </p>
+              <div className='flex gap-3 justify-center'>
+                <button
+                  onClick={() => setShowRetryPrompt(false)}
+                  className='bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors'
+                >
+                  Keep Waiting
+                </button>
+                <button
+                  onClick={handleRetry}
+                  className='bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors'
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-        className='mt-8'
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.5 }}
+        className='text-center xl:w-[500px]'
       >
-        <h2 className='text-2xl font-bold text-gray-900 mb-4'>Creating Your Personalized Experience</h2>
-        <p className='text-gray-600 text-lg'>
-          {isCheckingStatus
-            ? 'Checking your onboarding status...'
-            : 'Our AI is analyzing your preferences and generating tailored opportunities just for you...'}
-        </p>
-        {hasStarted && (
-          <p className='text-sm text-gray-500 mt-2'>Please don&apos;t refresh the page during this process.</p>
-        )}
+        <MultiStepLoader loadingStates={loadingStates} loading={loading} value={currentStep} />
+
+        {/* Loading Message */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className='mt-8'
+        >
+          <h2 className='text-2xl font-bold text-gray-900 mb-4'>Creating Your Personalized Experience</h2>
+          <p className='text-gray-600 text-lg'>
+            {isCheckingStatus
+              ? 'Checking your onboarding status...'
+              : 'Our AI is analyzing your preferences and generating tailored opportunities just for you...'}
+          </p>
+          {hasStarted && (
+            <p className='text-sm text-gray-500 mt-2'>Please don&apos;t refresh the page during this process.</p>
+          )}
+        </motion.div>
       </motion.div>
-    </motion.div>
+    </>
   );
 }

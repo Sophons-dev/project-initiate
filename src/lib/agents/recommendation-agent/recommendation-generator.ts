@@ -52,6 +52,14 @@ export async function generateRecommendations({
 
     console.log('✅ OpenAI response received:', JSON.stringify(response.output_parsed, null, 2));
     const parsed = RecommendationsSchema.parse(response.output_parsed);
+
+    const recommendations = Array.isArray(parsed?.recommendations) ? parsed.recommendations : [];
+
+    if (recommendations.length === 0) {
+      console.warn('⚠️ No recommendations generated from AI response');
+      throw new Error('No recommendations were generated from the AI response');
+    }
+
     console.log('✅ Parsed recommendations:', parsed.recommendations.length);
     return parsed;
   } catch (error) {
