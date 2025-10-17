@@ -167,9 +167,16 @@ export function FinalizingStep() {
         } else {
           // User needs to be onboarded
           const res = await onboardUser(data);
-          if (!res.success || !res.data?.userId) {
-            throw new Error(res.error || 'Onboarding failed');
+
+          if (!res.success) {
+            throw new Error(`failed to onboard user with data: ${JSON.stringify(data)}: ${res.error}`);
           }
+          if (!res.data?.userId) {
+            throw new Error(
+              `failed to onboard user with data: ${JSON.stringify(data)}: ${res.error} no user id in response`
+            );
+          }
+
           userId = res.data.userId;
         }
 
@@ -202,7 +209,22 @@ export function FinalizingStep() {
         router.push('/dashboard');
       } catch (error) {
         console.error('Error during AI generation process:', error);
-        setError(error instanceof Error ? error.message : 'An error occurred');
+
+        // Provide more specific error messages
+        let errorMessage = 'An error occurred';
+        if (error instanceof Error) {
+          if (error.message.includes('User not found')) {
+            errorMessage = 'User account not found. Please try signing in again.';
+          } else if (error.message.includes('User not authenticated')) {
+            errorMessage = 'Authentication expired. Please sign in again.';
+          } else if (error.message.includes('No opportunities generated')) {
+            errorMessage = 'Failed to generate opportunities. Please try again.';
+          } else {
+            errorMessage = error.message;
+          }
+        }
+
+        setError(errorMessage);
         setLoading(false);
         setIsFinalizing(false); // Reset finalizing state on error
         setHasStarted(false); // Allow retry

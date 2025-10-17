@@ -38,10 +38,40 @@ export async function onboardUser(
       return { success: false, error: 'User not authenticated' };
     }
 
-    const existing = await db.user.findUnique({ where: { clerkId: userId } });
+    let existing = await db.user.findUnique({ where: { clerkId: userId } });
 
+    // If user doesn't exist, create them (handles race condition with Clerk webhooks)
     if (!existing) {
-      return { success: false, error: 'User not found' };
+      // Get user info from Clerk to create the user
+      const { clerkClient } = await import('@clerk/nextjs/server');
+      const clerk = await clerkClient();
+
+      try {
+        const clerkUser = await clerk.users.getUser(userId);
+        const email = clerkUser.emailAddresses[0]?.emailAddress;
+
+        if (!email) {
+          return { success: false, error: 'User email not found in Clerk' };
+        }
+
+        // Create the user in our database
+        existing = await db.user.create({
+          data: {
+            clerkId: userId,
+            email: email,
+            onboardingCompleted: false,
+            profile: {
+              set: {
+                name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || email.split('@')[0],
+                image: clerkUser.imageUrl,
+              },
+            },
+          },
+        });
+      } catch (clerkError) {
+        console.error('Error fetching user from Clerk:', clerkError);
+        return { success: false, error: 'Failed to fetch user information from Clerk' };
+      }
     }
 
     const updated = await db.user.update({
